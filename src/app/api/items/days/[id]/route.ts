@@ -3,7 +3,8 @@ import { open, Database } from "sqlite"
 
 let db: Database<sqlite3.Database, sqlite3.Statement> | null = null;
 
-export async function GET() {
+export async function GET(req:Request,res:{params:{id:string}}) {
+    const {id : groupId} =res.params
 
     if (!db) {
         db = await open({
@@ -12,12 +13,9 @@ export async function GET() {
         })
     }
     const query = `
-        SELECT id, author, wise_sayings FROM days
+        SELECT id, author, wise_sayings, day_group_id FROM days WHERE day_group_id=?
     `
-    const items = await db.all(query)
-    return new Response(JSON.stringify(items), {
-        headers: { "Content-Type": 'application/json' },
-        status: 200
-    })
+    const items = await db.all(query,[Number(groupId)])
+    return Response.json(items)
 
 }

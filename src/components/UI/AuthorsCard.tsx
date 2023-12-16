@@ -8,8 +8,7 @@ interface PropsType {
 }
 export default function AuthorsCard({ items }: PropsType) {
     return (
-        <section className="mt-[5em] ">
-            <ul className="flex justify-center rotate-[]  min-h-[300px] max-h-[500px] flex-wrap overflow-y-auto "
+            <ul className=" mt-[5em] flex justify-center rotate-[]  min-h-[300px] max-h-[500px] flex-wrap overflow-y-auto "
             >
                 {items.map((item) => {
                     return <li className="
@@ -31,7 +30,5 @@ export default function AuthorsCard({ items }: PropsType) {
                         {item.author}</li>
                 })}
             </ul>
-
-        </section>
     )
 }
