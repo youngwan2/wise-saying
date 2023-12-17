@@ -11,7 +11,6 @@ export default function Nav(){
                 <li className="mt-5 flex items-center"><HiSun/ ><span className="ml-1"><Link href={'/weather'}>날씨/계절 </Link></span></li>
                 <li className="mt-5 flex items-center"><HiCalendar /><span className="ml-1"><Link href={'/day'}>요일별 </Link></span></li>
                 <li className="mt-5 flex items-center"><HiHeart /><span className="ml-1"><Link href={'/feel'}>감성자극</Link></span></li>
-                <li className="mt-5 flex items-center"><HiFire /><span className="ml-1"><Link href={'/motivation'}>힘나는 말</Link></span></li>
                 <li className="mt-5 flex items-center"><HiOutlineThumbUp /><span className="ml-1"><Link href={'/user'}>유저 명언</Link></span></li>
             </ul>
             <br />

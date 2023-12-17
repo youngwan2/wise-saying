@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { getItemFromDB } from "@/services/item.services"
 import AuthorsCard from "@/components/UI/AuthorsCard"
 import { HiUserGroup } from "react-icons/hi"

@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import WeatherCard from "@/components/UI/WeatherCard"
 import { getItemFromDB } from "@/services/item.services"
 import { HiSun } from "react-icons/hi"

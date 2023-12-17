@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import WeekdayCategory from "@/components/UI/WeekdayCategory";
 import { getWeekdayList } from "@/services/item.services";
 import { HiCalculator } from "react-icons/hi";
@@ -5,7 +7,6 @@ import { HiCalculator } from "react-icons/hi";
 export default async function DayPage(){
 
     const daysOfWeek = await getWeekdayList()
-    console.log(daysOfWeek)
 
     return (
         <section className="w-full">

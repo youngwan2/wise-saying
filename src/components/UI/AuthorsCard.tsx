@@ -2,8 +2,8 @@
 
 interface PropsType {
     items: {
-        author: string,
-        wise_sayings: string[]
+        id: number,
+        author:string
     }[]
 }
 export default function AuthorsCard({ items }: PropsType) {
