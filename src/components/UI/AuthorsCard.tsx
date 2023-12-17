@@ -1,5 +1,5 @@
 "use client"
-
+import { useRouter } from "next/navigation"
 interface PropsType {
     items: {
         id: number,
@@ -7,11 +7,18 @@ interface PropsType {
     }[]
 }
 export default function AuthorsCard({ items }: PropsType) {
+
+    const router = useRouter()
     return (
             <ul className=" mt-[5em] flex justify-center rotate-[]  min-h-[300px] max-h-[500px] flex-wrap overflow-y-auto "
             >
                 {items.map((item) => {
-                    return <li className="
+                    return <li
+                     onClick={()=>{
+                        const trim_author = item.author.replace(' ','')
+                        router.push(`/author/${item.author}`)
+                     }}
+                    className="
                         p-[5em]
                         odd:-rotate-2 
                         even:rotate-2 
