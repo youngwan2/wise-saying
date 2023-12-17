@@ -1,23 +1,28 @@
-import sqlite3 from "sqlite3"
-import { open, Database } from "sqlite"
+import { NextRequest } from "next/server";
+import sqlite3 from "sqlite3";
+import { open, Database } from "sqlite";
+
+interface ItemsType {
+    items: {
+        id: number,
+        author:string
+    }[]
+}
+
 
 let db: Database<sqlite3.Database, sqlite3.Statement> | null = null;
+export async function GET(req:NextRequest){
 
-export async function GET() {
-
-    if (!db) {
-        db = await open({
-            filename: "./wise_saying.db",
-            driver: sqlite3.Database,
+    if(!db) {
+        db  = await open({
+            filename:'./wise_saying.db',
+            driver:sqlite3.Database,
         })
     }
     const query = `
-        SELECT id, author, wise_sayings FROM authors
+        SELECT author_id AS id, author_name AS author FROM authors_group 
     `
-    const items = await db.all(query)
-    return new Response(JSON.stringify(items), {
-        headers: { "Content-Type": 'application/json' },
-        status: 200
-    })
+    const items:ItemsType = await db.all(query)
+    return new Response(JSON.stringify(items))
 
 }

@@ -1,19 +1,33 @@
-
-
-export async function getItemFromDB(path:string){
-    const mode = process.env.NODE_ENV 
-    const response = await fetch(`${mode==='development'?'http://localhost:3000/api/items/'+path:'/api/items/'+path}`)
-    const data = await response.json()
-    const refinement = data.map((item: any)=>{
-        return {id: item.id,author:item.author, wise_sayings: JSON.parse(item['wise_sayings'])};
-    
-    })
-    return refinement
+interface ItemType {
+        id: number,
+        author:string
 }
 
-export async function getWeekdayList(){
-    const mode = process.env.NODE_ENV
-    const response = await fetch(`${mode==='development'?'http://localhost:3000/api/dayofweek/':'/api/dayofweek/'}`)
-    const weeks = await response.json()
-    return weeks
+export async function getItemFromDB(path: string = "authors") {
+    try {
+        const response = await fetch(`http://localhost:3000/api/items/${path}`)
+        const data = await response.json()
+        return data
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+export async function getQuotesBy(authorName:string) {
+    console.log("이름:",authorName)
+    try {
+        const response = await fetch(`http://localhost:3000/api/items/authors/${authorName}`)
+    } catch(error){
+        console.error(error)
+    }      
+}
+
+export async function getWeekdayList() {
+    try {
+        const response = await fetch('http://localhost:3000/api/dayofweek/')
+        const weeks = await response.json()
+        return weeks
+    } catch (error) {
+        console.error(error)
+    }
 }

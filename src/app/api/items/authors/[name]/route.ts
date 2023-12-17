@@ -3,8 +3,8 @@ import { open, Database } from "sqlite"
 
 let db: Database<sqlite3.Database, sqlite3.Statement> | null = null;
 
-export async function GET() {
-
+export async function GET(req:Request) {
+    console.log(req.)
     if (!db) {
         db = await open({
             filename: "./wise_saying.db",
@@ -12,7 +12,9 @@ export async function GET() {
         })
     }
     const query = `
-        SELECT id, author, wise_sayings FROM motivations
+        SELECT id, B.author_name AS author, A.wise_sayings AS wise_sayings 
+        FROM quotes_authors A JOIN authors_group B
+        ON A.author_id = B.author_id
     `
     const items = await db.all(query)
     return new Response(JSON.stringify(items), {
