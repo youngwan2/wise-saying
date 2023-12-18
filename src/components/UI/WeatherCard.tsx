@@ -1,20 +1,21 @@
-"use client"
-import SearchForm from "./SearchForm"
+'use client'
+import SearchForm from './SearchForm'
 interface PropsType {
-    items: {
-        id: number,
-        author: string
-        wise_sayings: string
-
-    }[]
+  items: {
+    id: number
+    author: string
+    wise_sayings: string
+  }[]
 }
 export default function WeatherCard({ items }: PropsType) {
-    return (
-        <section className="my-[2em] relative ">
-            <SearchForm />
-            <ul className="flex justify-center flex-wrap  overflow-y-auto  max-h-[500px]  ">
-                {items.map((item) => {
-                    return <li className="
+  return (
+    <section className="my-[2em] relative ">
+      <SearchForm />
+      <ul className="flex justify-center flex-wrap  overflow-y-auto  max-h-[500px]  ">
+        {items.map((item) => {
+          return (
+            <li
+              className="
                     p-[3em]
                     odd:-rotate-2 
                     even:rotate-2 
@@ -28,16 +29,21 @@ export default function WeatherCard({ items }: PropsType) {
                     hover:translate-y-[-20px]
                     hover:bg-[#fae259]
                     hover:cursor-pointer
-                    relative" key={item.id}>
-                        <ul>
-                            <li className="w-[20px] h-[45px] bg-[rgba(0,0,0,0.7)] absolute top-[-1em] right-2 "></li>
-                           
-                            <li>{item.wise_sayings}</li>
-                            <li className="pt-[10px]"><strong>{item.author}</strong></li>
-                        </ul>
-                    </li>
-                })}
-            </ul>
-        </section>
-    )
+                    relative"
+              key={item.id}
+            >
+              <ul>
+                <li className="w-[20px] h-[45px] bg-[rgba(0,0,0,0.7)] absolute top-[-1em] right-2 "></li>
+
+                <li>{item.wise_sayings}</li>
+                <li className="pt-[10px]">
+                  <strong>{item.author}</strong>
+                </li>
+              </ul>
+            </li>
+          )
+        })}
+      </ul>
+    </section>
+  )
 }
