@@ -1,6 +1,4 @@
-import Nav from "./Nav";
-export default function SubHeader(){
-    return (
-            <Nav/>
-    )
+import Nav from './Nav'
+export default function SubHeader() {
+  return <Nav />
 }
