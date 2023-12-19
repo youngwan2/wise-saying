@@ -25,7 +25,8 @@ export default function RootLayout({
         <Header />
         <main id="main" className="shadow-2xl m-[5px] translate-x-[50%] translate-y-[-50%] right-[50%] rounded-[10px]  w-full max-w-[1400px] min-h-[500px] top-[50%] absolute bg-white flex">
           <SubHeader />
-          <section className='max-w-[100%]'>{children}</section>
+          <section className='max-w-[100%]'>
+            {children}</section>
         </main>
         <Footer />
       </body>
