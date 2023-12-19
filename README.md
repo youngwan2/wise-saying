@@ -10,17 +10,15 @@
 
 ## 프레임워크 / 라이브러리 / 그 외 도구
 ### 프론트엔드
-
 - ReactJS(v18+)
 - NextJS(v14+)
 - Typescript(v5+)
 - tailwindcss
 - Gsap(v3+)
-- ...
+- Next-Auth(v4+)
 
 ### 데이터베이스
-
-- SQLite3
+- SQLite3(v3+)
 - ...
 
 ### API 개발 및 테스도구
