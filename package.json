@@ -12,11 +12,13 @@
   "dependencies": {
     "gsap": "^3.12.3",
     "next": "14.0.4",
+    "next-auth": "^4.24.5",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^4.12.0",
     "sqlite": "^5.1.1",
-    "sqlite3": "^5.1.6"
+    "sqlite3": "^5.1.6",
+    "zustand": "^4.4.7"
   },
   "devDependencies": {
     "@types/node": "^20",
