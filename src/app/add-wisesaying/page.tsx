@@ -2,12 +2,20 @@
 import { useRouter } from "next/navigation"
 import gsap from "gsap"
 import { Draggable } from "gsap/Draggable"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
+
+interface PostType {
+    category: string
+    author:string,
+    
+    
+    
+}
 export default function AddWisesayingPage() {
-
-
     const formRef = useRef<HTMLFormElement>(null)
+    
+    const [post, setPost ] = useState({}) 
     useEffect(()=>{
         if(formRef.current) {
             gsap.registerPlugin(Draggable)
@@ -21,8 +29,6 @@ export default function AddWisesayingPage() {
     const router = useRouter()
     return (
         <section className="absolute left-0 right-0 top-0 bottom-0 bg-[#00000065] p-[10px] rounded-[10px]">
-            
-
             <form
                 ref={formRef}
                 className="max-w-[560px] mx-auto bg-[#ffb057]  rounded-[10px] shadow-2xl"
@@ -33,7 +39,9 @@ export default function AddWisesayingPage() {
                 <h2 className="text-[1.5em] mb-[1em] font-bold bg-[#333232] text-[white] p-[8px]  rounded-t-lg">명언 등록</h2>
                 <article className="px-[2em]">
                     <label htmlFor="subject" className="block font-bold">주제</label>
-                    <input type="text" className="min-w-[200px] w-[500px] min-h-[40px] px-[10px]" />
+                    <input onInput={()=>{
+
+                    }} type="text" className="min-w-[200px] w-[500px] min-h-[40px] px-[10px]" />
                 </article>
                 <br />
                 {/* 내용 */}
