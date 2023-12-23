@@ -45,7 +45,7 @@ export default function Page({ params }: { params: { id: string } }) {
           type: 'rotation',
         })
       })
-    }, 1000)
+    }, 2000)
   }
 
   useEffect(() => {
@@ -77,6 +77,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 <p>{item.wise_sayings}</p>
                 <footer className="font-bold mt-[1em]">{item.author}</footer>
               </blockquote>
+              <div className="w-[20px] h-[45px] bg-[rgba(0,0,0,0.7)] absolute top-[-1em] right-2 "></div>
             </li>
           )
         })}

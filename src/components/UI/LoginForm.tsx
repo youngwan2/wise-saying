@@ -4,20 +4,39 @@ import { signIn, useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { HiOutlineLockClosed, HiOutlineMail, HiOutlineX } from "react-icons/hi"
 import useLoginStateStore from "@/store/store"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 export default function LoginForm() {
 
     const router = useRouter()
     const { data: session } = useSession()
-
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
     const setLoginState = useLoginStateStore((state)=> state.setLoginState)
+
+    const reqLogin=async ()=>{
+        const user = {
+            email,
+            password
+        }
+
+        fetch('http://localhost:3000/api/login',{
+            method:'POST',
+            body:JSON.stringify(user)
+        }).then(async(response)=>{
+            if(response.status === 200){
+               const {success, accessToken} = await response.json()
+               if(success) return sessionStorage.setItem('token',accessToken)
+            }
+        }).catch((error)=>{
+            console.error(error)
+        })
+    }
 
     useEffect(()=>{
         if (!session) setLoginState(false)
         else setLoginState(true)
     },[session, setLoginState])
 
-    
     useEffect(()=>{
         const clear = setTimeout(()=>{
             if(session) {
@@ -30,10 +49,7 @@ export default function LoginForm() {
      
     },[session, router])
 
-    
-
     if (!session) {
-
         return (
             <>
                 <div className=" hover:cursor-pointer fixed left-0 right-0 bottom-0 top-0 bg-[#0000009c] rounded-[10px]"
@@ -58,15 +74,24 @@ export default function LoginForm() {
                     <div className="flex mt-[3.5em] mb-[1em] mx-[10px]">
                         <label className="rounded-s-lg bg-[#3F3F3F] text-[white] text-center p-[0.8em] inline-block min-w-[50px]" htmlFor="user-email">
                             <span className=" inline-block"><HiOutlineMail /></span></label>
-                        <input className=" rounded-e-lg min-w-[230px] w-[100%] bg-[#ffffffce]" type="email" id="user-email" name="user-email" />
+                        <input onInput={(e)=>{
+                            const email = e.currentTarget.value
+                            setEmail(email)
+                        }} className="pl-[5px] rounded-e-lg min-w-[230px] w-[100%] bg-[#ffffffce]" type="email" id="user-email" name="user-email" />
                     </div>
                     {/* 패스워드 */}
                     <div className="flex  mx-[10px]">
                         <label className="rounded-s-lg bg-[#3F3F3F] text-[white] p-[0.8em] text-center inline-block min-w-[50px]" htmlFor="user-password">
                             <span className="inline-block"><HiOutlineLockClosed /></span></label>
-                        <input className="rounded-e-lg min-w-[230px]  w-[100%] bg-[#ffffffce]" type="password" id="user-password" name="user-password" />
+                        <input onInput={(e)=>{
+                            const password = e.currentTarget.value
+                            setPassword(password)
+                        }} className="pl-[5px] rounded-e-lg min-w-[230px]  w-[100%] bg-[#ffffffce]" type="password" id="user-password" name="user-password" />
                     </div>
-                    <input className="rounded-[5px] my-[2.5em] text-[black] bg-[#FFFFFF] max-w-[150px] py-[0.5em] min-w-[150px] mx-auto hover: cursor-pointer hover:bg-[#ffd9d9] font-bold" type="submit" value={"로그인"} />
+                    {/* 로그인 요청 */}
+                    <input 
+                    onClick={reqLogin}
+                    className="rounded-[5px] my-[2.5em] text-[black] bg-[#FFFFFF] max-w-[150px] py-[0.5em] min-w-[150px] mx-auto hover: cursor-pointer hover:bg-[#ffd9d9] font-bold" type="submit" value={"로그인"} />
 
                     {/* 소셜 로그인 */}
                     <button onClick={() => {
@@ -82,8 +107,5 @@ export default function LoginForm() {
         )
     } 
 
-    // if(session) {
-    //     return <LoginForm/>
-    // }
     
 }

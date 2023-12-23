@@ -36,6 +36,7 @@ export default function WeekdayCategory({ categories }: PropsType) {
                     relative"
           >
             {category.day_name}
+            <div className="w-[20px] h-[45px] bg-[rgba(0,0,0,0.7)] absolute top-[-1em] right-2 "></div>
           </li>
         )
       })}

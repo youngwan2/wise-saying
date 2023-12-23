@@ -5,8 +5,6 @@ interface PropsType{
     items: ItemsType[]
 }
 export default function EtcCard({items}:PropsType){
-
-
     return (
         <ul className="flex justify-center flex-wrap  overflow-y-auto  max-h-[500px]  ">
            {items.map((item)=>{
@@ -32,6 +30,7 @@ export default function EtcCard({items}:PropsType){
                 <p className="leading-[2]">{item.wise_sayings}</p>
                 <span className="pt-[1em] block font-bold">{item.author}</span>
               </blockquote>
+              <div className="w-[20px] h-[45px] bg-[rgba(0,0,0,0.7)] absolute top-[-1em] right-2 "></div>
                  </li>
            })}
         </ul>
