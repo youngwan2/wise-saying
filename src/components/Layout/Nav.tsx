@@ -1,6 +1,8 @@
 'use client'
 import useLoginStateStore from '@/store/store'
 import Link from 'next/link'
+import useHasToken from '@/custom/useHasToken'
+
 import {
   HiUserGroup,
   HiSun,
@@ -15,8 +17,8 @@ import {
 } from 'react-icons/hi'
 export default function Nav() {
 
-  const loginState = useLoginStateStore((state) => state.loginState)
-
+  const nextAuthLoginState = useLoginStateStore((state) => state.loginState)
+  const generalLoginState = useHasToken()
   return (
     <nav className="text-white p-[10px] rounded-l-[10px] min-w-[230px] max-w-[280px] bg-[#E76F51] min-h-[100%] overflow-y-auto">
       <h2 className="font-bold text-[1.25em] mt-[1.25em]">카테고리</h2>
@@ -26,35 +28,35 @@ export default function Nav() {
           <HiUserGroup />
           <span className="ml-1">
             {' '}
-            <Link href={'/author'}>인물별 명언</Link>{' '}
+            <Link href={'/author-quotes'}>인물별 명언</Link>{' '}
           </span>
         </li>
         {/* 날씨 명언 */}
         <li className="mt-5 flex items-center">
           <HiSun />
           <span className="ml-1">
-            <Link href={'/weather'}>날씨/계절 명언 </Link>
+            <Link href={'/weather-quotes'}>날씨/계절 명언 </Link>
           </span>
         </li>
         {/* 요일 명언 */}
         <li className="mt-5 flex items-center">
           <HiCalendar />
           <span className="ml-1">
-            <Link href={'/day'}>요일별 명언 </Link>
+            <Link href={'/day-quotes'}>요일별 명언 </Link>
           </span>
         </li>
         {/* 유저 명언 */}
         <li className="mt-5 flex items-center">
           <HiOutlineThumbUp />
           <span className="ml-1">
-            <Link href={'/user'}>유저 명언</Link>
+            <Link href={'/user-quotes'}>유저 명언</Link>
           </span>
         </li>
         {/* 그 외 명언 */}
         <li className="mt-5 flex items-center">
           <HiHeart />
           <span className="ml-1">
-            <Link href={'/general'}>그 외 명언</Link>
+            <Link href={'/general-quotes'}>그 외 명언</Link>
           </span>
         </li>
       </ul>
@@ -71,7 +73,7 @@ export default function Nav() {
             <Link href={'/mypage'}>마이페이지</Link>
           </span>
         </li>
-        {loginState ? 
+        {nextAuthLoginState || generalLoginState ? 
         // 로그아웃
         <li className="mt-3 flex items-center">
           <HiLogout />

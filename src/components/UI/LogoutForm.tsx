@@ -1,4 +1,5 @@
 "use client"
+import useHasToken from "@/custom/useHasToken"
 import { signIn, signOut, useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
@@ -8,10 +9,10 @@ export default function Logout() {
 
     const {data: session} = useSession()
     const router =useRouter()
-
+    const validToken = useHasToken()
     useEffect(()=>{
         const clear = setTimeout(()=>{
-            if(!session) {
+            if(!session && !validToken) {
                 router.push('/')
             }
         },1000)
@@ -19,9 +20,9 @@ export default function Logout() {
             clearTimeout(clear)
         })
      
-    },[session, router])
+    },[session, router,validToken])
 
- if(session) {
+ if(session || validToken) {
   return (
     <>
     <div className="fixed left-0 right-0 top-0 bottom-0 bg-[#00000052] rounded-[10px]"></div>
@@ -36,6 +37,8 @@ export default function Logout() {
         <button
             className="bg-[#ff5100] text-[white] p-[10px] rounded-[5px] my-[1em]"
             onClick={() => {
+                localStorage.removeItem('token')
+                localStorage.removeItem('user')
                 signOut()
             }}>로그아웃</button>
 

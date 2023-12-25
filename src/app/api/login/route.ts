@@ -15,6 +15,7 @@ export async function POST(req: NextRequest) {
         }
         // 유저 정보
         const { email, password } = await req.json()
+        console.log(email, password)
 
         const query = `
         SELECT user_id, email, password FROM users_group
@@ -30,9 +31,9 @@ export async function POST(req: NextRequest) {
             // 일치하는 경우 후속 처리
             
             if (isValid === true) {
-                const scretKey = 'Login_True'
+                const scretKey:string = process.env.JWT_SCREPT!
                 try {
-                    const accessToken = await new Promise((resolve, reject) => {
+                    const accessToken:any = await new Promise((resolve, reject) => {
                         jwt.sign(
                             {
                                 userId: user_id,
@@ -48,7 +49,8 @@ export async function POST(req: NextRequest) {
                             }
                         )
                     })
-                    return NextResponse.json({ success: true, accessToken })
+                  const {userEmail} = jwt.decode(accessToken)
+                    return NextResponse.json({ success: true, accessToken, user: userEmail })
                 } catch (error) {
                     return NextResponse.json({success: false, meg:"토큰 서명에 문제가 발생하였습니다."})
                 }
