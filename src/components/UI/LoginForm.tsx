@@ -5,49 +5,56 @@ import { useRouter } from "next/navigation"
 import { HiOutlineLockClosed, HiOutlineMail, HiOutlineX } from "react-icons/hi"
 import useLoginStateStore from "@/store/store"
 import { useEffect, useState } from "react"
+import useHasToken from "@/custom/useHasToken"
 export default function LoginForm() {
 
     const router = useRouter()
     const { data: session } = useSession()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const setLoginState = useLoginStateStore((state)=> state.setLoginState)
+    const setLoginState = useLoginStateStore((state) => state.setLoginState)
+    const validToken = useHasToken()
 
-    const reqLogin=async ()=>{
+    const reqLogin = async () => {
         const user = {
             email,
             password
         }
+        fetch('http://localhost:3000/api/login', {
+            method: 'POST',
+            body: JSON.stringify(user)
+        }).then(async (response) => {
+            if (response.status === 200) {
+                const { success, accessToken, user } = await response.json()
 
-        fetch('http://localhost:3000/api/login',{
-            method:'POST',
-            body:JSON.stringify(user)
-        }).then(async(response)=>{
-            if(response.status === 200){
-               const {success, accessToken} = await response.json()
-               if(success) return sessionStorage.setItem('token',accessToken)
+                if (success) {
+                    localStorage.setItem('user', user)
+                    localStorage.setItem('token', accessToken)
+                }
             }
-        }).catch((error)=>{
+            location.reload()
+        }).catch((error) => {
             console.error(error)
         })
     }
 
-    useEffect(()=>{
+
+    useEffect(() => {
         if (!session) setLoginState(false)
         else setLoginState(true)
-    },[session, setLoginState])
+    }, [session, setLoginState])
 
-    useEffect(()=>{
-        const clear = setTimeout(()=>{
-            if(session) {
+    useEffect(() => {
+        const clear = setTimeout(() => {
+            if (session || validToken) {
                 router.push('/')
             }
-        },500)
-        return (()=>{
+        }, 500)
+        return (() => {
             clearTimeout(clear)
         })
-     
-    },[session, router])
+
+    }, [session, router, validToken])
 
     if (!session) {
         return (
@@ -74,7 +81,7 @@ export default function LoginForm() {
                     <div className="flex mt-[3.5em] mb-[1em] mx-[10px]">
                         <label className="rounded-s-lg bg-[#3F3F3F] text-[white] text-center p-[0.8em] inline-block min-w-[50px]" htmlFor="user-email">
                             <span className=" inline-block"><HiOutlineMail /></span></label>
-                        <input onInput={(e)=>{
+                        <input onInput={(e) => {
                             const email = e.currentTarget.value
                             setEmail(email)
                         }} className="pl-[5px] rounded-e-lg min-w-[230px] w-[100%] bg-[#ffffffce]" type="email" id="user-email" name="user-email" />
@@ -83,15 +90,15 @@ export default function LoginForm() {
                     <div className="flex  mx-[10px]">
                         <label className="rounded-s-lg bg-[#3F3F3F] text-[white] p-[0.8em] text-center inline-block min-w-[50px]" htmlFor="user-password">
                             <span className="inline-block"><HiOutlineLockClosed /></span></label>
-                        <input onInput={(e)=>{
+                        <input onInput={(e) => {
                             const password = e.currentTarget.value
                             setPassword(password)
                         }} className="pl-[5px] rounded-e-lg min-w-[230px]  w-[100%] bg-[#ffffffce]" type="password" id="user-password" name="user-password" />
                     </div>
                     {/* 로그인 요청 */}
-                    <input 
-                    onClick={reqLogin}
-                    className="rounded-[5px] my-[2.5em] text-[black] bg-[#FFFFFF] max-w-[150px] py-[0.5em] min-w-[150px] mx-auto hover: cursor-pointer hover:bg-[#ffd9d9] font-bold" type="submit" value={"로그인"} />
+                    <input
+                        onClick={reqLogin}
+                        className="rounded-[5px] my-[2.5em] text-[black] bg-[#FFFFFF] max-w-[150px] py-[0.5em] min-w-[150px] mx-auto hover: cursor-pointer hover:bg-[#ffd9d9] font-bold" type="submit" value={"로그인"} />
 
                     {/* 소셜 로그인 */}
                     <button onClick={() => {
@@ -105,7 +112,7 @@ export default function LoginForm() {
                 </form>
             </>
         )
-    } 
+    }
 
-    
+
 }
