@@ -20,8 +20,6 @@ export async function GET(){
 
 
     const items = await db.all(joinQuery)
-    console.log(items)
-    
     return NextResponse.json(items)
 
 }
