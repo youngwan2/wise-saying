@@ -32,8 +32,12 @@ export default function PostForm() {
            const {status, success} =await response.json()
             console.log(status, success)
            if(success === true) {
-            router.refresh()
+            alert("정상적으로 등록되었습니다.")
             router.push('/user-quotes')
+            setTimeout(()=>{
+                location.reload()
+            },300)
+        
            }
            if(success === false) {
             alert("최대 로그인 가능 시간이 초과하였습니다. 로그인을 다시 시도해 주세요")
@@ -114,7 +118,7 @@ export default function PostForm() {
                 <button className=" bg-[#ffffff] p-[10px] mr-[1em] font-bold" onClick={postUserPost}>등록하기</button>
                 <button
                     onClick={() => {
-                        router.back()
+                        router.push('/')
                     }}
                     className="bg-[#ffffff] p-[10px] font-bold">취소</button>
             </article>

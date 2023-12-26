@@ -1,5 +1,5 @@
 'use client'
-import useLoginStateStore from '@/store/store'
+import {useLoginStateStore} from '@/store/store'
 import Link from 'next/link'
 import useHasToken from '@/custom/useHasToken'
 
