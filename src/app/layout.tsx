@@ -18,7 +18,6 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
 
- 
   return (
     <html lang="ko" className="bg-[rgba(100,155,850,0.8)]">
       <body className={`${gowunDodum.className}`}>
