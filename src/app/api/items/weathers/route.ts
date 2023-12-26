@@ -13,6 +13,7 @@ export async function GET() {
   }
   const query = `
         SELECT id, author, wise_sayings FROM weathers
+        ORDER BY id DESC
     `
   const items = await db.all(query)
   return NextResponse.json(items)

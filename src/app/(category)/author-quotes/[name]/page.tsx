@@ -1,5 +1,6 @@
 export const dynamic = 'force-dynamic'
-import QuotesCard from '@/components/UI/QuotesCard'
+
+import AuthorQuotesCard from '@/components/UI/AuthorQuotesCard'
 import { getQuotesBy } from '@/services/item.services'
 import { HiUserGroup } from 'react-icons/hi'
 import type { ItemsType } from '@/types/items.types'
@@ -11,15 +12,16 @@ export default async function AuthorPage({
 }) {
   const pathName = params.name
   const items: ItemsType[] = await getQuotesBy(pathName)
+  const itemCount = items.length
   return (
     <section>
-      <h2 className="flex items-center text-[1.5em] p-[5px] ">
+      <h2 className="flex items-center text-[1.5em] p-[5px] mb-[1em] ">
         <span className="bg-[gold] p-[1.5px] rounded-[5px] m-[10px]">
           <HiUserGroup />
         </span>
-        {items[0].author}의 명언
+        {items[0].author}의 명언({itemCount})
       </h2>
-      <QuotesCard items={items} />
+      <AuthorQuotesCard items={items} />
     </section>
   )
 }

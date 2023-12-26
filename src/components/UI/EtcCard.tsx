@@ -6,7 +6,7 @@ interface PropsType{
 }
 export default function EtcCard({items}:PropsType){
     return (
-        <ul className="flex justify-center flex-wrap  overflow-y-auto  max-h-[500px]  ">
+        <ul className="flex justify-center flex-wrap  overflow-y-auto  max-h-[500px]">
            {items.map((item)=>{
             return <li key={item.id}  className="
                 p-[3em]
@@ -17,6 +17,7 @@ export default function EtcCard({items}:PropsType){
                 bg-[#FFE5A0] 
                 m-3 max-w-[300px] min-w-[200px] 
                 w-[100%] text-center 
+                text-[#222222]
                 transition-all
                 hover:shadow-md
                 hover:translate-y-[-20px]
@@ -24,7 +25,7 @@ export default function EtcCard({items}:PropsType){
                 hover:cursor-pointer
                 relative">
               <blockquote>
-                <span className="block mb-[2em] rounded-[1em] bg-[#ffffff] text-[black]">
+                <span className="block mb-[2em] rounded-[0.5em] bg-[#ffffff] text-[black]">
                   {item.id}
                 </span>
                 <p className="leading-[2]">{item.wise_sayings}</p>

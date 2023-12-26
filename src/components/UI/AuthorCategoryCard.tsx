@@ -6,21 +6,24 @@ interface PropsType {
     author: string
   }[]
 }
-export default function AuthorsCard({ items }: PropsType) {
+export default function AuthorsCategoryCard({ items }: PropsType) {
   const router = useRouter()
   return (
-    <ul className=" mt-[5em] flex justify-center rotate-[]  min-h-[300px] max-h-[500px] flex-wrap overflow-y-auto ">
+    <ul className=" mt-[1em] flex justify-center rotate-[]  min-h-[300px] max-h-[500px] flex-wrap overflow-y-auto ">
       {items.map((item) => {
         return (
           <li
             onClick={() => {
               item.author.replace(' ', '')
-              router.push(`/author/${item.author}`)
+              router.push(`/author-quotes/${item.author}`)
             }}
             className="
                         p-[5em]
                         odd:-rotate-2 
                         even:rotate-2 
+                        text-[1.15em]
+                        text-[#2b2b2b]
+                        font-bold
                         min-h-[230px]  
                         max-h-[300px]  
                         bg-[#FFE5A0] 

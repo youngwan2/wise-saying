@@ -15,8 +15,8 @@ export async function GET(req: NextRequest, res: { params: { name: string } }) {
   const query = `
         SELECT id, B.author_name AS author, A.wise_sayings AS wise_sayings 
         FROM quotes_authors A JOIN authors_group B
-        
         ON A.author_id = B.author_id AND B.author_name=?
+        ORDER BY id DESC
     `
   interface ItemsType {
     id: number

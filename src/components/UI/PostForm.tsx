@@ -16,6 +16,7 @@ export default function PostForm() {
         userEmail:''
     })
 
+    // 유저가 작성한 포스트를 등록 요청하는 메소드
     const postUserPost=()=>{
         if(validToken){
         const accessToken = localStorage.getItem("token")
@@ -29,8 +30,16 @@ export default function PostForm() {
             body : JSON.stringify(userPost)
         }).then(async (response)=>{
            const {status, success} =await response.json()
+            console.log(status, success)
            if(success === true) {
+            router.refresh()
             router.push('/user-quotes')
+           }
+           if(success === false) {
+            alert("최대 로그인 가능 시간이 초과하였습니다. 로그인을 다시 시도해 주세요")
+            localStorage.removeItem('user')
+            localStorage.removeItem('token')
+            router.push('/login')
            }
         }).catch((error)=>{
             console.error(error)
@@ -41,6 +50,7 @@ export default function PostForm() {
             router.push('/login')
         }
     }
+    // UI 드래그 이벤트 등록
     useEffect(() => {
         if (formRef.current) {
             gsap.registerPlugin(Draggable)
@@ -52,7 +62,8 @@ export default function PostForm() {
     }, [])
 
     useEffect(() => {
-        if (localStorage.getItem("user")) {
+        const hasUserEmail = !!localStorage.getItem("user")
+        if (hasUserEmail) {
             const userEmail = localStorage.getItem("user")
             if (userEmail) setUserPost((old)=> ({...old, userEmail}))
 
@@ -77,7 +88,7 @@ export default function PostForm() {
                 <input onInput={(e) => {
                     const category = e.currentTarget.value
                     setUserPost({...userPost, category})
-                }} type="text" className="min-w-[200px] w-[500px] min-h-[40px] px-[10px]" />
+                }} type="text" className="min-w-[200px] w-[500px] min-h-[40px] px-[10px]" placeholder="작성할 명언의 주제를 입력해주세요 ex) 사랑"/>
             </article>
             <br />
             {/* 내용 */}
@@ -86,7 +97,7 @@ export default function PostForm() {
                 <textarea name="content" id="content" className="min-w-[200px] w-[500px] p-[10px] min-h-[150px]" onInput={(e)=>{
                     const wise_sayings = e.currentTarget.value
                     setUserPost({...userPost, wise_sayings})
-                }} ></textarea>
+                }} placeholder="남기고자 하는 명언을 입력해주세요. ex) 해내지 못할 것을 걱정할게 아니라 시도조차 하지 않으려는 자신을 걱정해라." ></textarea>
             </article>
             <br />
             {/* 작성자(닉네임) */}
@@ -95,7 +106,7 @@ export default function PostForm() {
                 <input onInput={(e)=>{
                     const author =e.currentTarget.value;
                     setUserPost({...userPost, author})
-                }} type="text" className="min-w-[200px] w-[500px]  px-[10px] min-h-[40px] " />
+                }} type="text" className="min-w-[200px] w-[500px]  px-[10px] min-h-[40px]" placeholder="명언의 작성자로 표기할 이름을 입력해주세요 ex) 지나가는 고양이" />
             </article>
             <br />
             {/* 전송버튼 */}
