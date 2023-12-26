@@ -3,7 +3,7 @@ import Link from "next/link"
 import { signIn, useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { HiOutlineLockClosed, HiOutlineMail, HiOutlineX } from "react-icons/hi"
-import useLoginStateStore from "@/store/store"
+import {useLoginStateStore} from "@/store/store"
 import { useEffect, useState } from "react"
 import useHasToken from "@/custom/useHasToken"
 export default function LoginForm() {

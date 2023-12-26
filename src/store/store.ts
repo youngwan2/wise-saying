@@ -1,17 +1,25 @@
 import { create } from "zustand";
 
-type State = {
-    loginState : boolean
+interface LoginState{
+    loginState: boolean
+    setLoginState : (loignState: boolean) => void
 }
 
-type Action = {
-    setLoginState: (loginState: State['loginState']) => void
+interface PostIdState {
+    postId: number
+    setPostId : (id: number) => void
 }
 
-const useLoginStateStore = create<State & Action>((set) => ({
+
+export const useLoginStateStore = create<LoginState>((set) => ({
     loginState : false,
     setLoginState : (loginState) => set(() =>({loginState : loginState}))
 }))
 
 
-export default useLoginStateStore
+export const useUserPostIdStore = create<PostIdState>((set) => ({
+    postId : 0,
+    setPostId : (id) => set(() => ({postId : id }))
+}))
+
+

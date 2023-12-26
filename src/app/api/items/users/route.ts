@@ -1,6 +1,6 @@
 import sqlite3 from "sqlite3";
 import {open, Database} from 'sqlite'
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 let db:Database<sqlite3.Database, sqlite3.Statement>  | null = null
 export async function GET(){
@@ -12,7 +12,7 @@ export async function GET(){
     }
 
     const joinQuery = `
-        SELECT A.id AS id, A.wise_sayings AS wise_sayings, A.author AS author, B.email AS email
+        SELECT A.id AS id, A.wise_sayings AS wise_sayings, A.category AS category, A.author AS author, B.email AS email
         FROM quotes_users A JOIN users_group B
         ON A.user_id = B.user_id
         ORDER BY A.id DESC

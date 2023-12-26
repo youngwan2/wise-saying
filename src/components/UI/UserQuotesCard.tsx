@@ -3,20 +3,26 @@
 import useHasToken from "@/custom/useHasToken"
 import { ItemsType } from "@/types/items.types"
 import { useEffect, useState } from "react"
-import { HiOutlinePencil, HiOutlineTrash, HiTrash } from "react-icons/hi"
-
+import { HiOutlinePencil, HiOutlineTrash} from "react-icons/hi"
+import { useRouter } from "next/navigation"
+import { useUserPostIdStore } from "@/store/store"
 type UserItemsType = {
     email: string
 }
 
 type CombinePropsType = { items: (UserItemsType & ItemsType)[] }
 
+
+
 export default function UserQuotesCard({ items }: CombinePropsType) {
     const hasToken = useHasToken()
-    const [isUpdateItem, setIsUpdateItem] = useState(false)
     const [userEmail, setUserEmail] = useState('')
-    const [isUser, setIsUser] = useState(false)
+    const router = useRouter()
+    console.log(items)
 
+    const setPostId = useUserPostIdStore((state)=> state.setPostId)
+
+    // 명언 삭제
     const deleteItem = (id: number) => {
         if (hasToken) {
             const headers = {
@@ -42,25 +48,7 @@ export default function UserQuotesCard({ items }: CombinePropsType) {
             alert("접근 권한이 없습니다.")
         }
     }
-
-
-    const updateItem = (id: number) => {
-        if (hasToken) {
-            const headers = {
-                "Authorization": `Bearer ${localStorage.getItem('token')}`
-            }
-            const url = `http:localhost:3000/api/user-quotes/${id}`
-            fetch(url, {
-                method: "PUT",
-                headers
-            }
-            ).catch((console.error))
-        }
-        if (!hasToken) {
-            alert("접근 권한이 없습니다.")
-        }
-    }
-
+ 
     useEffect(() => {
         if (hasToken) {
             const user = localStorage.getItem('user')!
@@ -103,7 +91,8 @@ export default function UserQuotesCard({ items }: CombinePropsType) {
                         aria-label="수정 및 삭제 버튼의 컨테이너"
                         className={`invisible opacity-0 bg-[#14131328] absolute left-0 right-0 top-0 bottom-0 p-[5em] group-hover:visible group-hover:opacity-100 transition-all group-hover:backdrop-blur-[1px] ${userEmail === item.email? 'block':'hidden'} `}>
                         <button className="p-[5px] hover:bg-[tomato] text-[2em] hover:text-[white] bg-[white] rounded-[0.3em] mx-[0.5em]" onClick={() => {
-                            setIsUpdateItem(true)
+                            setPostId(Number(item.id))
+                            router.push('/update-wisesaying')
                         }} aria-label="수정버튼"><HiOutlinePencil></HiOutlinePencil></button>
                         <button className="p-[5px] hover:bg-[tomato] text-[2em] hover:text-[white] bg-[white] rounded-[0.3em]" onClick={() => {
                             deleteItem(item.id)
