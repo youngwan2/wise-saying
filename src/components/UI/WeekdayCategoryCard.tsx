@@ -17,14 +17,16 @@ export default function WeekdayCategory({ categories }: PropsType) {
           <li
             key={category.day_group_id}
             onClick={() => {
-              router.push(`/day/${category.day_group_id}`)
+              router.push(`/day-quotes/${category.day_group_id}`)
             }}
             className=" 
                     p-[4em]
                     odd:-rotate-2 
                     even:rotate-2 
                     max-w-[200px] 
-                    text-[1.5em]
+                    text-[1.25em]
+                    text-[#313131]
+                    font-semibold
                     bg-[#FFE5A0] 
                     m-3 
                     w-[100%] text-center 

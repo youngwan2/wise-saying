@@ -1,10 +1,4 @@
 import PostForm from "@/components/UI/PostForm"
-
-interface PostType {
-    category: string
-    author:string,
-    
-}
 export default function AddWisesayingPage() {
 
     return (

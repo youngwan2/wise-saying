@@ -1,6 +1,6 @@
 "use client"
 
-import { CategoryType } from "@/app/(category)/general/page"
+import { CategoryType } from "@/app/(category)/general-quotes/page"
 import { useRouter } from "next/navigation"
 interface PropsType {
     categories: CategoryType[]
@@ -14,11 +14,14 @@ export default function EtcCategoryCard({ categories }: PropsType) {
                 return (
                     <li 
                     onClick={()=>{
-                        router.push(`/general/${category.category}`)
+                        router.push(`/general-quotes/${category.category}`)
                     }}
                     key={category.id} 
                     className="
                         p-[5em]
+                        text-[1.25em]
+                        text-[#313131]
+                        font-semibold
                         odd:-rotate-2 
                         even:rotate-2 
                         min-h-[230px]  
