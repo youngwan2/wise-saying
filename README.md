@@ -101,12 +101,5 @@
 - [ ] SQLite3 마이그레이션 -> ???
 
 
-
 ### 배포
 - [ ] ...
-
-
-``` [내용]
-data-toggle="collapse"
-data-target="#my-collapse"
-```
