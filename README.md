@@ -10,16 +10,50 @@
 
 ## 프레임워크 / 라이브러리 / 그 외 도구
 ### 프론트엔드
-- ReactJS(v18+)
-- NextJS(v14+)
-- Typescript(v5+)
-- tailwindcss
-- Gsap(v3+)
-- Next-Auth(v4+)
+<details>
+<summary>ReactJS(^18)</summary>
+</details>
+<details>
+<summary>NextJS(^14.0.4)</summary>
+</details>
+<details>
+<summary>Typescript(^5)</summary>
+</details>
+<details>
+<summary>tailwindcss(^3.3.0)</summary>
+  - 미리 스타일이 정의된 클래스를 기반으로 빠르게 css를 프로젝트에 적용할 수 있으며, 별도로 css 파일 생성 및 선택자 지정이 필요하지 않다는 이점이 매력적으로 다가와 선택하였습니다.
+</details>
+<details>
+<summary>Gsap(^3.12.3)</summary>
+  - css 애니메이션에 있어서 성능 최적화가 잘 되어 있고, 사용방법이 간단하다는 이점이 있어서 선택하였습니다. <br>
+  - 사용자가 화면에 띄운 로그인, 회원가입, 글작성 창에 있어서 사용성을 높이기 위해 드래그 이벤트를 적용하는 데 활용하였습니다.
+</details>
+<details>
+<summary>Next-Auth(^4.24.5)</summary>
+  - 소셜 로그인 인증을 간편하게 실행하기 위한 목적으로 사용하였습니다.
+</details>
+<details>
+<summary>Zustand(^4.4.7)</summary>
+  - 복잡한 전역상태가 아닌 단순한 상태의 전역 관리를 목적으로 사용하였습니다. <br>
+  - 리덕스와 마찬가지로 불변성을 중요시 하지만, 리덕스는 루트 컴포넌트인 App 을 랩핑하여 전역적으로 스토어를 관리하기 때문에, 상태가 변경되면 관련된 모든 컴포넌트가 리렌더링 되는 문제가 존재하지만, Zustand 의 경우에는 그럴 필요 없이 해당 컴포넌트만 리렌더링 되므로 여러 고민 끝에 선택하게 되었습니다.
+</details>
+<details>
+<summary>React-icons(^4.12.0)</summary>
+</details>
 
 ### 데이터베이스
-- SQLite3(v3+)
-- ...
+<details>
+<summary>SQLite3(^5.1.6)</summary>
+  - 다른 관계형 데이터베이스에 비해 가볍고, 따로 데이터베이스 서버를 구축하지 않고도 간단한 트렌잭션 처리를 간편하고 쉽게 수행할 수 있다는 이점으로 선택하였습니다. <br>
+  - 물론 보안상 좋지 못한 방식이기 때문에, 중요한 정보를 저장하기에는 제약이 따르고, 대규모 트랜잭션 처리에서는 동기적으로 동작하는 특성상 성능상 문제가 발생할 수 있음을 인지하고 있습니다. 그러나 앱의 규모나 확장성, 개발의 목적 등을 염두에 두었을 때 이 보다 적합한 데이터베이스는 없을 것이라 판단하여 선택하였습니다.
+</details>
+
+### 유효성 검사
+- joi(^17.11.0)
+
+### 암호화/로그인 인증
+- bcrypt(^5.1.1)
+- jsonwebtoken(^9.0.2)
 
 ### API 개발 및 테스도구
 - Postman
@@ -63,3 +97,8 @@
 ### 배포
 - [ ] ...
 
+
+``` [내용]
+data-toggle="collapse"
+data-target="#my-collapse"
+```
