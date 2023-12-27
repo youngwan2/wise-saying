@@ -1,56 +1,37 @@
-'use client'
-import { useEffect, useState, useRef } from 'react'
+
+import type { Metadata } from 'next'
 import { HiCalendar } from 'react-icons/hi'
-import gsap from 'gsap'
-import { Draggable } from 'gsap/Draggable'
+import WeekdayQuotesCard from '@/components/UI/WeekdayQuotesCard'
+import { getWiseSayingByDay } from '@/services/item.services'
 
-gsap.registerPlugin(Draggable)
 
-interface ItemsType {
-  id: number
-  author: string
-  wise_sayings: string
+type MetadataPropsType = {
+  params : {id: string}
 }
-export default function Page({ params }: { params: { id: string } }) {
+const weekdayList = ['월', '화', '수', '목', '금', '토', '일']
+
+//메타 데이터
+export async function generateMetadata({
+  params
+}: MetadataPropsType):Promise<Metadata> {
+
+  const { id} = params
+
+  return {
+    title: weekdayList[Math.max(Number(id)-1,0)]+ " | My wise saying",
+    description: `${weekdayList[Math.max(Number(id)-1,0)]}요일에 읽으면 좋은 명언들을 모아놓은 페이지 입니다.`
+    
+  }
+  
+}
+
+// 페이지
+export default async function Page({ params }: { params: { id: string } }) {
   const { id } = params
-  const [items, setItems] = useState<ItemsType[]>()
-  const [itemCount] = useState(0)
-  const [dayOfWeedList] = useState(['월', '화', '수', '목', '금', '토', '일'])
 
-  const messageLiRef = useRef<HTMLLIElement>(null)
-  const liRefs = useRef<HTMLLIElement[]>([])
+  const items = await getWiseSayingByDay(id)
+  const itemCount =items.length
 
-  const setLiRefs = (index: number, element: HTMLLIElement | null) => {
-    element instanceof HTMLLIElement && (liRefs.current[index] = element)
-  }
-
-  /** @augments dayOfweed : 요일[1: 월, 2:화, 3:수, 4:목, 5:금, 6:토, 7:일] */
-  const getWiseSayingByDay = async (dayOfWeed: string) => {
-    const response = await fetch(
-      `http://localhost:3000/api/items/days/${dayOfWeed}`,
-    )
-    const data = await response.json()
-    setItems(data)
-  }
-
-  useEffect(() => {
-    getWiseSayingByDay(id)
-  }, [id])
-
-  const dragAble = () => {
-    const lis = liRefs.current
-    setTimeout(() => {
-      lis.forEach((li) => {
-        Draggable.create(li, {
-          type: 'rotation',
-        })
-      })
-    }, 2000)
-  }
-
-  useEffect(() => {
-    dragAble()
-  }, [])
 
   return (
     <section>
@@ -58,30 +39,10 @@ export default function Page({ params }: { params: { id: string } }) {
         <span className="bg-[#ebbb72] p-[2px] mr-[5px]">
           <HiCalendar color="white" />
         </span>
-        {dayOfWeedList[Number(id) - 1]}({items?.length ?? itemCount})
+        {weekdayList[Math.max(Number(id) - 1, 0)]}({itemCount})
       </h2>
 
-      <ul className="mt-[3em] w-full flex justify-center min-h-[350px] max-h-[500px] flex-wrap overflow-y-auto">
-        {items?.map((item, i) => {
-          return (
-            <li
-              ref={(element) => {
-                setLiRefs(i, element)
-              }}
-              key={item.id}
-              className=" p-[2em] odd:-rotate-2  even:rotate-2  max-w-[200px] bg-[#FFE5A0] 
-                                        m-3 w-[100%] text-center transition-all hover:shadow-md hover:translate-y-[-20px]
-                                      hover:bg-[#fae259] hover:cursor-pointer relative"
-            >
-              <blockquote>
-                <p>{item.wise_sayings}</p>
-                <footer className="font-bold mt-[1em]">{item.author}</footer>
-              </blockquote>
-              <div className="w-[20px] h-[45px] bg-[rgba(0,0,0,0.7)] absolute top-[-1em] right-2 "></div>
-            </li>
-          )
-        })}
-      </ul>
+      <WeekdayQuotesCard items={items} />
     </section>
   )
 }

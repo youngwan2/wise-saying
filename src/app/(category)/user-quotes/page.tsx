@@ -1,8 +1,15 @@
 export const revaliDate = 600
 
+import type { Metadata } from "next"
 import UserQuotesCard from "@/components/UI/UserQuotesCard"
 import { getItemFromDB } from "@/services/item.services"
 import { HiUsers } from "react-icons/hi"
+
+
+export const metadata:Metadata = {
+  title:'사용자 명언 | My wise saying',
+  description: "사용자가 직접 작성한 명언을 모아둔 페이지 입니다."
+}
 
 export default async function UserPage() {
 

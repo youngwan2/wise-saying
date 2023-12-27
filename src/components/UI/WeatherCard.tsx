@@ -33,7 +33,7 @@ export default function WeatherCard({ items }: PropsType) {
                     relative"
               key={item.id}
             >
-              <span className='absolute left-2 top-2 rounded-[5em] bg-[white] p-[3px]'>{item.id}</span>
+              <span className='absolute left-2 top-2 rounded-[5em] bg-[white] px-[5px]'>{item.id}</span>
               <blockquote className='mt-[1em]'>
                 <li className="w-[20px] h-[45px] bg-[rgba(0,0,0,0.7)] absolute top-[-1em] right-2 "></li>
                 <p>{item.wise_sayings}</p>

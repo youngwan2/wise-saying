@@ -16,6 +16,7 @@ export async function GET(req:NextRequest, res:{params:{category:string}}){
         SELECT A.id AS id, A.author AS author, A.wise_sayings AS wise_sayings  
         FROM quotes_general A JOIN gneral_group B
         ON B.category_id = A.category_id AND B.category = ?
+        ORDER BY id DESC
     `
     const items = await db.all(query,[category])
     return NextResponse.json(items)

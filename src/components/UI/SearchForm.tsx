@@ -1,3 +1,5 @@
+"use client"
+
 import { HiOutlineSearch } from 'react-icons/hi'
 
 export default function SearchForm() {
@@ -8,7 +10,7 @@ export default function SearchForm() {
         e.preventDefault()
       }}
     >
-      <div className="flex items-center">
+      <article className="flex items-center">
         <label
           className="text-4xl p-[5px] min-w-[50px] bg-[#E76F51]"
           htmlFor="search"
@@ -19,9 +21,9 @@ export default function SearchForm() {
           className="p-[10px] w-[100%]"
           type="search"
           id="search"
-          placeholder="안냥"
+          placeholder="키워드를 입력해주세요(인물 이름, 명언 키워드 등)"
         />
-      </div>
+      </article>
     </form>
   )
 }

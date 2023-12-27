@@ -1,6 +1,13 @@
+
+import type { Metadata } from 'next'
 import EtcCategoryCard from '@/components/UI/EtcCategoryCard'
 import { getGeneralQuotesCategoryFromDB } from '@/services/item.services'
 import { HiHeart } from 'react-icons/hi'
+
+export const metadata: Metadata = {
+  title: "그 외 명언 | My wise saying",
+  description: "그 외 다양한 명언에 대한 카테고리를 모아둔 페이지 입니다."
+}
 
 export interface CategoryType {
   id: number

@@ -1,8 +1,13 @@
 export const dynamic = 'force-dynamic'
-
+import type { Metadata } from 'next'
 import WeekdayCategoryCard from '@/components/UI/WeekdayCategoryCard'
 import { getWeekdayCategoryFromDB } from '@/services/item.services'
 import { HiCalculator } from 'react-icons/hi'
+
+export const metadata : Metadata = {
+  title: "요일별 명언 | My wise saying",
+  description: "요일 별 명언 상세 페이지 이동 전 요일 카테고리 페이지 입니다."
+}
 
 export default async function DayPage() {
   const daysOfWeek = await getWeekdayCategoryFromDB()

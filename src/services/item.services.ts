@@ -44,7 +44,7 @@ export async function getEtcQuotesBy(category: string) {
     const response = await fetch(`http://localhost:3000/api/items/general/${category}`)
     const data = await response.json()
     return data
-  } catch(error){
+  } catch (error) {
     console.error(error)
   }
 }
@@ -55,6 +55,18 @@ export async function getWeekdayCategoryFromDB() {
     const response = await fetch('http://localhost:3000/api/dayofweek/')
     const weeks = await response.json()
     return weeks
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+
+// 요일 따른 명언 요청
+export async function getWiseSayingByDay(dayOfWeed: string) {
+  try {
+    const response = await fetch(`http://localhost:3000/api/items/days/${dayOfWeed}`)
+    const items = await response.json()
+    return items
   } catch (error) {
     console.error(error)
   }
