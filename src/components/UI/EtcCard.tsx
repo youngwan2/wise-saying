@@ -25,7 +25,7 @@ export default function EtcCard({items}:PropsType){
                 hover:cursor-pointer
                 relative">
               <blockquote>
-                <span className="block mb-[2em] rounded-[0.5em] bg-[#ffffff] text-[black]">
+                <span className="absolute left-2 top-2 mb-[2em] rounded-[5em] px-[3px] bg-[#ffffff] text-[black]">
                   {item.id}
                 </span>
                 <p className="leading-[2]">{item.wise_sayings}</p>

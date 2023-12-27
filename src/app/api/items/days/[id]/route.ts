@@ -14,7 +14,10 @@ export async function GET(req: NextRequest,  res: { params: { id: string } }) {
     })
   }
   const query = `
-        SELECT id, author, wise_sayings, day_group_id FROM days WHERE day_group_id=?
+        SELECT id, author, wise_sayings, day_group_id 
+        FROM days 
+        WHERE day_group_id=?
+        ORDER BY id DESC
     `
   const items = await db.all(query, [Number(groupId)])
   return NextResponse.json(items)
