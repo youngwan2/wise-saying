@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic'
 import type { Metadata } from 'next'
-import WeekdayCategoryCard from '@/components/UI/WeekdayCategoryCard'
+import WeekdayCategoryCard from '@/components/UI/card/WeekdayCategoryCard'
 import { getWeekdayCategoryFromDB } from '@/services/item.services'
 import { HiCalculator } from 'react-icons/hi'
 

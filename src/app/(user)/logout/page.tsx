@@ -1,4 +1,4 @@
-import Logout from "@/components/UI/LogoutForm"
+import Logout from "@/components/UI/form/LogoutForm"
 
 export default function LogoutPage(){
 

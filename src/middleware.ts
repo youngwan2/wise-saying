@@ -1,9 +1,8 @@
-import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { Jwt } from 'jsonwebtoken'
+import { getServerSession} from 'next-auth'
 
-export function middleware(request: NextRequest) {
+export async function middleware(req: NextRequest) {
 
 
-  console.log(request.method)
+  // const session = await getServerSession()
 }

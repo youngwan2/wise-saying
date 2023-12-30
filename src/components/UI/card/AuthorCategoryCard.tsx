@@ -9,7 +9,7 @@ interface PropsType {
 export default function AuthorsCategoryCard({ items }: PropsType) {
   const router = useRouter()
   return (
-    <ul className=" mt-[1em] flex justify-center rotate-[]  min-h-[300px] max-h-[500px] flex-wrap overflow-y-auto ">
+    <ul className=" mt-[1em] flex justify-center flex-wrap overflow-y-auto min-h-[100vh]">
       {items.map((item) => {
         return (
           <li

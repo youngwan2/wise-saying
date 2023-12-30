@@ -2,7 +2,7 @@ export const dynamic = 'force-dynamic'
 
 import type { Metadata } from 'next'
 import { getItemFromDB } from '@/services/item.services'
-import AuthorsCategoryCard from '@/components/UI/AuthorCategoryCard'
+import AuthorsCategoryCard from '@/components/UI/card/AuthorCategoryCard'
 import { HiUserGroup } from 'react-icons/hi'
 
 

@@ -1,21 +1,16 @@
 export const dynamic = 'force-dynamic'
-import { getGeneralQuotesCategoryFromDB } from "@/services/item.services"
-import EtcCard from "@/components/UI/EtcCard"
-import type { CategoryType } from "../page"
-import type { Metadata, ResolvedMetadata } from "next"
+import EtcCard from "@/components/UI/card/EtcCard"
+import type { Metadata } from "next"
 import { getEtcQuotesBy } from "@/services/item.services"
 import { ItemsType } from "@/types/items.types"
 import { HiHeart } from "react-icons/hi"
 
-
-
 type Props = {
   params: {category: string},
-  searchParams: { [key: string]: string | string[] | undefined }
 }
 
 export async function generateMetadata(
-  {params, searchParams} : Props
+  {params} : Props
 ) : Promise<Metadata> {
 
   
@@ -33,7 +28,7 @@ export default async function EtcQuotesPage({ params }: { params: { category: st
   const items:ItemsType[] = await getEtcQuotesBy(category)
   const itemCount = items.length
   return (
-    <section >
+    <section>
       <h2 className="flex items-center text-[1.5em] p-[10px] ">
         <span className="bg-[#ffae00] p-[1.5px] rounded-[5px] mx-[5px]"><HiHeart color="white" /></span>{decodingCategory}({itemCount})</h2>
         <EtcCard items={items} />

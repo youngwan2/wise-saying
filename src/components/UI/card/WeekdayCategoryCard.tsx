@@ -11,7 +11,7 @@ interface PropsType {
 export default function WeekdayCategory({ categories }: PropsType) {
   const router = useRouter()
   return (
-    <ul className="mt-[3em] w-full flex justify-center min-h-[350px] max-h-[500px] flex-wrap overflow-y-auto">
+    <ul className="w-full flex justify-center min-h-[100vh] flex-wrap overflow-y-auto mt-[5em]">
       {categories.map((category) => {
         return (
           <li
@@ -20,16 +20,19 @@ export default function WeekdayCategory({ categories }: PropsType) {
               router.push(`/day-quotes/${category.day_group_id}`)
             }}
             className=" 
-                    p-[4em]
+                    p-[3em]
                     odd:-rotate-2 
                     even:rotate-2 
-                    max-w-[200px] 
+                    max-w-[280px] 
+                    max-h-[230px]
+                    min-h-[200px]
                     text-[1.25em]
                     text-[#313131]
                     font-semibold
                     bg-[#FFE5A0] 
-                    m-3 
+                    m-[2em] 
                     w-[100%] text-center 
+                    rounded-[5%]
                     transition-all
                     hover:shadow-md
                     hover:translate-y-[-20px]
@@ -37,8 +40,8 @@ export default function WeekdayCategory({ categories }: PropsType) {
                     hover:cursor-pointer
                     relative"
           >
-            {category.day_name}
-            <div className="w-[20px] h-[45px] bg-[rgba(0,0,0,0.7)] absolute top-[-1em] right-2 "></div>
+            {category.day_name}요일 <br></br> 명언
+            <div className="w-[20px] h-[45px] bg-[rgba(233,118,118,0.7)] absolute top-[-1em] left-[30%] -rotate-[15deg] "></div>
           </li>
         )
       })}

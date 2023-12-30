@@ -1,10 +1,10 @@
 export const dynamic = 'force-dynamic'
 
-import AuthorQuotesCard from '@/components/UI/AuthorQuotesCard'
+import AuthorQuotesCard from '@/components/UI/card/AuthorQuotesCard'
 import { getQuotesBy } from '@/services/item.services'
 import { HiUserGroup } from 'react-icons/hi'
 import type { ItemsType } from '@/types/items.types'
-import type { Metadata, ResolvedMetadata } from 'next'
+import type { Metadata} from 'next'
 
 
 

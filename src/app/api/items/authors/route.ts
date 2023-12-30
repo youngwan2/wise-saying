@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import sqlite3 from 'sqlite3'
-import { open, Database } from 'sqlite'
+import { openDb } from '@/connect'
 
 interface ItemsType {
   items: {
@@ -9,14 +8,8 @@ interface ItemsType {
   }[]
 }
 
-let db: Database<sqlite3.Database, sqlite3.Statement> | null = null
 export async function GET(req: NextRequest) {
-  if (!db) {
-    db = await open({
-      filename: './wise_saying.db',
-      driver: sqlite3.Database,
-    })
-  }
+  const db = await openDb()
   const query = `
         SELECT author_id AS id, author_name AS author FROM authors_group 
     `
