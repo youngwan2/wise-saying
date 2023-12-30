@@ -1,4 +1,4 @@
-import PostForm from "@/components/UI/PostForm"
+import PostForm from "@/components/UI/form/PostForm"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {

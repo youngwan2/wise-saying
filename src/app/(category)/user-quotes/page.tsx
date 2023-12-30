@@ -1,10 +1,9 @@
 export const revaliDate = 600
 
 import type { Metadata } from "next"
-import UserQuotesCard from "@/components/UI/UserQuotesCard"
+import UserQuotesCard from "@/components/UI/card/UserQuotesCard"
 import { getItemFromDB } from "@/services/item.services"
 import { HiUsers } from "react-icons/hi"
-
 
 export const metadata:Metadata = {
   title:'사용자 명언 | My wise saying',

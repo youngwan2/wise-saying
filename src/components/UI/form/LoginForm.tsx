@@ -3,11 +3,16 @@ import Link from "next/link"
 import { signIn, useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { HiOutlineLockClosed, HiOutlineMail, HiOutlineX } from "react-icons/hi"
-import {useLoginStateStore} from "@/store/store"
-import { useEffect, useState } from "react"
+import { useLoginStateStore } from "@/store/store"
+import { useEffect, useRef, useState } from "react"
 import useHasToken from "@/custom/useHasToken"
-export default function LoginForm() {
+import gsap from "gsap/all"
+import { Draggable } from "gsap/Draggable"
 
+
+
+export default function LoginForm() {
+    const loginFormRef = useRef<HTMLFormElement>(null)
     const router = useRouter()
     const { data: session } = useSession()
     const [email, setEmail] = useState('')
@@ -56,16 +61,26 @@ export default function LoginForm() {
 
     }, [session, router, validToken])
 
+
+    useEffect(() => {
+        gsap.registerPlugin(Draggable)
+
+        if (loginFormRef.current) {
+            setTimeout(() => {
+                Draggable.create(loginFormRef.current, {
+                    dragClickables: false,
+                     bounds:document.querySelector('body')
+                })
+            }, 1000)
+        }
+    }, [])
+
     if (!session) {
         return (
             <>
-                <div className=" hover:cursor-pointer fixed left-0 right-0 bottom-0 top-0 bg-[#0000009c] rounded-[10px]"
-                    onClick={() => {
-                        router.push('/')
-                    }}
-                >
-                </div>
+                <div aria-label="로그인 화면을 감싸고 있는 배경" className="fixed left-0 right-0 bottom-0 top-0 bg-[#0000009c] "></div>
                 <form
+                    ref={loginFormRef}
                     className="shadow-2xl  rounded-[10px] flex flex-col fixed max-w-[400px] min-h-[350px] left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-[100%] bg-[#E76F51]"
                     onSubmit={(e) => {
                         e.preventDefault()

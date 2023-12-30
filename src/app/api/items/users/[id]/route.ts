@@ -1,19 +1,10 @@
-import sqlite3 from "sqlite3";
-import {open, Database} from 'sqlite'
 import { NextRequest, NextResponse } from "next/server";
 import Jwt  from "jsonwebtoken";
-
-let db:Database<sqlite3.Database, sqlite3.Statement>  | null = null
-
+import { openDb } from "@/connect";
 
 export async function GET(req:NextRequest, res:{params: {id: string}}){
     const postId = res.params.id
-    if(!db) {
-        db = await open({
-            filename:'./wise_saying.db',
-            driver:sqlite3.Database
-        })
-    }
+    const db = await openDb()
 
     const joinQuery = `
         SELECT A.id AS id, A.wise_sayings AS wise_sayings, A.category AS category, A.author AS author, B.email AS email
@@ -29,13 +20,9 @@ export async function PUT(req:NextRequest, res:{params: {id: string}}){
     const accessToken = req.headers.get("Authorization")?.replace("Bearer ","")!
     const scrept = process.env.JWT_SCREPT!
     const {wise_sayings, category, author} = await req.json()
-    if(!db) {
-        db = await open({
-            filename:'./wise_saying.db',
-            driver:sqlite3.Database
-        })
-    }
-
+    
+    const db = await openDb()
+    
     try {
        const validToken = Jwt.verify(accessToken, scrept)
     

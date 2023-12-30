@@ -22,9 +22,9 @@ export default function RootLayout({
     <html lang="ko" className="bg-[rgba(100,155,850,0.8)]">
       <body className={`${gowunDodum.className}`}>
         <Header />
-        <main id="main" className="shadow-2xl m-[5px] translate-x-[50%] translate-y-[-50%] right-[50%] rounded-[10px]  w-full max-w-[1400px] min-h-[600px] top-[50%] absolute bg-white flex">
+        <main id="main" className="flex bg-[white] max-w-[1600px] mx-auto rounded-[10px]">
           <SubHeader />
-          <section className='max-w-[100%]'>
+          <section className='max-w-[100%] min-h-[100vh]'>
             {children}</section>
         </main>
         <Footer />

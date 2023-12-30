@@ -1,4 +1,4 @@
-import UpdateForm from "@/components/UI/UpdateForm";
+import UpdateForm from "@/components/UI/form/UpdateForm";
 
 export default function UpdatePage(){
     return (

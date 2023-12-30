@@ -9,7 +9,7 @@ export default function EtcCategoryCard({ categories }: PropsType) {
 
     const router = useRouter();
     return (
-        <ul className=" mt-[5em] flex justify-center min-h-[300px] max-h-[500px] flex-wrap overflow-y-auto">
+        <ul className=" mt-[5em] flex justify-center max-h-[100vh] flex-wrap overflow-y-auto">
             {categories.map((category) => {
                 return (
                     <li 
@@ -25,9 +25,10 @@ export default function EtcCategoryCard({ categories }: PropsType) {
                         odd:-rotate-2 
                         even:rotate-2 
                         min-h-[230px]  
+                        rounded-[20%]
                         max-h-[300px]  
                         bg-[#FFE5A0] 
-                        m-3 max-w-[300px] min-w-[260px] 
+                        m-[2em] max-w-[300px] min-w-[260px] 
                         w-[100%] text-center 
                         transition-all
                         hover:shadow-md
@@ -35,7 +36,7 @@ export default function EtcCategoryCard({ categories }: PropsType) {
                         hover:bg-[#fae259]
                         hover:cursor-pointer
                         relative">
-                    <div className="w-[20px] h-[45px] bg-[rgba(0,0,0,0.7)] absolute top-[-1em] right-2 "></div>
+                    <div className="w-[20px] h-[45px] bg-[rgba(228,114,114,0.7)] absolute top-[-1em] right-[1em] rotate-[30deg] "></div>
                         {category.category}</li>
                 )
             })}

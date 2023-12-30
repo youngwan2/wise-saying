@@ -1,6 +1,6 @@
 
 import type { Metadata } from 'next'
-import EtcCategoryCard from '@/components/UI/EtcCategoryCard'
+import EtcCategoryCard from '@/components/UI/card/EtcCategoryCard'
 import { getGeneralQuotesCategoryFromDB } from '@/services/item.services'
 import { HiHeart } from 'react-icons/hi'
 
