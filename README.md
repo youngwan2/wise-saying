@@ -40,6 +40,15 @@
 <details>
 <summary>React-icons(^4.12.0)</summary>
 </details>
+</details>
+<details>
+<summary>React-color(^2.19.3)</summary>
+
+  - 사용자가 명언집을 만들 때, 선택할 수 있는 컬러 선택기 라이브러리 입니다.
+  - 3년 전을 이후로 릴리즈되지 않고 있지만, 꾸준히 주간 다운로드 수가 높은 점, ui 가 사용하기 편리하게 되어 있다는 점을 보고 선택하였습니다.
+</details>
+
+
 
 ### 데이터베이스
 <details>
