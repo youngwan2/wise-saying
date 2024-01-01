@@ -42,8 +42,8 @@ export default function QuotesBackgroundStyler(){
                 />
             </article>
             <article className='flex w-full'>
-                <div className='p-[0.9em] w-full max-w-[40%]' ref={previewDivRef} />
-                <button className='bg-[#ddc01d] border min-w-[100px]' onClick={() => setDisplayState(!displayState)}>변경</button>
+                <div className='p-[1px] w-[118px] ' ref={previewDivRef} />
+                <button className='bg-[#eaeae9] border ml-[5px] px-[5px]' onClick={() => setDisplayState(!displayState)}>변경</button>
             </article>
         </article>
     )

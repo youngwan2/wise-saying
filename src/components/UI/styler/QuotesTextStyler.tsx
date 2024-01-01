@@ -6,6 +6,7 @@ import { useQuotesTextStyleStore } from '@/store/store'
 import QuotesTextFontStyler from './QuotesTextFontStyler'
 import QuotesTextColorStyler from './QuoteTextColorStyler'
 import QuotesTextLineHeightStyler from './QuotesTextLineHeightStyler'
+import QuotesTextStrokeStyler from './QuotesTextStrokeStyler'
 
 export interface TextStyleType {
     size: number
@@ -24,7 +25,7 @@ export default function QuotesTextStyler() {
         font: 'Arial',
         fontStyle: 'fill'
     })
-  
+
     const [sizeUnits] = useState(['px', 'em', 'rem'])
 
     const setTextStyle = useQuotesTextStyleStore((state) => state.setTextStyle)
@@ -35,15 +36,18 @@ export default function QuotesTextStyler() {
     }, [setTextStyle, textStyle])
 
     return (
-        <section className='lg:max-w-[80%]'>
-            {/* 명언 글자색 변경 */}
-            <QuotesTextColorStyler setTextStyleState={setTextStyleState} textStyle ={textStyle}/>
-            {/* 명언 글자 크기 변경 */}
-            <QuotesTextSizeStyler sizeUnits={sizeUnits} setTextStyleState={setTextStyleState} textStyle={textStyle} />
+        <section className='lg:max-w-[80%] m-[5px] flex flex-col'>
+            <div className='flex'>
+                {/* 명언 글자색 변경 */}
+                <QuotesTextColorStyler setTextStyleState={setTextStyleState} textStyle={textStyle} />
+                {/* 명언 글자 크기 변경 */}
+                <QuotesTextSizeStyler sizeUnits={sizeUnits} setTextStyleState={setTextStyleState} textStyle={textStyle} />
+            </div>
             <QuotesTextFontStyler setTextStyleState={setTextStyleState} textStyle={textStyle} />
-
-            {/* 글자 줄간격 */}
-            <QuotesTextLineHeightStyler/>
+                {/* 글자 줄간격 */}
+                <QuotesTextLineHeightStyler />
+                {/* 글자 외곽선 편집 */}
+                <QuotesTextStrokeStyler />
         </section>
     )
 }

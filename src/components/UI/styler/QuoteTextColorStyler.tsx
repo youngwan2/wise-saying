@@ -1,6 +1,6 @@
 import { PhotoshopPicker } from 'react-color'
 import { HiPaintBrush } from 'react-icons/hi2'
-import { useState,useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useQuotesTextStyleStore } from '@/store/store'
 import { TextStyleType } from './QuotesTextStyler'
 
@@ -8,9 +8,9 @@ import { TextStyleType } from './QuotesTextStyler'
 
 interface PropsType {
     setTextStyleState: (p: TextStyleType) => void
-    textStyle:TextStyleType
+    textStyle: TextStyleType
 }
-export default function QuotesTextColorStyler({setTextStyleState, textStyle}: PropsType) {
+export default function QuotesTextColorStyler({ setTextStyleState, textStyle }: PropsType) {
 
 
     const [displayState, setDisplayState] = useState(false)
@@ -34,10 +34,12 @@ export default function QuotesTextColorStyler({setTextStyleState, textStyle}: Pr
 
     return (
         <article>
-            <h2 className="flex items-center text-[1.2em] mt-[1.25em] pb-[0.25em] text-[white]"><HiPaintBrush color="white" /> <p className="ml-[0.5em]">글자 색 변경</p></h2>
+            <h2 className="flex items-center text-[1.2em] mt-[1.25em] pb-[0.25em] text-[white]"><HiPaintBrush color="white" />
+                <p className="ml-[0.5em]">글자 색</p>
+            </h2>
+            {/* 글자색 변경 */}
             <article className={`${displayState ? 'block fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]' : 'hidden'}`} ref={pickerRef}>
                 <PhotoshopPicker
-                    className=''
                     onChange={(color) => setConfirmedColor(color)}
                     onCancel={() => { setDisplayState(!displayState) }}
                     color={confirmedColor}
@@ -50,9 +52,10 @@ export default function QuotesTextColorStyler({setTextStyleState, textStyle}: Pr
                     }
                 />
             </article>
+            {/* 글자색 미리보기 */}
             <article className='flex w-full'>
-                <input className='p-[0.3em] w-full max-w-[50%]' type="text" placeholder='색 변경 후 글자를 적어보세요' ref={previewInputRef} />
-                <button className='bg-[#ddc01d] border min-w-[100px]' onClick={() => setDisplayState(!displayState)}>변경</button>
+                <p aria-label='글자 색 변경 미리보기 텍스트' className='p-[1px] w-[120px] text-center bg-white ' ref={previewInputRef}>글자색</p>
+                <button className='bg-[#d4d3d3] ml-[5px] px-[5px] ' onClick={() => setDisplayState(!displayState)}>변경</button>
             </article>
         </article>
     )

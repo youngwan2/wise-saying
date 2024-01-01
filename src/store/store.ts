@@ -1,45 +1,15 @@
 import { create } from "zustand";
+import {
+    LoginState,
+    PostIdState,
+    BgColorState,
+    CardSizeState,
+    TextStyleState, 
+    LienHeightState, 
+    StorkeState, 
+    ImageElState
+} from "./store.type";
 
-interface LoginState {
-    loginState: boolean
-    setLoginState: (loignState: boolean) => void
-}
-
-interface PostIdState {
-    postId: number
-    setPostId: (id: number) => void
-}
-
-interface BgColorState {
-    bgColor: string
-    setBgColor: (bg: string) => void
-}
-
-type SizeType = {
-    width: number
-    height: number
-}
-interface CardSizeState extends SizeType {
-    setSize: (size: SizeType) => void
-}
-
-type TextType = {
-    color: string
-    size: number
-    unit: string
-    font: string
-    fontStyle: string
-}
-
-interface TextStyleState extends TextType {
-    setTextStyle: (style: TextType) => void
-}
-
-
-interface LienHeightState {
-    lineHeight: number
-    setLineHeight : (height: number) => void
-}
 
 // 유저 로그인 상태를 저장
 export const useLoginStateStore = create<LoginState>((set) => ({
@@ -74,11 +44,30 @@ export const useQuotesTextStyleStore = create<TextStyleState>((set) => ({
     unit: 'px',
     font: 'Arial',
     fontStyle: 'fill',
-    setTextStyle: (style) => set(() => ({ color: style.color, size: style.size, unit: style.unit, fontStyle: style.fontStyle }))
+    setTextStyle: (style) => set(() => ({ color: style.color, size: style.size, unit: style.unit, font: style.font, fontStyle: style.fontStyle }))
 }))
 
 // 줄간격
-export const useQuotesLineHeightStore = create<LienHeightState>((set)=>({
-    lineHeight:30,
-    setLineHeight:(lineHeight) => set(()=> ({lineHeight}))
+export const useQuotesLineHeightStore = create<LienHeightState>((set) => ({
+    lineHeight: 30,
+    setLineHeight: (lineHeight) => set(() => ({ lineHeight }))
+}))
+
+// 텍스트 외곽선 스타일
+
+export const useQuotesStrokeStyleStore = create<StorkeState>((set) => ({
+    thickness: 1,
+    color: 'black',
+    setStrokeThicknessStyle: ((thickness) => set(() => ({ thickness}))),
+    setStrokeColorStyle: ((color) => set(() => ({ color})))
+
+}))
+
+
+// 이미지 요소 저장
+export const useImageElementStore = create<ImageElState>((set) => ({
+    imageSrc: '/images/image1.png',
+    isClear: false,
+    setImageSrc: (imageSrc) => set(() => ({ imageSrc })),
+    setImageReset: (state) => set(() => ({ isClear: state }))
 }))
