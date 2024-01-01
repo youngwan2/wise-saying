@@ -6,7 +6,7 @@ export default function QuotesTextLineHeightStyler() {
     return (
         <article>
             <h2 className="flex items-center text-[1.2em] mt-[1.25em] pb-[0.25em] text-[white]"><HiPaintBrush color="white" /> <p className="ml-[0.5em]">글자 줄간격</p></h2>
-            <input className="p-[0.2em] max-w-[50%] w-full" type="number" placeholder="Defalut : 35" onChange={(e) => {
+            <input min={0} className="p-[1px]  w-[161px] text-center" type="number" placeholder="Defalut : 35" onChange={(e) => {
                 const height = Number(e.currentTarget.value)
                 setLineHeight(height)
             }} />
