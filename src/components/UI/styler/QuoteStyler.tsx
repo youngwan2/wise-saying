@@ -5,13 +5,16 @@ import QuotesStylerCanvas from "./QuotesStylerCanvas"
 import QuotesTextStyler from "./QuotesTextStyler"
 import QuotesImageStyler from "./QuotesImageStyler"
 import { useRouter } from "next/navigation"
-import QUotesSizeStyler from "./QuotesSizeStyler"
+import QuotesSizeStyler from "./QuotesSizeStyler"
 import QuotesBackgroundStyler from "./QuotesBackgorundStyler"
-import QuotesTextStrokeStyler from "./QuotesTextStrokeStyler"
+import { useState } from "react"
+import QuotesStylerTaps from "../tap/QuotesStylerTaps"
 
 export default function QuoteStyler() {
 
     const router = useRouter()
+
+    const [selecTapNum, setSelectTapNum] = useState(0)
 
     return (
         <div className={'opacity-[100%] visible fixed left-0 right-0 top-0 bottom-0 bg-[#f8d187] overflow-auto bg-[url("/images/background.jpg")] '}>
@@ -28,13 +31,14 @@ export default function QuoteStyler() {
                 </article>
 
                 {/* 우측  */}
-                <article className="mt-[2em] w-full flex flex-col max-w-[100%] lg:max-w-[25%] lg:block pl-[1em] lg:mt-[0] bg-[#303030]  rounded-[1em]  shadow-[0_5px_5px_10px_rgba(0,0,0,0.2)]  ">
+                <article className="mt-[2em] w-full flex flex-col max-w-[100%] lg:max-w-[25%] lg:block pl-[1em] lg:mt-[0] bg-[#303030]  rounded-[1em]  shadow-[0_5px_5px_10px_rgba(0,0,0,0.2)] min-h-[400px]  ">
+                    <QuotesStylerTaps selectTapNum={selecTapNum} setSelectTapNum={setSelectTapNum} />
                     {/* 명언 글자 편집 */}
-                    <QuotesTextStyler />
+                    <QuotesTextStyler selectTapNum={selecTapNum} />
                     {/* 카드 배경 편집 */}
-                    <QuotesBackgroundStyler />
+                    <QuotesBackgroundStyler selectTapNum={selecTapNum} />
                     {/* 명언 카드 크기 편집 */}
-                    <QUotesSizeStyler />
+                    <QuotesSizeStyler selectTapNum={selecTapNum} />
                 </article>
             </section>
         </div>

@@ -36,11 +36,11 @@ export default function QuotesTextFontStyler({ setTextStyleState, textStyle }: P
     const fontStyles = ['fill', 'stroke', 'hybrid']
 
     return (
-        <article className="flex">
+        <article>
             {/* 폰트 */}
             <article>
                 <h2 className="flex items-center text-[1.2em] mt-[1.25em] pb-[0.25em] text-[white]"><HiPaintBrush color="white" /> <p className="ml-[0.5em]">폰트</p></h2>
-                <select className="p-[1px] w-[163px]"
+                <select className="p-[5px] text-center rounded-[0.5em] shadow-[0_0px_0px_1px_black] w-[200px]"
                     onChange={(e) => {
                         const font = e.currentTarget.value
                         setTextStyleState({ ...textStyle, font })
@@ -51,9 +51,9 @@ export default function QuotesTextFontStyler({ setTextStyleState, textStyle }: P
                 </select>
             </article>
             {/* 폰트 스타일 */}
-            <article className="ml-[1em]">
+            <article>
                 <h2 className="flex items-center text-[1.2em] mt-[1.25em] pb-[0.25em] text-[white]"><HiPaintBrush color="white" /> <p className="ml-[0.5em]">폰트 스타일</p></h2>
-                <select className="p-[1px] w-[107px]" id="" onChange={(e) => {
+                <select className="p-[5px] text-center rounded-[0.5em] shadow-[0_0px_0px_1px_black] w-[200px] " id="" onChange={(e) => {
                     const fontStyle = e.currentTarget.value
                     setTextStyleState({ ...textStyle, fontStyle })
                 }}>
