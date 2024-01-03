@@ -10,7 +10,9 @@ interface QuoteType {
 export default function QuotesStylerCanvas() {
 
     const canvasRef = useRef<HTMLCanvasElement>(null)
-    const imageEl = useMemo(()=>{return new Image() },[])
+    const imageEl = useMemo(() => {
+        if (Image) return new Image()
+    }, [])
 
     // 텍스트 스타일 정보
     const color = useQuotesTextStyleStore((state) => state.color)
@@ -19,6 +21,7 @@ export default function QuotesStylerCanvas() {
     const font = useQuotesTextStyleStore((state) => state.font)
     const fontStyle = useQuotesTextStyleStore((state) => state.fontStyle)
     const lineHeight = useQuotesLineHeightStore((state) => state.lineHeight)
+
     // 캔버스 스타일 정보
     const bgColor = useBackgroundColorStore((state) => state.bgColor)
     const width = useQuotesCardSizeStore((state) => state.width)
@@ -33,44 +36,49 @@ export default function QuotesStylerCanvas() {
     // 배경이미지
     const bgImageSrc = useImageElementStore((state) => state.imageSrc)
 
-    // 이미지 리셋
-    const isClear = useImageElementStore((state) => state.isClear)
+    const clearCanvas = (ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    };
+    const bgColorDraw= useCallback((ctx: CanvasRenderingContext2D,width: number, height: number)=>{
+        ctx.fillStyle = bgColor
+        ctx.fillRect(0, 0, width, height)
+    },[bgColor])
 
     // 텍스트 그리기
     const draw = useCallback((ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) => {
 
-        ctx.fillStyle = bgColor
-        ctx.fillRect(0, 0, width, height)
-        ctx.closePath()
         ctx.textAlign = 'center'
         ctx.textBaseline = 'middle'
-        ctx.fillStyle = `${color}`
+
         ctx.lineWidth = strokeThickness
         ctx.strokeStyle = strokeColor
         ctx.font = `${size}${unit} ${font}`
 
-        const split = wrap(quote, {newline:'\n\n', width: 20}).split('\n\n')
-        let textY = 0
-
+        const split = wrap(quote, { newline: '\n\n', width: 20 }).split('\n\n') // 텍스트가 일정 넓이를 벗어나면 자동 개행
+        let textY = 0 // 캔버스에 그려질 텍스트의 Y 좌표축을 저장(또한, 개행 되는 텍스트의 높이를 저장)
         if (imageEl) {
             imageEl.alt = "명언 카드 배경 이미지"
             imageEl.addEventListener('load', () => {
+                clearCanvas(ctx, canvas) // 새 그림을 추가하기 전에 이전 그림들 제거
+                bgColorDraw(ctx, width, height)
+                ctx.fillStyle = `${color}`
                 ctx.drawImage(imageEl, 0, 0, canvas.width, canvas.height)
                 split.forEach((text, i) => {
                     textY = (height / 3) + (i * lineHeight)
-                    if (fontStyle === 'fill') ctx.fillText(text, width / 2, textY)
+                    if (fontStyle === 'fill') { ctx.fillText(text, width / 2, textY) }
                     if (fontStyle === 'stroke') ctx.strokeText(text, width / 2, textY)
                     if (fontStyle === 'hybrid') {
                         ctx.strokeText(text, width / 2, textY)
                         ctx.fillText(text, width / 2, textY)
                     }
                 })
-
             })
             imageEl.src = bgImageSrc
         }
 
-    }, [imageEl,bgColor, color, fontStyle, width, height, font, quote, size, unit, lineHeight, strokeColor, strokeThickness, bgImageSrc])
+    }, [imageEl, color, fontStyle, width, height, font, quote, size, unit, lineHeight, strokeColor, strokeThickness, bgImageSrc, bgColorDraw])
+
+
 
     const createCanvas = () => {
         const canvas = canvasRef.current
@@ -80,11 +88,11 @@ export default function QuotesStylerCanvas() {
 
     useEffect(() => {
         const { canvas, ctx } = createCanvas()
-
         if (canvas && ctx) {
+            // clearCanvas(ctx, canvas)
             draw(ctx, canvas)
         }
-    }, [draw, isClear])
+    }, [draw])
 
 
     useEffect(() => {
@@ -98,7 +106,7 @@ export default function QuotesStylerCanvas() {
     return (
         <article>
             <span className="text-white">{width}X{height}</span>
-            <canvas ref={canvasRef} width={width} height={height} className="border">
+            <canvas ref={canvasRef} width={width} height={height} className="border shadow-[0_0px_5px_1px_rgba(1,100,500,0.7)]">
             </canvas>
         </article>
     )
