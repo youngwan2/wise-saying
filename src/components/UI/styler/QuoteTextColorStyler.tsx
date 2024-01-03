@@ -54,8 +54,8 @@ export default function QuotesTextColorStyler({ setTextStyleState, textStyle }: 
             </article>
             {/* 글자색 미리보기 */}
             <article className='flex w-full'>
-                <p aria-label='글자 색 변경 미리보기 텍스트' className='p-[1px] w-[120px] text-center bg-white ' ref={previewInputRef}>글자색</p>
-                <button className='bg-[#d4d3d3] ml-[5px] px-[5px] ' onClick={() => setDisplayState(!displayState)}>변경</button>
+                <p aria-label='글자 색 변경 미리보기 텍스트' className='p-[5px] rounded-[0.5em] shadow-[0_0px_0px_1px_black] w-[200px] text-center bg-white ' ref={previewInputRef}>글자색</p>
+                <button className='bg-[#fae04b] ml-[5px] p-[5px] rounded-[10px] w-[60px] ' onClick={() => setDisplayState(!displayState)}>변경</button>
             </article>
         </article>
     )
