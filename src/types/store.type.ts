@@ -55,3 +55,13 @@ export interface ImageElState{
     setImageSrc : (imageSrc: string) => void
     setImageReset : (state: boolean) => void 
 }
+
+
+export interface BookmarkToggleState {
+    toggleState: boolean,
+    bookmarkList: [],
+    count:number,
+    setToggleState : (toggle: boolean) => void
+    setBookmarkList : (list: any) => void
+    setListCount :(count: number) => void
+} 

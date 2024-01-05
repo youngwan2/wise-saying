@@ -7,8 +7,9 @@ import {
     TextStyleState, 
     LienHeightState, 
     StorkeState, 
-    ImageElState
-} from "./store.type";
+    ImageElState,
+    BookmarkToggleState
+} from "../types/store.type";
 
 
 // 유저 로그인 상태를 저장
@@ -60,6 +61,7 @@ export const useQuotesStrokeStyleStore = create<StorkeState>((set) => ({
     color: 'black',
     setStrokeThicknessStyle: ((thickness) => set(() => ({ thickness}))),
     setStrokeColorStyle: ((color) => set(() => ({ color})))
+    
 
 }))
 
@@ -70,4 +72,16 @@ export const useImageElementStore = create<ImageElState>((set) => ({
     isClear: false,
     setImageSrc: (imageSrc) => set(() => ({ imageSrc })),
     setImageReset: (state) => set(() => ({ isClear: state }))
+}))
+
+
+// 북마크 활성화 상태 및 리스트 저장 저장
+export const useBookmarkStore = create<BookmarkToggleState>((set)=>({
+    toggleState:false,
+    bookmarkList : [],
+    count:0,
+    setToggleState: (toggle) => set(()=> ({toggleState: toggle})),
+    setBookmarkList : (list) => set(()=> ({bookmarkList: list}) ),
+    setListCount: (count) => set(() => ({ count}))
+
 }))
