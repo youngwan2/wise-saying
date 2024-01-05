@@ -4,6 +4,10 @@ import './globals.css'
 import Header from '../components/Layout/Header'
 import Footer from '../components/Layout/Footer'
 import SubHeader from '@/components/Layout/SubHeader'
+import BookmarkIcon from '@/components/UI/bookmark/BookmarkIcon'
+import Bookmark from '@/components/UI/bookmark/Booklmark'
+
+
 const gowunDodum = Gowun_Dodum({ weight: '400', subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -22,8 +26,9 @@ export default function RootLayout({
     <html lang="ko" className="bg-[rgba(100,155,850,0.8)]">
       <body className={`${gowunDodum.className}`}>
         <Header />
-        <main id="main" className="flex bg-[white] max-w-[1600px] mx-auto rounded-[10px]">
+        <main id="main" className="flex bg-[white] max-w-[1600px] mx-auto rounded-[10px] relative">
           <SubHeader />
+          <Bookmark/>
           <section className='max-w-[100%] min-h-[100vh]'>
             {children}</section>
         </main>

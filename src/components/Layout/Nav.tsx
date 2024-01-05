@@ -1,5 +1,5 @@
 'use client'
-import {useLoginStateStore} from '@/store/store'
+import { useLoginStateStore } from '@/store/store'
 import Link from 'next/link'
 import useHasToken from '@/custom/useHasToken'
 
@@ -14,6 +14,7 @@ import {
   HiPencil,
   HiLogout,
   HiLogin,
+  HiOutlineHome
 } from 'react-icons/hi'
 export default function Nav() {
 
@@ -23,11 +24,17 @@ export default function Nav() {
     <nav className="text-white p-[10px] rounded-l-[10px] min-w-[230px] max-w-[280px] bg-[#E76F51] min-h-[100%] overflow-y-auto">
       <h2 className="font-bold text-[1.25em] mt-[1.25em]">카테고리</h2>
       <ul className="m-[8px]">
+        {/* 홈페이지 */}
+        <li className="mt-5 flex items-center">
+          <HiOutlineHome />
+          <span className="ml-1">
+            <Link href={'/'}>홈</Link>
+          </span>
+        </li>
         {/* 인물별 명언 */}
         <li className="mt-5 flex items-center">
           <HiUserGroup />
           <span className="ml-1">
-            {' '}
             <Link href={'/author-quotes'}>인물별 명언</Link>{' '}
           </span>
         </li>
@@ -73,22 +80,22 @@ export default function Nav() {
             <Link href={'/mypage'}>마이페이지</Link>
           </span>
         </li>
-        {nextAuthLoginState || generalLoginState ? 
-        // 로그아웃
-        <li className="mt-3 flex items-center">
-          <HiLogout />
-          <span className="ml-1">
-            <Link href={'/logout'}>로그아웃</Link>
-          </span>
-        </li> 
-        : 
-        // 로그인
-        <li className="mt-3 flex items-center">
-          <HiLogin />
-          <span className="ml-1">
-            <Link href={'/login'}>로그인</Link>
-          </span>
-        </li>}
+        {nextAuthLoginState || generalLoginState ?
+          // 로그아웃
+          <li className="mt-3 flex items-center">
+            <HiLogout />
+            <span className="ml-1">
+              <Link href={'/logout'}>로그아웃</Link>
+            </span>
+          </li>
+          :
+          // 로그인
+          <li className="mt-3 flex items-center">
+            <HiLogin />
+            <span className="ml-1">
+              <Link href={'/login'}>로그인</Link>
+            </span>
+          </li>}
 
         {/* 글쓰기 */}
         <li className="mt-3 flex items-center">

@@ -1,15 +1,13 @@
 "use client"
 import { ItemsType } from "@/types/items.types"
-import { pageSwitch, quotesSelector } from "@/utils/commonFunctions"
-import { useRouter } from "next/navigation"
-import { HiArchive, HiScissors } from 'react-icons/hi'
+import QuotesCardButton from "../button/QuotesCardButton"
 
 interface PropsType {
   items: ItemsType[]
+  category: string
 }
-export default function EtcCard({ items }: PropsType) {
+export default function EtcCard({ items, category }: PropsType) {
 
-  const router = useRouter()
   return (
     <ul className="flex justify-center flex-wrap  overflow-y-auto  max-h-[80vh] mt-[2em]">
       {items.map((item) => {
@@ -40,14 +38,7 @@ export default function EtcCard({ items }: PropsType) {
             <span className="pt-[1em] block font-bold">{item.author}</span>
           </blockquote>
           <div className="w-[20px] h-[45px] bg-[rgba(0,0,0,0.7)] absolute top-[-1em] right-2 "></div>
-          <div className='absolute hidden left-0 right-0 top-0 bottom-0 group-hover:flex group-hover:bg-[#00000044] justify-center items-center' aria-label={"버튼 영역 배경"} >
-            <button onClick={() => {
-              const id = item.id
-              pageSwitch(router, id)
-              quotesSelector(items, id)
-            }} className="p-[5px] hover:bg-[tomato] text-[2em] hover:text-[white] bg-[white] rounded-[0.3em] mx-[0.5em]" aria-label='명언 꾸미기 편집화면 이동 버튼' ><HiScissors /></button>
-            <button className="p-[5px] hover:bg-[tomato] text-[2em] hover:text-[white] bg-[white] rounded-[0.3em] mx-[0.5em]" aria-label='명언 담기 버튼'><HiArchive /></button>
-          </div>
+          <QuotesCardButton itemId={item.id} items={items} category={decodeURIComponent(category)}/>
         </li>
       })}
     </ul>

@@ -71,3 +71,20 @@ export async function getWiseSayingByDay(dayOfWeed: string) {
     console.error(error)
   }
 }
+
+
+// 북마크 리스트 조회 요청
+export async function getBookmarkListFormDB(token: string) {
+  try {
+    const response = await fetch(`http://localhost:3000/api/bookmark`,{
+      headers:{
+        "Authorization":`Bearer ${token}`
+      }
+    })
+    const items = await response.json()
+    return items
+  } catch(error){
+    console.error(error)
+  }
+
+}

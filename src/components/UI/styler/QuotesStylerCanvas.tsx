@@ -26,6 +26,7 @@ export default function QuotesStylerCanvas() {
     const bgColor = useBackgroundColorStore((state) => state.bgColor)
     const width = useQuotesCardSizeStore((state) => state.width)
     const height = useQuotesCardSizeStore((state) => state.height)
+
     // 명언(텍스트)
     const [quote, setQuote] = useState('')
 
@@ -49,7 +50,6 @@ export default function QuotesStylerCanvas() {
 
         ctx.textAlign = 'center'
         ctx.textBaseline = 'middle'
-
         ctx.lineWidth = strokeThickness
         ctx.strokeStyle = strokeColor
         ctx.font = `${size}${unit} ${font}`
@@ -78,8 +78,6 @@ export default function QuotesStylerCanvas() {
 
     }, [imageEl, color, fontStyle, width, height, font, quote, size, unit, lineHeight, strokeColor, strokeThickness, bgImageSrc, bgColorDraw])
 
-
-
     const createCanvas = () => {
         const canvas = canvasRef.current
         const ctx = canvas?.getContext("2d")
@@ -104,9 +102,9 @@ export default function QuotesStylerCanvas() {
     }, [])
 
     return (
-        <article>
+        <article className="min-h-[500px] w-[90%] bg-[#0f0f0fc7] p-[10px] relative shadow-inner shadow-[#303030]">
             <span className="text-white">{width}X{height}</span>
-            <canvas ref={canvasRef} width={width} height={height} className="border shadow-[0_0px_5px_1px_rgba(1,100,500,0.7)]">
+            <canvas ref={canvasRef} width={width} height={height} className="border shadow-[0_0px_5px_1px_rgba(1,100,500,0.7)]  mx-auto">
             </canvas>
         </article>
     )
