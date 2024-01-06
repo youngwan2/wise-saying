@@ -2,11 +2,11 @@
 
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
-import { useState, Suspense } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import { useImageElementStore } from '@/store/store'
 import ImageUploadForm from '../form/ImageUploadForm'
-import CarouselButton from '../button/CarouselButton'
+import StylerCarouselButton from '../button/StylerCarouselButton'
 
 export default function Carousel() {
 
@@ -26,7 +26,7 @@ export default function Carousel() {
                     <ImageUploadForm setImages={setImages} images={images}></ImageUploadForm>
                 </figure>
                 {/* 캐러셀 조작 버튼 */}
-                <CarouselButton emblaApi={emblaApi} />
+                <StylerCarouselButton emblaApi={emblaApi} />
             </article>
     )
 }

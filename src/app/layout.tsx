@@ -1,11 +1,9 @@
 import type { Metadata } from 'next'
 import { Gowun_Dodum } from 'next/font/google'
 import './globals.css'
-import Header from '../components/Layout/Header'
 import Footer from '../components/Layout/Footer'
-import SubHeader from '@/components/Layout/SubHeader'
-import BookmarkIcon from '@/components/UI/bookmark/BookmarkIcon'
-import Bookmark from '@/components/UI/bookmark/Booklmark'
+import Header from '@/components/Layout/Header'
+import Nav from '@/components/Layout/Nav'
 
 
 const gowunDodum = Gowun_Dodum({ weight: '400', subsets: ['latin'] })
@@ -23,15 +21,15 @@ export default function RootLayout({
 }) {
 
   return (
-    <html lang="ko" className="bg-[rgba(100,155,850,0.8)]">
+    <html lang="ko" className="bg-[#fdeb82]">
+
       <body className={`${gowunDodum.className}`}>
         <Header />
-        <main id="main" className="flex bg-[white] max-w-[1600px] mx-auto rounded-[10px] relative">
-          <SubHeader />
-          <Bookmark/>
-          <section className='max-w-[100%] min-h-[100vh]'>
-            {children}</section>
-        </main>
+        <div className="flex bg-[#ffffff] backdrop-blur-[5px] max-w-[1600px] mx-auto rounded-[10px] shadow-[0_0_1px_1px_gray]">
+          <Nav />
+          <main className='max-w-[100%] min-h-[100vh]'>
+            {children}</main>
+        </div>
         <Footer />
       </body>
     </html>
