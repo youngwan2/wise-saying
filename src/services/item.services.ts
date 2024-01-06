@@ -74,17 +74,14 @@ export async function getWiseSayingByDay(dayOfWeed: string) {
 
 
 // 북마크 리스트 조회 요청
-export async function getBookmarkListFormDB(token: string) {
-  try {
-    const response = await fetch(`http://localhost:3000/api/bookmark`,{
-      headers:{
-        "Authorization":`Bearer ${token}`
-      }
-    })
-    const items = await response.json()
-    return items
-  } catch(error){
-    console.error(error)
+export const getBookmarkListFormDB = async (url: string, token: string) => {
+  if (!(token === '')) {
+      const response = await fetch(url, {
+          headers: {
+              "Authorization": `Bearer ${token}`
+          }
+      })
+      const items = response.json()
+      return items
   }
-
 }

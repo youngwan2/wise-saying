@@ -9,7 +9,6 @@ export async function GET(req: NextRequest) {
         const db = await openDb()
         const scrept = process.env.JWT_SCREPT!
         const token = req.headers.get('Authorization')?.replace('Bearer ', '').trim()!
-
         const { userId }: any = jwt.verify(token, scrept)!
 
         const query = `
@@ -19,7 +18,7 @@ export async function GET(req: NextRequest) {
         `
 
         const items = await db.all(query, [userId])
-        return NextResponse.json({ meg: "성공적으로 북마크 목록을 가져왔습니다.", success: true, status: 200, items })
+        return NextResponse.json({ meg: "성공적으로 북마크 목록을 가져왔습니다.", success: true, status: 200, items, totalCount: items.length })
 
     } catch (error) {
         console.log(error)
