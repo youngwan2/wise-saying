@@ -6,6 +6,7 @@ import { useCallback, useEffect } from "react"
 import BookmarkCloseButton from "../button/BookmarkCloseButton"
 import { HiBookmarkSquare } from "react-icons/hi2"
 import { logoutUser } from "@/utils/commonFunctions"
+import { useRouter } from "next/navigation"
 
 
 interface BookmarkListType {
@@ -21,6 +22,7 @@ export default function BookmarkList() {
     const setListCount = useBookmarkStore((state) => state.setListCount)
     const bookmarkList: BookmarkListType[] = useBookmarkStore((state) => state.bookmarkList)
     const hasToken = useHasToken()
+    const router = useRouter()
 
     const getBookmarkListFromDb = useCallback(async () => {
         if (hasToken) {
@@ -31,7 +33,7 @@ export default function BookmarkList() {
             if (status === 200) {
                 setBookmarkList(items)
                 setListCount(items.length)
-                
+                router.refresh()
             }
             if( status === 401) {
                 alert(meg)
@@ -39,7 +41,7 @@ export default function BookmarkList() {
             }
         }
 
-    }, [hasToken, setBookmarkList, setListCount])
+    }, [hasToken, setBookmarkList, setListCount,router])
 
     useEffect(() => {
         getBookmarkListFromDb()

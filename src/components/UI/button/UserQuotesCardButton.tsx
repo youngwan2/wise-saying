@@ -4,7 +4,7 @@ import useHasToken from "@/custom/useHasToken"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { useUserPostIdStore } from "@/store/store"
-import { bookmarker, pageSwitch, quotesSelector } from "@/utils/commonFunctions"
+import { postBookmarkItem, pageSwitch, quotesSelector } from "@/utils/commonFunctions"
 import { ItemsType } from "@/types/items.types"
 
 interface PropsType {
@@ -76,7 +76,7 @@ export default function UserQuotesCardButton({ item, items }: PropsType) {
             }} className="p-[5px] hover:bg-[tomato] text-[2em] hover:text-[white] bg-[white] rounded-[0.3em] m-[0.5em]" aria-label='명언 꾸미기 편집화면 이동 버튼' ><HiScissors /></button>
             {/* 담기 */}
             <button onClick={() => {
-                bookmarker(hasToken, item.id, items, '유저')
+                postBookmarkItem(hasToken, item.id, items, '유저')
             }} className="p-[5px] hover:bg-[tomato] text-[2em] hover:text-[white] bg-[white] rounded-[0.3em] " aria-label='명언 담기 버튼'><HiArchiveBox /></button>
         </article>
     )

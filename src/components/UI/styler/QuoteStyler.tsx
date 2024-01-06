@@ -17,7 +17,7 @@ export default function QuoteStyler() {
     const [selecTapNum, setSelectTapNum] = useState(0)
 
     return (
-        <div className={'opacity-[100%] visible fixed left-0 right-0 top-0 bottom-0 bg-[#f8d187] overflow-auto bg-[url("/images/background.jpg")] '}>
+        <div className={'opacity-[100%] visible fixed left-0 right-0 top-0 bottom-0 rounded-[10px] overflow-auto bg-[white] '}>
             <button onClick={() => {
                 router.back()
             }} className="absolute right-2 top-2 text-[3em]"><HiX color="black"></HiX></button>

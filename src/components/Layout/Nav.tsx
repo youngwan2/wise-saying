@@ -21,7 +21,7 @@ export default function Nav() {
   const nextAuthLoginState = useLoginStateStore((state) => state.loginState)
   const generalLoginState = useHasToken()
   return (
-    <nav className="text-white p-[10px] rounded-l-[10px] min-w-[230px] max-w-[280px] bg-[#E76F51] min-h-[100%] overflow-y-auto">
+    <nav className="text-white p-[10px] rounded-l-[10px] min-w-[230px] max-w-[280px] bg-[#E76F51] min-h-[100%] overflow-y-auto hidden lg:block ">
       <h2 className="font-bold text-[1.25em] mt-[1.25em]">카테고리</h2>
       <ul className="m-[8px]">
         {/* 홈페이지 */}

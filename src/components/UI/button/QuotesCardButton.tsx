@@ -25,6 +25,7 @@ export default function QuotesCardButton({ itemId, items, category }: PropsType)
             }} className="p-[5px] hover:bg-[tomato] text-[2em] hover:text-[white] bg-[white] rounded-[0.3em] mx-[0.5em]" aria-label='명언 꾸미기 편집화면 이동 버튼' ><HiScissors /></button>
             <button onClick={() => {
                 postBookmarkItem(hasToken, itemId, items, category)
+                router.refresh()
             }} className="p-[5px] hover:bg-[tomato] text-[2em] hover:text-[white] bg-[white] rounded-[0.3em] mx-[0.5em]" aria-label='명언 담기 버튼'><HiArchive /></button>
         </article>
 

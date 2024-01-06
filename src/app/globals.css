@@ -37,7 +37,7 @@ body {
 
 /* 손잡이 */
 ::-webkit-scrollbar-thumb {
-  background: #f3a4a4;
+  background: #e99292;
   border-radius: 5px;
 }
 
