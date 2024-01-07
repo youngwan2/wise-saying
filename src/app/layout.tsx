@@ -21,8 +21,7 @@ export default function RootLayout({
 }) {
 
   return (
-    <html lang="ko" className="bg-[#fdeb82]">
-
+    <html lang="ko" className="bg-[#dadad7]">
       <body className={`${gowunDodum.className}`}>
         <Header />
         <div className="flex bg-[#ffffff] backdrop-blur-[5px] max-w-[1600px] mx-auto rounded-[10px] shadow-[0_0_1px_1px_gray]">
