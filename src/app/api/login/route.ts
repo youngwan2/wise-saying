@@ -1,62 +1,36 @@
 import { NextRequest, NextResponse } from "next/server";
-import sqlite3 from 'sqlite3'
 import jwt from 'jsonwebtoken'
-import { open, Database } from 'sqlite'
-import bcrpt from 'bcrypt'
+import bycrypt from 'bcrypt'
+import { openDb } from "@/connect";
 
-let db: Database<sqlite3.Database, sqlite3.Statement> | null = null;
 export async function POST(req: NextRequest) {
-        if (!db) {
-            db = await open({
-                filename: './wise_saying.db',
-                driver: sqlite3.Database
-
-            })
-        }
-        // 유저 정보
-        const { email, password } = await req.json()
-        console.log(email, password)
-
-        const query = `
+    const scrept = process.env.JWT_SCREPT as string
+    const db = await openDb()
+    // 유저 정보
+    const { email, password } = await req.json()
+    const query = `
         SELECT user_id, email, password FROM users_group
         WHERE email = ?
     `
-        const user = await db.get(query, [email])
+    const user = await db.get(query, [email])
 
-        // 암호화 비밀번호와 평문 비밀번호가 일치하는지 검증
-        if (user) {
-            const { user_id, email: dbEmail, password: dbPassword } = user
-            const isValid = await bcrpt.compare(password, dbPassword)
+    // 암호화 비밀번호와 평문 비밀번호가 일치하는지 검증
+    if (user) {
+        const { email, password: dbPassword, user_id } = user
+        const isUser = await bycrypt.compare(password, dbPassword)
 
-            // 일치하는 경우 후속 처리
-            
-            if (isValid === true) {
-                const scretKey:string = process.env.JWT_SCREPT!
-                try {
-                    const accessToken:any = await new Promise((resolve, reject) => {
-                        jwt.sign(
-                            {
-                                userId: user_id,
-                                userEmail: dbEmail
-                            },
-                            scretKey,
-                            {
-                                expiresIn:'1h'
-                            },
-                            (error: any, token: any) => {
-                                if (error) return reject(error)
-                                resolve(token)
-                            }
-                        )
-                    })
-                  const {userEmail} = jwt.decode(accessToken)
-                    return NextResponse.json({ success: true, accessToken, user: userEmail })
-                } catch (error) {
-                    return NextResponse.json({success: false, meg:"토큰 서명에 문제가 발생하였습니다."})
-                }
+        if(isUser) {
+        const createToken = jwt.sign({
+            exp: Math.floor(Date.now() / 1000) + (60 * 60),
+            data: {email, userId:user_id}
+        }, scrept);
+        const decode = jwt.verify(createToken, scrept) as jwt.JwtPayload
+        const {email: validEmail} = decode.data
 
-            }
-        } else {
-            return NextResponse.json({ success:false, meg:'해당 이메일 주소의 유저 정보가 존재하지 않습니다.' })
-        }
+        return NextResponse.json({ success: true, meg: '정상적으로 처리 되었습니다..', status: 201, email: validEmail, accessToken: createToken})        
+     }
+        return NextResponse.json({ success: false, meg: '비밀번호가 일치하지 않습니다.', status: 403})
+    } else {
+        return NextResponse.json({ success: false, meg: '유저 정보(이메일) 존재하지 않거나, 잘못 입력하였습니다.', status: 403 })
+    }
 }

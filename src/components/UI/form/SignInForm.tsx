@@ -1,5 +1,5 @@
 'use client'
-import { HiOutlineLockClosed, HiOutlineLockOpen, HiOutlineMail, HiOutlineX } from "react-icons/hi"
+import { HiEmojiHappy, HiOutlineLockClosed, HiOutlineLockOpen, HiOutlineMail, HiOutlineX } from "react-icons/hi"
 import { useRouter } from "next/navigation"
 import { gsap } from "gsap/all"
 import { Draggable } from "gsap/Draggable"
@@ -12,7 +12,8 @@ export default function SignInForm() {
     const [password, setPassword] = useState('')
     const [reConfirmPw, setReConfirmPw] = useState('')
     const [isSuccess, setisSuccessState] = useState(false)
-  
+    const [existsEmail, setExistsEmail] = useState(false)
+
     const router = useRouter()
     const formRef = useRef<HTMLFormElement>(null)
     const isVaildForm = isEmail && isPassword && isReconfirmPassword
@@ -30,9 +31,9 @@ export default function SignInForm() {
         }
     }, [])
 
-    useEffect(()=>{
-        if(isSuccess) return router.push('/')
-    },[isSuccess,router])
+    useEffect(() => {
+        if (isSuccess) return router.push('/')
+    }, [isSuccess, router])
 
     function emailChecker(email: string) {
         const regex = /[a-z0-9]+@[a-z]+\.[a-z]{2,}/g
@@ -65,11 +66,37 @@ export default function SignInForm() {
         fetch('http://localhost:3000/api/signin', {
             method: 'POST',
             body: JSON.stringify(body),
+
+        }).then(async (response) => {
+            const { success: isSuccess, status } = await response.json()
+            if(status === 201) {
+                setisSuccessState(isSuccess)
+                setExistsEmail(false)
+                alert('회원가입이 완료 되었습니다. 가입해주셔서 감사합니다.')
+                
+            }
+           
         }).catch((error) => {
             console.error(error)
+        })
+    }
+
+    function userExists(email: string) {
+        console.log(email)
+        fetch(`http://localhost:3000/api/users`, {
+            method:"POST",
+            body: JSON.stringify(email)
         }).then(async (response) => {
-            const {success : isSuccess} = await response.json()
-            setisSuccessState(isSuccess)
+            const res = await response.json()
+            const {meg, success, status} = res
+            if(status === 201 && success) {
+                setExistsEmail(true)
+                alert('확인 되었습니다. 다음을 진행해주세요.')
+            }
+            if(status === 409 && !success) {
+                setExistsEmail(false)
+                alert('중복된 이메일입니다.')
+            }
         })
     }
 
@@ -100,7 +127,10 @@ export default function SignInForm() {
                             const email = e.currentTarget.value
                             emailChecker(email)
                             setEmail(email)
-                        }} className="pl-[8px]  rounded-e-lg min-w-[230px] w-[100%] bg-[#ffffffce]" type="email" id="user-email" name="user-email" placeholder="이메일" />
+                        }} className="pl-[8px]  min-w-[230px] w-[100%] bg-[#ffffffce]" type="email" id="user-email" name="user-email" placeholder="이메일" />
+                        <button onClick={() => {
+                            userExists(email)
+                        }} className="bg-[white] min-w-[50px] rounded-r-[5px] hover:shadow-[0px_0px_0px_2px_black]">확인</button>
                     </div>
                     {isEmail ? <span className="block px-[5px] text-[#292997] ml-[0.5em]">- 이메일 형식과 일치합니다.</span> :
                         <>
@@ -146,14 +176,14 @@ export default function SignInForm() {
                     }
                 </article>
                 {/* 전송버튼 */}
-                <button
-                    disabled={!isVaildForm}
+                {isVaildForm && existsEmail?<button
                     onClick={() => {
+                        console.log(11)
                         userInfoPostFetch(email, password)
-                    }} 
-                    className={`rounded-[5px] my-[2.5em] text-[black] bg-[#FFFFFF] max-w-[150px] py-[0.5em] min-w-[150px] mx-auto hover: cursor-pointer hover:bg-[#ffd9d9] font-bold`}
+                    }}
+                    className={`rounded-[5px] my-[2.5em] text-[black] bg-[#FFFFFF] max-w-[150px] py-[0.5em] min-w-[150px] mx-auto hover: cursor-pointer hover:bg-[#ffd9d9] font-bold ${isVaildForm && existsEmail ? "visible" : "invisible"}`}
                     type="submit">
-                    {isVaildForm? "가입 가능":"가입 불가능"}</button>
+                    가입</button>:<span className="p-[30px] text-center text-white"> - 조건 충족시 버튼이 활성화 됩니다.</span> }
             </form>
         </>
 

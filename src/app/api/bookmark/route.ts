@@ -3,13 +3,14 @@ import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 
 
-
+//  북마크 조회 처리
 export async function GET(req: NextRequest) {
     try {
         const db = await openDb()
         const scrept = process.env.JWT_SCREPT!
         const token = req.headers.get('Authorization')?.replace('Bearer ', '').trim()!
-        const { userId }: any = jwt.verify(token, scrept)!
+        const decode = jwt.verify(token, scrept) as jwt.JwtPayload
+        const {userId} = decode.data
 
         const query = `
           SELECT bookmark_id AS id, author, category, wise_sayings
@@ -27,7 +28,7 @@ export async function GET(req: NextRequest) {
 
 }
 
-
+// 북마크 추가 처리
 export async function POST(req: NextRequest) {
     const { author, category, wise_sayings } = await req.json()
 
@@ -35,24 +36,25 @@ export async function POST(req: NextRequest) {
         const db = await openDb()
         const scrept = process.env.JWT_SCREPT!
         const token = req.headers.get('Authorization')?.replace('Bearer ', '').trim()!
-
-        const { userId }: any = jwt.verify(token, scrept)!
-
+        console.log(token)
+        console.log(scrept)
+        const decode = jwt.verify(token, scrept) as  jwt.JwtPayload
+        const {userId} = decode.data
        
         const selectQuery = `
         SELECT wise_sayings FROM bookmarks
         WHERE user_id = ? AND wise_sayings = ?   
         `
-        
         const insertQuery = `
-            INSERT INTO bookmarks(user_id, author, wise_sayings, category)
-            VALUES (?, ?, ?, ?)
+        INSERT INTO bookmarks(user_id, author, wise_sayings, category)
+        VALUES (?, ?, ?, ?)
         `
-         // 유저 아이디가 3이면서, wise_sayings 과 일치하는 게시글이 존재한다면, 추가하지 않기
+         // (북마크 목록에 이미 존재하는 경우) 북마크 목록에 추가하지 않기
         const isExistingItem = !!await db.get(selectQuery, [userId, wise_sayings])
+
         if (isExistingItem) { return NextResponse.json({ meg: "이미 존재하는 아이템 입니다.", success: false, status: 422 }) }
 
-        // 존재하지 않는다면 추가하기
+        // (북마크 목록에 없는 경우) 북마크 목록에 추가하기
         db.all(insertQuery, [userId, author, wise_sayings, category])
         return NextResponse.json({ meg: "북마크에 추가되었습니다.", success: true, status: 201 })
 
