@@ -1,8 +1,10 @@
 import LoginForm from "@/components/UI/form/LoginForm";
-export default function loginPage() {
+
+export default async function loginPage() {
+
   return (
     <section>
-        <LoginForm></LoginForm>
+      <LoginForm></LoginForm>
     </section>
   )
 }

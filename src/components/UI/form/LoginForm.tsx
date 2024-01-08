@@ -1,11 +1,11 @@
 "use client"
 import Link from "next/link"
-import { signIn, useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
+import { signIn } from "next-auth/react"
 import { HiOutlineLockClosed, HiOutlineMail, HiOutlineX } from "react-icons/hi"
 import { BsGithub } from 'react-icons/bs'
 import { useLoginStateStore } from "@/store/store"
-import { useEffect, useRef, useState } from "react"
+import {  useEffect, useRef, useState } from "react"
 import useHasToken from "@/custom/useHasToken"
 import gsap from "gsap/all"
 import { Draggable } from "gsap/Draggable"
@@ -13,13 +13,16 @@ import { Draggable } from "gsap/Draggable"
 export default function LoginForm() {
     const loginFormRef = useRef<HTMLFormElement>(null)
     const emailInputRef = useRef<HTMLInputElement>(null)
+
     const router = useRouter()
-    const { data: session } = useSession()
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
     const setLoginState = useLoginStateStore((state) => state.setLoginState)
     const hasToken = useHasToken()
 
+    // 로그인 요청 함수
     const reqLogin = async () => {
         const user = {
             email,
@@ -46,24 +49,21 @@ export default function LoginForm() {
         })
     }
 
-    useEffect(() => {
-        if (!session) setLoginState(false)
-        else setLoginState(true)
-    }, [session, setLoginState])
-
+    // 토큰이 존재하거나 세션이 존재한다면 리디렉트
     useEffect(() => {
         const clear = setTimeout(() => {
-            if (session || hasToken) {
-                router.push('/')
+            if ( hasToken) {
+                router.replace('/')
             }
         }, 500)
         return (() => {
             clearTimeout(clear)
         })
 
-    }, [session, router, hasToken])
+    }, [router, hasToken])
 
 
+    // 드래그어블 적용
     useEffect(() => {
         gsap.registerPlugin(Draggable)
 
@@ -78,7 +78,6 @@ export default function LoginForm() {
     }, [])
 
 
-    if (!session) {
         return (
             <>
                 <div aria-label="로그인 화면을 감싸고 있는 배경" className="fixed left-0 right-0 bottom-0 top-0 bg-[#0000009c] "></div>
@@ -134,7 +133,6 @@ export default function LoginForm() {
             </>
         )
     }
-}
 
 
 {/* 이메일 기억 */ }

@@ -36,8 +36,7 @@ export async function POST(req: NextRequest) {
         const db = await openDb()
         const scrept = process.env.JWT_SCREPT!
         const token = req.headers.get('Authorization')?.replace('Bearer ', '').trim()!
-        console.log(token)
-        console.log(scrept)
+
         const decode = jwt.verify(token, scrept) as  jwt.JwtPayload
         const {userId} = decode.data
        
