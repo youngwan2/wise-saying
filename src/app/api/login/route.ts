@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
 
     // 암호화 비밀번호와 평문 비밀번호가 일치하는지 검증
     if (user) {
-        const { email, password: dbPassword, user_id } = user
+        const { email, password: dbPassword, user_id, is_social_login } = user
         const isUser = await bycrypt.compare(password, dbPassword)
 
         if(isUser) {
