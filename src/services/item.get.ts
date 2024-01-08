@@ -8,13 +8,7 @@ export async function getItemFromDB(path: string = '') {
   }
 }
 
-/**
- * 서버로부터 특정 경로에 대한 아이템(명언목록)을 가져오는 함수
- * @param {string} authorName - 명언의 저자 이름
- * @returns {Promise<Array<{ id: number, author: string, wise_sayings: string }>>}
- * 서버 응답에서 추출된 아이템 배열. 각 아이템은 id, author, wise_sayings 속성을 가지고 있습니다.
- * @throws {Error} 서버 요청 / 응답 과정에서 발생한 예외 처리
- */
+// 서버로부터 특정 경로에 대한 명언 리스트 불러오기
 export async function getQuotesBy(authorName: string) {
   try {
     const response = await fetch(
@@ -60,8 +54,7 @@ export async function getWeekdayCategoryFromDB() {
   }
 }
 
-
-// 요일 따른 명언 요청
+// 요일 따른 명언 리스트 불러오기
 export async function getWiseSayingByDay(dayOfWeed: string) {
   try {
     const response = await fetch(`http://localhost:3000/api/items/days/${dayOfWeed}`)
@@ -72,8 +65,7 @@ export async function getWiseSayingByDay(dayOfWeed: string) {
   }
 }
 
-
-// 북마크 리스트 조회 요청
+// 북마크 리스트 불러오기
 export const getBookmarkListFormDB = async (url: string, token: string) => {
   if (!(token === '')) {
       const response = await fetch(url, {

@@ -1,7 +1,7 @@
 
 import type { Metadata } from 'next'
 import EtcCategoryCard from '@/components/UI/card/EtcCategoryCard'
-import { getGeneralQuotesCategoryFromDB } from '@/services/item.services'
+import { getGeneralQuotesCategoryFromDB } from '@/services/item.get'
 import { HiHeart } from 'react-icons/hi'
 
 export const metadata: Metadata = {

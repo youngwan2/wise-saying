@@ -1,7 +1,7 @@
 export const dynamic = 'force-dynamic'
 import EtcCard from "@/components/UI/card/EtcCard"
 import type { Metadata } from "next"
-import { getEtcQuotesBy } from "@/services/item.services"
+import { getEtcQuotesBy } from "@/services/item.get"
 import { ItemsType } from "@/types/items.types"
 import { HiHeart } from "react-icons/hi"
 

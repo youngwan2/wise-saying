@@ -2,7 +2,7 @@ export const revaliDate = 600
 
 import type { Metadata } from "next"
 import UserQuotesCard from "@/components/UI/card/UserQuotesCard"
-import { getItemFromDB } from "@/services/item.services"
+import { getItemFromDB } from "@/services/item.get"
 import { HiUsers } from "react-icons/hi"
 
 export const metadata:Metadata = {

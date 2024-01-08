@@ -2,7 +2,7 @@
 import type { Metadata } from 'next'
 import { HiCalendar } from 'react-icons/hi'
 import WeekdayQuotesCard from '@/components/UI/card/WeekdayQuotesCard'
-import { getWiseSayingByDay } from '@/services/item.services'
+import { getWiseSayingByDay } from '@/services/item.get'
 
 
 type MetadataPropsType = {

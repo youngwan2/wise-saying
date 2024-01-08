@@ -1,7 +1,7 @@
 export const dynamic = 'force-dynamic'
 import type { Metadata } from 'next'
 import WeatherCard from '@/components/UI/card/WeatherCard'
-import { getItemFromDB } from '@/services/item.services'
+import { getItemFromDB } from '@/services/item.get'
 import { HiSun } from 'react-icons/hi'
 
 
