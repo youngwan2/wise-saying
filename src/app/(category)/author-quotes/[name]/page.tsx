@@ -1,17 +1,14 @@
 export const dynamic = 'force-dynamic'
 
-import AuthorQuotesCard from '@/components/UI/card/AuthorQuotesCard'
+import QuotesCard from '@/components/UI/card/QuotesCard'
 import { getQuotesBy } from '@/services/item.get'
 import { HiUserGroup } from 'react-icons/hi'
 import type { ItemsType } from '@/types/items.types'
 import type { Metadata} from 'next'
 
-
-
 type Props = {
   params: {name: string},
 }
-
 
 export async function generateMetadata(
   {params} : Props,
@@ -26,7 +23,6 @@ export async function generateMetadata(
   }
 }
 
-
 export default async function AuthorPage({
   params,
 }: {
@@ -35,6 +31,7 @@ export default async function AuthorPage({
   const pathName = params.name
   const items: ItemsType[] = await getQuotesBy(pathName)
   const itemCount = items.length
+  const  category = "인물"
   return (
     <section>
       <h2 className="flex items-center text-[1.5em] p-[5px] mb-[1em] ">
@@ -43,7 +40,7 @@ export default async function AuthorPage({
         </span>
         {items[0].author}의 명언({itemCount})
       </h2>
-      <AuthorQuotesCard items={items} />
+      <QuotesCard items={items} category={category} />
     </section>
   )
 }

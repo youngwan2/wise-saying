@@ -1,5 +1,5 @@
 export const dynamic = 'force-dynamic'
-import EtcCard from "@/components/UI/card/EtcCard"
+import QuotesCard from "@/components/UI/card/QuotesCard"
 import type { Metadata } from "next"
 import { getEtcQuotesBy } from "@/services/item.get"
 import { ItemsType } from "@/types/items.types"
@@ -31,7 +31,7 @@ export default async function EtcQuotesPage({ params }: { params: { category: st
     <section>
       <h2 className="flex items-center text-[1.5em] p-[10px] ">
         <span className="bg-[#ffae00] p-[1.5px] rounded-[5px] mx-[5px]"><HiHeart color="white" /></span>{decodingCategory}({itemCount})</h2>
-        <EtcCard items={items} category={category} />
+        <QuotesCard items={items} category={decodingCategory} />
     </section>
   )
 }

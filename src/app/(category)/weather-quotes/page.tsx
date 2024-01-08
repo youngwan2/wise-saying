@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic'
 import type { Metadata } from 'next'
-import WeatherCard from '@/components/UI/card/WeatherCard'
+import QuotesCard from '@/components/UI/card/QuotesCard'
 import { getItemFromDB } from '@/services/item.get'
 import { HiSun } from 'react-icons/hi'
 
@@ -8,7 +8,6 @@ import { HiSun } from 'react-icons/hi'
 export const metadata: Metadata = {
   title:'날씨 관련 명언/글귀 | My wise saying'
 }
-
 
 export default async function WeatherPage() {
   const items = await getItemFromDB('weathers')
@@ -22,7 +21,7 @@ export default async function WeatherPage() {
         날씨 관련 명언/글귀({itemCount})
       </h2>
 
-      <WeatherCard items={items} />
+      <QuotesCard items={items} category='날씨' />
     </section>
   )
 }

@@ -1,7 +1,7 @@
 
 import type { Metadata } from 'next'
 import { HiCalendar } from 'react-icons/hi'
-import WeekdayQuotesCard from '@/components/UI/card/WeekdayQuotesCard'
+import QuotesCard from '@/components/UI/card/QuotesCard'
 import { getWiseSayingByDay } from '@/services/item.get'
 
 
@@ -20,9 +20,7 @@ export async function generateMetadata({
   return {
     title: weekdayList[Math.max(Number(id)-1,0)]+ " | My wise saying",
     description: `${weekdayList[Math.max(Number(id)-1,0)]}요일에 읽으면 좋은 명언들을 모아놓은 페이지 입니다.`
-    
   }
-  
 }
 
 // 페이지
@@ -42,7 +40,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         {weekdayList[Math.max(Number(id) - 1, 0)]}({itemCount})
       </h2>
 
-      <WeekdayQuotesCard items={items} />
+      <QuotesCard items={items} category='요일' />
     </section>
   )
 }
