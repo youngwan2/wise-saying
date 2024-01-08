@@ -5,15 +5,18 @@ import gsap from 'gsap'
 import { Draggable } from 'gsap/Draggable'
 import QuotesCardButton from '../button/QuotesCardButton'
 
+
 interface PropsType {
+  category: string
   items: {
     id: number
     author: string
     wise_sayings: string
+    
   } []
 }
 
-export default function WeekdayQuotesCard({ items }: PropsType) {
+export default function QuotesCard({ items, category }: PropsType) {
 
   gsap.registerPlugin(Draggable)
   const liRefs = useRef<HTMLLIElement[]>([])
@@ -58,7 +61,7 @@ export default function WeekdayQuotesCard({ items }: PropsType) {
               <footer className="font-bold mt-[1em]">{item.author}</footer>
             </blockquote>
             <div className="w-[20px] h-[45px] bg-[rgba(247,123,123,0.7)] absolute top-[-1em] right-1 rotate-45"></div>
-            <QuotesCardButton itemId={item.id} items={items} category='요일'/>
+            <QuotesCardButton itemId={item.id} items={items} category= {category}/>
           </li>
         )
       })}

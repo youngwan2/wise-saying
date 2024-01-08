@@ -10,7 +10,6 @@ export type CombinePropsType = { items: (UserItemsType & ItemsType)[] }
 
 export default function UserQuotesCard({ items }: CombinePropsType) {
 
-
     return (
         <ul className="flex justify-center flex-wrap overflow-y-auto max-h-[80vh]">
             {items.map((item) => {
