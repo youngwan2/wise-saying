@@ -1,7 +1,7 @@
 export const dynamic = 'force-dynamic'
 
 import AuthorQuotesCard from '@/components/UI/card/AuthorQuotesCard'
-import { getQuotesBy } from '@/services/item.services'
+import { getQuotesBy } from '@/services/item.get'
 import { HiUserGroup } from 'react-icons/hi'
 import type { ItemsType } from '@/types/items.types'
 import type { Metadata} from 'next'
