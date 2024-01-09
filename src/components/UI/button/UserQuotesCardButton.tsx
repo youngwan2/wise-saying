@@ -57,19 +57,22 @@ export default function UserQuotesCardButton({ item, items }: PropsType) {
     return (
         <article
             aria-label="수정 및 삭제, 꾸미기,담기 버튼의 컨테이너"
-            className={` flex justify-center items-center invisible opacity-0 bg-[#14131328] absolute left-0 right-0 top-0 bottom-0 p-[3em] group-hover:visible group-hover:opacity-100 flex-wrap transition-all group-hover:backdrop-blur-[1px]  `}>
-            {/* 수정 */}
-            <article className={`${userEmail === item.email ? 'block' : 'hidden'}`}>
-                <button className={`p-[5px] hover:bg-[tomato] text-[2em] hover:text-[white] bg-[white] rounded-[0.3em] m-[0.5em]`} onClick={() => {
-                    setPostId(Number(item.id))
-                    router.push('/update-wisesaying')
-                }} aria-label="수정버튼"><HiOutlinePencil></HiOutlinePencil></button>
-                {/* 삭제 */}
-                <button className={`p-[5px] hover:bg-[tomato] text-[2em] hover:text-[white] bg-[white] rounded-[0.3em]`} onClick={() => {
-                    deleteItem(item.id)
-                }} aria-label="삭제버튼"><HiOutlineTrash></HiOutlineTrash></button>
-            </article>
-            <QuotesCardCommonButton category="유저" itemId={item.id} items={items} />
+            className={` flex justify-center items-center invisible opacity-0 bg-[#14131328] absolute left-0 right-0 top-0 bottom-0  group-hover:visible group-hover:opacity-100 flex-wrap transition-all group-hover:backdrop-blur-[1px]  `}>
+            <div className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">
+                <article className={`${userEmail === item.email ? 'block' : 'hidden'} min-h-[60px] min-w-[60px]`}>
+                    {/* 수정 */}
+                    <button className={`min-w-[48px]  p-[5px] hover:bg-[tomato] text-[2em] hover:text-[white] bg-[white] rounded-[0.3em] mr-[0.15em] mb-[0.4em]`} onClick={() => {
+                        setPostId(Number(item.id))
+                        router.push('/update-wisesaying')
+                    }} aria-label="수정버튼"><HiOutlinePencil /><p className="text-[14px] font-semibold">수정</p></button>
+
+                    {/* 삭제 */}
+                    <button className={`min-w-[48px]  p-[5px] hover:bg-[tomato] text-[2em] hover:text-[white] bg-[white] rounded-[0.3em] mx-[0.3em]`} onClick={() => {
+                        deleteItem(item.id)
+                    }} aria-label="삭제버튼"><HiOutlineTrash /><p className="text-[14px] font-semibold">삭제</p></button>
+                </article>
+                <QuotesCardCommonButton category="유저" itemId={item.id} items={items} />
+            </div>
         </article>
     )
 }

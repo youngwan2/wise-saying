@@ -1,9 +1,8 @@
 
 "use client"
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect} from 'react'
 
 export default function useIntersectionObserver(elementRefs: any) {
-    const [isVisible, setIsVisible] = useState(false);
     // 아이템 드래그 이벤트
     const intersectionObserverActive = useCallback(() => {
         const lis = elementRefs.current
@@ -12,7 +11,6 @@ export default function useIntersectionObserver(elementRefs: any) {
             entries.forEach((entry) => {
                 const target = entry.target
                 const isVisible = entry.isIntersecting
-                setIsVisible(isVisible)
 
                 if (isVisible && target instanceof HTMLLIElement) {
                     target.style.cssText = `

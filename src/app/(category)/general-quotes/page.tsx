@@ -1,6 +1,6 @@
 
 import type { Metadata } from 'next'
-import EtcCategoryCard from '@/components/UI/card/EtcCategoryCard'
+import EtcCategoryList from '@/components/UI/list/EtcCategoryList'
 import { getGeneralQuotesCategoryFromDB } from '@/services/item.get'
 import { HiHeart } from 'react-icons/hi'
 
@@ -23,7 +23,7 @@ export default async function GeneralPage() {
         </span>
         그 외 명언({categories.length})
       </h2>
-      <EtcCategoryCard categories={categories} />
+      <EtcCategoryList categories={categories} />
     </section>
   )
 }
