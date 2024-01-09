@@ -65,3 +65,4 @@ export interface BookmarkToggleState {
     setBookmarkList : (list: any) => void
     setListCount :(count: number) => void
 } 
+
