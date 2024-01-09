@@ -8,7 +8,8 @@ import {
     LienHeightState, 
     StorkeState, 
     ImageElState,
-    BookmarkToggleState
+    BookmarkToggleState,
+    PagePathState
 } from "../types/store.type";
 
 
@@ -85,3 +86,4 @@ export const useBookmarkStore = create<BookmarkToggleState>((set)=>({
     setListCount: (count) => set(() => ({ count}))
 
 }))
+
