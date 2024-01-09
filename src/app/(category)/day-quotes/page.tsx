@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic'
 import type { Metadata } from 'next'
-import WeekdayCategoryCard from '@/components/UI/card/WeekdayCategoryCard'
+import WeekdayCategoryList from '@/components/UI/list/WeekdayCategoryList'
 import { getWeekdayCategoryFromDB } from '@/services/item.get'
 import { HiCalculator } from 'react-icons/hi'
 
@@ -20,7 +20,7 @@ export default async function DayPage() {
         </span>
         요일별 명언
       </h2>
-      <WeekdayCategoryCard categories={daysOfWeek} />
+      <WeekdayCategoryList categories={daysOfWeek} />
     </section>
   )
 }

@@ -3,48 +3,53 @@
 import { useRouter } from 'next/navigation'
 
 interface PropsType {
-  categories: {
+  category: {
     day_group_id: number
     day_name: string
-  }[]
+  }
 }
-export default function WeekdayCategory({ categories }: PropsType) {
+export default function WeekdayCategoryCard({ category }: PropsType) {
   const router = useRouter()
   return (
-    <ul className="w-full flex justify-center min-h-[100vh] flex-wrap overflow-y-auto mt-[5em]">
-      {categories.map((category) => {
-        return (
-          <li
-            key={category.day_group_id}
-            onClick={() => {
-              router.push(`/day-quotes/${category.day_group_id}`)
-            }}
-            className=" 
-                    p-[3em]
-                    odd:-rotate-2 
-                    even:rotate-2 
-                    max-w-[280px] 
-                    max-h-[230px]
-                    min-h-[200px]
-                    text-[1.25em]
-                    text-[#313131]
-                    font-semibold
-                    bg-[#FFE5A0] 
-                    m-[2em] 
-                    w-[100%] text-center 
-                    rounded-[5%]
-                    transition-all
-                    hover:shadow-md
-                    hover:translate-y-[-20px]
-                    hover:bg-[#fae259]
-                    hover:cursor-pointer
-                    relative"
-          >
-            {category.day_name}요일 <br></br> 명언
-            <div className="w-[20px] h-[45px] bg-[rgba(233,118,118,0.7)] absolute top-[-1em] left-[30%] -rotate-[15deg] "></div>
-          </li>
-        )
-      })}
-    </ul>
+    <li
+    tabIndex={0}
+      key={category.day_group_id}
+      onKeyUp={(e)=>{
+        const key = e.key
+        if(key !=='Enter') return
+        router.push(`/day-quotes/${category.day_group_id}`)
+      }}
+      onClick={() => {
+        router.push(`/day-quotes/${category.day_group_id}`)
+      }}
+      className="
+        p-[4em]
+        pt-[4em]
+        odd:-rotate-2
+        even:rotate-2 
+        font-bold
+        bg-gradient-to-bl from-white to-[#e0dddd2f]
+        text-[1.4em]
+        min-h-[230px]  
+        max-h-[280px]  
+        bg-[white] 
+        m-[2.5em] max-w-[300px] min-w-[200px] 
+        w-[100%] text-center 
+        transition-all
+        hover:underline
+        hover:decoration-wavy
+        hover:decoration-[tomato]
+        hover:shadow-[0_10px_5px_0_rgba(0,0,0,0.4)]
+        shadow-[1px_10px_5px_0_rgba(0,0,0,0.5)]
+        hover:translate-y-[20px]
+        hover:bg-[white]
+        hover:scale-[1.15]
+        hover:z-10
+        hover:cursor-pointer
+        relative"
+    >
+      {category.day_name}요일 <br></br> 명언
+      <div className=" w-[20px] h-[45px] bg-[rgba(248,147,147,0.7)] absolute top-[-1em] right-[1em] rotate-[15deg] "></div>
+    </li>
   )
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import QuotesCardButton from '../button/QuotesCardButton'
 import { HiOutlineClipboardDocumentCheck } from 'react-icons/hi2'
 import { useBookmarkStore } from '@/store/store'
@@ -31,11 +31,6 @@ export default function QuotesCard({ items, category }: PropsType) {
 
   // 인터섹션 옵저버 적용하는 커스텀 훅
   useIntersectionObserver(liRefs)
-
-  useEffect(()=>{
-    console.log(pathName)
-  },[pathName])
-
 
   return (
     <ul className="mt-[3em] w-full flex justify-center max-h-[80vh] flex-wrap overflow-y-auto ">
