@@ -6,14 +6,15 @@ export async function GET(req: NextRequest, res: { params: { name: string } }) {
 
   const db = await openDb()
   const query = `
-        SELECT id, B.author_name AS author, A.wise_sayings AS wise_sayings 
-        FROM quotes_authors A JOIN authors_group B
-        ON A.author_id = B.author_id AND B.author_name=?
+        SELECT id, B.category AS author,B.category AS category, A.wise_sayings AS wise_sayings 
+        FROM quotes_author A JOIN authors_group B
+        ON A.category_id = B.category_id AND B.category=?
         ORDER BY id DESC
     `
   interface ItemsType {
     id: number
     author: string
+    category: string
     wise_sayings: string
   }
 

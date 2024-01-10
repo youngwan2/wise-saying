@@ -1,26 +1,24 @@
 'use client'
 
+import { WeekDayCategoryType } from '@/types/items.types'
 import { useRouter } from 'next/navigation'
 
 interface PropsType {
-  category: {
-    day_group_id: number
-    day_name: string
-  }
+  list: WeekDayCategoryType
 }
-export default function WeekdayCategoryCard({ category }: PropsType) {
+export default function WeekdayCategoryCard({ list}: PropsType) {
   const router = useRouter()
   return (
     <li
     tabIndex={0}
-      key={category.day_group_id}
+      key={list.category_id}
       onKeyUp={(e)=>{
         const key = e.key
         if(key !=='Enter') return
-        router.push(`/day-quotes/${category.day_group_id}`)
+        router.push(`/day-quotes/${list.category_id}`)
       }}
       onClick={() => {
-        router.push(`/day-quotes/${category.day_group_id}`)
+        router.push(`/day-quotes/${list.category_id}`)
       }}
       className="
         p-[4em]
@@ -48,7 +46,7 @@ export default function WeekdayCategoryCard({ category }: PropsType) {
         hover:cursor-pointer
         relative"
     >
-      {category.day_name}요일 <br></br> 명언
+      {list.category}요일 <br></br> 명언
       <div className=" w-[20px] h-[45px] bg-[rgba(248,147,147,0.7)] absolute top-[-1em] right-[1em] rotate-[15deg] "></div>
     </li>
   )

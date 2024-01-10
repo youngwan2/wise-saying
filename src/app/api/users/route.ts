@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { openDb } from "@/connect";
 
 
+// 회원가입 시 유저가 이미 존재하는지 검증
 export async function POST(req:NextRequest){
     try {
     const email = await req.json()

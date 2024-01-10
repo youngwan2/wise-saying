@@ -3,8 +3,6 @@ import bcrpt from 'bcrypt'
 import { NextRequest, NextResponse } from "next/server";
 import { openDb } from '@/connect';
 
-
-
 export async function POST(req:NextRequest){
 
     const db = await openDb()

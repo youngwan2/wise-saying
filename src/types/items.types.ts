@@ -4,3 +4,9 @@ export interface ItemsType {
   wise_sayings: string
   email?:string
 }
+
+
+export interface WeekDayCategoryType {
+      category_id: number
+      category: string
+}

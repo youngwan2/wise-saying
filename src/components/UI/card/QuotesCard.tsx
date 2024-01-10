@@ -3,7 +3,6 @@
 import { useRef } from 'react'
 import QuotesCardButton from '../button/QuotesCardButton'
 import { HiOutlineClipboardDocumentCheck } from 'react-icons/hi2'
-import { useBookmarkStore } from '@/store/store'
 import useIntersectionObserver from '@/custom/useIntersectionObserver'
 import UserQuotesCardButton from '../button/UserQuotesCardButton'
 import { usePathname,} from 'next/navigation'
@@ -20,10 +19,7 @@ interface PropsType {
 }
 
 export default function QuotesCard({ items, category }: PropsType) {
-  const bookmarkList = useBookmarkStore((state) => state.bookmarkList)
-
   const pathName = usePathname()
-
   const liRefs = useRef<HTMLLIElement[]>([])
   const setLiRefs = (index: number, element: HTMLLIElement | null) => {
     element instanceof HTMLLIElement && (liRefs.current[index] = element)
