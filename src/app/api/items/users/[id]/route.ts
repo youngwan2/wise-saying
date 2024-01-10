@@ -2,19 +2,22 @@ import { NextRequest, NextResponse } from "next/server";
 import Jwt  from "jsonwebtoken";
 import { openDb } from "@/connect";
 
+// 조회
 export async function GET(req:NextRequest, res:{params: {id: string}}){
     const postId = res.params.id
     const db = await openDb()
 
     const joinQuery = `
         SELECT A.id AS id, A.wise_sayings AS wise_sayings, A.category AS category, A.author AS author, B.email AS email
-        FROM quotes_users A JOIN users_group B
+        FROM quotes_user A JOIN users_group B
         ON A.user_id = B.user_id AND A.id = ?
     `
     const items = await db.all(joinQuery,[postId])
     return NextResponse.json(items)
 }
 
+
+// 수정
 export async function PUT(req:NextRequest, res:{params: {id: string}}){
     const postId = res.params.id
     const accessToken = req.headers.get("Authorization")?.replace("Bearer ","")!
@@ -28,7 +31,8 @@ export async function PUT(req:NextRequest, res:{params: {id: string}}){
     
        if(!!validToken) {
         const query =`
-            UPDATE quotes_users SET wise_sayings = ?, category = ?, author = ?
+            UPDATE quotes_user 
+            SET wise_sayings = ?, category = ?, author = ?
             WHERE id = ?
         `
 

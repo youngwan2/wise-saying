@@ -4,14 +4,13 @@ import { HiUsers } from "react-icons/hi2";
 import QuotesCard from "../card/QuotesCard";
 
 interface PropsType {
-    path?: string 
     items : {
         id: number
         author:string
         wise_sayings:string;
     }[]
 }
-export default function UserPageContainer({items, path}:PropsType) {
+export default function UserPageContainer({items}:PropsType) {
 
         const itemCount = items.length
 
