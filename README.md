@@ -2,7 +2,8 @@
 
 - my wise saying app
 - ※ 프로젝트 진행 사항에 따라 달라질 수 있는 화면입니다.
-![image](https://github.com/youngwan2/wise-saying/assets/107159871/42dedbca-790b-48d9-86db-200db6c21069)
+![image](https://github.com/youngwan2/wise-saying/assets/107159871/afe06c37-af4f-41ba-ad6a-4f71a753c78b)
+
 
 ## 프로젝트 개요
 
