@@ -34,18 +34,17 @@ export default function BookmarkList() {
 
     // fetcher 함수는 key 파라미터를 그대로 받아들이며, 캐시 키도 전체 key 인수와 연관됩니다. 위의 예에서 url과 token은 둘 다 캐시 키에 들어맞습니다.
     const { data, isLoading } = useSWR(['/api/bookmark', token], ([url, token]) => getBookmarkListFormDB(url, token), {
-        refreshInterval: 5000
+        refreshInterval: 4000
     })
     const hasData = !!data
 
-    const bookmarkListUpdate = useCallback(() => {
-        if(hasData) {
-            const count = data.totalCount 
-                        const items = data.items
+    const bookmarkListUpdate = useCallback((data: { totalCount: any; items: any }, hasData:boolean) => {
+        if (hasData) {
+            const {totalCount: count, items} = data
             setBookmarkList(items)
-             setListCount(count)
+            setListCount(count)
         }
-    }, [data, hasData, setListCount, setBookmarkList])
+    }, [setListCount, setBookmarkList])
 
     useEffect(() => {
         if (data && (data.status === 401)) {
@@ -54,9 +53,9 @@ export default function BookmarkList() {
         }
     }, [router, data, isLoading])
 
-        useEffect(() => {
-        bookmarkListUpdate()
-    }, [bookmarkListUpdate])
+    useEffect(() => {
+        bookmarkListUpdate(data, hasData)
+    }, [bookmarkListUpdate,data, hasData])
 
 
     return (
@@ -64,8 +63,8 @@ export default function BookmarkList() {
             <BookmarkCloseButton />
             <div className="px-[2em] mt-[2em] absolute left-[50%] translate-x-[-50%] top-[2em] overflow-y-auto overflow-x-hidden max-h-[800px] p-[1em] w-[90%]">
                 <h2 className="text-white text-[2em] mb-[1em] pl-[10px] flex items-center"><HiBookmarkSquare className="pr-[5px]" />북마크 리스트</h2>
-                {!isLoading  ? bookmarkList.map((bookmark: BookmarkListType) => {
-                    return <BookmarkCard key={bookmark.id} bookmark={bookmark} />
+                {!isLoading ? bookmarkList.map((bookmark: BookmarkListType) => {
+                    return <BookmarkCard bookmark={bookmark} />
                 }) : <span>데이터를 가져오는 중입니다.</span>}
 
             </div>
