@@ -1,33 +1,21 @@
 "use client"
 
 import { useMypageTapsStore } from "@/store/store"
-import MypageComcernQuoteList from "../list/MypageComcernQuoteList"
+import MypageConcernQuoteList from "../list/MypageConcernQuoteList"
 import MypageProfileForm from "../form/MypageProfileForm"
 import useHasToken from "@/custom/useHasToken";
-import { useCallback, useEffect, useState } from "react";
+import useSWR from "swr";
 
-
-interface UserInfoType {
-        nickname: string
-        email: string
-        profile_image: string
-        user_id: number
-}
 export default function MypageContainer() {
 
     const tapId = useMypageTapsStore((state) => state.tapId)
-    const [userInfo, setUserInfo] = useState<UserInfoType>({
-        nickname: '',
-        email: '',
-        profile_image: '',
-        user_id: 0
-    })
     const hasToken = useHasToken()
 
     const token = (hasToken && localStorage.getItem('token')) || ''
-    const getUserInfoFromDb = useCallback(async (token: string) => {
+
+    const getUserInfoFromDb = async (url:string, token: string) => {
         try {
-            const response = await fetch('http://localhost:3000/api/users', {
+            const response = await fetch(url, {
                 method: 'GET',
                 headers: {
                     'authorization': `Bearer ${token}`
@@ -35,22 +23,21 @@ export default function MypageContainer() {
             })
             const result = await response.json()
             const { items: userInfo } = result
-
-            setUserInfo(userInfo)
+            return userInfo
         } catch (error) {
             console.error(error)
         }
-    }, [setUserInfo])
+    }
 
-    useEffect(() => {
-        getUserInfoFromDb(token)
-    }, [token, getUserInfoFromDb])
 
+    const {data:userInfo} = useSWR(['/api/users/',token],([url, token])=> getUserInfoFromDb(url,token), {
+        refreshInterval:5000
+    })
 
     return (
         <>
             {tapId === 0 && <MypageProfileForm userInfo={userInfo} />}
-            {tapId === 1 && <MypageComcernQuoteList />}
+            {tapId === 1 && <MypageConcernQuoteList />}
         </>
     )
 }
