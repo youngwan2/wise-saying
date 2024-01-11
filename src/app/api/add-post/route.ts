@@ -6,42 +6,55 @@ export async function POST(req: NextRequest) {
 
     const db = await openDb()
     const scrept = process.env.JWT_SCREPT!
-    const token = req.headers.get('authorization')?.replace('Bearer ', '')!
+    const token = req.headers.get('authorization')?.split(' ') || ''
+    const prefix = 'Bearer'
+    const validToken = token[1]
 
+    // 토큰 전송 형식과 일치하지 않는 경우
+    if (prefix !== token[0]) {
+        return NextResponse.json({ status: 400, success: false, meg: "올바른 형식의 토큰이 아닙니다. 다시 확인해주세요" })
+    }
     // 토큰 자체가 존재하지 않는 경우
     if (!token) {
-        return NextResponse.json({ status: 401, success: false, message: "유효한 토큰이 존재하지 않습니다." })
+        return NextResponse.json({ status: 401, success: false, meg: "유효한 토큰이 존재하지 않습니다." })
     }
 
     // 유효 토큰인지 검증 후 게시글 등록
     try {
         const { category, wise_sayings, author, userEmail } = await req.json()
-        const validToken = jwt.verify(token, scrept)
-        
+
+        // 유효한 토큰이 아니면 자동으로 catch 에 에러를 전달
+        jwt.verify(validToken, scrept)
+
+        // 유저 정보 검증
         const selectQuery = `
         SELECT user_id FROM users_group
         WHERE email = ?
-    `
-        // 유저가 존재 한다면 포스트 추가
+        `
         const { user_id: userId } = await db.get(selectQuery, [userEmail])
         const isUser = !!userId
 
-        if (isUser) {
-            const insertQuery = `
-            INSERT INTO quotes_users(wise_sayings, user_id,category, author)
-            VALUES (?,?,?,?)
-        `
-            try {
-                console.log(db.all(insertQuery, [wise_sayings, userId, category, author]))
 
-            } catch (error) {
-                console.error(error)
-            }
+        // 유저 정보가 없는 경우
+        if (!isUser) {
+            return NextResponse.json({ status: 403, success: false, meg: "접근 권한이 없습니다. 다시 로그인 해주세요." })
         }
-        return NextResponse.json({ status: 201, success: true })
+
+        const insertQuery = `
+            INSERT INTO quotes_user(wise_sayings, user_id,category, author)
+            VALUES (?,?,?,?)
+            `
+        try {
+            db.all(insertQuery, [wise_sayings, userId, category, author])
+
+        } catch (error) {
+            console.error(error)
+        }
+
+        return NextResponse.json({ status: 201, success: true, meg:"정상적으로 처리되었습니다." })
 
     } catch (error) {
-        return NextResponse.json({ status: 401, success: false, message: "토큰이 만료되었습니다. 다시 로그인 해주세요." })
+        return NextResponse.json({ status: 403, success: false, meg: "접근 권한이 없습니다. 다시 로그인 해주세요." })
     }
 
 

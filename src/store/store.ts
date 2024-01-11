@@ -1,15 +1,16 @@
 import { create } from "zustand";
-import {
+import type {
     LoginState,
     PostIdState,
     BgColorState,
     CardSizeState,
-    TextStyleState, 
-    LienHeightState, 
-    StorkeState, 
+    TextStyleState,
+    LienHeightState,
+    StorkeState,
     ImageElState,
     BookmarkToggleState,
-    PagePathState
+    MypageTapsState,
+    UserInfoState,
 } from "../types/store.type";
 
 
@@ -60,9 +61,9 @@ export const useQuotesLineHeightStore = create<LienHeightState>((set) => ({
 export const useQuotesStrokeStyleStore = create<StorkeState>((set) => ({
     thickness: 1,
     color: 'black',
-    setStrokeThicknessStyle: ((thickness) => set(() => ({ thickness}))),
-    setStrokeColorStyle: ((color) => set(() => ({ color})))
-    
+    setStrokeThicknessStyle: ((thickness) => set(() => ({ thickness }))),
+    setStrokeColorStyle: ((color) => set(() => ({ color })))
+
 
 }))
 
@@ -76,14 +77,35 @@ export const useImageElementStore = create<ImageElState>((set) => ({
 }))
 
 
-// 북마크 활성화 상태 및 리스트 저장 저장
-export const useBookmarkStore = create<BookmarkToggleState>((set)=>({
-    toggleState:false,
-    bookmarkList : [],
-    count:0,
-    setToggleState: (toggle) => set(()=> ({toggleState: toggle})),
-    setBookmarkList : (list) => set(()=> ({bookmarkList: list}) ),
-    setListCount: (count) => set(() => ({ count}))
+// 북마크 활성화 상태 및 리스트 저장
+export const useBookmarkStore = create<BookmarkToggleState>((set) => ({
+    toggleState: false,
+    bookmarkList: [],
+    count: 0,
+    setToggleState: (toggle) => set(() => ({ toggleState: toggle })),
+    setBookmarkList: (list) => set(() => ({ bookmarkList: list })),
+    setListCount: (count) => set(() => ({ count }))
 
 }))
 
+// 마이페이지 메뉴 탭의 id 저장
+export const useMypageTapsStore = create<MypageTapsState>((set) => ({
+    tapId: 0,
+    setTapId: (tapId) => set(() => ({ tapId }))
+}))
+
+
+// 로그인한 유저 정보를 저장
+
+
+export const useUserInfoStore = create<UserInfoState>((set) => ({
+    userId: 0,
+    email: 'example@text.com',
+    nickname: '없음',
+    profileImage: '/images/image1.png',
+    width: 200,
+    height: 200,
+    setUserInfo: (userInfo) => set(() => ({ userId: userInfo.userId, email: userInfo.email, nickname: userInfo.nickname, profileImage: userInfo.profileImage }))
+
+
+}))
