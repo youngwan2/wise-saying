@@ -49,7 +49,7 @@ export default function MypageProfileForm({ userInfo }: PropsType) {
         }
     }
 
-    // 유저 정보 업데이트
+    // 유저 프로필 정보 업데이트
     async function updateUserInfo() {
         if (!hasToken) return alert('접근 권한이 없습니다.')
         const token = localStorage.getItem('token')
@@ -90,7 +90,8 @@ export default function MypageProfileForm({ userInfo }: PropsType) {
         <section className="w-full min-h-[100vh]" >
             {userInfo !== undefined
                 ?
-                <form className="border-[3px] p-[2em] rounded-[10px] max-w-[600px] flex flex-col mx-auto mt-[3em] items-center" onSubmit={onSubmit} >
+                <form
+                    className="border-[3px] p-[2em] rounded-[10px] max-w-[600px] flex flex-col mx-auto mt-[3em] items-center shadow-[5px_10px_10px_0_rgba(0,0,0,0.5)] bg-gradient-to-tr from-orange-50 to-white transition-all " onSubmit={onSubmit} >
                     {/* 이미지 업로드 */}
                     <article className="relative group">
                         <Image className="mx-auto rounded-full" src={initialImageSrc} alt="유저의 프로필 이미지" width={250} height={250} /> :
@@ -108,18 +109,18 @@ export default function MypageProfileForm({ userInfo }: PropsType) {
                     {/* 닉네임 수정 */}
                     <article className="mt-[2em] text-center" >
                         <div className="mx-auto my-[5px]">
-                            <label htmlFor="nickname" className="mr-[5px] rounded-[5px] bg-[tomato] text-center font-bold text-white min-w-[70px] inline-block">닉네임</label>
+                            <label htmlFor="nickname" className="mr-[5px] rounded-[5px] text-center font-bold  min-w-[70px] inline-block">닉네임</label>
                             <input ref={nicknameRef} type="text" id="nickname" className="bg-[transparent] shadow-[inset_0_-2px_0_0_black] min-w-[200px] p-[6px]" onChange={(e) => {
                                 const nickname = e.currentTarget.value
                                 setNickname(nickname)
                             }} />
                         </div>
                         <div className="mx-auto my-[1em]">
-                            <label htmlFor="email" className=" mr-[5px] rounded-[5px] bg-[tomato] text-center font-bold text-white min-w-[70px] inline-block">이메일</label>
+                            <label htmlFor="email" className=" mr-[5px] rounded-[5px]  text-center font-bold min-w-[70px] inline-block">이메일</label>
                             <input readOnly value={userInfo.email} id="email" className="bg-[transparent] shadow-[inset_0_-2px_0_0_black]  min-w-[200px]  p-[6px]"></input>
                         </div>
                     </article>
-                    <button className="rounded-[5px] mt-[2em] bg-[#343333] text-white p-[10px]" onClick={updateUserInfo}>수정하기</button>
+                    <button className="shadow-[inset_-2px_-3px_3px_0_black] hover:bg-gradient-to-br hover:from-black  hover:to-slate-600  w-[230px] rounded-[5px] mt-[2em] bg-[#343333] text-white p-[10px]" onClick={updateUserInfo}>변경하기</button>
                 </form>
                 : <div>정보없음</div>
             }

@@ -14,7 +14,6 @@ export default function QuotesStylerTaps({selectTapNum, setSelectTapNum}:PropsTy
             {taps.map((tap) => {
                 return <button 
                 onClick={()=>{
-                    console.log(tap.num)
                     setSelectTapNum(tap.num)
                 }} 
                 key={tap.num} 

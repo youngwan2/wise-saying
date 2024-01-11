@@ -31,6 +31,7 @@ export default function QuotesCard({ items, category }: PropsType) {
   return (
     <ul className="mt-[3em] w-full flex justify-center max-h-[80vh] flex-wrap overflow-y-auto ">
       {items?.map((item, i) => {
+        console.log(item)
         return (
           <li
             ref={(element) => {
