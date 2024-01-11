@@ -1,17 +1,10 @@
-"use client"
-
 import MypageContainer from "@/components/UI/container/MypageContainer";
 import MypageTaps from "@/components/UI/tap/MypageTaps";
 import { HiHome } from "react-icons/hi2";
 
 
 
-// interface UserInfoType {
-//   user_id:number
-//   nickname:string
-//   email: string 
-//   profile_image: string
-// }
+
 
 export default function Mypage() {
 
@@ -22,7 +15,6 @@ export default function Mypage() {
           <HiHome color={'white'} />
         </span>
         마이페이지
-        
       </h2>
       <MypageTaps />
       <MypageContainer />
