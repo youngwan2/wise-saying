@@ -66,3 +66,21 @@ export interface BookmarkToggleState {
     setListCount :(count: number) => void
 } 
 
+
+export interface MypageTapsState{
+    tapId: number
+    setTapId : (tapId: number) => void
+}
+
+
+interface UserInfoType {
+    userId: number
+    email: string
+    nickname: string
+    profileImage: string
+    width: number
+    height: number
+}
+export interface UserInfoState extends UserInfoType {
+setUserInfo: (userInfo: UserInfoType) => void
+}

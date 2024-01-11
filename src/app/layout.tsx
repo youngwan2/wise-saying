@@ -26,7 +26,7 @@ export default function RootLayout({
         <Header />
         <div className="flex bg-[#ffffff] backdrop-blur-[5px] max-w-[1600px] mx-auto rounded-[10px] shadow-[0_0_1px_1px_gray]">
           <Nav />
-          <main className='max-w-[100%] min-h-[100vh]'>
+          <main className='max-w-[100%] min-h-[100vh] w-full'>
             {children}</main>
         </div>
         <Footer />

@@ -4,6 +4,7 @@ import gsap from "gsap"
 import { Draggable } from "gsap/Draggable"
 import { useEffect, useRef, useState } from "react"
 import useHasToken from "@/custom/useHasToken"
+import { logoutUser } from "@/utils/commonFunctions"
 
 export default function PostForm() {
 
@@ -29,21 +30,16 @@ export default function PostForm() {
             headers,
             body : JSON.stringify(userPost)
         }).then(async (response)=>{
-           const {status, success} =await response.json()
+           const {status, success, meg} =await response.json()
             console.log(status, success)
-           if(success === true) {
-            alert("정상적으로 등록되었습니다.")
+           if(status === 201) {
+            alert(meg)
             router.push('/user-quotes')
-            setTimeout(()=>{
-                location.reload()
-            },300)
         
            }
            if(success === false) {
-            alert("최대 로그인 가능 시간이 초과하였습니다. 로그인을 다시 시도해 주세요")
-            localStorage.removeItem('user')
-            localStorage.removeItem('token')
-            router.push('/login')
+            alert(meg)
+            logoutUser()
            }
         }).catch((error)=>{
             console.error(error)
@@ -54,6 +50,7 @@ export default function PostForm() {
             router.push('/login')
         }
     }
+    
     // UI 드래그 이벤트 등록
     useEffect(() => {
         if (formRef.current) {

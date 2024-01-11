@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import type { Metadata } from "next"
 import { getItemFromDB } from "@/services/item.get"
 import UserPageContainer from "@/components/UI/container/UserPageContainer"
