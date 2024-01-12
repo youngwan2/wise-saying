@@ -64,7 +64,7 @@ export default function BookmarkList() {
             <div className="px-[2em] mt-[2em] absolute left-[50%] translate-x-[-50%] top-[2em] overflow-y-auto overflow-x-hidden max-h-[800px] p-[1em] w-[90%]">
                 <h2 className="text-white text-[2em] mb-[1em] pl-[10px] flex items-center"><HiBookmarkSquare className="pr-[5px]" />북마크 리스트</h2>
                 {!isLoading ? bookmarkList.map((bookmark: BookmarkListType) => {
-                    return <BookmarkCard bookmark={bookmark} />
+                    return <BookmarkCard bookmark={bookmark} key={bookmark.id} />
                 }) : <span>데이터를 가져오는 중입니다.</span>}
 
             </div>

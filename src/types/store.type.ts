@@ -36,7 +36,7 @@ export interface TextStyleState extends TextType {
 
 export interface LienHeightState {
     lineHeight: number
-    setLineHeight : (height: number) => void
+    setLineHeight: (height: number) => void
 }
 
 type StorkeType = {
@@ -49,27 +49,27 @@ export interface StorkeState extends StorkeType {
     setStrokeColorStyle: (color: string) => void
 }
 
-export interface ImageElState{
+export interface ImageElState {
     imageSrc: string
     isClear: boolean
-    setImageSrc : (imageSrc: string) => void
-    setImageReset : (state: boolean) => void 
+    setImageSrc: (imageSrc: string) => void
+    setImageReset: (state: boolean) => void
 }
 
 
 export interface BookmarkToggleState {
     toggleState: boolean,
     bookmarkList: [],
-    count:number,
-    setToggleState : (toggle: boolean) => void
-    setBookmarkList : (list: any) => void
-    setListCount :(count: number) => void
-} 
+    count: number,
+    setToggleState: (toggle: boolean) => void
+    setBookmarkList: (list: any) => void
+    setListCount: (count: number) => void
+}
 
 
-export interface MypageTapsState{
+export interface MypageTapsState {
     tapId: number
-    setTapId : (tapId: number) => void
+    setTapId: (tapId: number) => void
 }
 
 
@@ -82,5 +82,13 @@ interface UserInfoType {
     height: number
 }
 export interface UserInfoState extends UserInfoType {
-setUserInfo: (userInfo: UserInfoType) => void
+    setUserInfo: (userInfo: UserInfoType) => void
+}
+
+
+export interface CardZoomInOutState {
+    isZoomIn: boolean
+    cardIndex: number | null
+    setIsZoomIn: (isZoomIn: boolean) => void
+    setCardIndex : (index : number|null) => void
 }
