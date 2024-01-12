@@ -11,6 +11,7 @@ import type {
     BookmarkToggleState,
     MypageTapsState,
     UserInfoState,
+    CardZoomInOutState,
 } from "../types/store.type";
 
 
@@ -57,14 +58,11 @@ export const useQuotesLineHeightStore = create<LienHeightState>((set) => ({
 }))
 
 // 텍스트 외곽선 스타일
-
 export const useQuotesStrokeStyleStore = create<StorkeState>((set) => ({
     thickness: 1,
     color: 'black',
     setStrokeThicknessStyle: ((thickness) => set(() => ({ thickness }))),
     setStrokeColorStyle: ((color) => set(() => ({ color })))
-
-
 }))
 
 
@@ -96,8 +94,6 @@ export const useMypageTapsStore = create<MypageTapsState>((set) => ({
 
 
 // 로그인한 유저 정보를 저장
-
-
 export const useUserInfoStore = create<UserInfoState>((set) => ({
     userId: 0,
     email: 'example@text.com',
@@ -106,6 +102,13 @@ export const useUserInfoStore = create<UserInfoState>((set) => ({
     width: 200,
     height: 200,
     setUserInfo: (userInfo) => set(() => ({ userId: userInfo.userId, email: userInfo.email, nickname: userInfo.nickname, profileImage: userInfo.profileImage }))
+}))
 
 
+
+export const useCardZoomInOutStore = create<CardZoomInOutState>((set)=>({
+    isZoomIn : false,
+    cardIndex : 0,
+    setIsZoomIn : (isZoomIn) =>  set(() =>({isZoomIn})),
+    setCardIndex : (index) => set(()=>({cardIndex:index}))
 }))

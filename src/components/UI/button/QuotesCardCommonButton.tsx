@@ -5,11 +5,13 @@ import { pageSwitch, postBookmarkItem, quotesSelector } from "@/utils/commonFunc
 import { HiOutlineBookmark, HiScissors } from "react-icons/hi2"
 import { PropsType } from "./QuotesCardButton"
 import { useRouter } from "next/navigation"
+import { useCardZoomInOutStore } from "@/store/store"
 
 
 
-export default function QuotesCardCommonButton({ itemId, items, category }: PropsType) {
-
+export default function QuotesCardCommonButton({ itemId, items, category, index }: PropsType) {
+    const setIsZoomIn = useCardZoomInOutStore((state)=> state.setIsZoomIn)
+    const setCardIndex = useCardZoomInOutStore((state)=> state.setCardIndex)
     const hasToken = useHasToken()
     const router = useRouter()
 
@@ -33,7 +35,8 @@ export default function QuotesCardCommonButton({ itemId, items, category }: Prop
             <article className="flex min-h-[60px] min-w-[100px] mt-[0.8em]"  >
                 {/* 확대 버튼 */}
                 <button onClick={() => {
-                    alert("준비중 입니다.")
+                    setIsZoomIn(true)
+                    setCardIndex(index)
                 }} className="min-w-[48px]  p-[5px] hover:bg-[tomato] text-[2em] hover:text-[white] bg-[white] rounded-[0.3em] mx-[0.1em]" aria-label='명언 확대해서 보기 버튼'><HiOutlineZoomIn /><p className="text-[14px] font-semibold">확대</p></button>
                 {/* 듣기 버튼 */}
                 <button onClick={() => {
