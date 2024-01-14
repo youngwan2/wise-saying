@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { MutableRefObject, useCallback, useEffect, useRef } from 'react'
 import QuotesCardButton from '../button/QuotesCardButton'
 import useIntersectionObserver from '@/custom/useIntersectionObserver'
 import UserQuotesCardButton from '../button/UserQuotesCardButton'
@@ -16,7 +16,6 @@ interface PropsType {
     id: number
     author: string
     wise_sayings: string
-
   }[]
 }
 
@@ -24,7 +23,6 @@ export default function QuotesCard({ items, category }: PropsType) {
   const pathName = usePathname()
   const isZoomIn = useCardZoomInOutStore((state) => state.isZoomIn)
   const cardIndex = useCardZoomInOutStore((state) => state.cardIndex)
-
   const liRefs = useRef<HTMLLIElement[]>([])
   const ulRef = useRef<HTMLUListElement>(null)
   const setLiRefs = (index: number, element: HTMLLIElement | null) => {
@@ -34,7 +32,8 @@ export default function QuotesCard({ items, category }: PropsType) {
   // 인터섹션 옵저버 적용하는 커스텀 훅
   useIntersectionObserver(liRefs)
 
-  useEffect(() => {
+  // 카드 확대
+  const cardZoomInoutSwitch = useCallback((cardIndex: number | null =0, liRefs: MutableRefObject<HTMLLIElement[]>) => {
     if (liRefs.current) {
       if (isZoomIn && cardIndex) {
         gsap.to(liRefs.current[cardIndex], { visibility: 'hidden', opacity: 0, translateY: -50, translateZ: 15 })
@@ -42,10 +41,14 @@ export default function QuotesCard({ items, category }: PropsType) {
       if (!isZoomIn && cardIndex) {
         gsap.to(liRefs.current[cardIndex], { visibility: 'visible', opacity: 1, translateY: 0 })
       }
-
     }
-  }, [isZoomIn, cardIndex])
+  }, [isZoomIn])
 
+  useEffect(() => {
+    cardZoomInoutSwitch(cardIndex, liRefs)
+  }, [cardIndex, cardZoomInoutSwitch])
+
+  if (!items) return <h2>로딩중 입니다..</h2>
   return (
     <>
 
@@ -64,15 +67,15 @@ export default function QuotesCard({ items, category }: PropsType) {
                 min-h-[250px] hover:cursor-pointer
                 `}
             >
-              <span className='absolute left-2 top-2'>{item.id}</span>
+              <span className='absolute left-2 top-2'>{item?.id}</span>
               <blockquote className='mt-[1em]'>
-                <p className=' p-[1em]'>{item.wise_sayings}</p>
-                <footer className="font-bold mt-[1em]">{item.author}</footer>
+                <p className=' p-[1em]'>{item?.wise_sayings}</p>
+                <footer className="font-bold mt-[1em]">{item?.author}</footer>
               </blockquote>
               <div className="w-[20px] h-[45px] bg-[rgba(247,123,123,0.7)] absolute top-[-1em] right-1 rotate-45"></div>
 
               {pathName.includes('/user-quotes')
-                ? <UserQuotesCardButton item={item} items={items} />
+                ? <UserQuotesCardButton index={i} item={item} items={items} />
                 : <QuotesCardButton index={i} itemId={item.id} items={items} category={category} />}
             </li>
           )

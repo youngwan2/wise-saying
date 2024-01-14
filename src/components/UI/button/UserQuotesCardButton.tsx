@@ -6,12 +6,14 @@ import { useRouter } from "next/navigation"
 import { useUserPostIdStore } from "@/store/store"
 import { ItemsType } from "@/types/items.types"
 import QuotesCardCommonButton from "./QuotesCardCommonButton"
+import { deleteUserQuote } from "@/services/item.delete"
 
 interface PropsType {
-    item: ItemsType,
+    item: ItemsType
     items: ItemsType[]
+    index: number
 }
-export default function UserQuotesCardButton({ item, items }: PropsType) {
+export default function UserQuotesCardButton({ index, item, items }: PropsType) {
 
     const hasToken = useHasToken()
     const [userEmail, setUserEmail] = useState('')
@@ -19,37 +21,12 @@ export default function UserQuotesCardButton({ item, items }: PropsType) {
 
     const setPostId = useUserPostIdStore((state) => state.setPostId)
 
-    // 명언 삭제
-    const deleteItem = (id: number) => {
-        if (hasToken) {
-            const headers = {
-                "Authorization": `Bearer ${localStorage.getItem('token')}`
-            }
-            const url = `/api/posts/${id}`
-            fetch(url, {
-                method: "DELETE",
-                headers
-            })
-                .then(async (response) => {
-                    const { success } = await response.json()
-                    if (success === true) location.reload()
-                    if (success === false) {
-                        localStorage.clear()
-                        alert('로그인 가능 시간이 만료되었습니다. 다시 로그인 해주세요.')
-                        location.reload()
-                    }
-                })
-                .catch((console.error))
-        }
-        if (!hasToken) {
-            alert("접근 권한이 없습니다.")
-        }
-    }
-
     useEffect(() => {
         if (hasToken) {
-            const user = localStorage.getItem('user')!
-            setUserEmail(user)
+            const json = localStorage.getItem('user')!
+            const user = JSON.parse(json)
+            const { dbEmail } = user
+            setUserEmail(dbEmail)
         }
 
     }, [hasToken])
@@ -68,10 +45,10 @@ export default function UserQuotesCardButton({ item, items }: PropsType) {
 
                     {/* 삭제 */}
                     <button className={`min-w-[48px]  p-[5px] hover:bg-[tomato] text-[2em] hover:text-[white] bg-[white] rounded-[0.3em] mx-[0.3em]`} onClick={() => {
-                        deleteItem(item.id)
+                        deleteUserQuote(hasToken, item.id)
                     }} aria-label="삭제버튼"><HiOutlineTrash /><p className="text-[14px] font-semibold">삭제</p></button>
                 </article>
-                <QuotesCardCommonButton category="유저" itemId={item.id} items={items} />
+                <QuotesCardCommonButton category="유저" itemId={item.id} items={items} index={index} />
             </div>
         </article>
     )

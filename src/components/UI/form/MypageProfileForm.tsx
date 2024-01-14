@@ -6,6 +6,7 @@ import { HiUpload } from "react-icons/hi"
 import { storage } from "@/utils/firebase"
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import useHasToken from "@/custom/useHasToken"
+import { useRouter } from "next/navigation"
 
 interface PropsType {
     userInfo: {
@@ -22,6 +23,7 @@ export default function MypageProfileForm({ userInfo }: PropsType) {
     const [imageUrl, setImageUrl] = useState('')
     const [nickname, setNickname] = useState('')
     const hasToken = useHasToken()
+    const router = useRouter()
 
     /**
      *  @var src : 미리보기 이미지
@@ -86,6 +88,21 @@ export default function MypageProfileForm({ userInfo }: PropsType) {
         setImageUrl(userInfo?.profile_image)
     }, [userInfo?.profile_image])
 
+
+    if (!userInfo)
+        return (
+            <h2 className="text-center border inline-block p-[1.7em] px-[3em] relative left-[50%] translate-x-[-50%] mt-[8em] text-[1.25em] rounded-[10px] shadow-[5px_10px_10px_0_rgba(0,0,0,0.5)] bg-gradient-to-tr from-orange-50 to-white">접근 권한이 없습니다.
+                <br />
+                <div className="mt-[0.5em]">
+                    <button className="hover:bg-slate-600  min-w-[80px] p-[3px] mr-[10px] bg-slate-800 text-white text-[16px]" onClick={() => {
+                        router.push('/login')
+                    }}>로그인</button>
+                    <button className="hover:bg-slate-600 min-w-[80px] p-[3px] bg-slate-800 text-white text-[16px]" onClick={() => {
+                        router.push('/signin')
+                    }}>회원가입</button>
+                </div>
+            </h2>)
+            
     return (
         <section className="w-full min-h-[100vh]" >
             {userInfo !== undefined
@@ -122,7 +139,7 @@ export default function MypageProfileForm({ userInfo }: PropsType) {
                     </article>
                     <button className="shadow-[inset_-2px_-3px_3px_0_black] hover:bg-gradient-to-br hover:from-black  hover:to-slate-600  w-[230px] rounded-[5px] mt-[2em] bg-[#343333] text-white p-[10px]" onClick={updateUserInfo}>변경하기</button>
                 </form>
-                : <div>정보없음</div>
+                : null
             }
         </section>
     )
