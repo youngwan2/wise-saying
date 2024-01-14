@@ -51,7 +51,6 @@ export default function QuotesCard({ items, category }: PropsType) {
   if (!items) return <h2>로딩중 입니다..</h2>
   return (
     <>
-
       <ul ref={ulRef} className="mt-[3em] w-full flex justify-center max-h-[80vh] flex-wrap overflow-y-auto perspective-500 transform-style-3d ">
         {items?.map((item, i) => {
           return (
