@@ -3,6 +3,7 @@ import { ItemsType } from "@/types/items.types"
 import { MouseEvent, useEffect, useRef, useState } from "react"
 import { gsap } from "gsap/gsap-core"
 import { Draggable } from "gsap/Draggable"
+import ReplaceMessageCard from "./ReplaceMessageCard"
 
 interface PropsType {
     item: ItemsType
@@ -50,7 +51,7 @@ export default function ZommInQuoteCard({ item }: PropsType) {
         }
     }, [isZoomIn, position])
 
-
+    if(!item) return <ReplaceMessageCard childern={"로딩중입니다... 잠시만 기다려주세요. "}/>
     return (
         <>
             {/* 카드 오버레이 */}

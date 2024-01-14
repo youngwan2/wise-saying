@@ -7,6 +7,7 @@ import useHasToken from "@/custom/useHasToken";
 import useSWR from "swr";
 import MypageMyQuoteList from "../list/MypageMyQuoteList";
 import { useState } from "react";
+import ReplaceMessageCard from "../card/ReplaceMessageCard";
 
 export default function MypageContainer() {
 
@@ -16,36 +17,33 @@ export default function MypageContainer() {
 
     const token = (hasToken && localStorage.getItem('token')) || ''
 
-    const getUserInfoFromDb = async (url:string, token: string) => {
-            const response = await fetch(url, {
-                method: 'GET',
-                headers: {
-                    'authorization': `Bearer ${token}`
-                }
-            })
-            const result = await response.json()
-            const { items: userInfo } = result
-            return userInfo
-    }
-
-    const getUserQuotesFromDb = async (url:string) => {
+    const getUserInfoFromDb = async (url: string, token: string) => {
         const response = await fetch(url, {
-            method:'GET',
-            headers:{
-                'dataType':'mypage'
+            method: 'GET',
+            headers: {
+                'authorization': `Bearer ${token}`
             }
         })
-
-        const {items:userInfo, count} = await response.json()
-        return {userInfo,count}
+        const result = await response.json()
+        const { items: userInfo } = result
+        return userInfo
     }
 
-    const {data:userInfo,error,isLoading} = useSWR(['/api/users/',token],([url, token])=> getUserInfoFromDb(url,token), {
-        refreshInterval:5000
-    })
+    const getUserQuotesFromDb = async (url: string) => {
+        const response = await fetch(url, {
+            method: 'GET',
+        })
 
-    const {data:userQuotesInfo} = useSWR(()=> tapId ===2 ? '/api/users/mypage/posts/?userId='+userInfo.user_id+'&page='+page: null, getUserQuotesFromDb)
-    if(error) return <div>에러발생...</div>
+        const { items: userInfo, count } = await response.json()
+        return { userInfo, count }
+    }
+
+    const { data: userInfo, error, isLoading } = useSWR(['/api/users/', token], ([url, token]) => getUserInfoFromDb(url, token), { refreshInterval: 5000 })
+
+    const { data: userQuotesInfo } = useSWR(() => tapId === 2 ? '/api/users/mypage/posts/?userId=' + userInfo.user_id + '&page=' + page : null, getUserQuotesFromDb)
+
+    if (!userInfo) return <ReplaceMessageCard childern={"게시글을 불러오는 중입니다. 잠시만 기다려주세요."}></ReplaceMessageCard>
+    if (error) return <ReplaceMessageCard childern={"게시글 조회에 실패하였습니다. 나중에 다시 시도 해주세요."}></ReplaceMessageCard>
 
     return (
         <>

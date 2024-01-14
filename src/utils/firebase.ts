@@ -12,7 +12,6 @@ const firebaseConfig = {
     measurementId: process.env.NEXT_PUBLIC_FIRE_MEASUREMENT_ID
   };
   
-  console.log(process.env.NEXT_PUBLIC_FIRE_STORAGE_BUCKET)
   // Initialize Firebase
   export const app = initializeApp(firebaseConfig);
   export const storage = getStorage(app);
