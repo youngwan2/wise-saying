@@ -4,23 +4,29 @@ import { openDb } from "@/connect";
 
 // 조회
 export async function GET(req:NextRequest, res:{params: {id: string}}){
+
     const postId = res.params.id
     const db = await openDb()
 
     const joinQuery = `
-        SELECT A.id AS id, A.wise_sayings AS wise_sayings, A.category AS category, A.author AS author, B.email AS email
+        SELECT id, wise_sayings, category, author, B.email AS email
         FROM quotes_user A JOIN users_group B
-        ON A.user_id = B.user_id AND A.id = ?
+        ON A.user_id = B.user_id
+        WHERE id = ?
+        LIMIT 1
     `
-    const items = await db.all(joinQuery,[postId])
-    return NextResponse.json(items)
+
+    const item = await db.get(joinQuery,[postId])
+    console.log(item)
+    if(!item ) return NextResponse.json({meg:'요청한 자료가 존재하지 않습니다.', status:404, success:false})
+    return NextResponse.json({meg:"정상적으로 처리되었습니다.", status: 200, success:true, item})
 }
 
 
 // 수정
 export async function PUT(req:NextRequest, res:{params: {id: string}}){
     const postId = res.params.id
-    const accessToken = req.headers.get("Authorization")?.replace("Bearer ","")!
+    const accessToken = req.headers.get("authorization")?.replace("Bearer ","")!
     const scrept = process.env.JWT_SCREPT!
     const {wise_sayings, category, author} = await req.json()
     

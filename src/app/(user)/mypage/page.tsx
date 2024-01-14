@@ -3,9 +3,6 @@ import MypageTaps from "@/components/UI/tap/MypageTaps";
 import { HiHome } from "react-icons/hi2";
 
 
-
-
-
 export default function Mypage() {
 
   return (
