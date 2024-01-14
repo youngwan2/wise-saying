@@ -14,8 +14,6 @@ export default function QuotesCardCommonButton({ itemId, items, category, index 
     const setCardIndex = useCardZoomInOutStore((state)=> state.setCardIndex)
     const hasToken = useHasToken()
     const router = useRouter()
-
-
     return (
         <>
             <article className="flex min-h-[60px] min-w-[60px]">

@@ -22,8 +22,7 @@ export default function PostForm() {
         if(validToken){
         const accessToken = localStorage.getItem("token")
         const headers = {
-            "Content-Type":"application/json",
-            "Authorization":`Bearer ${accessToken}`
+            "authorization":`Bearer ${accessToken}`
         }
         fetch('http://localhost:3000/api/add-post',{
             method:"POST",
@@ -31,7 +30,6 @@ export default function PostForm() {
             body : JSON.stringify(userPost)
         }).then(async (response)=>{
            const {status, success, meg} =await response.json()
-            console.log(status, success)
            if(status === 201) {
             alert(meg)
             router.push('/user-quotes')
@@ -39,7 +37,7 @@ export default function PostForm() {
            }
            if(success === false) {
             alert(meg)
-            logoutUser()
+            // logoutUser()
            }
         }).catch((error)=>{
             console.error(error)

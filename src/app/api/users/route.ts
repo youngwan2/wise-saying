@@ -33,19 +33,19 @@ export async function GET(req: NextRequest) {
 
     try {
         const db = await openDb()
-        const reqToken = req.headers.get('authorization')?.split(' ') || ''
+        const rawToken = req.headers.get('authorization')?.split(' ') || ''
         const scrept = process.env.JWT_SCREPT || ''
-        const reqPrefix = reqToken[0]
+        const reqPrefix = rawToken[0]
         const prefix = 'Bearer'
 
         if (prefix !== reqPrefix) return NextResponse.json({ meg: "올바른 토큰 형식이 아닙니다.", status: 400, success: false })
 
-        const token = reqToken[1]
+        const token = rawToken[1]
         const result = jwt.verify(token, scrept) as JwtPayload
         const { userId } = result.data
 
         const query =
-            `
+        `
         SELECT user_id, email, nickname, profile_image FROM users_group
         WHERE user_id = ?
         `
