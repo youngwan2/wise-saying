@@ -1,4 +1,4 @@
-import BookmarkModal from "../UI/bookmark/BookmarkModal";
+import BookmarkModal from "../UI/modal/BookmarkModal";
 import BookmarkModalButton from "../UI/button/BookmarkModalButton";
 import HeaderNavButton from "../UI/button/HeaderNavButton";
 import HeaderProfileCard from "../UI/card/HeaderProfileCard";
