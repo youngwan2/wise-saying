@@ -21,7 +21,7 @@ interface BookmarkListType {
     url: string
 }
 
-export default function BookmarkList() {
+export default function BookmarkModal() {
     const toggleState = useBookmarkStore((state) => state.toggleState)
     const setBookmarkList = useBookmarkStore((state) => state.setBookmarkList)
     const bookmarkList = useBookmarkStore((state) => state.bookmarkList)
