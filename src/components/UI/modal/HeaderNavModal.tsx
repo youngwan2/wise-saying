@@ -1,5 +1,5 @@
 "use client"
-import { HiOutlineCalendarDays, HiOutlineHandThumbUp, HiOutlineHeart, HiOutlinePencil, HiOutlineSun, HiOutlineUserGroup } from "react-icons/hi2"
+import { HiOutlineCalendarDays, HiOutlineHandThumbUp, HiOutlineHeart, HiOutlineHome, HiOutlinePencil, HiOutlineSun, HiOutlineUserGroup } from "react-icons/hi2"
 import { useNavDisplayStateStore } from "@/store/store";
 import { useRouter } from "next/navigation";
 
@@ -51,6 +51,12 @@ export default function HeaderNavModal() {
                     router.push('/add-wisesaying')
                 }} className="hover:shadow-[0_0px_0px_2px_tomato] min-w-[100px] text-[0.68em] lg:text-[0.8em]  hover:bg-white rounded-[10px] transition-all m-2 max-w-[300px] justify-center px-[5px] font-semibold hover:cursor-pointer">
                     <span className="text-[1.25em]" ><HiOutlinePencil color="tomato" className="w-[100%] h-[30px] mb-[0.5em]" />명언 쓰기</span>
+                </button>
+                {/* 마이페이지 */}
+                <button onClick={()=>{
+                    router.push('/mypage')
+                }} className="hover:shadow-[0_0px_0px_2px_tomato] min-w-[100px] text-[0.68em] lg:text-[0.8em]  hover:bg-white rounded-[10px] transition-all m-2 max-w-[300px] justify-center px-[5px] font-semibold hover:cursor-pointer">
+                    <span className="text-[1.25em]" ><HiOutlineHome color="tomato" className="w-[100%] h-[30px] mb-[0.5em]" />마이페이지</span>
                 </button>
             </article>
     )
