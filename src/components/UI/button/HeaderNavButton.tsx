@@ -7,7 +7,7 @@ import useScrollBasedIconPosition from "@/custom/useScrollBasedIconPosition";
 export default function HeaderNavButton() {
     const navButtonRef = useRef<HTMLButtonElement>(null)
 
-    useScrollBasedIconPosition(navButtonRef,80,'tomato',10)
+    useScrollBasedIconPosition(navButtonRef,40,200,'tomato',10)
     const setDisplay = useNavDisplayStateStore((state) => state.setIsDisplay)
     const isDisplay = useNavDisplayStateStore((state) => state.isDisplay)
     return (

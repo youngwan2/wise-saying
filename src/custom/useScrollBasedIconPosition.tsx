@@ -11,7 +11,7 @@ import { Draggable } from "gsap/Draggable";
  * @param backgroundColor 배경색
  * @param padding 안쪽 여백(px 단위)
  */
-export default function useScrollBasedIconPosition(ref:RefObject<any>, fiexdPositionY:number, backgroundColor:string, padding:number){
+export default function useScrollBasedIconPosition(ref:RefObject<any>, fiexdPositionY:number, fiexdPositionX:number, backgroundColor:string, padding:number){
 
     useEffect(() => {
         if (ref.current) {
@@ -43,6 +43,7 @@ export default function useScrollBasedIconPosition(ref:RefObject<any>, fiexdPosi
                         background:backgroundColor,
                         boxShadow:'0 0 5px 0 rgba(0,0,0,0.5)',
                         y: fiexdPositionY,
+                        x: fiexdPositionX,
                         zIndex:1000
                     })
                     draggableInstance =Draggable.create(element,{
@@ -52,5 +53,5 @@ export default function useScrollBasedIconPosition(ref:RefObject<any>, fiexdPosi
             })
         }
 
-    }, [ref,backgroundColor,padding,fiexdPositionY])
+    }, [ref,backgroundColor,padding,fiexdPositionY, fiexdPositionX])
 }

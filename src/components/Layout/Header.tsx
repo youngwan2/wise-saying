@@ -10,8 +10,8 @@ export default function Header() {
         <h1 className="p-[5px] text-[1.25em] font-bold">Wise Sayings</h1>
         <div className="flex items-center">
           <HeaderProfileCard />
-            <HeaderNavButton />
-            <BookmarkModalButton />
+          <HeaderNavButton />
+          <BookmarkModalButton />
         </div>
       </header>
       <HeaderNavModal />
