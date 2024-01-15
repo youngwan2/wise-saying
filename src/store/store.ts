@@ -12,6 +12,7 @@ import type {
     MypageTapsState,
     UserInfoState,
     CardZoomInOutState,
+    NavDisplayState,
 } from "../types/store.type";
 
 
@@ -104,11 +105,18 @@ export const useUserInfoStore = create<UserInfoState>((set) => ({
     setUserInfo: (userInfo) => set(() => ({ userId: userInfo.userId, email: userInfo.email, nickname: userInfo.nickname, profileImage: userInfo.profileImage }))
 }))
 
-
-
+// 명언 카드 확대(클로즈 업) 관련 상태 저장
 export const useCardZoomInOutStore = create<CardZoomInOutState>((set)=>({
     isZoomIn : false,
     cardIndex : 0,
     setIsZoomIn : (isZoomIn) =>  set(() =>({isZoomIn})),
     setCardIndex : (index) => set(()=>({cardIndex:index}))
+}))
+
+
+
+// 네비게이션 메뉴 온오프 상태 저장
+export const useNavDisplayStateStore = create<NavDisplayState>((set)=>({
+    isDisplay:false,
+    setIsDisplay : (display) => set(()=>({isDisplay:display}))
 }))

@@ -16,6 +16,7 @@ export default function ZommInQuoteCard({ item }: PropsType) {
     const [position, setPosition] = useState({ x: 0, y: 0, xy: 0 })
     const cardRef = useRef<HTMLDivElement>(null)
     const overlayDivRef = useRef<HTMLDivElement>(null)
+    const wrapperDivRef = useRef<HTMLDivElement>(null)
 
 
     function setCardPosition(e: MouseEvent<HTMLDivElement>) {
@@ -32,13 +33,10 @@ export default function ZommInQuoteCard({ item }: PropsType) {
     useEffect(() => {
         if (cardRef.current) {
             const card = cardRef.current
-            gsap.set(card, {
-                perspective: 600
-            })
             if (isZoomIn) {
                 const { x, y, xy } = position
                 gsap.to(card, {
-                    opacity: 1, visibility: 'visible', scale: 1.25, translate: '-50%, -50%', top: '50%', rotateY: -y * 5, rotateZ: xy * 10, background: `linear-gradient(${-x * 360}deg, white, rgba(555,555,555,0.7) 80%  )`,
+                    opacity: 1,transformOrigin:'50% 100%' , visibility: 'visible', scale: 1.25, translate: '-50%, -50%', top: '50%', rotateY: -y * 5 , rotateZ: xy * 15, background: `linear-gradient(${-x * 360}deg, white, rgba(555,555,555,0.7) 80%  )`,
                     boxShadow: `${-x * 100}px ${-y * 100}px 10px 0 rgba(0,0,0,0.5)`,
                     borderRadius: 5,
                     duration: 0.1,
@@ -53,14 +51,14 @@ export default function ZommInQuoteCard({ item }: PropsType) {
 
     if(!item) return <ReplaceMessageCard childern={"로딩중입니다... 잠시만 기다려주세요. "}/>
     return (
-        <>
+        <article ref={wrapperDivRef} className={` ${isZoomIn ? 'fixed left-0 top-0 bottom-0 right-0 visible opacity-100 ' :'fixed left-0 top-0 bottom-0 right-0 invisible opacity-0'} transition-all duration-1000`}>
             {/* 카드 오버레이 */}
             <div
                 aria-label="카드 오버레이(카드의 뒷배경)"
                 ref={overlayDivRef}
                 onClick={() => {
                     setIsZoomIn(false)
-                }} className={`transition-all ${isZoomIn ? ' backdrop-blur-[3px] z-50 fixed left-0 top-0 right-0 bottom-0 bg-[#00000086] visible opacity-100 ' : 'invisible opacity-0'}`}></div>
+                }} className={`${isZoomIn ? ' backdrop-blur-[3px] z-50 fixed left-0 top-0 right-0 bottom-0 bg-[#00000086] visible opacity-100 ' : 'invisible opacity-0'}`}></div>
             {/* 카드 */}
             <div
                 aria-label="확대된 명언 카드"
@@ -69,12 +67,11 @@ export default function ZommInQuoteCard({ item }: PropsType) {
                 key={item.id}
                 className={`
                 invisible opacity-0
-                perspective-500
                 scale-[1.25]
                 z-[100]
                 fixed left-[50%] top-[30%] translate-x-[-50%] translate-y-[-50%]
                 shadow-[1px_10px_5px_0_rgba(0,0,0,0.3)] p-[2.2em] odd:-rotate-2  even:rotate-2  max-w-[300px] bg-[#FFE5A0] 
-                m-3 w-[100%] text-center transition-all delay-300 duration-300
+                m-3 w-[100%] text-center delay-300 duration-300
                 min-h-[260px]
                 `}
             >
@@ -83,6 +80,6 @@ export default function ZommInQuoteCard({ item }: PropsType) {
                     <footer className="font-bold mt-[1em]">{item.author}</footer>
                 </blockquote>
             </div>
-        </>
+        </article>
     )
 }
