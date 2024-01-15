@@ -3,7 +3,7 @@ import { Gowun_Dodum } from 'next/font/google'
 import './globals.css'
 import Footer from '../components/Layout/Footer'
 import Header from '@/components/Layout/Header'
-import Nav from '@/components/Layout/Nav'
+import Nav from '@/components/UI/navigation/Nav'
 
 
 const gowunDodum = Gowun_Dodum({ weight: '400', subsets: ['latin'] })
@@ -24,7 +24,7 @@ export default function RootLayout({
     <html lang="ko" className="bg-[#dadad7]">
       <body className={`${gowunDodum.className}`}>
         <Header />
-        <div className="flex bg-[#ffffff] backdrop-blur-[5px] max-w-[1600px] mx-auto rounded-[10px] shadow-[0_0_1px_1px_gray]">
+        <div className="flex bg-[#ffffff] backdrop-blur-[5px] max-w-[1700px] mx-auto rounded-[10px] shadow-[0_0_1px_1px_gray]">
           <Nav />
           <main className='max-w-[100%] min-h-[100vh] w-full'>
             {children}</main>

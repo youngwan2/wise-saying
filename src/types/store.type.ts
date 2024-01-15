@@ -92,3 +92,9 @@ export interface CardZoomInOutState {
     setIsZoomIn: (isZoomIn: boolean) => void
     setCardIndex : (index : number|null) => void
 }
+
+
+export interface NavDisplayState {
+    isDisplay: boolean
+    setIsDisplay: (display:boolean) => void
+}
