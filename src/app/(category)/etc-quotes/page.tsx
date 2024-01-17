@@ -13,15 +13,16 @@ export interface CategoryType {
   id: number
   category: string
 }
-export default async function GeneralPage() {
+export default async function EtcPage() {
   const categories: CategoryType[] = await getGeneralQuotesCategoryFromDB()
+  const itemCount = categories?.length || 0
   return (
     <section >
-      <h2 className="flex items-center text-[1.5em] p-[10px]" >
-        <span className="bg-[#ffae00] p-[1.5px] rounded-[5px] mx-[5px]">
+      <h2 className="flex items-center text-[1.5em] p-[10px]">
+        <span className="bg-[#ffae00] p-[2.3px] rounded-[5px] mx-[2px]">
           <HiHeart color="white" />
         </span>
-        그 외 명언({categories.length})
+        그 외 명언({itemCount})
       </h2>
       <EtcCategoryList categories={categories} />
     </section>

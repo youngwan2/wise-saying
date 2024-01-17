@@ -1,7 +1,9 @@
 "use client"
 
-import { CategoryType } from "@/app/(category)/general-quotes/page"
+import { CategoryType } from "@/app/(category)/etc-quotes/page";
 import { useRouter } from "next/navigation"
+
+
 interface PropsType {
     category: CategoryType
 }
@@ -13,11 +15,11 @@ export default function EtcCategoryCard({ category }: PropsType) {
             tabIndex={0}
             onKeyUp={(e) => {
                 const key = e.key
-                if(key !=='Enter') return
-                router.push(`/general-quotes/${category.category}`)
+                if (key !== 'Enter') return
+                router.push(`/etc-quotes/${category.category}`)
             }}
             onClick={() => {
-                router.push(`/general-quotes/${category.category}`)
+                router.push(`/etc-quotes/${category.category}`)
             }}
             key={category.id}
             className="

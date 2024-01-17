@@ -1,9 +1,8 @@
 import { useCardZoomInOutStore } from "@/store/store"
 import { ItemsType } from "@/types/items.types"
 import { MouseEvent, useEffect, useRef, useState } from "react"
-import { gsap } from "gsap/gsap-core"
+import { gsap } from "gsap/all"
 import { Draggable } from "gsap/Draggable"
-import ReplaceMessageCard from "./ReplaceMessageCard"
 
 interface PropsType {
     item: ItemsType
@@ -31,7 +30,7 @@ export default function ZommInQuoteCard({ item }: PropsType) {
     }
 
     useEffect(() => {
-        if (cardRef.current) {
+        if (cardRef.current && gsap) {
             const card = cardRef.current
             if (isZoomIn) {
                 const { x, y, xy } = position
@@ -49,9 +48,9 @@ export default function ZommInQuoteCard({ item }: PropsType) {
         }
     }, [isZoomIn, position])
 
-    if(!item) return <ReplaceMessageCard childern={"로딩중입니다... 잠시만 기다려주세요. "}/>
+    if(!item) return <span className="hidden"></span>
     return (
-        <article ref={wrapperDivRef} className={` ${isZoomIn ? 'fixed left-0 top-0 bottom-0 right-0 visible opacity-100 ' :'fixed left-0 top-0 bottom-0 right-0 invisible opacity-0'} transition-all duration-1000`}>
+        <div ref={wrapperDivRef} className={` ${isZoomIn ? 'fixed left-0 top-0 bottom-0 right-0 visible opacity-100 ' :'fixed left-0 top-0 bottom-0 right-0 invisible opacity-0'} transition-all duration-1000`}>
             {/* 카드 오버레이 */}
             <div
                 aria-label="카드 오버레이(카드의 뒷배경)"
@@ -80,6 +79,6 @@ export default function ZommInQuoteCard({ item }: PropsType) {
                     <footer className="font-bold mt-[1em]">{item.author}</footer>
                 </blockquote>
             </div>
-        </article>
+        </div>
     )
 }

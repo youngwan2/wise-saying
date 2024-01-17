@@ -1,46 +1,32 @@
+"use client"
 
-import type { Metadata } from 'next'
-import { HiCalendar } from 'react-icons/hi'
-import QuotesCard from '@/components/UI/card/QuotesCard'
-import { getWiseSayingByDay } from '@/services/item.get'
+import { HiUserGroup } from 'react-icons/hi'
+import LoadMoreButton from '@/components/UI/button/LoadMoreButton'
+import useInfiniteScroll from '@/custom/useInfiniteScroll'
+import QuoteList from '@/components/UI/card/QuoteList'
+import ReplaceMessageCard from '@/components/UI/card/ReplaceMessageCard'
 
-
-type MetadataPropsType = {
-  params : {id: string}
-}
-const weekdayList = ['월', '화', '수', '목', '금', '토', '일']
-
-//메타 데이터
-export async function generateMetadata({
-  params
-}: MetadataPropsType):Promise<Metadata> {
-
-  const { id} = params
-
-  return {
-    title: weekdayList[Math.max(Number(id)-1,0)]+ " | My wise saying",
-    description: `${weekdayList[Math.max(Number(id)-1,0)]}요일에 읽으면 좋은 명언들을 모아놓은 페이지 입니다.`
-  }
+interface PropsType {
+  params: { id: string },
 }
 
-// 페이지
-export default async function Page({ params }: { params: { id: string } }) {
-  const { id } = params
+const DAYS = ['월','화','수','목','금','토','일']
+export default function DayQuotesPage({ params }: PropsType) {
+  const pathName: string =  decodeURIComponent(params.id)
 
-  const items = await getWiseSayingByDay(id)
-  const itemCount =items.length
+  const { items, size, setSize, isLastPage, isLoadingMore, itemCount } = useInfiniteScroll(pathName, 'days')
 
-
+  if(!items) return <ReplaceMessageCard childern={<p>아이템을 조회중입니다. 잠시만 기다려 주세요.</p>}/>
   return (
-    <section>
-      <h2 className="text-[1.5em] flex items-center p-5">
-        <span className="bg-[#ebbb72] p-[2px] mr-[5px]">
-          <HiCalendar color="white" />
+    <section className='h-[100vh]'>
+      <h2 className="flex items-center text-[1.5em] p-[5px] mb-[1em] ">
+        <span className="bg-[gold] p-[1.5px] rounded-[5px] m-[10px]">
+          <HiUserGroup />
         </span>
-        {weekdayList[Math.max(Number(id) - 1, 0)]}({itemCount})
+        {DAYS[Math.min(Number(pathName)-1,0)]}요일 명언({itemCount})
       </h2>
-
-      <QuotesCard items={items} category='요일' />
+      <QuoteList items={items} />
+      <LoadMoreButton size={size} setSize={setSize} isLastPage={isLastPage} isLoadingMore={isLoadingMore} />
     </section>
   )
 }

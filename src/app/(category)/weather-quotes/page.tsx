@@ -1,22 +1,27 @@
-export const dynamic = 'force-dynamic'
-import type { Metadata } from 'next'
-import QuotesCard from '@/components/UI/card/QuotesCard'
-import { getItemFromDB } from '@/services/item.get'
-import { HiSun } from 'react-icons/hi'
+"use client"
+
+import LoadMoreButton from '@/components/UI/button/LoadMoreButton'
+import useInfiniteScroll from '@/custom/useInfiniteScroll'
+import QuoteList from '@/components/UI/card/QuoteList'
+import ReplaceMessageCard from '@/components/UI/card/ReplaceMessageCard'
+import { HiSun } from 'react-icons/hi2'
 
 
-export const metadata: Metadata = {
-  title: '날씨 관련 명언/글귀 | My wise saying'
-}
-
-export default async function WeatherPage() {
-  const items = await getItemFromDB('weathers')
-  const itemCount = items.length
+export default function WeatherPage() {
+  const pathName: string =  '날씨/계절'
+  const { items, size, setSize, isLastPage, isLoadingMore, itemCount } = useInfiniteScroll('', 'weathers')
+  
+  if(!items) return <ReplaceMessageCard childern={<p>아이템을 조회중입니다. 잠시만 기다려 주세요.</p>}/>
   return (
-    <section>
-      <h2 className="flex items-center text-[1.5em] p-[10px] ">
-        <span className="bg-[#ffae00] p-[1.5px] rounded-[5px] mx-[2px]"> <HiSun color={'white'} /></span>날씨 관련 명언/글귀({itemCount})</h2>
-      <QuotesCard items={items} category='날씨' />
+    <section className='h-[100vh]'>
+      <h2 className="flex items-center text-[1.5em] p-[5px] mb-[1em] ">
+        <span className="bg-[#ffae00] p-[1.5px] rounded-[5px] m-[10px]">
+          <HiSun color="white" />
+        </span>
+        {pathName} 명언({itemCount})
+      </h2>
+      <QuoteList items={items} />
+      <LoadMoreButton size={size} setSize={setSize} isLastPage={isLastPage} isLoadingMore={isLoadingMore} />
     </section>
   )
 }
