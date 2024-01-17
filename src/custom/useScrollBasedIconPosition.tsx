@@ -5,7 +5,6 @@ import { Draggable } from "gsap/Draggable";
 
 
 /**
- * 
  * @param ref useRef() 로 생성된 참조 객체를 전달(ex. const buttonRef = useRef<HTMLButtonElement>(null))
  * @param fiexdPositionY 특정위치로 스크롤 이후 고정될 Y축 좌표 지점(px단위)
  * @param backgroundColor 배경색

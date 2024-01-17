@@ -17,7 +17,9 @@ export function quotesSelector(items: ItemsType[], id: number) {
 
 // 북마크 아이템을 추가하는 함수
 export const postBookmarkItem = (hasToken: boolean, itemId: number, items: ItemsType[], category: string) => {
+    console.log(hasToken)
     if (!hasToken) return alert('로그인 후 이용해주시길 바랍니다.')
+
     const token = localStorage.getItem('token')
     const selectedItem = items.find((item) => item.id === itemId)
     const postData = {

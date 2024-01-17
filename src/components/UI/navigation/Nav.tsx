@@ -63,7 +63,7 @@ export default function Nav() {
         <li className="mt-5 flex items-center">
           <HiHeart />
           <span className="ml-1">
-            <Link href={'/general-quotes'}>그 외 명언</Link>
+            <Link href={'/etc-quotes'}>그 외 명언</Link>
           </span>
         </li>
       </ul>
@@ -108,7 +108,7 @@ export default function Nav() {
         <li className="mt-3 flex items-center">
           <HiOutlineCog />
           <span className="ml-1">
-            <Link href={'/general'}>환경설정</Link>
+            <Link href={'/system'}>환경설정</Link>
           </span>
         </li>
       </ul>

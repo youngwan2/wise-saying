@@ -88,9 +88,9 @@ export interface UserInfoState extends UserInfoType {
 
 export interface CardZoomInOutState {
     isZoomIn: boolean
-    cardIndex: number | null
+    cardIndex: number | 0
     setIsZoomIn: (isZoomIn: boolean) => void
-    setCardIndex : (index : number|null) => void
+    setCardIndex : (index : number) => void
 }
 
 

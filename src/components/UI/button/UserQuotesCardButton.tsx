@@ -33,7 +33,7 @@ export default function UserQuotesCardButton({ index, item, items }: PropsType) 
 
     return (
         <article
-            aria-label="수정 및 삭제, 꾸미기,담기 버튼의 컨테이너"
+            aria-label="수정 및 삭제, 꾸미기,담기, 확대, 듣기 버튼의 컨테이너"
             className={` flex justify-center items-center invisible opacity-0 bg-[#14131328] absolute left-0 right-0 top-0 bottom-0  group-hover:visible group-hover:opacity-100 flex-wrap transition-all group-hover:backdrop-blur-[1px]  `}>
             <div className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">
                 <article className={`${userEmail === item.email ? 'block' : 'hidden'} min-h-[60px] min-w-[60px]`}>

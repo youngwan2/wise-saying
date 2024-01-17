@@ -110,7 +110,7 @@ export const useCardZoomInOutStore = create<CardZoomInOutState>((set)=>({
     isZoomIn : false,
     cardIndex : 0,
     setIsZoomIn : (isZoomIn) =>  set(() =>({isZoomIn})),
-    setCardIndex : (index) => set(()=>({cardIndex:index}))
+    setCardIndex : (cardIndex) => set(()=>({cardIndex}))
 }))
 
 
