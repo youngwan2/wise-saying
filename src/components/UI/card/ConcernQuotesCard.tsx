@@ -17,14 +17,14 @@ export default function ConcernQuotesCard() {
     if (bookmarkList.length < 1) return <h2 className="border inline-block p-[2em] relative left-[50%] translate-x-[-50%] mt-[8em] text-[1.25em] rounded-[10px] shadow-[5px_10px_10px_0_rgba(0,0,0,0.5)] bg-gradient-to-tr from-orange-50 to-white">추가된 게시글이 없습니다.</h2>
     
     return (
-        <article className="overflow-y-auto overflow-x-hidden max-h-[700px]">
+        <article className="mt-[3em] text-start min-h-[630px]">
             {bookmarkList.map((bookmark) => {
                 return (
-                    <ul className="flex flex-col bg-[white] max-w-[1200px] w-full p-[1em] pt-[2em] m-[5px] rounded-[10px] subpixel-antialiased  relative  " key={bookmark.id}>
-                        <li className="mx-[5px] font-bold p-[7px] border border-[#454444a0] "><span className="inline-block min-w-[50px] tracking-[6px]">식별| </span>{bookmark.id}</li>
-                        <li className="mx-[5px] font-bold p-[7px] border border-[#454444a0] "><span className="inline-block min-w-[50px] tracking-[5px]">구분| </span>{bookmark.category}</li>
-                        <li className="mx-[5px] font-bold p-[7px] border border-[#454444a0] "><span className="inline-block min-w-[50px] tracking-[5px]">저자| </span>{bookmark.author}</li>
-                        <li className="mx-[5px] font-bold p-[7px] border border-[#454444a0] "><span className="inline-block min-w-[50px] tracking-[5px]">명언| </span>{bookmark.wise_sayings}</li>
+                    <ul className="border shadow-[inset_-3px_-3px_5px_0_rgba(0,0,0,0.5)] p-[10px] rounded-[10px] my-[5px] max-w-[700px] mx-auto hover:bg-gradient-to-r from-white to-gray-200 relative " key={bookmark.id}>
+                        <li className="flex"><span className="rounded-[5px] mr-[10px] min-w-50px text-center max-w-[50px] inline-block w-full px-[3px] m-[3px] font-semibold">구분 </span>{bookmark.id}</li>
+                        <li className="flex"><span className="rounded-[5px] mr-[10px] min-w-50px text-center max-w-[50px] inline-block w-full px-[3px] m-[3px] font-semibold">인물 </span>{bookmark.author}</li>
+                        <li className="flex"><span className="rounded-[5px] mr-[10px] min-w-50px text-center max-w-[50px] inline-block w-full px-[3px] m-[3px] font-semibold">명언 </span>{bookmark.wise_sayings}</li>
+                        <li className="flex"><span className="rounded-[5px] mr-[10px] min-w-50px text-center max-w-[50px] inline-block w-full px-[3px] m-[3px] font-semibold">분류 </span>{bookmark.category}</li>
                         <li className="text-[#f77b65] text-[1.5em] absolute right-[2em] top-[3px] hover:shadow-[0_0_1px_1px_tomato] " ><Link href={`${bookmark.url}`}><HiLink /></Link></li>
                         <li><BookmarkDeleteButton id={bookmark.id} /></li>
                     </ul>

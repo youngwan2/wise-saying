@@ -5,6 +5,7 @@ import { Draggable } from "gsap/Draggable"
 import { useEffect, useRef, useState } from "react"
 import { useUserPostIdStore } from "@/store/store"
 import useHasToken from "@/custom/useHasToken"
+import { logoutUser } from "@/utils/commonFunctions"
 
 
 type PostType = {
@@ -28,7 +29,7 @@ export default function UpdateForm() {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
 
-    // 유저가 작성한 포스트를 등록 요청하는 메소드
+    // 사용자가 작성한 명언 등록 PUT
     const updateUserPost = () => {
         if (!hasToken) {
             alert("로그인 해주세요")
@@ -55,9 +56,7 @@ export default function UpdateForm() {
             }
             if (success === false) {
                 alert("최대 로그인 가능 시간이 초과하였습니다. 로그인을 다시 시도해 주세요")
-                localStorage.removeItem('user')
-                localStorage.removeItem('token')
-                router.push('/login')
+                logoutUser()
             }
         }).catch((error) => {
             setError("데이터 요청에 실패하였습니다. 나중에 다시 시도해주세요/")
@@ -66,14 +65,17 @@ export default function UpdateForm() {
 
     }
 
-    // 유저가 작성한 단일 포스트 데이터를 요청하는 메소드
+    // 유저가 작성한 단일 포스트 요청 GET
     const getUserPostBy = async (postId: number) => {
         setLoading(true)
         try {
-            const response = await fetch(`http://localhost:3000/api/items/users/${postId}`)
-            const { item, status } = await response.json()
+            const response = await fetch(`http://localhost:3000/api/items/users/post?postid=${postId}`)
+            const { item, status, meg } = await response.json()
             if (status === 200) {
                 setPost(item)
+            }
+            if (status !== 200) {
+                alert(meg)
             }
             setLoading(false)
 
@@ -84,7 +86,7 @@ export default function UpdateForm() {
     }
 
 
-    // UI 드래그 이벤트 등록
+    // UI 드래그 이벤트 등록 GSAP
     useEffect(() => {
         let clear: number | NodeJS.Timeout
         if (formRef.current) {
@@ -97,7 +99,7 @@ export default function UpdateForm() {
             }, 2000)
 
         }
-        return (()=>{
+        return (() => {
             clearTimeout(clear)
         })
 

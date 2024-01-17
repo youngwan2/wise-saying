@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import jwt, { JwtPayload } from 'jsonwebtoken'
 
+
+/**
+ * 
+ * @param req NextRequest
+ * @returns user - accessToken 페이로드 반환
+ */
 export const accessTokenVerify= (req: NextRequest) => {
 
     const rawToken = req.headers.get('authorization')?.split(' ') || []
@@ -17,13 +23,12 @@ export const accessTokenVerify= (req: NextRequest) => {
         return NextResponse.json({ meg: '요청 토큰을 찾을 수 없습니다. 확인 후 양식에 맞춰서 다시 보내주세요.', status: 400, stateText: 'Bad Request', success: false })
     }
 
-    const vaildToken = jwt.verify(token, scrept ) as JwtPayload
+    const decode = jwt.verify(token, scrept ) as JwtPayload
     
-    if(!vaildToken) {
+    if(!decode) {
         return NextResponse.json({meg : '토큰이 만료되었습니다. 다시 로그인을 시도해주세요.', status : 401, success:false})
     }
     
-    const user = vaildToken.data
-    console.log(user)
-    return true
+    const user = decode.data
+    return user
 }

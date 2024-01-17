@@ -14,12 +14,10 @@ interface PropsType {
     count: number
 }
 
-
+const MAX_RENDER_PAGE = 5
 
 export default function MypageMyQuoteList({ userQuotes, setPage, page, count }: PropsType) {
-
-
-    const renderPageCount = 5
+    
     const [limit, setLimit] = useState(0)
     const [firstPage, setFirstPage] = useState(1)
     const [lastPage, setLastPage] = useState(0)
@@ -37,15 +35,15 @@ export default function MypageMyQuoteList({ userQuotes, setPage, page, count }: 
 
     // 페이지 네이션 상태 초기 셋팅
     useEffect(() => {
-        setPageGroup(Math.ceil((page + 1) / renderPageCount))
-        setLimit(Math.ceil(count / renderPageCount))
-        setFirstPage(lastPage - (renderPageCount - 1))
-        setLastPage(pageGroup * renderPageCount)
+        setPageGroup(Math.ceil((page + 1) / MAX_RENDER_PAGE))
+        setLimit(Math.ceil(count /  MAX_RENDER_PAGE))
+        setFirstPage(lastPage - ( MAX_RENDER_PAGE - 1))
+        setLastPage(pageGroup *  MAX_RENDER_PAGE)
         render()
     }, [page, count, lastPage, firstPage, pageGroup, render])
 
 
-    const [categories, setCategories] = useState<string[]>(['전체']);
+    const [categories, setCategories] = useState<string[]>(['']);
     const categoryCreator = useCallback(() => {
         const tempCategories: string[] = []
         userQuotes?.forEach((item) => {
@@ -64,6 +62,7 @@ export default function MypageMyQuoteList({ userQuotes, setPage, page, count }: 
     return (
         <>
             <section className="mt-[3em] text-center min-h-[630px]">
+            <button className="border rounded-[2em] py-[3px] px-[10px] bg-[tomato] text-white m-[3px]">{"전체"}</button>
                 {categories?.map((category) => {
                     return (
                         <button key={category} className="border rounded-[2em] py-[3px] px-[10px] bg-[tomato] text-white m-[3px]">{category}</button>
@@ -78,9 +77,6 @@ export default function MypageMyQuoteList({ userQuotes, setPage, page, count }: 
             <Pagination limit={limit} page={page} pageList={pageList} setPage={setPage} />
         </>
     )
-
-
-    {/* <button className="border-[2px] p-[6px] mt-[2em] bg-gradient-to-tr from-slate-800 to-slate-400 px-[2em] text-white shadow-[inset_-2px_-2px_3px_rgba(0,0,0,0.5)] rounded-[5px] hover:bg-gradient-to-r">더보기</button> */ }
 }
 
 
