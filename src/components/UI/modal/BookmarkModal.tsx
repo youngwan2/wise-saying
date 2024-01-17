@@ -4,7 +4,7 @@ import useHasToken from "@/custom/useHasToken"
 import { getBookmarkListFormDB } from "@/services/item.get"
 import { useBookmarkStore } from "@/store/store"
 
-import { useCallback, useEffect } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { HiBookmarkSquare } from "react-icons/hi2"
 import { logoutUser } from "@/utils/commonFunctions"
@@ -21,26 +21,30 @@ interface BookmarkListType {
     url: string
 }
 
+const MAX_PAGE = 5
 export default function BookmarkModal() {
     const toggleState = useBookmarkStore((state) => state.toggleState)
     const setBookmarkList = useBookmarkStore((state) => state.setBookmarkList)
     const bookmarkList = useBookmarkStore((state) => state.bookmarkList)
     const setListCount = useBookmarkStore((state) => state.setListCount)
-
+    const [page, setPage] = useState(0)
     const hasToken = useHasToken()
     const token = hasToken ? localStorage.getItem('token')! : ''
 
     const router = useRouter()
 
-    // fetcher 함수는 key 파라미터를 그대로 받아들이며, 캐시 키도 전체 key 인수와 연관됩니다. 위의 예에서 url과 token은 둘 다 캐시 키에 들어맞습니다.
-    const { data, isLoading } = useSWR(['/api/bookmark', token], ([url, token]) => getBookmarkListFormDB(url, token), {
+
+    const { data, isLoading } = useSWR([`/api/bookmark?page=${page}&limit=5`, token], ([url, token]) => getBookmarkListFormDB(url, token), {
         refreshInterval: 4000
     })
     const hasData = !!data
+    const total = data?.totalCount || 0
+    const currentTotal = data?.items?.length || 0
+    const maxPage = Math.ceil(total/5)
 
-    const bookmarkListUpdate = useCallback((data: { totalCount: any; items: any }, hasData:boolean) => {
+    const bookmarkListUpdate = useCallback((data: { totalCount: number; items: BookmarkListType[] }, hasData: boolean) => {
         if (hasData) {
-            const {totalCount: count, items} = data
+            const { totalCount: count, items } = data
             setBookmarkList(items)
             setListCount(count)
         }
@@ -55,19 +59,26 @@ export default function BookmarkModal() {
 
     useEffect(() => {
         bookmarkListUpdate(data, hasData)
-    }, [bookmarkListUpdate,data, hasData])
-
+    }, [bookmarkListUpdate, data, hasData])
 
     return (
-        <article className={`${toggleState ? 'z-40 fixed left-0 right-0 top-0 bottom-0 bg-[#000000a4] visible opacity-100' : 'invisible opacity-0'}`}>
+        <section className={`${toggleState ? 'z-40 fixed left-0 right-0 top-0 bottom-0 bg-[#000000a4] block' : ' z-40 fixed left-0 right-0 top-0 bottom-0 bg-[#000000a4] hidden'}`}>
+            <h2 className="text-white text-[2em] mb-[1em] pl-[10px] flex items-center justify-center mt-[2em]"><HiBookmarkSquare className="pr-[5px]" />북마크 리스트({total})</h2>
             <BookmarkCloseButton />
-            <div className="px-[2em] mt-[2em] absolute left-[50%] translate-x-[-50%] top-[2em] overflow-y-auto overflow-x-hidden max-h-[800px] p-[1em] w-[90%]">
-                <h2 className="text-white text-[2em] mb-[1em] pl-[10px] flex items-center"><HiBookmarkSquare className="pr-[5px]" />북마크 리스트</h2>
+            <div className="px-[1em] mt-[2em] overflow-y-auto overflow-x-hidden  p-[1em] w-[90%] mx-auto flex flex-col justify-center items-center">
                 {!isLoading ? bookmarkList.map((bookmark: BookmarkListType) => {
                     return <BookmarkCard bookmark={bookmark} key={bookmark.id} />
                 }) : <span>데이터를 가져오는 중입니다.</span>}
-
             </div>
-        </article>
+            <article className="flex justify-center fixed bottom-[1.8em] left-[50%] translate-x-[-50%]">
+                <button className={`mx-[10px] text-white ${page===0? 'invisible':'visible'}`}onClick={() => {
+                    setPage(Math.max(0, page - 1))
+                }}>이전</button>
+                <span className={"mx-[10px] text-white"}>{page + 1}/{maxPage}</span>
+                <button className={`mx-[10px] text-white ${currentTotal<5? 'invisible':'visible'}`} onClick={() => {
+                    setPage(Math.min(MAX_PAGE, page + 1))
+                }}>다음</button>
+            </article>
+        </section>
     )
 }

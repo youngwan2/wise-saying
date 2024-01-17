@@ -27,6 +27,7 @@ export default function MypageContainer() {
         })
         const result = await response.json()
         const { items: userInfo } = result
+        
         return userInfo
     }
 
@@ -35,8 +36,8 @@ export default function MypageContainer() {
         const response = await fetch(url, {
             method: 'GET',
         })
-
         const { items: userInfo, count } = await response.json()
+
         return { userInfo, count }
     }
 

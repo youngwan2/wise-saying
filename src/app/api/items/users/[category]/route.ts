@@ -4,24 +4,21 @@ import { openDb } from "@/connect";
 
 // 조회
 export async function GET(req: NextRequest, res: { params: { category: string } }) {
-
-    const {category  } = res.params
-    const page = req.nextUrl.searchParams.get('page')
-    const limit = req.nextUrl.searchParams.get('limit')
-    console.log(category, page, limit)
-
     const db = await openDb()
 
-    const joinQuery = `
-        SELECT id, wise_sayings, category, author, B.email AS email
-        FROM quotes_user A JOIN users_group B
-        ON A.user_id = B.user_id AND category = ?
-        LIMIT ? OFFSET ?*15
-    `
+        const { category } = res.params
+        const page = req.nextUrl.searchParams.get('page')
+        const limit = req.nextUrl.searchParams.get('limit')
 
-    const items = await db.all(joinQuery, [category, limit, page])
-    // if (!items) return NextResponse.json({items:[]})
-    return NextResponse.json(items)
+        const query = `
+            SELECT id, wise_sayings, category, author, B.email AS email
+            FROM quotes_user A JOIN users_group B
+            ON A.user_id = B.user_id AND category = ?
+            LIMIT ? OFFSET ?*15
+        `
+        const items = await db.all(query, [category, limit, page])
+        return NextResponse.json(items)
+
 }
 
 
@@ -31,6 +28,8 @@ export async function PUT(req: NextRequest, res: { params: { id: string } }) {
     const accessToken = req.headers.get("authorization")?.replace("Bearer ", "")!
     const scrept = process.env.JWT_SCREPT!
     const { wise_sayings, category, author } = await req.json()
+
+    console.log(wise_sayings, category, author)
 
     const db = await openDb()
 

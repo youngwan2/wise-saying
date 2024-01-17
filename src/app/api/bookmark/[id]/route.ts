@@ -4,7 +4,7 @@ import * as jwt from 'jsonwebtoken'
 
 
 
-// 북마크 삭제 처리
+// 북마크 삭제
 export async function DELETE(req:NextRequest,res:{params: {id: string}} ) {
     const {id} =  res.params
     const db = await openDb();
