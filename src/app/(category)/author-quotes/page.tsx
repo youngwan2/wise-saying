@@ -17,7 +17,7 @@ export default async function AuthorPage() {
   return (
     <section>
       <h2 className="flex items-center text-[1.5em] p-[10px]">
-        <span className="bg-[#ffae00] p-[2.3px] rounded-[5px] mx-[2px]">
+      <span className="bg-[#fbd15e] p-[1.5px] rounded-[5px] m-[10px] text-white">
           <HiUserGroup color="white" />
         </span>
         인물별 명언({itemCount})

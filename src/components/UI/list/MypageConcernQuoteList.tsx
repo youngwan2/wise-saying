@@ -1,4 +1,4 @@
-import ConcernQuotesCard from "../card/ConcernQuotesCard";
+import ConcernQuotesCard from "../card/MypageConcernQuotesCard";
 
 export default function MypageConcernQuoteList() {
 

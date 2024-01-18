@@ -1,6 +1,13 @@
 "use client"
 import { useCallback, useEffect, useRef, useState, useMemo } from "react"
-import { useBackgroundColorStore, useImageElementStore, useQuotesCardSizeStore, useQuotesLineHeightStore, useQuotesStrokeStyleStore, useQuotesTextStyleStore } from "@/store/store"
+import {
+    useBackgroundColorStore,
+    useImageElementStore,
+    useQuotesCardSizeStore,
+    useQuotesLineHeightStore,
+    useQuotesStrokeStyleStore,
+    useQuotesTextStyleStore
+} from "@/store/store"
 import wrap from "word-wrap"
 
 
@@ -40,10 +47,10 @@ export default function QuotesStylerCanvas() {
     const clearCanvas = (ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     };
-    const bgColorDraw= useCallback((ctx: CanvasRenderingContext2D,width: number, height: number)=>{
+    const bgColorDraw = useCallback((ctx: CanvasRenderingContext2D, width: number, height: number) => {
         ctx.fillStyle = bgColor
         ctx.fillRect(0, 0, width, height)
-    },[bgColor])
+    }, [bgColor])
 
     // 텍스트 그리기
     const draw = useCallback((ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) => {

@@ -1,62 +1,31 @@
 import { ItemsType } from "@/types/items.types"
 import { ChangeEvent, FormEvent } from "react"
 
-// 페이지 이동 함수
+/**
+ * 페이지 이동 함수
+ * @param router next/navigation의 useRouter()
+ * @param id 페이지 식별자
+ * @returns {boolean} 페이지 전환 유무를 반환
+ */
 export const pageSwitch = (router: any, id: number) => {
     router.push(`/quotes-styler/auhtor/${id}`)
 
     return true
 }
 
-// 명언 선택 함수
+/**
+ * * 명언 선택 함수
+ * @param items - 전체 아이템 목록
+ * @param id - 선택할 아이템의 식별자
+ */
 export function quotesSelector(items: ItemsType[], id: number) {
     const item = items.find((item) => item.id === id)
     localStorage.setItem('selectedItem', JSON.stringify(item))
 }
 
-
-// 북마크 아이템을 추가하는 함수
-export const postBookmarkItem = (hasToken: boolean, itemId: number, items: ItemsType[], category: string) => {
-    console.log(hasToken)
-    if (!hasToken) return alert('로그인 후 이용해주시길 바랍니다.')
-
-    const token = localStorage.getItem('token')
-    const selectedItem = items.find((item) => item.id === itemId)
-    const postData = {
-        author: selectedItem?.author,
-        wise_sayings: selectedItem?.wise_sayings,
-        category
-    }
-
-    const url = '/api/bookmark'
-    fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(postData),
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    }).then(async (response) => {
-        const result = await response.json()
-        const { meg, status } = result
-
-        if (status === 201) {
-            alert(meg)
-
-        }
-        if (status === 422) {
-            alert(meg)
-        }
-        if (status === 401) {
-            alert(meg)
-            logoutUser()
-        }
-    }).catch((error) => {
-        console.error(error)
-    })
-}
-
-
-// 토큰 만료 이후 강제 로그아웃 함수
+/** 
+ * * 토큰 만료 이후 강제 로그아웃 함수
+ * */ 
 export const logoutUser = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('user')
@@ -65,10 +34,10 @@ export const logoutUser = () => {
 }
 
 
-// 이미지 미리보기 설정 함수
 /**
- * @param e 
- * @returns 이미지 주소를 반환(src)
+ * * 이미지 미리보기 주소(src)를 반환하는 함수
+ * @param e ChangeEvent
+ * @returns {string} 이미지 주소를 반환(src)
  */
 export const imagePreviewReader = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target && e.target.files) {
@@ -86,3 +55,4 @@ export const imagePreviewReader = (e: ChangeEvent<HTMLInputElement>) => {
 export const onSubmit = (e:FormEvent) => {
     e.preventDefault()
 }
+

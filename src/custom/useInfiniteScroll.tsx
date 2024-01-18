@@ -1,8 +1,15 @@
 import { getQuotesBy } from '@/services/item.get'
 import useSWRInfinite from 'swr/infinite'
 
-
-const MAX_ITEM_COUNT = 15
+/**
+ * SWR | 버튼형 무한 스크롤 커스텀 훅
+ * @param pathname 페이지 경로
+ * @param type 타입(각 타입 별로 서로 다른 api 경로로 요청)
+ * @returns 
+ * @example
+ * // 사용 예시
+ * const { items, size, isLastPage, setSize, isLoadingMore, itemCount } = useInfiniteScroll('/some/path', 'authors');
+ */
 export default function useInfiniteScroll(pathname: string | number, type: string) {
 
   const pathName = pathname
@@ -17,7 +24,7 @@ export default function useInfiniteScroll(pathname: string | number, type: strin
       case 'days':
       case 'users':
       case 'etc':
-        url = `/api/items/${type}/${pathName}/?page=${pageIndex}&limit=15`
+        url = `/api/items/${type}/${pathName}?page=${pageIndex}&limit=15`
         break;
 
       case 'weathers': {
@@ -37,8 +44,7 @@ export default function useInfiniteScroll(pathname: string | number, type: strin
   const isLoadingMore = isLoading || (size > 0 && itemInfo && typeof itemInfo[size - 1] === 'undefined')
 
   // 중첩 배열의 마지막 배열 요소의 길이가 최대 아이템 갯수 보다 작다면 해당 지점을 마지막 페이지로 판단한다.
-  const isLastPage = itemInfo?.[itemInfo.length-1]?.length < MAX_ITEM_COUNT;
 
-  return { items, size, isLastPage, setSize, isLoadingMore, itemCount }
+  return { items, size, setSize, isLoadingMore, itemCount }
 
 }

@@ -49,7 +49,6 @@ export default function QuoteCard({ item, items, index }: PropsType) {
     if (liRefs.current[cardIndex] === undefined) return
     if (liRefs.current.length > 0 && cardIndex >= 0) {
       const liEl = liRefs.current[cardIndex]
-      console.log(cardIndex)
       cardZoomInoutSwitch(liEl)
     }
   }, [cardIndex, cardZoomInoutSwitch])
@@ -65,9 +64,9 @@ export default function QuoteCard({ item, items, index }: PropsType) {
       }}
       key={item.id}
       className={`
-                text-[1.1em]
+                text-[1.15em]
                 group
-                p-[1.5em] my-[1em] m-3 w-[100%] max-w-[300px] min-h-[250px] max-h-[400px] bg-gradient-to-t from-[#fff1a3] to-[#faeda3] text-center 
+                p-[1.5em] my-[1em] m-3 w-[100%] max-h-[600px]  max-w-[330px] min-h-[250px] bg-gradient-to-t from-[#fff1a3] to-[#faeda3] text-center 
                 odd:-rotate-1  even:rotate-1
                 transition-all duration-700 shadow-[5px_10px_5px_0_rgba(0,0,0,0.3)] antialiased
                 hover:shadow-[-1px_20px_10px_0_rgba(0,0,0,0.5)] hover:translate-y-[-20px] hover:cursor-pointer

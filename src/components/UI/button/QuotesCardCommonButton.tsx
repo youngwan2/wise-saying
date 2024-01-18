@@ -1,15 +1,19 @@
 import { HiOutlineZoomIn } from "react-icons/hi"
 import { SlEarphones } from "react-icons/sl"
 import useHasToken from "@/custom/useHasToken"
-import { pageSwitch, postBookmarkItem, quotesSelector } from "@/utils/commonFunctions"
+import { pageSwitch, quotesSelector } from "@/utils/commonFunctions"
+
 import { HiOutlineBookmark, HiScissors } from "react-icons/hi2"
 import { PropsType } from "./QuotesCardButton"
 import { useRouter } from "next/navigation"
 import { useCardZoomInOutStore } from "@/store/store"
+import { postBookmarkItem } from "@/services/item.post"
 
 
 
 export default function QuotesCardCommonButton({ itemId, items, category, index }: PropsType) {
+
+
     const setIsZoomIn = useCardZoomInOutStore((state) => state.setIsZoomIn)
     const setCardIndex = useCardZoomInOutStore((state) => state.setCardIndex)
     const hasToken = useHasToken()

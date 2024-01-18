@@ -10,7 +10,7 @@ export default function HeaderNavModal() {
     return (
             <article
                 aria-label="하단 네비게이션"
-                className={`max-w-[900px] left-[50%] translate-x-[-50%] fixed bottom-0 z-50 h-[full] w-[100vw] flex flex-wrap
+                className={`max-w-[950px] left-[50%] translate-x-[-50%] fixed bottom-0 z-50 h-[full] w-[100vw] flex flex-wrap
                      justify-center items-center text-center overflow-hidden bg-[#ffffff]
                      transition-all duration-700
                     shadow-[0_-5px_10px_0_rgba(0,0,0,0.5)]  

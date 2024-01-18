@@ -16,7 +16,7 @@ export default async function DayPage() {
   return (
     <section className="w-full">
       <h2 className="flex items-center text-[1.5em] p-[10px]">
-        <span className="bg-[#ffae00] p-[2.3px] rounded-[5px] mx-[2px]">
+      <span className="bg-[#fbd15e] p-[1.5px] rounded-[5px] m-[10px] text-white">
           <HiCalculator color="white" />
         </span>
         요일별 명언({itemCount})

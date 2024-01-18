@@ -3,9 +3,9 @@ import jwt, { JwtPayload } from 'jsonwebtoken'
 
 
 /**
- * 
+ * * accessToken 유효성 검증
  * @param req NextRequest
- * @returns user - accessToken 페이로드 반환
+ * @returns user - accessToken 검증 후 반환하는 페이로드의 유저 정보를 반환
  */
 export const accessTokenVerify= (req: NextRequest) => {
 
