@@ -1,5 +1,5 @@
 import QuoteStyler from "@/components/UI/styler/QuoteStyler"
-export default function QuoteStylerPage({params}:{params:{id: string}}){
+export default function QuoteStylerPage(){
         return (
         <QuoteStyler/>
     )

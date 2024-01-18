@@ -18,7 +18,9 @@ export default function Carousel() {
             <article className='overflow-hidden' ref={emblaRef}>
                 <figure className="flex  max-w-[1000px] px-[3em] pb-[5em] mt-[5em]">
                     {images.map((image, i) => {
-                        return <Image onClick={(e) => {
+                        return <Image 
+                        
+                         onClick={(e) => {
                             const src = images[i]
                             setImageSrc(src)
                         }} className='rounded-[1em] mx-[10px] shadow-custom1 hover:cursor-pointer bg-[#fafafa]' key={image} src={image} alt='명언 카드 배경 이미지' width={230} height={230}></Image>

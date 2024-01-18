@@ -21,12 +21,12 @@ export default function RootLayout({
 }) {
 
   return (
-    <html lang="ko" className="bg-[#dadad7]">
+    <html lang="ko" className="bg-gradient-to-br from-orange-200 to-slate-200">
       <body className={`${gowunDodum.className}`}>
         <Header />
-        <div className="flex bg-[#ffffff] backdrop-blur-[5px] max-w-[1700px] mx-auto rounded-[10px] shadow-[0_0_1px_1px_gray]">
+        <div className="shadow-[inset_-2px_-2px_5px_rgba(0,0,0,0.5)] mt-[3.5em]  flex bg-[#ffffff] backdrop-blur-[5px] max-w-[1700px] mx-auto rounded-[10px]  ">
           <Nav />
-          <main className='max-w-[100%] min-h-[100vh] w-full'>
+          <main className='max-w-[98%] min-h-[100vh] w-full mx-[5px]'>
             {children}</main>
         </div>
         <Footer />

@@ -22,17 +22,22 @@ export async function GET(req: NextRequest) {
           ORDER BY id DESC
           LIMIT ? OFFSET ?*5
         `
-        const countSelectQuery =
+        const countSelectQuery = `
+          SELECT COUNT(*) AS count
+          FROM bookmarks
+          WHERE user_id = ?
         `
-        SELECT COUNT(*) AS count
-        FROM bookmarks
-        WHERE user_id = ?
-        ORDER BY id DESC
-        `
-        const items = await db.all(query, [userId, limit, page])
-        const countSelectResult = await db.get(countSelectQuery,[userId])
-        const totalCount = countSelectResult.count
-        return NextResponse.json({ meg: "성공적으로 북마크 목록을 가져왔습니다.", success: true, status: 200, items, totalCount })
+        try {
+            const items = await db.all(query, [userId, limit, page])
+            const countSelectResult = await db.get(countSelectQuery, [userId])
+            const totalCount = countSelectResult.count
+
+            return NextResponse.json({ meg: "성공적으로 북마크 목록을 가져왔습니다.", success: true, status: 200, items, totalCount })
+        } catch (error) {
+            console.log(error)
+            return NextResponse.json({ meg: "조회된 북마크 목록이 존재하지 않습니다.", success: true, status: 200, items: [], totalCount: 0 })
+        }
+
 
     } catch (error) {
         console.log(error)

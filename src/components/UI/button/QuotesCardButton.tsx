@@ -11,7 +11,6 @@ export interface PropsType {
 }
 
 export default function QuotesCardButton({index, itemId, items, category }: PropsType) {
-
     return (
         <article 
         aria-label="꾸미기,담기, 확대, 듣기 버튼의 컨테이너"

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import MyQuoteCard from "../card/MyQuoteCard";
+import MyQuoteCard from "../card/MypageMyQuoteCard";
 import Pagination from "../pagination/Pagination";
 
 interface PropsType {
