@@ -6,10 +6,11 @@ import Joi from "joi";
 
 export async function POST(req: NextRequest) {
     const scrept = process.env.JWT_SCREPT as string
+
+    console.log(scrept)
     const db = await openDb()
     // 유저 정보
     const { email, password } = await req.json()
-
 
     const query = `
         SELECT user_id, email, password,profile_image, nickname FROM users_group

@@ -1,4 +1,4 @@
-import TodayQuotelist from "@/components/UI/list/TodayQuoteList";
+import TodayQuotelist from "@/components/UI/list/TodayQuoteList"
 
 export default async function Home() {
 
