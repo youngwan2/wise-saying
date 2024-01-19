@@ -48,7 +48,7 @@ export default function UserQuotesCardButton({ index, item, items }: PropsType) 
                         deleteUserQuote(hasToken, item.id)
                     }} aria-label="삭제버튼"><HiOutlineTrash /><p className="text-[14px] font-semibold">삭제</p></button>
                 </article>
-                <QuotesCardCommonButton category="유저" itemId={item.id} items={items} index={index} />
+                <QuotesCardCommonButton itemId={item.id} items={items} index={index} />
             </div>
         </article>
     )
