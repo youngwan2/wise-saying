@@ -1,6 +1,4 @@
 "use client"
-
-import { HiUserGroup } from 'react-icons/hi'
 import LoadMoreButton from '@/components/UI/button/LoadMoreButton'
 import useInfiniteScroll from '@/custom/useInfiniteScroll'
 import QuoteList from '@/components/UI/list/QuoteList'

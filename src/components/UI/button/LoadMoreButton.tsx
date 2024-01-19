@@ -11,7 +11,6 @@ export default function LoadMoreButton({ setSize, size, maxPage, isLoadingMore }
     const [isLastPage, setIsLastPage] = useState(false)
    
     useEffect(()=>{
-        console.log(size, maxPage)
         setIsLastPage(size === maxPage)
     },[size, maxPage])
     return (

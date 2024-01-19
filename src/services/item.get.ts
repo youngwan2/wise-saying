@@ -18,7 +18,6 @@ export async function getQuotesBy(url: string): Promise<any> {
   try {
     const response = await fetch(url)
     const items = await response.json()
-
     return items
 
   } catch (error) {
@@ -68,7 +67,6 @@ export const getBookmarkListFormDB = async (url: string, token: string): Promise
  * → ` http://localhost:3000/api/items/authors/소크라테스`
  */
 export const getApiMetaDataFromServer = async (path1: string, path2: string) => {
-  console.log(path1, path2)
   const response = await fetch(`http://localhost:3000/api/items/${path1}/${path2}?type=meta`)
   const result = await response.json()
 
