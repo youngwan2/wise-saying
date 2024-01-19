@@ -9,6 +9,7 @@ import { usePathname, useRouter } from "next/navigation"
 import { useCardZoomInOutStore } from "@/store/store"
 import { postBookmarkItem } from "@/services/item.post"
 import { useEffect, useState } from "react"
+import AlertCard from "../card/AlertCard"
 
 
 
@@ -20,6 +21,7 @@ export default function QuotesCardCommonButton({ itemId, items, index }: PropsTy
     const setCardIndex = useCardZoomInOutStore((state) => state.setCardIndex)
     const hasToken = useHasToken()
     const router = useRouter()
+    const [alertToggle, setAlertToggle] = useState({toggle:false, messgae:''})
 
 
     const categorySwitch=(path:string)=>{
@@ -58,9 +60,15 @@ export default function QuotesCardCommonButton({ itemId, items, index }: PropsTy
                 }} className="min-w-[48px]  p-[5px] hover:bg-[tomato] text-[2em] hover:text-[white] bg-[white] rounded-[0.3em] mx-[0.1em]" aria-label='명언 확대해서 보기 버튼'><HiOutlineZoomIn /><p className="text-[14px] font-semibold">확대</p></button>
                 {/* 듣기 버튼 */}
                 <button onClick={() => {
-                    alert("준비중 입니다.")
+                    // alert("준비중 입니다.")
+                    setAlertToggle({
+                        toggle:true,
+                        messgae:"준비중입니다."
+                    })
+                    
                 }} className="min-w-[48px]  p-[5px] hover:bg-[tomato] text-[2em] hover:text-[white] bg-[white] rounded-[0.3em] mx-[0.3em]" aria-label='명언 듣기 버튼'><SlEarphones className="ml-[4px]" /><p className="text-[14px] font-semibold">듣기</p></button>
             </article>
+            <AlertCard toggle={alertToggle.toggle} message={alertToggle.messgae}/>
         </>
     )
 }

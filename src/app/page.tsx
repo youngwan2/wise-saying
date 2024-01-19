@@ -1,3 +1,4 @@
+import AlertCard from "@/components/UI/card/AlertCard"
 import TodayQuotelist from "@/components/UI/list/TodayQuoteList"
 
 export default async function Home() {
@@ -15,5 +16,6 @@ export default async function Home() {
 
   return <section className="w-[100%] pt-[15px]">
     <TodayQuotelist quotes={items}/>
+
   </section>
 }
