@@ -57,7 +57,7 @@ export default function ZommInQuoteCard({ item }: PropsType) {
                 ref={overlayDivRef}
                 onClick={() => {
                     setIsZoomIn(false)
-                }} className={`${isZoomIn ? ' backdrop-blur-[3px] z-50 fixed left-0 top-0 right-0 bottom-0 bg-[#00000086] visible opacity-100 ' : 'invisible opacity-0'}`}></div>
+                }} className={`${isZoomIn ? ' backdrop-blur-[3px] z-50 fixed left-0 top-0 right-0 bottom-0 bg-[#00000086] visible opacity-100 ' : 'invisible opacity-0'}  rounded-[10px]`}></div>
             {/* 카드 */}
             <div
                 aria-label="확대된 명언 카드"

@@ -15,9 +15,9 @@ interface PropsType {
   index: number
 }
 
-const category = "인물"
 
 export default function QuoteCard({ item, items, index }: PropsType) {
+
   const liRefs = useRef<HTMLLIElement[]>([])
   const pathName = usePathname()
   const isZoomIn = useCardZoomInOutStore((state) => state.isZoomIn)
@@ -81,7 +81,7 @@ export default function QuoteCard({ item, items, index }: PropsType) {
 
       {pathName.includes('/user-quotes')
         ? <UserQuotesCardButton index={index} item={item} items={items} />
-        : <QuotesCardButton index={index} itemId={item.id} items={items} category={category} />}
+        : <QuotesCardButton index={index} itemId={item.id} items={items} />}
     </li>
   )
 }

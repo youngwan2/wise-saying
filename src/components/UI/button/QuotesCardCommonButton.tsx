@@ -5,19 +5,34 @@ import { pageSwitch, quotesSelector } from "@/utils/commonFunctions"
 
 import { HiOutlineBookmark, HiScissors } from "react-icons/hi2"
 import { PropsType } from "./QuotesCardButton"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { useCardZoomInOutStore } from "@/store/store"
 import { postBookmarkItem } from "@/services/item.post"
+import { useEffect, useState } from "react"
 
 
 
-export default function QuotesCardCommonButton({ itemId, items, category, index }: PropsType) {
+export default function QuotesCardCommonButton({ itemId, items, index }: PropsType) {
 
-
+    const path = usePathname()
+    const [category, setCategory] = useState('')
     const setIsZoomIn = useCardZoomInOutStore((state) => state.setIsZoomIn)
     const setCardIndex = useCardZoomInOutStore((state) => state.setCardIndex)
     const hasToken = useHasToken()
     const router = useRouter()
+
+
+    const categorySwitch=(path:string)=>{
+        if(path.startsWith('/author-quotes')) return setCategory('인물')
+        if(path.startsWith('/weather-quotes')) return setCategory('날씨')
+        if(path.startsWith('/day-quotes')) return setCategory('요일')
+        if(path.startsWith('/etc-quotes')) return setCategory('기타')
+        if(path.startsWith('/user-quotes')) return setCategory('유저')
+    }
+
+    useEffect(()=>{ 
+        categorySwitch(path)
+    },[path])
     return (
         <>
             <article className="flex min-h-[60px] min-w-[60px]">
