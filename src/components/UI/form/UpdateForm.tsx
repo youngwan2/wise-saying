@@ -63,7 +63,7 @@ export default function UpdateForm() {
   // 유저가 작성한 단일 포스트 요청 GET
   const getUserPostBy = async (postId: number) => {
     setLoading(true)
-    const response = await fetch(`/api/items/users/post?postid=${postId}`)
+    const response = await fetch(`/api/items/users/post/${postId}`)
     const { item, status, meg } = await response.json()
     if (status === 200) {
       setPost(item)

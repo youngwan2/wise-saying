@@ -2,9 +2,9 @@ import { openDb } from '@/connect'
 import { NextRequest, NextResponse } from 'next/server'
 
 // 단일 포스트 조회
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest,res:{params:{id: number}}) {
   try {
-    const postId = req.nextUrl.searchParams.get('postid') || 0
+    const postId =  res.params.id
     const db = await openDb()
     const query = `
     SELECT id, wise_sayings, category, author, B.email AS email
