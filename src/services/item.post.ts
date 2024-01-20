@@ -52,15 +52,18 @@ export const postBookmarkItem = (
     })
 }
 
-
 /**
  * POST | 유저 닉네임과 프로필 이미지 URL 을 저장
  * @param hasToken 토큰 존재 유무 판단
  * @param nickname 유저 닉네임
  * @param imageUrl 유저 프로필 이미지 URL
- * @returns 
+ * @returns
  */
-export async function updateUserInfo(hasToken: boolean, nickname: string, imageUrl: string) {
+export async function updateUserInfo(
+  hasToken: boolean,
+  nickname: string,
+  imageUrl: string,
+) {
   if (!hasToken) return alert('접근 권한이 없습니다.')
   const token = localStorage.getItem('token')
   const userInfo = {
@@ -91,7 +94,6 @@ export async function updateUserInfo(hasToken: boolean, nickname: string, imageU
   }
 }
 
-
 interface UserPostType {
   category: string
   wise_sayings: string
@@ -100,7 +102,11 @@ interface UserPostType {
 }
 
 // 유저가 작성한 포스트를 등록 요청하는 메소드
-export const postUserPost = (hasToken: boolean, userPost: UserPostType, router: any) => {
+export const postUserPost = (
+  hasToken: boolean,
+  userPost: UserPostType,
+  router: any,
+) => {
   if (hasToken) {
     const accessToken = localStorage.getItem('token')
     const headers = {
@@ -131,12 +137,11 @@ export const postUserPost = (hasToken: boolean, userPost: UserPostType, router: 
   }
 }
 
-
 /**
-* POST | 로그인 요청
-* @param email 
-* @param password 
-*/
+ * POST | 로그인 요청
+ * @param email
+ * @param password
+ */
 export const reqLogin = async (email: string, password: string) => {
   const user = {
     email,

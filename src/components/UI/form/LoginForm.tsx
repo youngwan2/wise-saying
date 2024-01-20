@@ -19,7 +19,6 @@ export default function LoginForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-
   // 토큰이 존재하거나 세션이 존재한다면 리디렉트
   useEffect(() => {
     const clear = setTimeout(() => {

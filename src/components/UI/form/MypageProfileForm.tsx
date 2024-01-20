@@ -48,7 +48,6 @@ export default function MypageProfileForm({ userInfo }: PropsType) {
     }
   }
 
-
   // 닉네임 초깃값 지정
   useEffect(() => {
     if (!nicknameRef.current) return
@@ -131,7 +130,7 @@ export default function MypageProfileForm({ userInfo }: PropsType) {
               ></input>
             </div>
           </article>
-                <MypageProfileUpdateButton nickname={nickname} imageUrl={imageUrl}/>
+          <MypageProfileUpdateButton nickname={nickname} imageUrl={imageUrl} />
         </form>
       ) : null}
     </section>

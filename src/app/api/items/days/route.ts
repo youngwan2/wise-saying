@@ -11,6 +11,10 @@ export async function GET() {
     console.log(items)
     return NextResponse.json(items)
   } catch (error) {
-    console.error(error)
+    return NextResponse.json({
+      status: 500,
+      success: false,
+      meg: '서버측에서 문재가 발생하였습니다. 나중에 다시시도해주세요.',
+    })
   }
 }

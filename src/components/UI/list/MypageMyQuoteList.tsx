@@ -29,7 +29,7 @@ export default function MypageMyQuoteList({
   const [categories, setCategories] = useState<string[]>([''])
   const [pageList, setPageList] = useState<number[]>([])
 
-  /** 
+  /**
    * 페이지네이션을 그리는 함수
    */
   const render = useCallback(() => {
@@ -40,7 +40,6 @@ export default function MypageMyQuoteList({
     setPageList(pageList)
   }, [firstPage, lastPage])
 
-
   // 페이지 네이션 상태 초기 셋팅
   useEffect(() => {
     setPageGroup(Math.ceil((page + 1) / MAX_RENDER_PAGE))
@@ -50,8 +49,7 @@ export default function MypageMyQuoteList({
     render()
   }, [page, count, lastPage, firstPage, pageGroup, render])
 
-
-//  명언 카테고리를 필터해서 카테고리 목록을 상태에 저장
+  //  명언 카테고리를 필터해서 카테고리 목록을 상태에 저장
   const categoryCreator = useCallback(() => {
     const tempCategories: string[] = []
     userQuotes?.forEach((item) => {

@@ -1,7 +1,7 @@
 export const dynamic = 'force-dynamic'
 
 import type { Metadata } from 'next'
-import { getCategoriesFromDb} from '@/services/item.get'
+import { getCategoriesFromDb } from '@/services/item.get'
 import AuthorsCategoryList from '@/components/UI/list/AuthorCategoryList'
 import { HiUserGroup } from 'react-icons/hi'
 

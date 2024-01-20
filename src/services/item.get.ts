@@ -1,4 +1,4 @@
-import { config } from "@/lib/config";
+import { config } from '@/lib/config'
 
 /**
  * * GET | 서버로부터 특정 경로에 대한 명언 리스트 불러오기
@@ -68,10 +68,11 @@ export const getApiMetaDataFromServer = async (
   path2: string,
 ) => {
   try {
-    const url = path1  === 'weathers'
-      ? `${config.apiPrefix}${config.apiHost}/api/items/${path1}?type=meta`
-      : `${config.apiPrefix}${config.apiHost}/api/items/${path1}/${path2}?type=meta`
-    console.log('GET 메타 데이터 분기 경로:',url)
+    const url =
+      path1 === 'weathers'
+        ? `${config.apiPrefix}${config.apiHost}/api/items/${path1}?type=meta`
+        : `${config.apiPrefix}${config.apiHost}/api/items/${path1}/${path2}?type=meta`
+    console.log('GET 메타 데이터 분기 경로:', url)
     const response = await fetch(url)
     const result = await response.json()
 
@@ -86,7 +87,7 @@ export const getApiMetaDataFromServer = async (
  */
 export const todayQuoteFetch = async () => {
   try {
-    const url = config.apiPrefix + config.apiHost+"/api/items/random";
+    const url = config.apiPrefix + config.apiHost + '/api/items/random'
     const response = await fetch(url, {
       next: { revalidate: 3600 },
     })

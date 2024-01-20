@@ -6,13 +6,12 @@ export async function DELETE(
   req: NextRequest,
   res: { params: { id: string } },
 ) {
-  const scrept = process.env.JWT_SCREPT!
-  const token = req.headers.get('Authorization')?.replace('Bearer ', '')!
+  const scrept = process.env.JWT_SCREPT || ''
+  const token = req.headers.get('Authorization')?.replace('Bearer ', '') || ''
   const { id } = res.params
 
-  const db = await openDb()
-
   try {
+    const db = await openDb()
     const result = Jwt.verify(token, scrept)
     const isValid = !!result
     if (isValid) {

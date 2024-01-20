@@ -101,8 +101,8 @@ export default function PostForm() {
       <article className="p-[2em]">
         <button
           className=" bg-[#ffffff] p-[10px] mr-[1em] font-bold"
-          onClick={()=>{
-            postUserPost(hasToken, userPost, router )
+          onClick={() => {
+            postUserPost(hasToken, userPost, router)
           }}
         >
           등록하기
