@@ -1,13 +1,14 @@
 'use client'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { signIn } from 'next-auth/react'
+// import { signIn } from 'next-auth/react'
 import { HiOutlineLockClosed, HiOutlineMail, HiOutlineX } from 'react-icons/hi'
 import { BsGithub } from 'react-icons/bs'
 import { useEffect, useRef, useState } from 'react'
 import useHasToken from '@/custom/useHasToken'
 import gsap from 'gsap/all'
 import { Draggable } from 'gsap/Draggable'
+import { reqLogin } from '@/services/item.post'
 
 export default function LoginForm() {
   const loginFormRef = useRef<HTMLFormElement>(null)
@@ -18,46 +19,6 @@ export default function LoginForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  // 로그인 요청 함수
-  const reqLogin = async () => {
-    const user = {
-      email,
-      password,
-    }
-    fetch('http://localhost:3000/api/login', {
-      method: 'POST',
-      body: JSON.stringify(user),
-    })
-      .then(async (response) => {
-        const {
-          accessToken,
-          email: dbEmail,
-          status,
-          meg,
-          profile,
-        } = await response.json()
-        if (status === 201) {
-          const user = {
-            dbEmail,
-            profile,
-          }
-          localStorage.setItem('user', JSON.stringify(user))
-          localStorage.setItem('token', accessToken)
-          alert(`${dbEmail}님 환영합니다!. 잠시 후 Home 화면으로 이동합니다.`)
-        }
-
-        if (status === 403) {
-          alert(`${meg} 다시 확인해주세요.`)
-        }
-        if (status === 500) {
-          alert(meg)
-        }
-        location.reload()
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-  }
 
   // 토큰이 존재하거나 세션이 존재한다면 리디렉트
   useEffect(() => {
@@ -156,7 +117,9 @@ export default function LoginForm() {
 
         {/* 로그인 요청 */}
         <input
-          onClick={reqLogin}
+          onClick={() => {
+            reqLogin(email, password)
+          }}
           className="rounded-[5px] my-[2.5em] text-[black] bg-[#FFFFFF] max-w-[150px] py-[0.5em] min-w-[150px] mx-auto hover: cursor-pointer hover:bg-[#ffd9d9] font-bold"
           type="submit"
           value={'로그인'}
@@ -166,7 +129,8 @@ export default function LoginForm() {
         <button
           className="hover:bg-[white] hover:text-[tomato] font-bold p-[5px] border w-[50%] mx-auto mb-[10px] flex items-center justify-center"
           onClick={() => {
-            signIn()
+            alert('향후 추가 예정입니다.')
+            // signIn()
           }}
         >
           <BsGithub />
@@ -188,17 +152,4 @@ export default function LoginForm() {
       </form>
     </>
   )
-}
-
-{
-  /* 이메일 기억 */
-}
-{
-  /* <article className="m-[15px] ml-[1.5em] mt-[1.2em] flex items-center hover:cursor-pointer" >
-                        <input type="checkbox" id="checkbox" className=" hover:cursor-pointer" name="checkbox" onChange={(e)=>{
-                            const isCheck =e.currentTarget.checked
-                            if(isCheck) localStorage.setItem('user-email',email, )
-                        }}/>
-                        <label htmlFor="checkbox" className=" hover:cursor-pointer pl-[5px] text-[1.15em]">이메일을 기억하시겠습니까?</label>
-                    </article> */
 }

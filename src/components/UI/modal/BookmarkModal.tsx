@@ -23,6 +23,9 @@ interface BookmarkListType {
 
 const MAX_PAGE = 5
 
+/**
+ * TODO: 분리 가능한 부분은 컴포넌트로 분리할 필요가 있어 보임.
+ */
 export default function BookmarkModal() {
   const toggleState = useBookmarkStore((state) => state.toggleState)
   const setBookmarkList = useBookmarkStore((state) => state.setBookmarkList)

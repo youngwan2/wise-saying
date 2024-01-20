@@ -1,4 +1,5 @@
 /**
+ * DELETE | 유저가 선택한 명언 아이템 삭제
  * @param hasToken accessToken 검증
  * @param id 해당 카드의 식별자
  */

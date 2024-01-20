@@ -1,6 +1,6 @@
 'use client'
+
 import {
-  HiEmojiHappy,
   HiOutlineLockClosed,
   HiOutlineLockOpen,
   HiOutlineMail,
@@ -10,6 +10,10 @@ import { useRouter } from 'next/navigation'
 import { gsap } from 'gsap/all'
 import { Draggable } from 'gsap/Draggable'
 import { useEffect, useRef, useState } from 'react'
+
+/**
+ *  TODO: 하나의 페이지에 너무 긴 코드가 존재함 상태관리가 복잡해 보이고, 가독성도 매우 떨어짐. 별도의 컴포넌트로 분리하여 가독성을 높일 필요가 있음
+ */
 export default function SignInForm() {
   const [isEmail, setIsEmail] = useState(false)
   const [isPassword, setIsPassword] = useState(false)
@@ -47,6 +51,7 @@ export default function SignInForm() {
     return setIsEmail(false)
   }
 
+  /** 패스워드 체크 */
   function passwordChecker(password: string) {
     // 8자 이상 (a-z, 0-9 무조건 1개 이상 포함, 특수문자 1개 이상 포함)
     const regex =
@@ -56,6 +61,7 @@ export default function SignInForm() {
     return setIsPassword(false)
   }
 
+   /** 패스워드 재확인 */
   function passwordReConfirmChecker(ps: string) {
     // 8자 이상 (a-z, 0-9 무조건 1개 이상 포함, 특수문자 1개 이상 포함)
     const test = ps.includes(password)
@@ -63,13 +69,14 @@ export default function SignInForm() {
     return setIsReconfirmPassword(false)
   }
 
+  /** 회원가입 요청 */
   function userInfoPostFetch(email: string, password: string) {
     const body = {
       email,
       password,
       reConfirmPw,
     }
-    fetch('http://localhost:3000/api/signin', {
+    fetch('/api/signin', {
       method: 'POST',
       body: JSON.stringify(body),
     })
@@ -87,18 +94,17 @@ export default function SignInForm() {
   }
 
   function userExists(email: string) {
-    console.log(email)
-    fetch(`http://localhost:3000/api/users`, {
+    fetch(`/api/users`, {
       method: 'POST',
       body: JSON.stringify(email),
     }).then(async (response) => {
       const res = await response.json()
-      const { meg, success, status } = res
-      if (status === 201 && success) {
+      const { status } = res
+      if (status === 201) {
         setExistsEmail(true)
         alert('확인 되었습니다. 다음을 진행해주세요.')
       }
-      if (status === 409 && !success) {
+      if (status === 409) {
         setExistsEmail(false)
         alert('중복된 이메일입니다.')
       }
@@ -174,6 +180,7 @@ export default function SignInForm() {
             </>
           )}
         </article>
+
         {/* 패스워드 */}
         <article className="mx-[10px]  mb-[1em]">
           <div className="flex">
@@ -213,6 +220,7 @@ export default function SignInForm() {
             </>
           )}
         </article>
+
         {/* 패스워드 재검증 */}
         <article className="mx-[10px]">
           <div className="flex">
@@ -253,7 +261,6 @@ export default function SignInForm() {
         {isVaildForm && existsEmail ? (
           <button
             onClick={() => {
-              console.log(11)
               userInfoPostFetch(email, password)
             }}
             className={`rounded-[5px] my-[2.5em] text-[black] bg-[#FFFFFF] max-w-[150px] py-[0.5em] min-w-[150px] mx-auto hover: cursor-pointer hover:bg-[#ffd9d9] font-bold ${
@@ -265,7 +272,6 @@ export default function SignInForm() {
           </button>
         ) : (
           <span className="p-[30px] text-center text-white">
-            {' '}
             - 조건 충족시 버튼이 활성화 됩니다.
           </span>
         )}

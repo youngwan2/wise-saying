@@ -1,16 +1,5 @@
 import { config } from "@/lib/config";
 
-export async function getItemFromDB(path: string = '') {
-  try {
-    const url =  config.apiPrefix + config.apiHost + `/api/items/${path}`
-    const response = await fetch(url)
-    const data = await response.json()
-    return data
-  } catch (error) {
-    console.error(error)
-  }
-}
-
 /**
  * * GET | 서버로부터 특정 경로에 대한 명언 리스트 불러오기
  * @param url

@@ -8,8 +8,6 @@ interface PropsType {
 export default function BookmarkDeleteButton({ id }: PropsType) {
   const hasToken = useHasToken()
 
-  const router = useRouter()
-
   const deleteBookmark = async (id: number) => {
     if (!hasToken) return alert('로그인 해주세요.')
     if (hasToken) {

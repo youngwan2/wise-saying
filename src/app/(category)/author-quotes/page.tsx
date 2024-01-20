@@ -1,7 +1,7 @@
 export const dynamic = 'force-dynamic'
 
 import type { Metadata } from 'next'
-import { getItemFromDB } from '@/services/item.get'
+import { getCategoriesFromDb} from '@/services/item.get'
 import AuthorsCategoryList from '@/components/UI/list/AuthorCategoryList'
 import { HiUserGroup } from 'react-icons/hi'
 
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 }
 
 export default async function AuthorPage() {
-  const categories = await getItemFromDB('authors')
+  const categories = await getCategoriesFromDb('/api/items/authors')
   const itemCount = categories?.length || null
 
   return (

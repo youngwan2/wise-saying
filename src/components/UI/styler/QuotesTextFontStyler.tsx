@@ -1,6 +1,5 @@
 import { HiPaintBrush } from 'react-icons/hi2'
 import type { TextStyleType } from './QuotesTextStyler'
-import { useImageElementStore, useQuotesTextStyleStore } from '@/store/store'
 
 interface PropsType {
   setTextStyleState: (p: TextStyleType) => void

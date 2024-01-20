@@ -6,8 +6,7 @@ import { HiUpload } from 'react-icons/hi'
 import { storage } from '@/utils/firebase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import useHasToken from '@/custom/useHasToken'
-import { useRouter } from 'next/navigation'
-import ReplaceMessageCard from '../card/ReplaceMessageCard'
+import MypageProfileUpdateButton from '../button/MypageProfileUpdataButton'
 
 interface PropsType {
   userInfo: {
@@ -23,8 +22,6 @@ export default function MypageProfileForm({ userInfo }: PropsType) {
   const [src, setSrc] = useState('')
   const [imageUrl, setImageUrl] = useState('')
   const [nickname, setNickname] = useState('')
-  const hasToken = useHasToken()
-  const router = useRouter()
 
   /**
    *  @var src : 미리보기 이미지
@@ -51,31 +48,6 @@ export default function MypageProfileForm({ userInfo }: PropsType) {
     }
   }
 
-  // 유저 프로필 정보 업데이트
-  async function updateUserInfo() {
-    if (!hasToken) return alert('접근 권한이 없습니다.')
-    const token = localStorage.getItem('token')
-    const userInfo = {
-      nickname: nickname,
-      profile_image: imageUrl,
-    }
-
-    try {
-      const response = await fetch('http://localhost:3000/api/users/upload', {
-        method: 'POST',
-        body: JSON.stringify(userInfo),
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      })
-      const result = await response.json()
-      console.log(result)
-    } catch (error) {
-      alert(
-        '전송 중 예기치 못한 문제가 발생하였습니다. 나중에 다시시도 해주세요.',
-      )
-    }
-  }
 
   // 닉네임 초깃값 지정
   useEffect(() => {
@@ -159,12 +131,7 @@ export default function MypageProfileForm({ userInfo }: PropsType) {
               ></input>
             </div>
           </article>
-          <button
-            className="shadow-[inset_-2px_-3px_3px_0_black] hover:bg-gradient-to-br hover:from-black  hover:to-slate-600  w-[230px] rounded-[5px] mt-[2em] bg-[#343333] text-white p-[10px]"
-            onClick={updateUserInfo}
-          >
-            변경하기
-          </button>
+                <MypageProfileUpdateButton nickname={nickname} imageUrl={imageUrl}/>
         </form>
       ) : null}
     </section>

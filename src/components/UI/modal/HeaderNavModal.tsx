@@ -12,6 +12,9 @@ import { useNavDisplayStateStore } from '@/store/store'
 import { useRouter } from 'next/navigation'
 import { HiPhotograph } from 'react-icons/hi'
 
+/**
+ * TODO : 반복되는 로직이라면 반복문으로 줄일 수 있는 경우 줄일 필요가 있어 보임.
+ */
 export default function HeaderNavModal() {
   const isDisplay = useNavDisplayStateStore((state) => state.isDisplay)
   const router = useRouter()

@@ -10,6 +10,9 @@ import QuotesBackgroundStyler from './QuotesBackgorundStyler'
 import { useState } from 'react'
 import QuotesStylerTaps from '../tap/QuotesStylerTaps'
 
+/**
+ * TODO : div 와 section 그리고 내부에 article 로 각각 구분해서 하나의 컴포넌트에 모아두었는데, 눈에 잘 보여지지가 않음. 더 고민해보고 수정할 필요가 있어 보임.
+ */
 export default function QuoteStyler() {
   const router = useRouter()
 

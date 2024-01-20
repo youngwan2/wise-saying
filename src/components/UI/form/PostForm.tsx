@@ -4,50 +4,18 @@ import gsap from 'gsap'
 import { Draggable } from 'gsap/Draggable'
 import { useEffect, useRef, useState } from 'react'
 import useHasToken from '@/custom/useHasToken'
-import { logoutUser } from '@/utils/commonFunctions'
+import { postUserPost } from '@/services/item.post'
+import { onSubmit } from '@/utils/commonFunctions'
 
 export default function PostForm() {
   const formRef = useRef<HTMLFormElement>(null)
-  const validToken = useHasToken()
+  const hasToken = useHasToken()
   const [userPost, setUserPost] = useState({
     category: '',
     wise_sayings: '',
     author: '',
     userEmail: '',
   })
-
-  // 유저가 작성한 포스트를 등록 요청하는 메소드
-  const postUserPost = () => {
-    if (validToken) {
-      const accessToken = localStorage.getItem('token')
-      const headers = {
-        authorization: `Bearer ${accessToken}`,
-      }
-      fetch('http://localhost:3000/api/add-post', {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(userPost),
-      })
-        .then(async (response) => {
-          const { status, success, meg } = await response.json()
-          if (status === 201) {
-            alert(meg)
-            router.push('/user-quotes')
-          }
-          if (success === false) {
-            alert(meg)
-            // logoutUser()
-          }
-        })
-        .catch((error) => {
-          console.error(error)
-        })
-    }
-    if (!validToken) {
-      alert('로그인 해주세요')
-      router.push('/login')
-    }
-  }
 
   // UI 드래그 이벤트 등록
   useEffect(() => {
@@ -60,6 +28,7 @@ export default function PostForm() {
     }
   }, [])
 
+  // 등록된 유저 정보가 있으면 해당 정보를 불러오기
   useEffect(() => {
     const hasUserEmail = !!localStorage.getItem('user')
     if (hasUserEmail) {
@@ -74,9 +43,7 @@ export default function PostForm() {
     <form
       ref={formRef}
       className="max-w-[560px] mx-auto bg-[#ffb057]  rounded-[10px] shadow-2xl"
-      onSubmit={(e) => {
-        e.preventDefault()
-      }}
+      onSubmit={onSubmit}
     >
       {/* 주제(카테고리) */}
       <h2 className="text-[1.5em] mb-[1em] font-bold bg-[#333232] text-[white] p-[8px]  rounded-t-lg">
@@ -134,7 +101,9 @@ export default function PostForm() {
       <article className="p-[2em]">
         <button
           className=" bg-[#ffffff] p-[10px] mr-[1em] font-bold"
-          onClick={postUserPost}
+          onClick={()=>{
+            postUserPost(hasToken, userPost, router )
+          }}
         >
           등록하기
         </button>

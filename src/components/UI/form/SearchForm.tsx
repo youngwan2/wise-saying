@@ -1,14 +1,13 @@
 'use client'
 
+import { onSubmit } from '@/utils/commonFunctions'
 import { HiOutlineSearch } from 'react-icons/hi'
 
 export default function SearchForm() {
   return (
     <form
       className="rounded-[10px] my-[2em] border-2 max-w-[500px] min-w-[200px] mx-auto "
-      onSubmit={(e) => {
-        e.preventDefault()
-      }}
+      onSubmit={onSubmit}
     >
       <article className="flex items-center">
         <label

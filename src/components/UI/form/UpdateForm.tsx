@@ -14,7 +14,9 @@ type PostType = {
   author: string
   email: string
 }
-
+/**
+ *  TODO : 코드가 너무 길어서 눈에 바로 안 보임. 분기 처리를 불필요하게 많이 하는 것 같음. 추상화해서 코드 재사용성을 높일 필요가 있어 보임.
+ */
 export default function UpdateForm() {
   const router = useRouter()
   const formRef = useRef<HTMLFormElement>(null)
@@ -38,13 +40,13 @@ export default function UpdateForm() {
     const headers = {
       authorization: `Bearer ${accessToken}`,
     }
-    fetch(`http://localhost:3000/api/items/users/${postId}`, {
+    fetch(`/api/items/users/${postId}`, {
       method: 'PUT',
       headers,
       body: JSON.stringify(post),
     })
       .then(async (response) => {
-        const { status, success } = await response.json()
+        const { success } = await response.json()
         if (success === true) {
           alert('정상적으로 등록되었습니다.')
           router.push('/user-quotes')
@@ -70,7 +72,7 @@ export default function UpdateForm() {
     setLoading(true)
     try {
       const response = await fetch(
-        `http://localhost:3000/api/items/users/post?postid=${postId}`,
+        `/api/items/users/post?postid=${postId}`,
       )
       const { item, status, meg } = await response.json()
       if (status === 200) {
