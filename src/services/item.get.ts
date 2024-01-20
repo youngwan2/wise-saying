@@ -50,13 +50,17 @@ export const getBookmarkListFormDB = async (
   token: string,
 ): Promise<any> => {
   if (token === '') return
-  const response = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-  const items = response.json()
-  return items
+  try {
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    const items = response.json()
+    return items
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 /**
@@ -71,10 +75,30 @@ export const getApiMetaDataFromServer = async (
   path1: string,
   path2: string,
 ) => {
-  const response = await fetch(
-    `http://localhost:3000/api/items/${path1}/${path2}?type=meta`,
-  )
-  const result = await response.json()
+  try {
+    const response = await fetch(
+      `http://localhost:3000/api/items/${path1}/${path2}?type=meta`,
+    )
+    const result = await response.json()
 
-  return result
+    return result
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+/**
+ * GET | 랜덤으로 명언 정보 불러오기
+ */
+export const todayQuoteFetch = async () => {
+  try {
+    const response = await fetch('http://localhost:3000/api/items/random', {
+      next: { revalidate: 3600 },
+    })
+    const items = await response.json()
+
+    return items
+  } catch (error) {
+    console.error(error)
+  }
 }
