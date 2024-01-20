@@ -7,13 +7,10 @@ interface PropsType {
   }[]
 }
 export default function AuthorsCategoryList({ items }: PropsType) {
-  
   return (
     <ul className=" mt-[1em] flex justify-center flex-wrap overflow-y-auto min-h-[100vh]">
       {items.map((item) => {
-        return (
-          <AuthorsCategoryCard key={item.id} item={item}/>
-        )
+        return <AuthorsCategoryCard key={item.id} item={item} />
       })}
     </ul>
   )

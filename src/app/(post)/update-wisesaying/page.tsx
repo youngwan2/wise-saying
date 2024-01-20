@@ -1,9 +1,9 @@
-import UpdateForm from "@/components/UI/form/UpdateForm";
+import UpdateForm from '@/components/UI/form/UpdateForm'
 
-export default function UpdatePage(){
-    return (
-        <section>
-            <UpdateForm/>
-        </section>
-    )
+export default function UpdatePage() {
+  return (
+    <section>
+      <UpdateForm />
+    </section>
+  )
 }

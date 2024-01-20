@@ -1,28 +1,26 @@
-"use client"
+'use client'
 
-import { CategoryType } from "@/app/(category)/etc-quotes/page";
-import { useRouter } from "next/navigation"
-
+import { CategoryType } from '@/app/(category)/etc-quotes/page'
+import { useRouter } from 'next/navigation'
 
 interface PropsType {
-    category: CategoryType
+  category: CategoryType
 }
 export default function EtcCategoryCard({ category }: PropsType) {
-
-    const router = useRouter();
-    return (
-        <li
-            tabIndex={0}
-            onKeyUp={(e) => {
-                const key = e.key
-                if (key !== 'Enter') return
-                router.push(`/etc-quotes/${category.category}`)
-            }}
-            onClick={() => {
-                router.push(`/etc-quotes/${category.category}`)
-            }}
-            key={category.id}
-            className="
+  const router = useRouter()
+  return (
+    <li
+      tabIndex={0}
+      onKeyUp={(e) => {
+        const key = e.key
+        if (key !== 'Enter') return
+        router.push(`/etc-quotes/${category.category}`)
+      }}
+      onClick={() => {
+        router.push(`/etc-quotes/${category.category}`)
+      }}
+      key={category.id}
+      className="
                 p-[4em]
                 pt-[4em]
                 odd:-rotate-2 
@@ -47,8 +45,9 @@ export default function EtcCategoryCard({ category }: PropsType) {
                 hover:z-10
                 hover:cursor-pointer
                 relative"
-        >
-            <div className="w-[20px] h-[45px] bg-[rgba(71,69,69,0.7)] absolute top-[-1em] right-[1em] rotate-[30deg] "></div>
-            {category.category}</li>
-    )
+    >
+      <div className="w-[20px] h-[45px] bg-[rgba(71,69,69,0.7)] absolute top-[-1em] right-[1em] rotate-[30deg] "></div>
+      {category.category}
+    </li>
+  )
 }

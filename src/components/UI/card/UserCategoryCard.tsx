@@ -1,14 +1,12 @@
-import { useRouter } from "next/navigation"
+import { useRouter } from 'next/navigation'
 
 interface PropsType {
   category: string
 }
 export default function UserCategoryCard({ category }: PropsType) {
-
   const router = useRouter()
 
   return (
-
     <li
       tabIndex={0}
       key={category}

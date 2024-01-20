@@ -1,4 +1,3 @@
-
 export async function getItemFromDB(path: string = '') {
   try {
     const response = await fetch(`http://localhost:3000/api/items/${path}`)
@@ -11,7 +10,7 @@ export async function getItemFromDB(path: string = '') {
 
 /**
  * * GET | 서버로부터 특정 경로에 대한 명언 리스트 불러오기
- * @param url 
+ * @param url
  * @returns {Promise} 아이템 목록 반환
  */
 export async function getQuotesBy(url: string): Promise<any> {
@@ -19,7 +18,6 @@ export async function getQuotesBy(url: string): Promise<any> {
     const response = await fetch(url)
     const items = await response.json()
     return items
-
   } catch (error) {
     console.error(error)
   }
@@ -28,7 +26,7 @@ export async function getQuotesBy(url: string): Promise<any> {
 /**
  * * GET | 명언  카테고리 불러오기
  * @param url 경로
- * @returns 
+ * @returns
  */
 export async function getCategoriesFromDb(url: string) {
   try {
@@ -43,16 +41,19 @@ export async function getCategoriesFromDb(url: string) {
 
 /**
  * * GET | 북마크 리스트 불러오기
- * @param url 
+ * @param url
  * @param token accessToken
  * @returns {Promise}
  */
-export const getBookmarkListFormDB = async (url: string, token: string): Promise<any> => {
+export const getBookmarkListFormDB = async (
+  url: string,
+  token: string,
+): Promise<any> => {
   if (token === '') return
   const response = await fetch(url, {
     headers: {
-      "Authorization": `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    },
   })
   const items = response.json()
   return items
@@ -62,12 +63,17 @@ export const getBookmarkListFormDB = async (url: string, token: string): Promise
  * * GET | 각 페이지의 카테고리별 메타데이터 불러오기
  * @param path1 중분류(ex. authors, days, etc, users)
  * @param path2 소분류(ex. 소크라테스, 월, 사랑, 인생)
- * @returns 
- * @example `http://localhost:3000/api/items/${path1}/${path2}}` 
+ * @returns
+ * @example `http://localhost:3000/api/items/${path1}/${path2}}`
  * → ` http://localhost:3000/api/items/authors/소크라테스`
  */
-export const getApiMetaDataFromServer = async (path1: string, path2: string) => {
-  const response = await fetch(`http://localhost:3000/api/items/${path1}/${path2}?type=meta`)
+export const getApiMetaDataFromServer = async (
+  path1: string,
+  path2: string,
+) => {
+  const response = await fetch(
+    `http://localhost:3000/api/items/${path1}/${path2}?type=meta`,
+  )
   const result = await response.json()
 
   return result

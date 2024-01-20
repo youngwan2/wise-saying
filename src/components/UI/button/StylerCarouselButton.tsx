@@ -1,30 +1,32 @@
-
-import { useCallback } from "react"
-import { EmblaCarouselType } from "embla-carousel-react"
+import { useCallback } from 'react'
+import { EmblaCarouselType } from 'embla-carousel-react'
 
 interface PropsType {
-    emblaApi: EmblaCarouselType
+  emblaApi: EmblaCarouselType
 }
-export default function StylerCarouselButton({emblaApi}:PropsType) {
+export default function StylerCarouselButton({ emblaApi }: PropsType) {
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev()
+  }, [emblaApi])
 
-    const scrollPrev = useCallback(() => {
-        if (emblaApi) emblaApi.scrollPrev()
-    }, [emblaApi])
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext()
+  }, [emblaApi])
 
-    const scrollNext = useCallback(() => {
-        if (emblaApi) emblaApi.scrollNext()
-    }, [emblaApi])
-
-
-
-    return (
-        <article className='flex justify-center items-center mb-[3em] text-white'>
-            <button className="px-[10px] hover:bg-[gold] hover:text-black border mr-[10px]" onClick={scrollPrev}>
-                Prev
-            </button>
-            <button className="px-[10px] hover:bg-[gold] hover:text-black border" onClick={scrollNext}>
-                Next
-            </button>
-        </article>
-    )
+  return (
+    <article className="flex justify-center items-center mb-[3em] text-white">
+      <button
+        className="px-[10px] hover:bg-[gold] hover:text-black border mr-[10px]"
+        onClick={scrollPrev}
+      >
+        Prev
+      </button>
+      <button
+        className="px-[10px] hover:bg-[gold] hover:text-black border"
+        onClick={scrollNext}
+      >
+        Next
+      </button>
+    </article>
+  )
 }

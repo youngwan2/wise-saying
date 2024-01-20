@@ -1,7 +1,7 @@
-import BookmarkModal from "../UI/modal/BookmarkModal";
-import BookmarkModalButton from "../UI/button/BookmarkModalButton";
-import HeaderNavButton from "../UI/button/HeaderNavButton";
-import HeaderNavModal from "../UI/modal/HeaderNavModal";
+import BookmarkModal from '../UI/modal/BookmarkModal'
+import BookmarkModalButton from '../UI/button/BookmarkModalButton'
+import HeaderNavButton from '../UI/button/HeaderNavButton'
+import HeaderNavModal from '../UI/modal/HeaderNavModal'
 
 export default function Header() {
   return (

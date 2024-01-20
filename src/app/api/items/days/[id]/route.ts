@@ -19,7 +19,6 @@ export async function GET(req: NextRequest, res: { params: { id: string } }) {
     const MAX_PAGE = Math.ceil(count / Number(limit))
     await db.close()
     return NextResponse.json({ TOTAL_COUNT: count, MAX_PAGE })
-
   }
 
   const page = req.nextUrl.searchParams.get('page') || 0

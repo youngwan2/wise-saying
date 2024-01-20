@@ -2,28 +2,28 @@
 import { useRouter } from 'next/navigation'
 
 interface PropsType {
-    item: {
-        id: number
-        author: string
-    }
+  item: {
+    id: number
+    author: string
+  }
 }
 
 export default function AuthorsCategoryCard({ item }: PropsType) {
-    const router = useRouter()
-    return (
-        <li
-            tabIndex={0}
-            onKeyUp={(e) => {
-                const key = e.key
-                if(key !=='Enter') return 
-                item.author.replace(' ', '')
-                router.push(`/author-quotes/${item.author}`)
-            }}
-            onClick={() => {
-                item.author.replace(' ', '')
-                router.push(`/author-quotes/${item.author}`)
-            }}
-            className="
+  const router = useRouter()
+  return (
+    <li
+      tabIndex={0}
+      onKeyUp={(e) => {
+        const key = e.key
+        if (key !== 'Enter') return
+        item.author.replace(' ', '')
+        router.push(`/author-quotes/${item.author}`)
+      }}
+      onClick={() => {
+        item.author.replace(' ', '')
+        router.push(`/author-quotes/${item.author}`)
+      }}
+      className="
                 p-[4em]
                 pt-[4em]
                 odd:-rotate-2 
@@ -48,11 +48,10 @@ export default function AuthorsCategoryCard({ item }: PropsType) {
                 hover:z-10
                 hover:cursor-pointer
                 relative"
-            key={item.author}
-        >
-            <div className="w-[20px] h-[45px] bg-[rgba(237,147,147,0.7)] absolute top-[-1em] right-2 "></div>
-            {item.author}
-        </li>
-
-    )
+      key={item.author}
+    >
+      <div className="w-[20px] h-[45px] bg-[rgba(237,147,147,0.7)] absolute top-[-1em] right-2 "></div>
+      {item.author}
+    </li>
+  )
 }

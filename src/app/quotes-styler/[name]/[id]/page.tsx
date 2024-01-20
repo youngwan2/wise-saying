@@ -1,6 +1,4 @@
-import QuoteStyler from "@/components/UI/styler/QuoteStyler"
-export default function QuoteStylerPage(){
-        return (
-        <QuoteStyler/>
-    )
+import QuoteStyler from '@/components/UI/styler/QuoteStyler'
+export default function QuoteStylerPage() {
+  return <QuoteStyler />
 }

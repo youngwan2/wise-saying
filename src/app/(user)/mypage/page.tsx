@@ -1,10 +1,8 @@
-import MypageContainer from "@/components/UI/container/MypageContainer";
-import MypageTaps from "@/components/UI/tap/MypageTaps";
-import { HiHome } from "react-icons/hi2";
-
+import MypageContainer from '@/components/UI/container/MypageContainer'
+import MypageTaps from '@/components/UI/tap/MypageTaps'
+import { HiHome } from 'react-icons/hi2'
 
 export default function Mypage() {
-
   return (
     <section className="w-full bg-red">
       <h2 className="flex items-center text-[1.5em] p-[10px] ">

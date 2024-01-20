@@ -1,4 +1,3 @@
-
 import { openDb } from '@/connect'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -6,7 +5,7 @@ export async function GET(req: NextRequest) {
   const db = await openDb()
 
   const limit = req.nextUrl.searchParams.get('limit') || 15
-  const type = req.nextUrl.searchParams.get('type') 
+  const type = req.nextUrl.searchParams.get('type')
 
   if (type === 'meta') {
     const query = `
@@ -19,7 +18,7 @@ export async function GET(req: NextRequest) {
     console.log(MAX_PAGE)
 
     db.close()
-    return NextResponse.json({ MAX_PAGE, TOTAL_COUNT: count, })
+    return NextResponse.json({ MAX_PAGE, TOTAL_COUNT: count })
   }
 
   const page = req.nextUrl.searchParams.get('page') || 0
@@ -32,5 +31,4 @@ export async function GET(req: NextRequest) {
   const items = await db.all(query, [limit, page])
   db.close()
   return NextResponse.json(items)
-
 }

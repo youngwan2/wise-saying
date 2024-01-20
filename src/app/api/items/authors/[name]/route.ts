@@ -1,7 +1,6 @@
 import { openDb } from '@/connect'
 import { NextRequest, NextResponse } from 'next/server'
 
-
 interface ItemsType {
   id: number
   author: string
@@ -25,13 +24,11 @@ export async function GET(req: NextRequest, res: { params: { name: string } }) {
     const { count } = result
     const MAX_PAGE = Math.ceil(count / Number(limit))
 
-
     await db.close()
     return NextResponse.json({ TOTAL_COUNT: count, MAX_PAGE })
-
-  } 
-    const page = req.nextUrl.searchParams.get('page') || 0
-    const query = `
+  }
+  const page = req.nextUrl.searchParams.get('page') || 0
+  const query = `
         SELECT id, B.category AS author,B.category AS category, A.wise_sayings AS wise_sayings 
         FROM quotes_author A JOIN authors_group B
         ON A.category_id = B.category_id AND B.category = ?
@@ -39,8 +36,7 @@ export async function GET(req: NextRequest, res: { params: { name: string } }) {
         LIMIT ? OFFSET ?*15
     `
 
-    const items: ItemsType[] = await db.all(query, [name, limit, page])
-    await db.close()
-    return NextResponse.json(items)
-
+  const items: ItemsType[] = await db.all(query, [name, limit, page])
+  await db.close()
+  return NextResponse.json(items)
 }

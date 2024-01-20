@@ -1,13 +1,12 @@
-import { useCallback, useEffect, useRef } from "react"
-import QuotesCardButton from "../button/QuotesCardButton"
-import UserQuotesCardButton from "../button/UserQuotesCardButton"
-import useIntersectionObserver from "@/custom/useIntersectionObserver"
-import { useCardZoomInOutStore } from "@/store/store"
-import { usePathname } from "next/navigation"
-import { ItemsType } from "@/types/items.types"
-import ReplaceMessageCard from "./ReplaceMessageCard"
-import gsap from "gsap/all"
-
+import { useCallback, useEffect, useRef } from 'react'
+import QuotesCardButton from '../button/QuotesCardButton'
+import UserQuotesCardButton from '../button/UserQuotesCardButton'
+import useIntersectionObserver from '@/custom/useIntersectionObserver'
+import { useCardZoomInOutStore } from '@/store/store'
+import { usePathname } from 'next/navigation'
+import { ItemsType } from '@/types/items.types'
+import ReplaceMessageCard from './ReplaceMessageCard'
+import gsap from 'gsap/all'
 
 interface PropsType {
   item: ItemsType
@@ -15,9 +14,7 @@ interface PropsType {
   index: number
 }
 
-
 export default function QuoteCard({ item, items, index }: PropsType) {
-
   const liRefs = useRef<HTMLLIElement[]>([])
   const pathName = usePathname()
   const isZoomIn = useCardZoomInOutStore((state) => state.isZoomIn)
@@ -31,19 +28,25 @@ export default function QuoteCard({ item, items, index }: PropsType) {
   useIntersectionObserver(liRefs)
 
   // 카드 확대
-  const cardZoomInoutSwitch = useCallback((target: HTMLLIElement) => {
+  const cardZoomInoutSwitch = useCallback(
+    (target: HTMLLIElement) => {
+      // 줌 인(확대)
+      if (isZoomIn) {
+        gsap.to(target, {
+          visibility: 'hidden',
+          opacity: 0,
+          translateY: -50,
+          translateZ: 15,
+        })
+      }
 
-    // 줌 인(확대)
-    if (isZoomIn) {
-      gsap.to(target, { visibility: 'hidden', opacity: 0, translateY: -50, translateZ: 15 })
-    }
-
-    // 줌 아웃(축소)
-    if (!isZoomIn) {
-      gsap.to(target, { visibility: 'visible', opacity: 1, translateY: 0 })
-    }
-  }, [isZoomIn])
-
+      // 줌 아웃(축소)
+      if (!isZoomIn) {
+        gsap.to(target, { visibility: 'visible', opacity: 1, translateY: 0 })
+      }
+    },
+    [isZoomIn],
+  )
 
   useEffect(() => {
     if (liRefs.current[cardIndex] === undefined) return
@@ -53,8 +56,12 @@ export default function QuoteCard({ item, items, index }: PropsType) {
     }
   }, [cardIndex, cardZoomInoutSwitch])
 
-
-  if (!item) return <ReplaceMessageCard childern={<p>아이템을 조회중입니다. 잠시만 기다려주세요.</p>} />
+  if (!item)
+    return (
+      <ReplaceMessageCard
+        childern={<p>아이템을 조회중입니다. 잠시만 기다려주세요.</p>}
+      />
+    )
   return (
     <li
       ref={(element) => {
@@ -72,17 +79,20 @@ export default function QuoteCard({ item, items, index }: PropsType) {
                 hover:shadow-[-1px_20px_10px_0_rgba(0,0,0,0.5)] hover:translate-y-[-20px] hover:cursor-pointer
                 `}
     >
-      <span className='absolute left-2 top-2 underline decoration-wavy decoration-[#fb6e6e]'>{item.id}</span>
-      <blockquote className='mt-[1em]'>
-        <p className=' p-[1em]'>{item?.wise_sayings}</p>
+      <span className="absolute left-2 top-2 underline decoration-wavy decoration-[#fb6e6e]">
+        {item.id}
+      </span>
+      <blockquote className="mt-[1em]">
+        <p className=" p-[1em]">{item?.wise_sayings}</p>
         <footer className="font-bold mt-[1em]">{item?.author}</footer>
       </blockquote>
       <div className="w-[20px] h-[45px] bg-[rgba(255,181,181,0.7)] absolute top-[-1em] right-1 rotate-45"></div>
 
-      {pathName.includes('/user-quotes')
-        ? <UserQuotesCardButton index={index} item={item} items={items} />
-        : <QuotesCardButton index={index} itemId={item.id} items={items} />}
+      {pathName.includes('/user-quotes') ? (
+        <UserQuotesCardButton index={index} item={item} items={items} />
+      ) : (
+        <QuotesCardButton index={index} itemId={item.id} items={items} />
+      )}
     </li>
   )
 }
-

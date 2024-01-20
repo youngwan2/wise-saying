@@ -14,10 +14,9 @@ import {
   HiPencil,
   HiLogout,
   HiLogin,
-  HiOutlineHome
+  HiOutlineHome,
 } from 'react-icons/hi'
 export default function Nav() {
-
   const nextAuthLoginState = useLoginStateStore((state) => state.loginState)
   const generalLoginState = useHasToken()
   return (
@@ -80,7 +79,7 @@ export default function Nav() {
             <Link href={'/mypage'}>마이페이지</Link>
           </span>
         </li>
-        {nextAuthLoginState || generalLoginState ?
+        {nextAuthLoginState || generalLoginState ? (
           // 로그아웃
           <li className="mt-3 flex items-center">
             <HiLogout />
@@ -88,14 +87,15 @@ export default function Nav() {
               <Link href={'/logout'}>로그아웃</Link>
             </span>
           </li>
-          :
+        ) : (
           // 로그인
           <li className="mt-3 flex items-center">
             <HiLogin />
             <span className="ml-1">
               <Link href={'/login'}>로그인</Link>
             </span>
-          </li>}
+          </li>
+        )}
 
         {/* 글쓰기 */}
         <li className="mt-3 flex items-center">

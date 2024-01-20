@@ -13,13 +13,11 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
-       boxShadow: {
-          custom1:'2px 2px 10px rbga(0,0,0,0.8)'
-       }
+      boxShadow: {
+        custom1: '2px 2px 10px rbga(0,0,0,0.8)',
+      },
     },
   },
-  plugins: [
-    require('tailwindcss-3d')
-  ],
+  plugins: [require('tailwindcss-3d')],
 }
 export default config

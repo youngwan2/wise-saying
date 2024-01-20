@@ -6,15 +6,15 @@ import { useRouter } from 'next/navigation'
 interface PropsType {
   list: WeekDayCategoryType
 }
-export default function WeekdayCategoryCard({ list}: PropsType) {
+export default function WeekdayCategoryCard({ list }: PropsType) {
   const router = useRouter()
   return (
     <li
-    tabIndex={0}
+      tabIndex={0}
       key={list.category_id}
-      onKeyUp={(e)=>{
+      onKeyUp={(e) => {
         const key = e.key
-        if(key !=='Enter') return
+        if (key !== 'Enter') return
         router.push(`/day-quotes/${list.category_id}`)
       }}
       onClick={() => {
