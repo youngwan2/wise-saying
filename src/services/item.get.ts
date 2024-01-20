@@ -1,6 +1,9 @@
+import { config } from "@/lib/config";
+
 export async function getItemFromDB(path: string = '') {
   try {
-    const response = await fetch(`http://localhost:3000/api/items/${path}`)
+    const url =  config.apiPrefix + config.apiHost + `/api/items/${path}`
+    const response = await fetch(url)
     const data = await response.json()
     return data
   } catch (error) {
@@ -30,7 +33,7 @@ export async function getQuotesBy(url: string): Promise<any> {
  */
 export async function getCategoriesFromDb(url: string) {
   try {
-    const transformURL = 'http://localhost:3000' + url
+    const transformURL = config.apiPrefix + config.apiHost + url
     const response = await fetch(transformURL)
     const weeks = await response.json()
     return weeks
@@ -76,9 +79,9 @@ export const getApiMetaDataFromServer = async (
   path2: string,
 ) => {
   try {
-    const url = path1 === 'weathers'
-      ? `http://localhost:3000/api/items/${path1}?type=meta`
-      : `http://localhost:3000/api/items/${path1}/${path2}?type=meta`
+    const url = path1  === 'weathers'
+      ? `${config.apiPrefix}${config.apiHost}/api/items/${path1}?type=meta`
+      : `${config.apiPrefix}${config.apiHost}/api/items/${path1}/${path2}?type=meta`
     console.log('GET 메타 데이터 분기 경로:',url)
     const response = await fetch(url)
     const result = await response.json()
@@ -94,11 +97,11 @@ export const getApiMetaDataFromServer = async (
  */
 export const todayQuoteFetch = async () => {
   try {
-    const response = await fetch('http://localhost:3000/api/items/random', {
+    const url = config.apiPrefix + config.apiHost+"/api/items/random";
+    const response = await fetch(url, {
       next: { revalidate: 3600 },
     })
     const items = await response.json()
-
     return items
   } catch (error) {
     console.error(error)

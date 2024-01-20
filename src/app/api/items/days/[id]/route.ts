@@ -30,5 +30,6 @@ export async function GET(req: NextRequest, res: { params: { id: string } }) {
         LIMIT ? OFFSET ?*15
     `
   const items = await db.all(query, [id, limit, page])
+  await db.close()
   return NextResponse.json(items)
 }
