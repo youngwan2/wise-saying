@@ -16,7 +16,7 @@ export default function BookmarkModalButton() {
       onClick={() => {
         setToggleState(!toggleState)
       }}
-      className="text-black right-[10px] top-[10px] p-[10px] hover:cursor-pointer hover:shadow-[0_0px_0px_1px_rgba(0,0,0,0.3)]"
+      className="text-[0.82em] hover:shadow-[0_0_0_1px_rgba(888,888,888,0.3)] p-[10px] mt-[0.25em]"
     >
       <span className=" rounded-[1em] flex flex-col items-center ">
         <span className="bg-[#fe7c7c] px-[10px] rounded-[1em] mb-[-15px] z-[1] text-white">

@@ -1,15 +1,13 @@
-import { useEffect, useState } from 'react'
+import { MouseEventHandler, useEffect, useState } from 'react'
 
 interface PropsType {
-  setSize: (
-    size: number | ((_size: number) => number),
-  ) => Promise<any[] | undefined>
+  onClick:MouseEventHandler<HTMLButtonElement>
   size: number
   maxPage: number
   isLoadingMore: boolean
 }
 export default function LoadMoreButton({
-  setSize,
+  onClick,
   size,
   maxPage,
   isLoadingMore,
@@ -26,10 +24,9 @@ export default function LoadMoreButton({
         isLastPage
           ? 'bg-[#00000042] hover:cursor-not-allowed'
           : 'hover:cursor-pointer'
-      }  relative left-[50%] translate-x-[-50%] mt-[1em] shadow-[inset_-2px_-2px_5px_0_rgba(0,0,0,0.5)] rounded-[5px] border-[3px]  bg-white to-slate-400 w-[150px] h-[50px] hover:bg-[tomato] hover:text-white font-semibold text-[1.15em] `}
-      onClick={() => {
-        setSize(size + 1)
-      }}
+      }  relative left-[50%] translate-x-[-50%] mt-[3em] mb-[2em] shadow-[inset_-2px_-2px_5px_0_rgba(0,0,0,0.5)] 
+         rounded-[5px] border-[3px]  bg-white to-slate-400 w-[150px] h-[50px] hover:bg-[tomato] hover:text-white font-semibold text-[1.15em] z-[0]  `}
+      onClick={onClick}
     >
       {isLastPage
         ? '마지막 페이지'

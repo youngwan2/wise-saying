@@ -81,7 +81,7 @@ export default function ZommInQuoteCard({ item }: PropsType) {
         }}
         className={`${
           isZoomIn
-            ? ' backdrop-blur-[3px] z-50 fixed left-0 top-0 right-0 bottom-0 bg-[#00000086] visible opacity-100 '
+            ? ' backdrop-blur-[3px] z-[200] fixed left-0 top-0 right-0 bottom-0 bg-[#00000086] visible opacity-100'
             : 'invisible opacity-0'
         }  rounded-[10px]`}
       ></div>
@@ -94,7 +94,7 @@ export default function ZommInQuoteCard({ item }: PropsType) {
         className={`
                 invisible opacity-0
                 scale-[1.25]
-                z-[100]
+                z-[1000]
                 fixed left-[50%] top-[30%] translate-x-[-50%] translate-y-[-50%]
                 shadow-[1px_10px_5px_0_rgba(0,0,0,0.3)] p-[2.2em] odd:-rotate-2  even:rotate-2  max-w-[300px] bg-[#FFE5A0] 
                 m-3 w-[100%] text-center delay-300 duration-300

@@ -1,15 +1,15 @@
 'use client'
 
-import {
-  HiOutlineLockClosed,
-  HiOutlineLockOpen,
-  HiOutlineMail,
-  HiOutlineX,
-} from 'react-icons/hi'
+import { HiOutlineX } from 'react-icons/hi'
 import { useRouter } from 'next/navigation'
 import { gsap } from 'gsap/all'
 import { Draggable } from 'gsap/Draggable'
 import { useEffect, useRef, useState } from 'react'
+import SignInEmailInput from '../input/SignInEmailInput'
+import SignInPasswordInput from '../input/SignInPasswordInput'
+import SignInPasswordReConfirmInput from '../input/SignInPwReConfirmInput'
+import SignInSubmitButton from '../button/SignInSubmitButton'
+import { onSubmit } from '@/utils/commonFunctions'
 
 /**
  *  TODO: 하나의 페이지에 너무 긴 코드가 존재함 상태관리가 복잡해 보이고, 가독성도 매우 떨어짐. 별도의 컴포넌트로 분리하여 가독성을 높일 필요가 있음
@@ -18,11 +18,13 @@ export default function SignInForm() {
   const [isEmail, setIsEmail] = useState(false)
   const [isPassword, setIsPassword] = useState(false)
   const [isReconfirmPassword, setIsReconfirmPassword] = useState(false)
+  const [isSuccess, setisSuccessState] = useState(false)
+  const [existsEmail, setExistsEmail] = useState(false)
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [reConfirmPw, setReConfirmPw] = useState('')
-  const [isSuccess, setisSuccessState] = useState(false)
-  const [existsEmail, setExistsEmail] = useState(false)
+
 
   const router = useRouter()
   const formRef = useRef<HTMLFormElement>(null)
@@ -44,30 +46,6 @@ export default function SignInForm() {
     if (isSuccess) return router.push('/')
   }, [isSuccess, router])
 
-  function emailChecker(email: string) {
-    const regex = /[a-z0-9]+@[a-z]+\.[a-z]{2,}/g
-    const test = regex.test(email)
-    if (test) return setIsEmail(true)
-    return setIsEmail(false)
-  }
-
-  /** 패스워드 체크 */
-  function passwordChecker(password: string) {
-    // 8자 이상 (a-z, 0-9 무조건 1개 이상 포함, 특수문자 1개 이상 포함)
-    const regex =
-      /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&+=])[a-zA-Z0-9!@#$%^&+=]{8,}$/g
-    const test = regex.test(password)
-    if (test) return setIsPassword(true)
-    return setIsPassword(false)
-  }
-
-  /** 패스워드 재확인 */
-  function passwordReConfirmChecker(ps: string) {
-    // 8자 이상 (a-z, 0-9 무조건 1개 이상 포함, 특수문자 1개 이상 포함)
-    const test = ps.includes(password)
-    if (test) return setIsReconfirmPassword(true)
-    return setIsReconfirmPassword(false)
-  }
 
   /** 회원가입 요청 */
   function userInfoPostFetch(email: string, password: string) {
@@ -76,7 +54,7 @@ export default function SignInForm() {
       password,
       reConfirmPw,
     }
-    fetch('/api/signin', {
+    fetch('/api/auth/signin', {
       method: 'POST',
       body: JSON.stringify(body),
     })
@@ -87,29 +65,15 @@ export default function SignInForm() {
           setExistsEmail(false)
           alert('회원가입이 완료 되었습니다. 가입해주셔서 감사합니다.')
         }
+        if (status !== 201) {
+
+        }
       })
-      .catch((error) => {
-        console.error(error)
+      .catch(() => {
+        alert('요청에 실패하였습니다. 나중에 다시 시도해주세요.')
       })
   }
 
-  function userExists(email: string) {
-    fetch(`/api/users`, {
-      method: 'POST',
-      body: JSON.stringify(email),
-    }).then(async (response) => {
-      const res = await response.json()
-      const { status } = res
-      if (status === 201) {
-        setExistsEmail(true)
-        alert('확인 되었습니다. 다음을 진행해주세요.')
-      }
-      if (status === 409) {
-        setExistsEmail(false)
-        alert('중복된 이메일입니다.')
-      }
-    })
-  }
 
   return (
     <>
@@ -117,9 +81,7 @@ export default function SignInForm() {
       <form
         ref={formRef}
         className="shadow-2xl  rounded-[10px] flex flex-col fixed max-w-[430px] min-h-[350px] left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-[100%] bg-[#E76F51]"
-        onSubmit={(e) => {
-          e.preventDefault()
-        }}
+        onSubmit={onSubmit}
       >
         <h2 className="rounded-t-[10px]  p-[10px] font-bold text-[1.25em] bg-[#413A3A] text-[white]">
           회원가입
@@ -134,147 +96,30 @@ export default function SignInForm() {
         </button>
 
         {/* 이메일 */}
-        <article className="mt-[3.5em] mb-[1em] mx-[10px]">
-          <div className="flex">
-            <label
-              className="rounded-s-lg bg-[#3F3F3F] text-[white] text-center p-[0.8em] inline-block min-w-[50px]"
-              htmlFor="user-email"
-            >
-              <span className=" inline-block">
-                <HiOutlineMail />
-              </span>
-            </label>
-            <input
-              onInput={(e) => {
-                const email = e.currentTarget.value
-                emailChecker(email)
-                setEmail(email)
-              }}
-              className="pl-[8px]  min-w-[230px] w-[100%] bg-[#ffffffce]"
-              type="email"
-              id="user-email"
-              name="user-email"
-              placeholder="이메일"
-            />
-            <button
-              onClick={() => {
-                userExists(email)
-              }}
-              className="bg-[white] min-w-[50px] rounded-r-[5px] hover:shadow-[0px_0px_0px_2px_black]"
-            >
-              확인
-            </button>
-          </div>
-          {isEmail ? (
-            <span className="block px-[5px] text-[#292997] ml-[0.5em]">
-              - 이메일 형식과 일치합니다.
-            </span>
-          ) : (
-            <>
-              <span className="text-[#444141] block ml-[0.5em] ">
-                - ex. email@naver.com
-              </span>
-              <span className="text-[red] block  ml-[0.5em]">
-                - 이메일 형식과 일치시키세요
-              </span>
-            </>
-          )}
-        </article>
+        <SignInEmailInput 
+            email={email} 
+            isEmail={isEmail} 
+            setEmail={setEmail} 
+            setIsEmail={setIsEmail} 
+            setExistsEmail={setExistsEmail} />
 
         {/* 패스워드 */}
-        <article className="mx-[10px]  mb-[1em]">
-          <div className="flex">
-            <label
-              className="rounded-s-lg bg-[#3F3F3F] text-[white] p-[0.8em] text-center inline-block min-w-[50px]"
-              htmlFor="user-password"
-            >
-              <span className="inline-block">
-                <HiOutlineLockOpen />
-              </span>
-            </label>
-            <input
-              onInput={(e) => {
-                const password = e.currentTarget.value
-                setPassword(password)
-                passwordChecker(password)
-              }}
-              className="pl-[8px]  rounded-e-lg min-w-[230px]  w-[100%] bg-[#ffffffce]"
-              type="password"
-              id="user-password"
-              name="user-password"
-              placeholder="패스워드"
-            />
-          </div>
-          {isPassword ? (
-            <span className="block px-[5px] text-[#292997] ml-[0.5em]">
-              - 패스워드 형식과 일치합니다.
-            </span>
-          ) : (
-            <>
-              <span className="text-[#444141] block ml-[0.5em] ">
-                - 특수문자 1개 이상, 문자 및 숫자 1개 이상 포함한 8자 이상
-              </span>
-              <span className="text-[red] block  ml-[0.5em]">
-                - 패스워드 형식과 일치시키세요
-              </span>
-            </>
-          )}
-        </article>
+        <SignInPasswordInput isPassword={isPassword} setPassword={setPassword} setIsPassword={setIsPassword} />
 
         {/* 패스워드 재검증 */}
-        <article className="mx-[10px]">
-          <div className="flex">
-            <label
-              className="rounded-s-lg bg-[#3F3F3F] text-[white] p-[0.8em] text-center inline-block min-w-[50px]"
-              htmlFor="user-repassword"
-            >
-              <span className="inline-block">
-                <HiOutlineLockClosed />
-              </span>
-            </label>
-            <input
-              onInput={(e) => {
-                const password = e.currentTarget.value
-                passwordReConfirmChecker(password)
-                setReConfirmPw(password)
-              }}
-              className="pl-[8px] rounded-e-lg min-w-[230px]  w-[100%] bg-[#ffffffce]"
-              type="password"
-              id="user-repassword"
-              name="user-repassword"
-              placeholder="패스워드 재확인"
-            />
-          </div>
-          {isReconfirmPassword ? (
-            <span className="block px-[5px] text-[#292997] ml-[0.5em]">
-              - 패스워드 형식과 일치합니다.
-            </span>
-          ) : (
-            <>
-              <span className="text-[red] block  ml-[0.5em]">
-                - 앞서 작성한 패스워드와 일치시키세요
-              </span>
-            </>
-          )}
-        </article>
+        <SignInPasswordReConfirmInput 
+            isReconfirmPassword={isReconfirmPassword} 
+            password={password} 
+            setIsReconfirmPassword={setIsReconfirmPassword} 
+            setReConfirmPw={setReConfirmPw} />
+        
         {/* 전송버튼 */}
-        {isVaildForm && existsEmail ? (
-          <button
-            onClick={() => {
-              userInfoPostFetch(email, password)
-            }}
-            className={`rounded-[5px] my-[2.5em] text-[black] bg-[#FFFFFF] max-w-[150px] py-[0.5em] min-w-[150px] mx-auto hover: cursor-pointer hover:bg-[#ffd9d9] font-bold ${
-              isVaildForm && existsEmail ? 'visible' : 'invisible'
-            }`}
-            type="submit"
-          >
-            가입
-          </button>
-        ) : (
-          <span className="p-[30px] text-center text-white">
-            - 조건 충족시 버튼이 활성화 됩니다.
-          </span>
-        )}
+        <SignInSubmitButton 
+            email={email} 
+            password={password} 
+            existsEmail={existsEmail} 
+            isVaildForm={isVaildForm} 
+            userInfoPostFetch={userInfoPostFetch} />
       </form>
     </>
   )

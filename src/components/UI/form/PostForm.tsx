@@ -1,21 +1,14 @@
 'use client'
-import { useRouter } from 'next/navigation'
+import {  useRouter } from 'next/navigation'
 import gsap from 'gsap'
 import { Draggable } from 'gsap/Draggable'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import useHasToken from '@/custom/useHasToken'
-import { postUserPost } from '@/services/item.post'
-import { onSubmit } from '@/utils/commonFunctions'
+import { postUserPost } from '@/api/user/post'
 
 export default function PostForm() {
   const formRef = useRef<HTMLFormElement>(null)
   const hasToken = useHasToken()
-  const [userPost, setUserPost] = useState({
-    category: '',
-    wise_sayings: '',
-    author: '',
-    userEmail: '',
-  })
 
   // UI 드래그 이벤트 등록
   useEffect(() => {
@@ -28,25 +21,30 @@ export default function PostForm() {
     }
   }, [])
 
-  // 등록된 유저 정보가 있으면 해당 정보를 불러오기
-  useEffect(() => {
-    const hasUserEmail = !!localStorage.getItem('user')
-    if (hasUserEmail) {
-      const userEmail = localStorage.getItem('user')
-      if (userEmail) setUserPost((old) => ({ ...old, userEmail }))
-    }
-  }, [])
 
   const router = useRouter()
 
+  const addPost = async (form: FormData) => {
+    const category = form.get('category')
+    const content = form.get('content')
+    const author = form.get('author')
+
+    const body = {
+      category,
+      wise_sayings: content,
+      author
+    }
+    postUserPost(router, hasToken, body)
+
+  }
   return (
     <form
       ref={formRef}
-      className="max-w-[560px] mx-auto bg-[#ffb057]  rounded-[10px] shadow-2xl"
-      onSubmit={onSubmit}
+      action={addPost}
+      className="max-w-[560px] mx-auto bg-[#ff8957]  mt-[2em] rounded-[10px] shadow-[inset_-2px_-2px_5px_rgba(0,0,0,0.5)]"
     >
       {/* 주제(카테고리) */}
-      <h2 className="text-[1.5em] mb-[1em] font-bold bg-[#333232] text-[white] p-[8px]  rounded-t-lg">
+      <h2 className="text-[1.5em] mb-[1em] font-bold bg-[#333232] text-[white] p-[8px]  rounded-t-lg shadow-[inset_-2px_0px_5px_rgba(0,0,0,0.5)] ">
         명언 등록
       </h2>
       <article className="px-[2em]">
@@ -54,11 +52,8 @@ export default function PostForm() {
           주제
         </label>
         <input
-          onInput={(e) => {
-            const category = e.currentTarget.value
-            setUserPost({ ...userPost, category })
-          }}
           type="text"
+          name='category'
           className="min-w-[200px] w-[500px] min-h-[40px] px-[10px]"
           placeholder="작성할 명언의 주제를 입력해주세요 ex) 사랑"
         />
@@ -73,10 +68,6 @@ export default function PostForm() {
           name="content"
           id="content"
           className="min-w-[200px] w-[500px] p-[10px] min-h-[150px]"
-          onInput={(e) => {
-            const wise_sayings = e.currentTarget.value
-            setUserPost({ ...userPost, wise_sayings })
-          }}
           placeholder="남기고자 하는 명언을 입력해주세요. ex) 해내지 못할 것을 걱정할게 아니라 시도조차 하지 않으려는 자신을 걱정해라."
         ></textarea>
       </article>
@@ -87,11 +78,8 @@ export default function PostForm() {
           작성자
         </label>
         <input
-          onInput={(e) => {
-            const author = e.currentTarget.value
-            setUserPost({ ...userPost, author })
-          }}
           type="text"
+          name='author'
           className="min-w-[200px] w-[500px]  px-[10px] min-h-[40px]"
           placeholder="명언의 작성자로 표기할 이름을 입력해주세요 ex) 지나가는 고양이"
         />
@@ -101,13 +89,11 @@ export default function PostForm() {
       <article className="p-[2em]">
         <button
           className=" bg-[#ffffff] p-[10px] mr-[1em] font-bold"
-          onClick={() => {
-            postUserPost(hasToken, userPost, router)
-          }}
         >
           등록하기
         </button>
         <button
+          type='button'
           onClick={() => {
             router.push('/')
           }}

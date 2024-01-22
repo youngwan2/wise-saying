@@ -33,6 +33,7 @@ export default function useIntersectionObserver(elementRefs: any) {
       { threshold: 0.5 },
     )
 
+    // 옵저버 등록
     lis.forEach((li: HTMLLinkElement) => {
       observer.observe(li)
     })

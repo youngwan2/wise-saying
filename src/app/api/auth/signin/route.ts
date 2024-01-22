@@ -3,18 +3,12 @@ import bcrpt from 'bcrypt'
 import { NextRequest, NextResponse } from 'next/server'
 import { openDb } from '@/connect'
 
-export async function POST(req: NextRequest) {
+// 암호화 설정(옵션)
+const SALT = 10
 
+export async function POST(req: NextRequest) {
   try {
     const db = await openDb()
-
-    const query = `
-        INSERT INTO users_group(email, password)
-        VALUES (?,?)
-    `
-
-    // 암호화 설정(옵션)
-    const saltRounds = 10
 
     // 유효성 검사
     const { email, password, reConfirmPw } = await req.json()
@@ -46,8 +40,13 @@ export async function POST(req: NextRequest) {
     const { email: validEmail, password: validPs } = result.value
 
     //검증 성공 시 비밀번호 해시 암호화
-    bcrpt.hash(validPs, saltRounds, function (err, hash) {
-      db.all(query, [validEmail, hash])
+    bcrpt.hash(validPs, SALT, function (err, hash) {
+      const query = `
+      INSERT INTO users_group(email, password, create_date)
+      VALUES (?,?,?)
+  `
+      const createDate = new Date().toLocaleString()
+      db.all(query, [validEmail, hash, createDate])
     })
 
     return NextResponse.json({
@@ -58,6 +57,10 @@ export async function POST(req: NextRequest) {
 
     // 그 외 서버 에러 처리
   } catch (error) {
-    return NextResponse.json({ status: 500, success: false, meg: '서버에서 문제가 발생하였습니다. 나중에 다시시도 해주세요.' })
+    return NextResponse.json({
+      status: 500,
+      success: false,
+      meg: '서버에서 문제가 발생하였습니다. 나중에 다시시도 해주세요.',
+    })
   }
 }

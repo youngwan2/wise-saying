@@ -1,4 +1,5 @@
 import { ItemsType } from '@/types/items.types'
+import { redirect } from 'next/navigation'
 import { ChangeEvent, FormEvent } from 'react'
 
 /**
@@ -29,10 +30,7 @@ export function quotesSelector(items: ItemsType[], id: number) {
 export const logoutUser = () => {
   localStorage.removeItem('token')
   localStorage.removeItem('user')
-  alert(
-    '보안을 위해 로그인 가능 시간이 만료되어 로그아웃 처리 됩니다. 서비스를 계속 이용하시려면 다시 로그인 해주세요.',
-  )
-  location.replace('/')
+  redirect('/')
 }
 
 /**

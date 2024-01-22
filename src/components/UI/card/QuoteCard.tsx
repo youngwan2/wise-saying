@@ -73,7 +73,7 @@ export default function QuoteCard({ item, items, index }: PropsType) {
       className={`
                 text-[1.15em]
                 group
-                p-[1.5em] my-[1em] m-3 w-[100%] max-h-[600px]  max-w-[330px] min-h-[250px] bg-gradient-to-t from-[#fff1a3] to-[#faeda3] text-center 
+                p-[1.5em] my-[1em] m-3 w-[100%] max-h-[600px]  max-w-[330px] min-h-[250px]  text-center bg-[#f6e9a0] 
                 odd:-rotate-1  even:rotate-1
                 transition-all duration-700 shadow-[5px_10px_5px_0_rgba(0,0,0,0.3)] antialiased
                 hover:shadow-[-1px_20px_10px_0_rgba(0,0,0,0.5)] hover:translate-y-[-20px] hover:cursor-pointer
@@ -86,7 +86,7 @@ export default function QuoteCard({ item, items, index }: PropsType) {
         <p className=" p-[1em]">{item?.wise_sayings}</p>
         <footer className="font-bold mt-[1em]">{item?.author}</footer>
       </blockquote>
-      <div className="w-[20px] h-[45px] bg-[rgba(255,181,181,0.7)] absolute top-[-1em] right-1 rotate-45"></div>
+      
 
       {pathName.includes('/user-quotes') ? (
         <UserQuotesCardButton index={index} item={item} items={items} />

@@ -1,4 +1,4 @@
-import { getQuotesBy } from '@/services/item.get'
+import { getQuotesBy } from '@/api/data/get'
 import useSWRInfinite from 'swr/infinite'
 
 /**
@@ -28,10 +28,6 @@ export default function useInfiniteScroll(
       case 'etc':
         url = `/api/items/${type}/${pathName}?page=${pageIndex}&limit=15`
         break
-
-      case 'weathers': {
-        url = `/api/items/weathers?page=${pageIndex}&limit=15`
-      }
     }
     return url
   }

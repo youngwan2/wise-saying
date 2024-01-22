@@ -1,7 +1,7 @@
 'use client'
 import useSWR from 'swr'
 import useHasToken from '@/custom/useHasToken'
-import { getBookmarkListFormDB } from '@/services/item.get'
+import { getBookmarkListFormDB } from '@/api/data/get'
 import { useBookmarkStore } from '@/store/store'
 
 import { useCallback, useEffect, useState } from 'react'

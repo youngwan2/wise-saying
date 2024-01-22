@@ -7,7 +7,7 @@ import { HiOutlineBookmark, HiScissors } from 'react-icons/hi2'
 import { PropsType } from './QuotesCardButton'
 import { usePathname, useRouter } from 'next/navigation'
 import { useCardZoomInOutStore } from '@/store/store'
-import { postBookmarkItem } from '@/services/item.post'
+import { postBookmarkItem } from '@/api/data/post'
 import { useEffect, useState } from 'react'
 import AlertCard from '../card/AlertCard'
 

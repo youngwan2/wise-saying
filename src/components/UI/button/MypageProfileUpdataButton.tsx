@@ -1,5 +1,5 @@
 import useHasToken from '@/custom/useHasToken'
-import { updateUserInfo } from '@/services/item.post'
+import { updateUserInfo } from '@/api/user/post'
 
 interface PropsType {
   nickname: string

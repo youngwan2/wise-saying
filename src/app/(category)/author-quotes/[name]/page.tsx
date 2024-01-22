@@ -1,6 +1,5 @@
 'use client'
 
-import { HiUserGroup } from 'react-icons/hi'
 import LoadMoreButton from '@/components/UI/button/LoadMoreButton'
 import useInfiniteScroll from '@/custom/useInfiniteScroll'
 import QuoteList from '@/components/UI/list/QuoteList'
@@ -21,6 +20,7 @@ export default function AuthorPage({ params }: PropsType) {
     isLoadingMore,
     itemCount: currnetItemCount,
   } = useInfiniteScroll(pathName, 'authors')
+  
   const { totalCount, maxPage } = useItemMetadataFetch('authors', pathName)
 
   if (!items)
@@ -31,16 +31,13 @@ export default function AuthorPage({ params }: PropsType) {
     )
   return (
     <section className="max-h-[80vh] relative">
-      <h2 className="flex items-center text-[1.5em] p-[5px] mb-[1em] ">
-        <span className="bg-[#fbd15e] p-[1.5px] rounded-[5px] m-[10px] text-white">
-          <HiUserGroup />
-        </span>
+      <h2 className="flex justify-center items-center text-[1.5em] p-[10px]  text-center text-white max-w-[250px] mx-auto bg-gradient-to-b from-[transparent] to-[#00000033]  shadow-[0_9px_2px_0_rgba(0,0,0,0.5)] rounded-[5px] my-[2em] ">
         {pathName}의 명언({currnetItemCount}/{totalCount})
       </h2>
       <QuoteList items={items} />
       <LoadMoreButton
         size={size}
-        setSize={setSize}
+        onClick={()=> setSize(size+1)}
         maxPage={maxPage}
         isLoadingMore={isLoadingMore}
       />

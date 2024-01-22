@@ -1,7 +1,7 @@
 export const dynamic = 'force-dynamic'
 import type { Metadata } from 'next'
 import WeekdayCategoryList from '@/components/UI/list/WeekdayCategoryList'
-import { getCategoriesFromDb } from '@/services/item.get'
+import { getCategoriesFromDb } from '@/api/data/get'
 import { HiCalculator } from 'react-icons/hi'
 
 export const metadata: Metadata = {
@@ -15,10 +15,7 @@ export default async function DayPage() {
 
   return (
     <section className="w-full">
-      <h2 className="flex items-center text-[1.5em] p-[10px]">
-        <span className="bg-[#fbd15e] p-[1.5px] rounded-[5px] m-[10px] text-white">
-          <HiCalculator color="white" />
-        </span>
+      <h2 className="flex justify-center items-center text-[1.5em] p-[10px]  text-center text-white max-w-[250px] mx-auto bg-gradient-to-b from-[transparent] to-[#00000033]  shadow-[0_9px_2px_0_rgba(0,0,0,0.5)] rounded-[5px] my-[2em] ">
         요일별 명언({itemCount})
       </h2>
       <WeekdayCategoryList categories={daysOfWeek} />

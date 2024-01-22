@@ -3,6 +3,7 @@ import { HiOutlineMenu, HiX } from 'react-icons/hi'
 import { useNavDisplayStateStore } from '@/store/store'
 import { useRef } from 'react'
 import useScrollBasedIconPosition from '@/custom/useScrollBasedIconPosition'
+import { HiOutlineXCircle, HiXCircle } from 'react-icons/hi2'
 
 export default function HeaderNavButton() {
   const navButtonRef = useRef<HTMLButtonElement>(null)
@@ -14,13 +15,17 @@ export default function HeaderNavButton() {
     <button
       ref={navButtonRef}
       className={
-        'text-[1.25em] hover:shadow-[0_0_0_1px_rgba(0,0,0,0.5)] p-[10px] mt-[0.25em]'
+        'text-[1.7em] hover:shadow-[0_0_0_1px_rgba(888,888,888,0.3)] p-[10px] mt-[0.25em]'
       }
       onClick={() => {
         setDisplay(!isDisplay)
       }}
     >
-      {isDisplay ? <HiX /> : <HiOutlineMenu />}
+      {isDisplay ? (
+        <HiOutlineXCircle color="white" />
+      ) : (
+        <HiOutlineMenu color="white" />
+      )}
     </button>
   )
 }

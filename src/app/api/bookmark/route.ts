@@ -1,7 +1,7 @@
 import { openDb } from '@/connect'
 import { NextRequest, NextResponse } from 'next/server'
 import { headers } from 'next/headers'
-import { accessTokenVerify } from '@/utils/api/auth'
+import { accessTokenVerify } from '@/utils/validation'
 
 //  북마크 조회 처리
 export async function GET(req: NextRequest) {

@@ -44,14 +44,15 @@ export async function GET(
 }
 
 // 수정
-export async function PATCH(req: NextRequest, res: { params: { category: string } }) {
-
+export async function PATCH(
+  req: NextRequest,
+  res: { params: { category: string } },
+) {
   try {
     const db = await openDb()
     const postId = res.params.category
-    const accessToken = req.headers
-      .get('authorization')
-      ?.replace('Bearer ', '') || ''
+    const accessToken =
+      req.headers.get('authorization')?.replace('Bearer ', '') || ''
     const scrept = process.env.JWT_SCREPT!
     const { wise_sayings, category, author } = await req.json()
 
@@ -72,14 +73,13 @@ export async function PATCH(req: NextRequest, res: { params: { category: string 
         `
 
     db.all(query, [wise_sayings, category, author, postId])
-   
+
     // db.close()
     return NextResponse.json({
       status: 201,
       success: true,
       meg: '요청을 성공적으로 처리하였습니다.',
     })
-
   } catch (error) {
     console.log(error)
     return NextResponse.json({

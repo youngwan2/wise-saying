@@ -1,7 +1,7 @@
 export const dynamic = 'force-dynamic'
 
 import TodayQuotelist from '@/components/UI/list/TodayQuoteList'
-import { todayQuoteFetch } from '@/services/item.get'
+import { todayQuoteFetch } from '@/api/data/get'
 
 export default async function Home() {
   const items = await todayQuoteFetch()

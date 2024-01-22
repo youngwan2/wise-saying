@@ -21,10 +21,10 @@ export default function QuoteList({ items }: PropsType) {
     <>
       <ul
         ref={ulRef}
-        className="mt-[1em] pt-[2em] w-full flex justify-center max-h-[75vh] flex-wrap overflow-y-auto perspective-500 transform-style-3d h-[80vh] "
+        className="mt-[1em] pt-[2em] w-full flex justify-center flex-wrap perspective-500 transform-style-3d"
       >
         {items.map((item, i) => {
-          return <QuoteCard item={item} index={i} key={item.id} items={items} />
+          return <QuoteCard  key={item.id} index={i} item={item}  items={items} />
         })}
       </ul>
       <ZommInQuoteCard item={items[cardIndex || 0]} />

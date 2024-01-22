@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useUserPostIdStore } from '@/store/store'
 import { ItemsType } from '@/types/items.types'
 import QuotesCardCommonButton from './QuotesCardCommonButton'
-import { deleteUserQuote } from '@/services/item.delete'
+import { deleteUserQuote } from '@/api/data/delete'
 
 interface PropsType {
   item: ItemsType

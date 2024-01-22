@@ -1,26 +1,26 @@
-import { PostType } from "../form/UpdateForm"
+import { PostType } from '../form/UpdateForm'
 
 interface PropsType {
-    setPost: (p: PostType) => void
-    post: PostType
+  setPost: (p: PostType) => void
+  post: PostType
 }
 export default function UpdateSubjectInput({ setPost, post }: PropsType) {
 
-    return (
-        <article className="px-[2em]">
-            <label htmlFor="content" className="block font-bold">
-                내용
-            </label>
-            <textarea
-                name="content"
-                id="content"
-                className="min-w-[200px] w-[500px] p-[10px] min-h-[150px]"
-                onInput={(e) => {
-                    const wise_sayings = e.currentTarget.value
-                    setPost({ ...post, wise_sayings })
-                }}
-                placeholder={'기존내용) ' + post.wise_sayings || '없음'}
-            ></textarea>
-        </article>
-    )
+  return (
+    <article className="px-[2em]">
+    <label htmlFor="subject" className="block font-bold">
+      주제
+    </label>
+    <input
+      onInput={(e) => {
+        const category = e.currentTarget.value
+        setPost({ ...post, category })
+      }}
+      type="text"
+      className="min-w-[200px] w-[500px] min-h-[40px] px-[10px]"
+      placeholder={'기존내용) ' + post.category || '없음'}
+    />
+  </article>
+
+  )
 }

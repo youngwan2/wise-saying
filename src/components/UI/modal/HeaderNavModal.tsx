@@ -1,23 +1,57 @@
 'use client'
+
 import {
   HiOutlineCalendarDays,
   HiOutlineHandThumbUp,
   HiOutlineHeart,
   HiOutlineHomeModern,
   HiOutlinePencil,
-  HiOutlineSun,
   HiOutlineUserGroup,
 } from 'react-icons/hi2'
+
 import { useNavDisplayStateStore } from '@/store/store'
 import { useRouter } from 'next/navigation'
 import { HiPhotograph } from 'react-icons/hi'
+import React, { MouseEventHandler } from 'react'
+import { IconType } from 'react-icons'
+
 
 /**
  * TODO : 반복되는 로직이라면 반복문으로 줄일 수 있는 경우 줄일 필요가 있어 보임.
  */
+
+interface PropsType {
+  onClick: MouseEventHandler<HTMLButtonElement>
+  icon:IconType
+  label: string
+}
+const NavLinkButton = ({ onClick, icon, label }: PropsType) => {
+  return (
+    <button
+      onClick={onClick}
+      className="hover:shadow-[0_0px_0px_2px_tomato] min-w-[100px] text-[0.68em] lg:text-[0.8em] hover:bg-white rounded-[10px] transition-all m-2  max-w-[300px] justify-center px-[5px] font-semibold hover:cursor-pointer"
+    >
+      <span className="text-[1.25em]">
+        {icon && React.createElement(icon, { color: 'tomato', className: 'w-[100%] h-[30px] mb-[0.5em]' })}
+        {label}
+      </span>
+    </button>
+  );
+};
+
 export default function HeaderNavModal() {
-  const isDisplay = useNavDisplayStateStore((state) => state.isDisplay)
-  const router = useRouter()
+  const isDisplay = useNavDisplayStateStore((state) => state.isDisplay);
+  const router = useRouter();
+
+  const navList = [
+    { path: '/author-quotes', label: '인물별 명언', icon: HiOutlineUserGroup },
+    { path: '/day-quotes', label: '요일별 명언', icon: HiOutlineCalendarDays },
+    { path: '/user-quotes', label: '유저 명언', icon: HiOutlineHandThumbUp },
+    { path: '/etc-quotes', label: '그 외 명언', icon: HiOutlineHeart },
+    { path: '/add-wisesaying', label: '명언 쓰기', icon: HiOutlinePencil },
+    { path: '/mypage', label: '마이페이지', icon: HiPhotograph },
+    { path: '/', label: '홈', icon: HiOutlineHomeModern },
+  ];
 
   return (
     <article
@@ -27,133 +61,19 @@ export default function HeaderNavModal() {
                      transition-all duration-700
                     shadow-[0_-5px_10px_0_rgba(0,0,0,0.5)]  
                     rounded-t-[1em]
-                     ${
-                       isDisplay
-                         ? 'visible opacity-100 translate-y-0'
-                         : 'translate-y-[100px] invisible opacity-0'
-                     } `}
+                     ${isDisplay
+          ? 'visible opacity-100 translate-y-0'
+          : 'translate-y-[100px] invisible opacity-0'
+        } `}
     >
-      {/* 인물별 명언 */}
-      <button
-        onClick={() => {
-          router.push('/author-quotes')
-        }}
-        className="hover:shadow-[0_0px_0px_2px_tomato] min-w-[100px] text-[0.68em] lg:text-[0.8em] hover:bg-white rounded-[10px]  transition-all m-2 justify-center px-[5px] font-semibold hover:cursor-pointer"
-      >
-        <span className="text-[1.25em]">
-          <HiOutlineUserGroup
-            color="tomato"
-            className=" w-[100%] h-[30px] mb-[0.5em]"
-          />
-          인물별 명언
-        </span>
-      </button>
-      {/* 날씨 명언 */}
-      <button
-        onClick={() => {
-          router.push('/weather-quotes')
-        }}
-        className="hover:shadow-[0_0px_0px_2px_tomato] min-w-[100px] text-[0.68em] lg:text-[0.8em] hover:bg-white rounded-[10px] transition-all m-2 max-w-[300px] justify-center px-[5px] font-semibold hover:cursor-pointer"
-      >
-        <span className="text-[1.25em]">
-          <HiOutlineSun
-            color="tomato"
-            className="w-[100%] h-[30px] mb-[0.5em]"
-          />
-          날씨/계절 명언{' '}
-        </span>
-      </button>
-      {/* 요일 명언 */}
-      <button
-        onClick={() => {
-          router.push('/day-quotes')
-        }}
-        className="hover:shadow-[0_0px_0px_2px_tomato] min-w-[100px] text-[0.68em] lg:text-[0.8em] hover:bg-white rounded-[10px]  transition-all m-2  max-w-[300px] justify-center px-[5px] font-semibold hover:cursor-pointer"
-      >
-        <span className="text-[1.25em]">
-          {' '}
-          <HiOutlineCalendarDays
-            color="tomato"
-            className="w-[100%] h-[30px] mb-[0.5em]"
-          />
-          요일별 명언{' '}
-        </span>
-      </button>
-      {/* 유저 명언 */}
-      <button
-        onClick={() => {
-          router.push('/user-quotes')
-        }}
-        className="hover:shadow-[0_0px_0px_2px_tomato] min-w-[100px] text-[0.68em] lg:text-[0.8em] hover:bg-white rounded-[10px] transition-all m-2  max-w-[300px] justify-center px-[5px] font-semibold hover:cursor-pointer"
-      >
-        <span className="text-[1.25em]">
-          <HiOutlineHandThumbUp
-            color="tomato"
-            className="w-[100%] h-[30px] mb-[0.5em]"
-          />
-          유저 명언
-        </span>
-      </button>
-      {/* 그 외 명언 */}
-      <button
-        onClick={() => {
-          router.push('/etc-quotes')
-        }}
-        className="hover:shadow-[0_0px_0px_2px_tomato] min-w-[100px] text-[0.68em] lg:text-[0.8em]  hover:bg-white rounded-[10px] transition-all m-2 max-w-[300px] justify-center px-[5px] font-semibold hover:cursor-pointer"
-      >
-        <span className="text-[1.25em]">
-          <HiOutlineHeart
-            color="tomato"
-            className="w-[100%] h-[30px] mb-[0.5em]"
-          />
-          그 외 명언
-        </span>
-      </button>
-      {/* 명언등록 */}
-      <button
-        onClick={() => {
-          router.push('/add-wisesaying')
-        }}
-        className="hover:shadow-[0_0px_0px_2px_tomato] min-w-[100px] text-[0.68em] lg:text-[0.8em]  hover:bg-white rounded-[10px] transition-all m-2 max-w-[300px] justify-center px-[5px] font-semibold hover:cursor-pointer"
-      >
-        <span className="text-[1.25em]">
-          <HiOutlinePencil
-            color="tomato"
-            className="w-[100%] h-[30px] mb-[0.5em]"
-          />
-          명언 쓰기
-        </span>
-      </button>
-      {/* 마이페이지 */}
-      <button
-        onClick={() => {
-          router.push('/mypage')
-        }}
-        className="hover:shadow-[0_0px_0px_2px_tomato] min-w-[100px] text-[0.68em] lg:text-[0.8em]  hover:bg-white rounded-[10px] transition-all m-2 max-w-[300px] justify-center px-[5px] font-semibold hover:cursor-pointer"
-      >
-        <span className="text-[1.25em]">
-          <HiPhotograph
-            color="tomato"
-            className="w-[100%] h-[30px] mb-[0.5em]"
-          />
-          마이페이지
-        </span>
-      </button>
-      {/* 홈 */}
-      <button
-        onClick={() => {
-          router.push('/')
-        }}
-        className="hover:shadow-[0_0px_0px_2px_tomato] min-w-[100px] text-[0.68em] lg:text-[0.8em]  hover:bg-white rounded-[10px] transition-all m-2 max-w-[300px] justify-center px-[5px] font-semibold hover:cursor-pointer"
-      >
-        <span className="text-[1.25em]">
-          <HiOutlineHomeModern
-            color="tomato"
-            className="w-[100%] h-[30px] mb-[0.5em]"
-          />
-          홈
-        </span>
-      </button>
+      {navList.map((navItem, index) => (
+        <NavLinkButton
+          key={index}
+          onClick={() => router.push(navItem.path)}
+          icon={navItem.icon}
+          label={navItem.label}
+        />
+      ))}
     </article>
-  )
+  );
 }

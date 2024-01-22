@@ -1,8 +1,7 @@
 export const dynamic = 'force-dynamic'
 import type { Metadata } from 'next'
 import EtcCategoryList from '@/components/UI/list/EtcCategoryList'
-import { getCategoriesFromDb } from '@/services/item.get'
-import { HiHeart } from 'react-icons/hi'
+import { getCategoriesFromDb } from '@/api/data/get'
 
 export const metadata: Metadata = {
   title: '그 외 명언 | My wise saying',
@@ -18,10 +17,7 @@ export default async function EtcPage() {
   const itemCount = categories?.length || 0
   return (
     <section>
-      <h2 className="flex items-center text-[1.5em] p-[10px]">
-        <span className="bg-[#fbd15e] p-[1.5px] rounded-[5px] m-[10px] text-white">
-          <HiHeart color="white" />
-        </span>
+      <h2 className="flex justify-center items-center text-[1.5em] p-[10px]  text-center text-white max-w-[250px] mx-auto bg-gradient-to-b from-[transparent] to-[#00000033]  shadow-[0_9px_2px_0_rgba(0,0,0,0.5)] rounded-[5px] my-[2em] ">
         그 외 명언({itemCount})
       </h2>
       <EtcCategoryList categories={categories} />

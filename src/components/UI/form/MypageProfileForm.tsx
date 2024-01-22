@@ -5,7 +5,6 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { HiUpload } from 'react-icons/hi'
 import { storage } from '@/utils/firebase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
-import useHasToken from '@/custom/useHasToken'
 import MypageProfileUpdateButton from '../button/MypageProfileUpdataButton'
 
 interface PropsType {

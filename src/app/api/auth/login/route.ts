@@ -10,13 +10,14 @@ export async function POST(req: NextRequest) {
 
     // 유저 정보
     const { email, password } = await req.json()
+    console.log(email, password)
     const query = `
         SELECT user_id, email, password,profile_image, nickname FROM users_group
         WHERE email = ?
     `
     const user = await db.get(query, [email])
 
-    // 유저 정보 존재 유무 판단
+    // 1. 유저 정보 존재 유무 판단
     if (!user)
       return NextResponse.json({
         success: false,
@@ -31,7 +32,7 @@ export async function POST(req: NextRequest) {
       nickname,
     } = user
 
-    // 유효한 비밀번호 인지 판단
+    // 2. 유효한 비밀번호 인지 판단
     const vaildPw = await bycrypt.compare(password, dbPassword)
 
     if (!vaildPw)
@@ -41,7 +42,7 @@ export async function POST(req: NextRequest) {
         status: 403,
       })
 
-    // 액세스 토큰 생성
+    // 3. 액세스 토큰 생성
     const createAccessToken = jwt.sign(
       {
         exp: Math.floor(Date.now() / 1000) + 60 * 60,
@@ -50,7 +51,7 @@ export async function POST(req: NextRequest) {
       scrept,
     )
 
-    // 토큰 디코드
+    // 4. 토큰 디코딩
     const decode = jwt.verify(createAccessToken, scrept) as jwt.JwtPayload
     const { dbEmail: validEmail } = decode.data
 
@@ -63,7 +64,7 @@ export async function POST(req: NextRequest) {
       accessToken: createAccessToken,
     })
 
-    // 에러 처리
+    // 5. 그 외 에러 처리
   } catch (error) {
     return NextResponse.json({
       success: false,

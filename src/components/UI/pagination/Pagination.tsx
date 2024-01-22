@@ -29,8 +29,8 @@ export default function Pagination({
         return (
           <button
             key={i}
-            className={`border-dashed border-[3px] hover:underline px-[10px] mx-[5px] ${
-              page === i ? 'font-bold border-[tomato] rounded-full' : ''
+            className={`border-dashed border-[3px] hover:underline px-[10px] text-white mx-[5px] ${
+              page === i ? 'font-bold border-[tomato] rounded-full ' : ''
             } ${limit >= pageNum ? 'inline-block' : 'hidden'}`}
             onClick={() => {
               setPage(pageNum - 1)
