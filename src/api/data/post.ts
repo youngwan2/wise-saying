@@ -3,15 +3,12 @@
  * @param hasToken accessToken 존재 유무 판단
  * @param itemId 북마크에 추가할 아이템의 식별자(=>quote_id)
  */
-export const addBookmarkItem = (
-  hasToken: boolean,
-  itemId: number,
-) => {
+export const addBookmarkItem = (hasToken: boolean, itemId: number) => {
   if (!hasToken) return alert('로그인 후 이용해주시길 바랍니다.')
 
   const token = localStorage.getItem('token')
   const postData = {
-    quoteId: itemId
+    quoteId: itemId,
   }
 
   const url = '/api/bookmark'
@@ -19,7 +16,7 @@ export const addBookmarkItem = (
     method: 'POST',
     body: JSON.stringify(postData),
     headers: {
-      'authorization': `Bearer ${token}`,
+      authorization: `Bearer ${token}`,
     },
   })
     .then(async (response) => {

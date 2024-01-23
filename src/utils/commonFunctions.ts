@@ -27,11 +27,10 @@ export function quotesSelector(items: ItemsType[], id: number) {
 /**
  * * 토큰 만료 이후 강제 로그아웃 함수
  * */
-export const logoutUser = (router:AppRouterInstance) => {
+export const logoutUser = (router: AppRouterInstance) => {
   localStorage.removeItem('token')
   localStorage.removeItem('user')
   router.push('/')
-  
 }
 
 /**

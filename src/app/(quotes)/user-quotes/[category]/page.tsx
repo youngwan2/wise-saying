@@ -11,10 +11,10 @@ interface PropsType {
 
 export default function AuthorPage({ params }: PropsType) {
   const pathName: string = decodeURIComponent(params.category)
-  
+
   const { items, size, setSize, isLoadingMore, itemCount } = useInfiniteScroll(
     'users',
-    pathName
+    pathName,
   )
 
   const { totalCount, maxPage } = useItemMetadataFetch('users', pathName)
@@ -33,7 +33,7 @@ export default function AuthorPage({ params }: PropsType) {
       <QuoteList items={items} />
       <LoadMoreButton
         size={size}
-        onClick={()=> setSize(size+1)}
+        onClick={() => setSize(size + 1)}
         maxPage={maxPage}
         isLoadingMore={isLoadingMore}
       />

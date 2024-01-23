@@ -17,7 +17,7 @@ export default function CategoryCard({ item }: PropsType) {
 
   return (
     <li
-      ref={(elemnt)=>{
+      ref={(elemnt) => {
         elemnt && (liRefs.current[liRefs.current.length] = elemnt)
       }}
       tabIndex={0}

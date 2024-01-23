@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     const db = await openDb()
     const { category, wise_sayings, author } = await req.json()
 
-    console.log(category, wise_sayings,author)
+    console.log(category, wise_sayings, author)
 
     // 유효한 토큰이 아니면 자동으로 catch 에 에러를 전달
     const { dbEmail } = user
@@ -23,8 +23,6 @@ export async function POST(req: NextRequest) {
         `
     const { user_id: userId } = await db.get(selectQuery, [dbEmail])
     const createDate = new Date().toLocaleString()
-
-
 
     const insertQuery = `
             INSERT INTO quotes_user(quote, user_id, category, author, create_date)

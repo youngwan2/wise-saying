@@ -9,7 +9,6 @@ export default function Logout() {
   const hasToken = useHasToken()
   const [nickname, setNickname] = useState('익명')
 
-
   useEffect(() => {
     if (localStorage.getItem('user') === null) return
 
@@ -19,11 +18,11 @@ export default function Logout() {
     setNickname(nickname)
   }, [])
 
-  useEffect(()=>{
-    if(!hasToken) {
+  useEffect(() => {
+    if (!hasToken) {
       redirect('/')
     }
-  },[hasToken])
+  }, [hasToken])
   if (hasToken) {
     return (
       <>

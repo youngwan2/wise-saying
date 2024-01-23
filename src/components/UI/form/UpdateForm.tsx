@@ -79,8 +79,7 @@ export default function UpdateForm() {
     getUserPostBy(postId)
   }, [postId])
 
-
-  useDraggable(formRef)
+  useDraggable(formRef, null)
 
   if (loading)
     return <ReplaceMessageCard childern="데이터를 불러오는 중입니다..." />

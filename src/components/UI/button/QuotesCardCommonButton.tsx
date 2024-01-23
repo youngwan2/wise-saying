@@ -8,7 +8,7 @@ import { PropsType } from './QuotesCardButton'
 import { usePathname, useRouter } from 'next/navigation'
 import { useCardZoomInOutStore } from '@/store/store'
 import { addBookmarkItem } from '@/api/data/post'
-import {  useState } from 'react'
+import { useState } from 'react'
 import AlertCard from '../card/AlertCard'
 
 export default function QuotesCardCommonButton({

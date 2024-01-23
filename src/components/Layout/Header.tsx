@@ -26,7 +26,6 @@ export default function Header() {
       <SearchForm />
       <HeaderNavModal />
       <BookmarkModal />
-
     </>
   )
 }

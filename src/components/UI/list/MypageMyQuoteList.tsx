@@ -7,7 +7,7 @@ interface PropsType {
   setPage: (p: number) => void
   userQuotes: {
     id: number
-    wise_sayings: string
+    quote: string
     author: string
     category: string
   }[]

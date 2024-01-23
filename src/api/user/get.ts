@@ -1,4 +1,4 @@
-import { config } from "@/lib/config"
+import { config } from '@/lib/config'
 
 /**
  * GET | 데이터베이스에서 유저 정보 불어오기
@@ -31,7 +31,6 @@ export const getUserQuotesFromDb = async (url: string) => {
   const { items: userInfo, count } = await response.json()
   return { userInfo, count }
 }
-
 
 export const getCategoryUserFromDb = async (path: string) => {
   const transformUrl = config.apiPrefix + config.apiHost + path

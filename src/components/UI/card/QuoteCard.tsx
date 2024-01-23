@@ -29,7 +29,7 @@ export default function QuoteCard({ item, items, index }: PropsType) {
 
   /**
    * @param target gsap 애니메이션 대상
-   *  */ 
+   *  */
   const cardZoomInoutSwitch = useCallback(
     (target: HTMLLIElement) => {
       // 줌 인(확대) 시 해당 li 는 사라진다.
@@ -59,7 +59,8 @@ export default function QuoteCard({ item, items, index }: PropsType) {
     }
   }, [cardIndex, cardZoomInoutSwitch])
 
-  if (!item) return (<ReplaceMessageCard childern='게시글이 존재하지 않습니다.'/>)
+  if (!item)
+    return <ReplaceMessageCard childern="게시글이 존재하지 않습니다." />
 
   return (
     <li

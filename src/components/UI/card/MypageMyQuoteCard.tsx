@@ -22,7 +22,7 @@ export default function MyQuoteCard({ item }: PropsType) {
           <span className=" rounded-[5px] mr-[10px] min-w-50px text-center  max-w-[50px] inline-block  w-full px-[3px] m-[3px] font-semibold">
             명언{' '}
           </span>
-          <p>{item.wise_sayings}</p>
+          <p>{item.quote}</p>
         </li>
         <li className="flex">
           <span className="rounded-[5px] mr-[10px] min-w-50px text-center  max-w-[50px] inline-block  w-full px-[3px] m-[3px] font-semibold">

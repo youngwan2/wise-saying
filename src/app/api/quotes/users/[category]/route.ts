@@ -51,7 +51,7 @@ export async function PATCH(
     const db = await openDb()
     const postId = res.params.category
 
-  //  접근 토큰 검증
+    //  접근 토큰 검증
     accessTokenVerify(req)
 
     const { quote, category, author } = await req.json()

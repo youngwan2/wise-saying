@@ -33,7 +33,6 @@ export async function GET(req: NextRequest, res: { params: { id: number } }) {
   }
 }
 
-
 // 단일 포스트 삭제
 export async function DELETE(
   req: NextRequest,
@@ -51,11 +50,14 @@ export async function DELETE(
         `
     db.get(query, [id])
 
-    return NextResponse.json({ status: 201, success: true, meg:'성공적으로 처리 되었습니다.' })
- 
+    return NextResponse.json({
+      status: 201,
+      success: true,
+      meg: '성공적으로 처리 되었습니다.',
+    })
   } catch (error) {
     console.log(error)
-    
+
     return NextResponse.json({
       status: 401,
       success: false,

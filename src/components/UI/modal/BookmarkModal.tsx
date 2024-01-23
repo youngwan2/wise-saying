@@ -21,7 +21,6 @@ interface BookmarkListType {
   url: string
 }
 
-
 /**
  * TODO: 분리 가능한 부분은 컴포넌트로 분리할 필요가 있어 보임.
  */
@@ -35,7 +34,7 @@ export default function BookmarkModal() {
   const token = hasToken ? localStorage.getItem('token')! : ''
 
   const router = useRouter()
-  const { data, isLoading,error } = useSWR(
+  const { data, isLoading, error } = useSWR(
     [`/api/bookmark?page=${page}&limit=5`, token],
     ([url, token]) => getBookmarkListFormDB(url, token),
     {
@@ -65,7 +64,6 @@ export default function BookmarkModal() {
   useEffect(() => {
     if (data && data.status === 401) {
       router.push('/login')
-   
     }
   }, [router, data])
 
@@ -75,10 +73,11 @@ export default function BookmarkModal() {
 
   return (
     <section
-      className={`${toggleState
-        ? 'z-40 fixed left-0 right-0 top-0 bottom-0 bg-[#000000a4] block'
-        : ' z-40 fixed left-0 right-0 top-0 bottom-0 bg-[#000000a4] hidden'
-        }`}
+      className={`${
+        toggleState
+          ? 'z-40 fixed left-0 right-0 top-0 bottom-0 bg-[#000000a4] block'
+          : ' z-40 fixed left-0 right-0 top-0 bottom-0 bg-[#000000a4] hidden'
+      }`}
     >
       <h2 className="text-white text-[2em] mb-[1em] pl-[10px] flex items-center justify-center mt-[2em]">
         <HiBookmarkSquare className="pr-[5px]" />

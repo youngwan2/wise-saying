@@ -8,7 +8,6 @@ export async function GET(req: NextRequest) {
   const page = req.nextUrl.searchParams.get('page') || 0
   const limit = req.nextUrl.searchParams.get('limit') || 5
 
-
   try {
     const user = accessTokenVerify(req)
     const userId = user.userId
@@ -40,7 +39,7 @@ export async function GET(req: NextRequest) {
         items,
         totalCount,
       })
-      // 존재하지 않는 경우 
+      // 존재하지 않는 경우
     } catch (error) {
       console.log(error)
       return NextResponse.json({

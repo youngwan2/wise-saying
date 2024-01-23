@@ -7,7 +7,7 @@ export async function DELETE(
   req: NextRequest,
   res: { params: { id: string } },
 ) {
-  const { id:quoteId } = res.params
+  const { id: quoteId } = res.params
 
   const db = await openDb()
 

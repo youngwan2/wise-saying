@@ -24,7 +24,7 @@ export default function LoginForm() {
   }, [router, hasToken])
 
   // 드래그어블 적용
-  useDraggable(loginFormRef)
+  useDraggable(loginFormRef,null)
 
   async function login(form: FormData) {
     const email = form.get('email')

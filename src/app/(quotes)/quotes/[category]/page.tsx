@@ -1,4 +1,3 @@
-
 import type { Metadata } from 'next'
 import CategoryList from '@/components/UI/list/CategoryList'
 import { getCategoryCountFromDb } from '@/api/data/get'
@@ -14,7 +13,7 @@ export default async function CategoryPage() {
 
   return (
     <section>
-      <CategoryList categoryCount={count}/>
+      <CategoryList categoryCount={count} />
     </section>
   )
 }

@@ -1,5 +1,4 @@
 import { config } from '@/lib/config'
-import { logoutUser } from '@/utils/commonFunctions'
 
 /**
  * * GET | 서버로부터 특정 경로에 대한 명언 리스트 불러오기
@@ -50,11 +49,13 @@ export const getBookmarkListFormDB = async (
       },
     })
     const items = response.json()
-    const {status} = await items
+    const { status } = await items
 
-    if(status === 401) {return logoutUser()}
+    if (status === 401) {
+      localStorage.removeItem('token')
+      localStorage.removeItem('user')
+    }
     return items
-    
   } catch (error) {
     console.error(error)
   }

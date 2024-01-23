@@ -4,15 +4,17 @@ import { RefObject, useEffect } from 'react'
 
 /**
  * GSAP | 드래그어블 효과를 적용하는 커스텀 훅
- * @param elementRef 
+ * @param elementRef
  * @param type 특정 타입에 따라 다른 타입의 드래그어블 애니메이션을 적용(x | rotation | null)
  */
-export default function useDraggable(elementRef: RefObject<HTMLFormElement>, type: string | null) {
-
+export default function useDraggable(
+  elementRef: RefObject<HTMLFormElement>,
+  type: string | null,
+) {
   useEffect(() => {
     gsap.registerPlugin(Draggable)
-    let instance: Draggable[];
-    let clear: NodeJS.Timeout;
+    let instance: Draggable[]
+    let clear: NodeJS.Timeout
 
     if (elementRef.current) {
       clear = setTimeout(() => {
@@ -25,11 +27,10 @@ export default function useDraggable(elementRef: RefObject<HTMLFormElement>, typ
         } else if (type === 'rotation') {
           instance = Draggable.create(elementRef.current, {
             dragClickables: false,
-            type:'rotation',
+            type: 'rotation',
             bounds: document.querySelector('body'),
           })
-        }
-        else {
+        } else {
           instance = Draggable.create(elementRef.current, {
             dragClickables: false,
             bounds: document.querySelector('body'),
@@ -43,6 +44,5 @@ export default function useDraggable(elementRef: RefObject<HTMLFormElement>, typ
         instance[0].kill()
       }
     }
-
   }, [elementRef, type])
 }

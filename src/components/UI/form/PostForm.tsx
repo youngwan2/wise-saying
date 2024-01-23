@@ -5,14 +5,13 @@ import { postUserPost } from '@/api/user/post'
 import useDraggable from '@/custom/useDraggable'
 import { useRef } from 'react'
 
-
 export default function PostForm() {
   const formRef = useRef<HTMLFormElement>(null)
   const hasToken = useHasToken()
 
   // UI 드래그 이벤트 등록
 
-  useDraggable(formRef)
+  useDraggable(formRef, null)
 
   const router = useRouter()
 

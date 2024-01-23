@@ -153,11 +153,11 @@ export const useNavDisplayStateStore = create<NavDisplayState>((set) => ({
   setIsDisplay: (display) => set(() => ({ isDisplay: display })),
 }))
 
-
 /**
  * * Zustand |  헤더 검색창 온오프 상태 저장
  */
-export const useHeaderSearchFormStateStore = create<HeaderSearchFormDisplayState>((set) => ({
-  isDisplay: false,
-  setIsDisplay: (display) => set(() => ({ isDisplay: display })),
-}))
+export const useHeaderSearchFormStateStore =
+  create<HeaderSearchFormDisplayState>((set) => ({
+    isDisplay: false,
+    setIsDisplay: (display) => set(() => ({ isDisplay: display })),
+  }))

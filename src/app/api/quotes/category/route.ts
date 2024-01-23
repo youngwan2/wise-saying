@@ -19,9 +19,7 @@ export async function GET(req: NextRequest) {
          SELECT COUNT(DISTINCT author) AS count FROM quotes_all
       `
       const count = await db.get(query)
-      return NextResponse.json(
-        count
-      )
+      return NextResponse.json(count)
     }
 
     // 카테고리 목록 반환
