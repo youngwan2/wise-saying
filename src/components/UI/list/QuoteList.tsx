@@ -9,7 +9,7 @@ interface PropsType {
   items: {
     id: number
     author: string
-    wise_sayings: string
+    quote: string
   }[]
 }
 
@@ -24,7 +24,7 @@ export default function QuoteList({ items }: PropsType) {
         className="mt-[1em] pt-[2em] w-full flex justify-center flex-wrap perspective-500 transform-style-3d"
       >
         {items.map((item, i) => {
-          return <QuoteCard  key={item.id} index={i} item={item}  items={items} />
+          return <QuoteCard key={item.id} index={i} item={item} items={items} />
         })}
       </ul>
       <ZommInQuoteCard item={items[cardIndex || 0]} />

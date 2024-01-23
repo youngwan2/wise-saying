@@ -12,10 +12,8 @@ export default function SignInPasswordReConfirmInput({
   setReConfirmPw,
   setIsReconfirmPassword,
 }: PropsType) {
-
   /** 패스워드 재확인 */
   function passwordReConfirmChecker(ps: string) {
-    
     // 8자 이상 (a-z, 0-9 무조건 1개 이상 포함, 특수문자 1개 이상 포함)
     const test = ps.includes(password)
     if (test) return setIsReconfirmPassword(true)

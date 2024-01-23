@@ -3,21 +3,23 @@ import { NextRequest, NextResponse } from 'next/server'
 import { headers } from 'next/headers'
 import { accessTokenVerify } from '@/utils/validation'
 
-//  북마크 조회 처리
+//  GET | 북마크 조회 처리
 export async function GET(req: NextRequest) {
   const page = req.nextUrl.searchParams.get('page') || 0
   const limit = req.nextUrl.searchParams.get('limit') || 5
 
+
   try {
-    const db = await openDb()
     const user = accessTokenVerify(req)
     const userId = user.userId
 
+    const db = await openDb()
+
     const query = `
-          SELECT bookmark_id AS id, author, category, wise_sayings, url
-          FROM bookmarks
-          WHERE user_id = ?
-          ORDER BY id DESC
+          SELECT url, quote, A.quote_id AS id, author
+          FROM bookmarks A 
+          JOIN quotes_all B ON A.quote_id = B.quote_id 
+          WHERE A.user_id = ?
           LIMIT ? OFFSET ?*5
         `
     const countSelectQuery = `
@@ -30,6 +32,7 @@ export async function GET(req: NextRequest) {
       const countSelectResult = await db.get(countSelectQuery, [userId])
       const totalCount = countSelectResult.count
 
+      // 존재하는 경우
       return NextResponse.json({
         meg: '성공적으로 북마크 목록을 가져왔습니다.',
         success: true,
@@ -37,6 +40,7 @@ export async function GET(req: NextRequest) {
         items,
         totalCount,
       })
+      // 존재하지 않는 경우 
     } catch (error) {
       console.log(error)
       return NextResponse.json({
@@ -57,38 +61,40 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// 북마크 추가 처리
+// POST | 북마크 추가 처리
 export async function POST(req: NextRequest) {
-  const { author, category, wise_sayings } = await req.json()
-
+  const { quoteId } = await req.json()
+  const user = accessTokenVerify(req)
   const url = headers().get('referer')
-
   try {
     const db = await openDb()
-    const user = accessTokenVerify(req)
+
     const userId = user.userId
 
-    const selectQuery = `
-        SELECT wise_sayings FROM bookmarks
-        WHERE user_id = ? AND wise_sayings = ?   
-        `
-    const insertQuery = `
-        INSERT INTO bookmarks(user_id, author, wise_sayings, category, url)
-        VALUES (?, ?, ?, ?, ?)
-        `
     // (북마크 목록에 이미 존재하는 경우) 북마크 목록에 추가하지 않기
-    const isExistingItem = !!(await db.get(selectQuery, [userId, wise_sayings]))
+    const selectQuery = `
+        SELECT user_id, quote_id FROM bookmarks
+        WHERE user_id = ? AND quote_id = ?   
+        `
+
+    const isExistingItem = !!(await db.get(selectQuery, [userId, quoteId]))
 
     if (isExistingItem) {
       return NextResponse.json({
-        meg: '이미 존재하는 아이템 입니다.',
+        meg: '이미 북마크 목록에 추가된 카드입니다.',
         success: false,
         status: 304,
       })
     }
 
     // (북마크 목록에 없는 경우) 북마크 목록에 추가하기
-    db.get(insertQuery, [userId, author, wise_sayings, category, url])
+    const insertQuery = `
+        INSERT INTO bookmarks(user_id, quote_id , url, create_date)
+        VALUES (?, ?, ?, ?)
+        `
+    const createDate = Date.now()
+
+    db.get(insertQuery, [userId, quoteId, url, createDate])
 
     return NextResponse.json({
       meg: '북마크에 추가되었습니다.',

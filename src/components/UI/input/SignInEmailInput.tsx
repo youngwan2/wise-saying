@@ -15,8 +15,7 @@ export default function SignInEmailInput({
   setEmail,
   setExistsEmail,
 }: PropsType) {
-
-    // 이메일 유효성 검사
+  // 이메일 유효성 검사
   function emailChecker(email: string) {
     const regex = /[a-z0-9]+@[a-z]+\.[a-z]{2,}/g
     const test = regex.test(email)
@@ -46,7 +45,6 @@ export default function SignInEmailInput({
   return (
     <article className="mt-[3.5em] mb-[1em] mx-[10px]">
       <div className="flex">
-
         {/* 이메일 입력 Input */}
         <label
           className="rounded-s-lg bg-[#3F3F3F] text-[white] text-center p-[0.8em] inline-block min-w-[50px]"

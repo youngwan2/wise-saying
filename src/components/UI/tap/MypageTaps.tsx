@@ -16,8 +16,11 @@ export default function MypageTaps() {
         return (
           <button
             key={tapName}
-            className={` transition text-[1.25em] mx-[1em]  ${tapId === i ? 'shadow-[0_2px_0_0_tomato] font-bold text-[white]' : 'text-[gray]'
-              } `}
+            className={` transition text-[1.25em] mx-[1em]  ${
+              tapId === i
+                ? 'shadow-[0_2px_0_0_tomato] font-bold text-[white]'
+                : 'text-[gray]'
+            } `}
             onClick={() => {
               setTapId(i)
             }}

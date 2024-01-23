@@ -3,31 +3,32 @@ import useSWRInfinite from 'swr/infinite'
 
 /**
  * SWR | 버튼형 무한 스크롤 커스텀 훅
- * @param pathname 페이지 경로
- * @param type 타입(각 타입 별로 서로 다른 api 경로로 요청)
+ * @param mainCategory 첫 번째 분기 처리 경로로 사용
+ * @param subCategory 페이지 경로2 두 번째 분기처리 경로로 사용(동적 라우트 처리)
  * @returns
  * @example
  * // 사용 예시
- * const { items, size, isLastPage, setSize, isLoadingMore, itemCount } = useInfiniteScroll('/some/path', 'authors');
+ * const { items, size, isLastPage, setSize, isLoadingMore, itemCount } = useInfiniteScroll('authors', '소크라테스);
  */
 export default function useInfiniteScroll(
-  pathname: string | number,
-  type: string,
+  mainCategory: string | number,
+  subCategory: string,
 ) {
-  const pathName = pathname
-
   //  데이터 식별 키(해당 키를 기반으로 fetch 함수에 url 을 공급하고, 키에 변동 사항이 생기면 서버에서 데이터를 불러온다.)
   const getKey = (pageIndex: number, previousPageData: any) => {
     if (previousPageData && !previousPageData.length) return null // 끝에 도달
 
     let url = ''
-    switch (type) {
-      case 'authors':
-      case 'days':
+    switch (mainCategory) {
       case 'users':
-      case 'etc':
-        url = `/api/items/${type}/${pathName}?page=${pageIndex}&limit=15`
+      case 'authors': {
+        url = `/api/quotes/${mainCategory}/${subCategory}?page=${pageIndex}&limit=15`
         break
+      }
+      case 'categories': {
+        url = `/api/quotes/category?page=${pageIndex}&limit=15`
+        break
+      }
     }
     return url
   }

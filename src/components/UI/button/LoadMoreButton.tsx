@@ -1,7 +1,7 @@
 import { MouseEventHandler, useEffect, useState } from 'react'
 
 interface PropsType {
-  onClick:MouseEventHandler<HTMLButtonElement>
+  onClick: MouseEventHandler<HTMLButtonElement>
   size: number
   maxPage: number
   isLoadingMore: boolean

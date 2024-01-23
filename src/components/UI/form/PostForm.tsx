@@ -1,26 +1,18 @@
 'use client'
-import {  useRouter } from 'next/navigation'
-import gsap from 'gsap'
-import { Draggable } from 'gsap/Draggable'
-import { useEffect, useRef } from 'react'
+import { useRouter } from 'next/navigation'
 import useHasToken from '@/custom/useHasToken'
 import { postUserPost } from '@/api/user/post'
+import useDraggable from '@/custom/useDraggable'
+import { useRef } from 'react'
+
 
 export default function PostForm() {
   const formRef = useRef<HTMLFormElement>(null)
   const hasToken = useHasToken()
 
   // UI 드래그 이벤트 등록
-  useEffect(() => {
-    if (formRef.current) {
-      gsap.registerPlugin(Draggable)
-      Draggable.create(formRef.current, {
-        bounds: document.querySelector('body'),
-        dragClickables: false,
-      })
-    }
-  }, [])
 
+  useDraggable(formRef)
 
   const router = useRouter()
 
@@ -32,10 +24,9 @@ export default function PostForm() {
     const body = {
       category,
       wise_sayings: content,
-      author
+      author,
     }
     postUserPost(router, hasToken, body)
-
   }
   return (
     <form
@@ -44,7 +35,7 @@ export default function PostForm() {
       className="max-w-[560px] mx-auto bg-[#ff8957]  mt-[2em] rounded-[10px] shadow-[inset_-2px_-2px_5px_rgba(0,0,0,0.5)]"
     >
       {/* 주제(카테고리) */}
-      <h2 className="text-[1.5em] mb-[1em] font-bold bg-[#333232] text-[white] p-[8px]  rounded-t-lg shadow-[inset_-2px_0px_5px_rgba(0,0,0,0.5)] ">
+      <h2 className="text-[1.5em] mt-[-4px] mb-[1em] font-bold bg-[#333232] text-[white] p-[8px]  rounded-t-lg shadow-[inset_-2px_0px_5px_rgba(0,0,0,0.5)] ">
         명언 등록
       </h2>
       <article className="px-[2em]">
@@ -53,8 +44,8 @@ export default function PostForm() {
         </label>
         <input
           type="text"
-          name='category'
-          className="min-w-[200px] w-[500px] min-h-[40px] px-[10px]"
+          name="category"
+          className="min-w-[200px] w-full max-w-[500px] min-h-[40px] px-[10px] rounded-[5px] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.5)]"
           placeholder="작성할 명언의 주제를 입력해주세요 ex) 사랑"
         />
       </article>
@@ -67,7 +58,7 @@ export default function PostForm() {
         <textarea
           name="content"
           id="content"
-          className="min-w-[200px] w-[500px] p-[10px] min-h-[150px]"
+          className="min-w-[200px] w-full max-w-[500px] p-[10px] min-h-[150px] rounded-[5px] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.5)]"
           placeholder="남기고자 하는 명언을 입력해주세요. ex) 해내지 못할 것을 걱정할게 아니라 시도조차 하지 않으려는 자신을 걱정해라."
         ></textarea>
       </article>
@@ -79,25 +70,23 @@ export default function PostForm() {
         </label>
         <input
           type="text"
-          name='author'
-          className="min-w-[200px] w-[500px]  px-[10px] min-h-[40px]"
+          name="author"
+          className="min-w-[200px] w-full max-w-[500px]  px-[10px] min-h-[40px] rounded-[5px] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.5)]"
           placeholder="명언의 작성자로 표기할 이름을 입력해주세요 ex) 지나가는 고양이"
         />
       </article>
       <br />
-      {/* 전송버튼 */}
+      {/* 버튼 */}
       <article className="p-[2em]">
-        <button
-          className=" bg-[#ffffff] p-[10px] mr-[1em] font-bold"
-        >
+        <button className="bg-[#ffffff] p-[10px] mr-[1em] font-bold hover:bg-[#162557] hover:text-white rounded-[5px]">
           등록하기
         </button>
         <button
-          type='button'
+          type="button"
           onClick={() => {
             router.push('/')
           }}
-          className="bg-[#ffffff] p-[10px] font-bold"
+          className="bg-[#ffffff] p-[10px] font-bold hover:bg-[#162557] hover:text-white rounded-[5px]"
         >
           취소
         </button>

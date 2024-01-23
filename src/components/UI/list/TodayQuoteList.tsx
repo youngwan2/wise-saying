@@ -4,7 +4,7 @@ interface PropsType {
   quotes: {
     id: number
     author: string
-    wise_sayings: string
+    quote: string
   }[]
 }
 export default function TodayQuotelist({ quotes }: PropsType) {
@@ -14,14 +14,14 @@ export default function TodayQuotelist({ quotes }: PropsType) {
         오늘의 명언
       </h2>
       <ul className="pt-[1em] ">
-        {quotes.map((quote,i) => {
+        {quotes.map((quote, i) => {
           return (
             <TodayQuoteCard
               key={quote.id}
-              index ={i}
+              index={i}
               id={quote.id}
               author={quote.author}
-              quote={quote.wise_sayings}
+              quote={quote.quote}
             />
           )
         })}

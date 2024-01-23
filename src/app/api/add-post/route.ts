@@ -3,8 +3,6 @@ import { openDb } from '@/connect'
 import { accessTokenVerify } from '@/utils/validation'
 
 export async function POST(req: NextRequest) {
-
-
   // 토큰 유효성 검증
   const user = accessTokenVerify(req)
 
@@ -12,6 +10,8 @@ export async function POST(req: NextRequest) {
   try {
     const db = await openDb()
     const { category, wise_sayings, author } = await req.json()
+
+    console.log(category, wise_sayings,author)
 
     // 유효한 토큰이 아니면 자동으로 catch 에 에러를 전달
     const { dbEmail } = user
@@ -22,20 +22,22 @@ export async function POST(req: NextRequest) {
             WHERE email = ?
         `
     const { user_id: userId } = await db.get(selectQuery, [dbEmail])
+    const createDate = new Date().toLocaleString()
+
+
 
     const insertQuery = `
-            INSERT INTO quotes_user(wise_sayings, user_id,category, author)
-            VALUES (?,?,?,?)
+            INSERT INTO quotes_user(quote, user_id, category, author, create_date)
+            VALUES (?,?,?,?,?)
         `
 
-    db.all(insertQuery, [wise_sayings, userId, category, author])
+    db.all(insertQuery, [wise_sayings, userId, category, author, createDate])
     db.close()
     return NextResponse.json({
       status: 201,
       success: true,
       meg: '정상적으로 처리되었습니다.',
     })
-
   } catch (error) {
     return NextResponse.json({
       status: 500,

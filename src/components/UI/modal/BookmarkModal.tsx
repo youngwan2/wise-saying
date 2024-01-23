@@ -12,16 +12,15 @@ import { logoutUser } from '@/utils/commonFunctions'
 import BookmarkCloseButton from '../button/BookmarkCloseButton'
 import BookmarkCard from '../card/BookmarkCard'
 import ReplaceMessageCard from '../card/ReplaceMessageCard'
+import BookmarkSwitchButton from '../button/BookmarkSwitchButton'
 
 interface BookmarkListType {
   id: number
   author: string
-  wise_sayings: string
-  category: string
+  quote: string
   url: string
 }
 
-const MAX_PAGE = 5
 
 /**
  * TODO: 분리 가능한 부분은 컴포넌트로 분리할 필요가 있어 보임.
@@ -36,7 +35,7 @@ export default function BookmarkModal() {
   const token = hasToken ? localStorage.getItem('token')! : ''
 
   const router = useRouter()
-  const { data, isLoading } = useSWR(
+  const { data, isLoading,error } = useSWR(
     [`/api/bookmark?page=${page}&limit=5`, token],
     ([url, token]) => getBookmarkListFormDB(url, token),
     {
@@ -48,6 +47,7 @@ export default function BookmarkModal() {
   const currentTotal = data?.items?.length || 0
   const maxPage = Math.ceil(total / 5) || 1
 
+  // 북마크 리스트를 갱신하는 함수
   const bookmarkListUpdate = useCallback(
     (
       data: { totalCount: number; items: BookmarkListType[] },
@@ -65,9 +65,9 @@ export default function BookmarkModal() {
   useEffect(() => {
     if (data && data.status === 401) {
       router.push('/login')
-      logoutUser()
+   
     }
-  }, [router, data, isLoading])
+  }, [router, data])
 
   useEffect(() => {
     bookmarkListUpdate(data, hasData)
@@ -75,11 +75,10 @@ export default function BookmarkModal() {
 
   return (
     <section
-      className={`${
-        toggleState
-          ? 'z-40 fixed left-0 right-0 top-0 bottom-0 bg-[#000000a4] block'
-          : ' z-40 fixed left-0 right-0 top-0 bottom-0 bg-[#000000a4] hidden'
-      }`}
+      className={`${toggleState
+        ? 'z-40 fixed left-0 right-0 top-0 bottom-0 bg-[#000000a4] block'
+        : ' z-40 fixed left-0 right-0 top-0 bottom-0 bg-[#000000a4] hidden'
+        }`}
     >
       <h2 className="text-white text-[2em] mb-[1em] pl-[10px] flex items-center justify-center mt-[2em]">
         <HiBookmarkSquare className="pr-[5px]" />
@@ -103,33 +102,13 @@ export default function BookmarkModal() {
       </div>
 
       {/* 버튼 컨테이너 */}
-      <article className="flex justify-center ">
-        {/* 이전 */}
-        <button
-          className={`mx-[10px] text-white ${
-            page === 0 ? 'invisible' : 'visible'
-          }`}
-          onClick={() => {
-            setPage(Math.max(0, page - 1))
-          }}
-        >
-          이전
-        </button>
-        <span className={'mx-[10px] text-white'}>
-          {page + 1}/{maxPage}
-        </span>
-        {/* 다음 */}
-        <button
-          className={`mx-[10px] text-white ${
-            currentTotal < 5 ? 'invisible' : 'visible'
-          }`}
-          onClick={() => {
-            setPage(Math.min(MAX_PAGE, page + 1))
-          }}
-        >
-          다음
-        </button>
-      </article>
+      <BookmarkSwitchButton
+        maxPageSize={maxPage}
+        page={page}
+        currentTotal={currentTotal}
+        onClickPrevSwitch={() => setPage(Math.max(0, page - 1))}
+        onClickNextSwitch={() => setPage(Math.min(maxPage, page + 1))}
+      />
     </section>
   )
 }

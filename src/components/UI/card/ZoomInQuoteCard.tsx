@@ -17,6 +17,7 @@ export default function ZommInQuoteCard({ item }: PropsType) {
   const overlayDivRef = useRef<HTMLDivElement>(null)
   const wrapperDivRef = useRef<HTMLDivElement>(null)
 
+  // 카드 위치 지정
   function setCardPosition(e: MouseEvent<HTMLDivElement>) {
     const { offsetX, offsetY } = e.nativeEvent
 
@@ -92,17 +93,14 @@ export default function ZommInQuoteCard({ item }: PropsType) {
         ref={cardRef}
         key={item.id}
         className={`
-                invisible opacity-0
-                scale-[1.25]
-                z-[1000]
-                fixed left-[50%] top-[30%] translate-x-[-50%] translate-y-[-50%]
+                invisible opacity-0 scale-[1.25] z-[1000] fixed left-[50%] top-[30%] translate-x-[-50%] translate-y-[-50%]
                 shadow-[1px_10px_5px_0_rgba(0,0,0,0.3)] p-[2.2em] odd:-rotate-2  even:rotate-2  max-w-[300px] bg-[#FFE5A0] 
                 m-3 w-[100%] text-center delay-300 duration-300
                 min-h-[260px]
                 `}
       >
         <blockquote className="mt-[1em]">
-          <p className=" p-[1em]">{item.wise_sayings}</p>
+          <p className=" p-[1em]">{item.quote}</p>
           <footer className="font-bold mt-[1em]">{item.author}</footer>
         </blockquote>
       </div>

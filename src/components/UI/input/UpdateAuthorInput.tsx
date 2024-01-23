@@ -16,7 +16,7 @@ export default function UpdateAuthorInput({ setPost, post }: PropsType) {
           setPost({ ...post, author })
         }}
         type="text"
-        className="min-w-[200px] w-[500px]  px-[10px] min-h-[40px]"
+        className="min-w-[200px] w-[500px]  px-[10px] min-h-[40px]  rounded-[5px] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.5)]"
         placeholder={'기존내용) ' + post.author}
       />
     </article>

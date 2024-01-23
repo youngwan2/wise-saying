@@ -7,7 +7,8 @@ export async function DELETE(
   req: NextRequest,
   res: { params: { id: string } },
 ) {
-  const { id } = res.params
+  const { id:quoteId } = res.params
+
   const db = await openDb()
 
   // 토큰 유효성 검증
@@ -15,11 +16,11 @@ export async function DELETE(
   const { userId } = user
 
   const query = `
-    DELETE FROM  bookmarks
-    WHERE bookmark_id = ? AND user_id = ?
+    DELETE FROM bookmarks
+    WHERE quote_id = ? AND user_id = ?
 `
   try {
-    await db.get(query, [id, userId])
+    await db.get(query, [quoteId, userId])
   } catch (error) {
     return NextResponse.json({
       status: 500,

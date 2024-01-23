@@ -8,10 +8,11 @@ import {
   useQuotesStrokeStyleStore,
   useQuotesTextStyleStore,
 } from '@/store/store'
+
 import wrap from 'word-wrap'
 
 interface QuoteType {
-  wise_sayings: string
+  quote: string
 }
 export default function QuotesStylerCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -124,8 +125,8 @@ export default function QuotesStylerCanvas() {
   useEffect(() => {
     if (localStorage.getItem('selectedItem')) {
       const jsonQuote = localStorage.getItem('selectedItem')!
-      const quote: QuoteType = JSON.parse(jsonQuote)
-      setQuote(quote.wise_sayings)
+      const item: QuoteType = JSON.parse(jsonQuote)
+      setQuote(item.quote)
     }
   }, [])
 

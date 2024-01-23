@@ -9,7 +9,6 @@ import { useState } from 'react'
 import ReplaceMessageCard from '../card/ReplaceMessageCard'
 import { getUserInfoFromDb, getUserQuotesFromDb } from '@/api/user/get'
 
-
 export default function MypageContainer() {
   const tapId = useMypageTapsStore((state) => state.tapId)
   const hasToken = useHasToken()
@@ -18,17 +17,22 @@ export default function MypageContainer() {
   const token = (hasToken && localStorage.getItem('token')) || ''
 
   const {
-    data: userInfo, error, isLoading } = useSWR(['/api/users/', token], ([url, token]) => getUserInfoFromDb(url, token),
-      { refreshInterval: 5000 },
-    )
+    data: userInfo,
+    error,
+    isLoading,
+  } = useSWR(
+    ['/api/users/', token],
+    ([url, token]) => getUserInfoFromDb(url, token),
+    { refreshInterval: 5000 },
+  )
 
   const { data: userQuotesInfo } = useSWR(
     () =>
       tapId === 1
         ? '/api/users/mypage/posts/?userId=' +
-        userInfo.user_id +
-        '&page=' +
-        page
+          userInfo.user_id +
+          '&page=' +
+          page
         : null,
     getUserQuotesFromDb,
   )

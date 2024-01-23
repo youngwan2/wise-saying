@@ -1,13 +1,14 @@
 'use client'
 import useHasToken from '@/custom/useHasToken'
 import { logoutUser } from '@/utils/commonFunctions'
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 export default function Logout() {
   const router = useRouter()
-  const validToken = useHasToken()
+  const hasToken = useHasToken()
   const [nickname, setNickname] = useState('익명')
+
 
   useEffect(() => {
     if (localStorage.getItem('user') === null) return
@@ -18,7 +19,12 @@ export default function Logout() {
     setNickname(nickname)
   }, [])
 
-  if (validToken) {
+  useEffect(()=>{
+    if(!hasToken) {
+      redirect('/')
+    }
+  },[hasToken])
+  if (hasToken) {
     return (
       <>
         <div className="fixed left-0 right-0 top-0 bottom-0 bg-[#00000052] rounded-[10px]"></div>
@@ -38,7 +44,8 @@ export default function Logout() {
           <button
             className="bg-[#ff5100] text-[white] p-[10px] rounded-[5px] my-[1em]"
             onClick={() => {
-              logoutUser()
+              alert('곧 로그아웃 처리가 완료 됩니다.')
+              logoutUser(router)
             }}
           >
             로그아웃

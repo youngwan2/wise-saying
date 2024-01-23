@@ -1,4 +1,5 @@
 import { config } from '@/lib/config'
+import { logoutUser } from '@/utils/commonFunctions'
 
 /**
  * * GET | 서버로부터 특정 경로에 대한 명언 리스트 불러오기
@@ -20,12 +21,12 @@ export async function getQuotesBy(url: string): Promise<any> {
  * @param url 경로
  * @returns
  */
-export async function getCategoriesFromDb(url: string) {
+export async function getCategoryCountFromDb(url: string) {
   try {
     const transformURL = config.apiPrefix + config.apiHost + url
     const response = await fetch(transformURL)
-    const weeks = await response.json()
-    return weeks
+    const { count } = await response.json()
+    return count
   } catch (error) {
     console.error(error)
   }
@@ -49,7 +50,11 @@ export const getBookmarkListFormDB = async (
       },
     })
     const items = response.json()
+    const {status} = await items
+
+    if(status === 401) {return logoutUser()}
     return items
+    
   } catch (error) {
     console.error(error)
   }
@@ -57,22 +62,18 @@ export const getBookmarkListFormDB = async (
 
 /**
  * * GET | 각 페이지의 카테고리별 메타데이터 불러오기
- * @param path1 중분류(ex. authors, days, etc, users, weathers)
- * @param path2 소분류(ex. 소크라테스, 월, 사랑, 인생)
+ * @param mainCategory 중분류(ex. authors, days, etc, users, weathers)
+ * @param subCategory 소분류(ex. 소크라테스, 랑, 인생)
  * @returns
- * @example `http://localhost:3000/api/items/${path1}/${path2}}`
- * → ` http://localhost:3000/api/items/authors/소크라테스`
+ * @example `http://localhost:3000/api/quotes/${mainCategory}/${subCategory}}`
+ * → ` http://localhost:3000/api/quotes/authors/소크라테스`
  */
 export const getApiMetaDataFromServer = async (
-  path1: string,
-  path2: string,
+  mainCategory: string,
+  subCategory: string,
 ) => {
   try {
-    const url =
-      path1 === 'weathers'
-        ? `${config.apiPrefix}${config.apiHost}/api/items/${path1}?type=meta`
-        : `${config.apiPrefix}${config.apiHost}/api/items/${path1}/${path2}?type=meta`
-    console.log('GET 메타 데이터 분기 경로:', url)
+    const url = `${config.apiPrefix}${config.apiHost}/api/quotes/${mainCategory}/${subCategory}?type=meta`
     const response = await fetch(url)
     const result = await response.json()
 
@@ -87,7 +88,7 @@ export const getApiMetaDataFromServer = async (
  */
 export const todayQuoteFetch = async () => {
   try {
-    const url = config.apiPrefix + config.apiHost + '/api/items/random'
+    const url = config.apiPrefix + config.apiHost + '/api/quotes/random'
     const response = await fetch(url, {
       next: { revalidate: 3600 },
     })

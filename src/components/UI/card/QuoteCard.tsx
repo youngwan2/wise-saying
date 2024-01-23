@@ -27,10 +27,12 @@ export default function QuoteCard({ item, items, index }: PropsType) {
   // 인터섹션 옵저버 적용하는 커스텀 훅
   useIntersectionObserver(liRefs)
 
-  // 카드 확대
+  /**
+   * @param target gsap 애니메이션 대상
+   *  */ 
   const cardZoomInoutSwitch = useCallback(
     (target: HTMLLIElement) => {
-      // 줌 인(확대)
+      // 줌 인(확대) 시 해당 li 는 사라진다.
       if (isZoomIn) {
         gsap.to(target, {
           visibility: 'hidden',
@@ -40,7 +42,7 @@ export default function QuoteCard({ item, items, index }: PropsType) {
         })
       }
 
-      // 줌 아웃(축소)
+      // 줌 아웃(축소) 시 해당 li 가 다시 나타난다.
       if (!isZoomIn) {
         gsap.to(target, { visibility: 'visible', opacity: 1, translateY: 0 })
       }
@@ -52,16 +54,13 @@ export default function QuoteCard({ item, items, index }: PropsType) {
     if (liRefs.current[cardIndex] === undefined) return
     if (liRefs.current.length > 0 && cardIndex >= 0) {
       const liEl = liRefs.current[cardIndex]
+
       cardZoomInoutSwitch(liEl)
     }
   }, [cardIndex, cardZoomInoutSwitch])
 
-  if (!item)
-    return (
-      <ReplaceMessageCard
-        childern={<p>아이템을 조회중입니다. 잠시만 기다려주세요.</p>}
-      />
-    )
+  if (!item) return (<ReplaceMessageCard childern='게시글이 존재하지 않습니다.'/>)
+
   return (
     <li
       ref={(element) => {
@@ -71,8 +70,7 @@ export default function QuoteCard({ item, items, index }: PropsType) {
       }}
       key={item.id}
       className={`
-                text-[1.15em]
-                group
+                text-[1.15em] group
                 p-[1.5em] my-[1em] m-3 w-[100%] max-h-[600px]  max-w-[330px] min-h-[250px]  text-center bg-[#f6e9a0] 
                 odd:-rotate-1  even:rotate-1
                 transition-all duration-700 shadow-[5px_10px_5px_0_rgba(0,0,0,0.3)] antialiased
@@ -83,10 +81,9 @@ export default function QuoteCard({ item, items, index }: PropsType) {
         {item.id}
       </span>
       <blockquote className="mt-[1em]">
-        <p className=" p-[1em]">{item?.wise_sayings}</p>
-        <footer className="font-bold mt-[1em]">{item?.author}</footer>
+        <p className=" p-[1em]">{item.quote}</p>
+        <footer className="font-bold mt-[1em]">{item.author}</footer>
       </blockquote>
-      
 
       {pathName.includes('/user-quotes') ? (
         <UserQuotesCardButton index={index} item={item} items={items} />

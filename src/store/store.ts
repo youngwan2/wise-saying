@@ -13,6 +13,7 @@ import type {
   UserInfoState,
   CardZoomInOutState,
   NavDisplayState,
+  HeaderSearchFormDisplayState,
 } from '../types/store.type'
 
 /**
@@ -148,6 +149,15 @@ export const useCardZoomInOutStore = create<CardZoomInOutState>((set) => ({
  * * Zustand |  네비게이션 메뉴 온오프 상태 저장
  */
 export const useNavDisplayStateStore = create<NavDisplayState>((set) => ({
+  isDisplay: false,
+  setIsDisplay: (display) => set(() => ({ isDisplay: display })),
+}))
+
+
+/**
+ * * Zustand |  헤더 검색창 온오프 상태 저장
+ */
+export const useHeaderSearchFormStateStore = create<HeaderSearchFormDisplayState>((set) => ({
   isDisplay: false,
   setIsDisplay: (display) => set(() => ({ isDisplay: display })),
 }))

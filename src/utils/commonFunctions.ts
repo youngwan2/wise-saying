@@ -1,5 +1,5 @@
 import { ItemsType } from '@/types/items.types'
-import { redirect } from 'next/navigation'
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 import { ChangeEvent, FormEvent } from 'react'
 
 /**
@@ -27,10 +27,11 @@ export function quotesSelector(items: ItemsType[], id: number) {
 /**
  * * 토큰 만료 이후 강제 로그아웃 함수
  * */
-export const logoutUser = () => {
+export const logoutUser = (router:AppRouterInstance) => {
   localStorage.removeItem('token')
   localStorage.removeItem('user')
-  redirect('/')
+  router.push('/')
+  
 }
 
 /**

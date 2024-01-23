@@ -7,8 +7,8 @@ import { HiOutlineBookmark, HiScissors } from 'react-icons/hi2'
 import { PropsType } from './QuotesCardButton'
 import { usePathname, useRouter } from 'next/navigation'
 import { useCardZoomInOutStore } from '@/store/store'
-import { postBookmarkItem } from '@/api/data/post'
-import { useEffect, useState } from 'react'
+import { addBookmarkItem } from '@/api/data/post'
+import {  useState } from 'react'
 import AlertCard from '../card/AlertCard'
 
 export default function QuotesCardCommonButton({
@@ -16,25 +16,13 @@ export default function QuotesCardCommonButton({
   items,
   index,
 }: PropsType) {
-  const path = usePathname()
-  const [category, setCategory] = useState('')
   const setIsZoomIn = useCardZoomInOutStore((state) => state.setIsZoomIn)
   const setCardIndex = useCardZoomInOutStore((state) => state.setCardIndex)
+  const path = usePathname()
   const hasToken = useHasToken()
   const router = useRouter()
   const [alertToggle, setAlertToggle] = useState({ toggle: false, messgae: '' })
 
-  const categorySwitch = (path: string) => {
-    if (path.startsWith('/author-quotes')) return setCategory('인물')
-    if (path.startsWith('/weather-quotes')) return setCategory('날씨')
-    if (path.startsWith('/day-quotes')) return setCategory('요일')
-    if (path.startsWith('/etc-quotes')) return setCategory('기타')
-    if (path.startsWith('/user-quotes')) return setCategory('유저')
-  }
-
-  useEffect(() => {
-    categorySwitch(path)
-  }, [path])
   return (
     <>
       <article className="flex min-h-[60px] min-w-[60px]">
@@ -53,11 +41,11 @@ export default function QuotesCardCommonButton({
           <p className="text-[14px] font-semibold">꾸미기</p>
         </button>
 
-        {/* 북마크 버튼 */}
+        {/* 북마크 추가 버튼 */}
         <button
           onClick={() => {
             if (!items) return
-            postBookmarkItem(hasToken, itemId, items, category)
+            addBookmarkItem(hasToken, itemId)
           }}
           className="p-[5px] hover:bg-[tomato] text-[2em] hover:text-[white] bg-[white] rounded-[0.3em] mx-[0.3em]"
           aria-label="명언 북마크 버튼"

@@ -25,7 +25,6 @@ export default function SignInForm() {
   const [password, setPassword] = useState('')
   const [reConfirmPw, setReConfirmPw] = useState('')
 
-
   const router = useRouter()
   const formRef = useRef<HTMLFormElement>(null)
   const isVaildForm = isEmail && isPassword && isReconfirmPassword
@@ -46,7 +45,6 @@ export default function SignInForm() {
     if (isSuccess) return router.push('/')
   }, [isSuccess, router])
 
-
   /** 회원가입 요청 */
   function userInfoPostFetch(email: string, password: string) {
     const body = {
@@ -66,14 +64,12 @@ export default function SignInForm() {
           alert('회원가입이 완료 되었습니다. 가입해주셔서 감사합니다.')
         }
         if (status !== 201) {
-
         }
       })
       .catch(() => {
         alert('요청에 실패하였습니다. 나중에 다시 시도해주세요.')
       })
   }
-
 
   return (
     <>
@@ -96,30 +92,37 @@ export default function SignInForm() {
         </button>
 
         {/* 이메일 */}
-        <SignInEmailInput 
-            email={email} 
-            isEmail={isEmail} 
-            setEmail={setEmail} 
-            setIsEmail={setIsEmail} 
-            setExistsEmail={setExistsEmail} />
+        <SignInEmailInput
+          email={email}
+          isEmail={isEmail}
+          setEmail={setEmail}
+          setIsEmail={setIsEmail}
+          setExistsEmail={setExistsEmail}
+        />
 
         {/* 패스워드 */}
-        <SignInPasswordInput isPassword={isPassword} setPassword={setPassword} setIsPassword={setIsPassword} />
+        <SignInPasswordInput
+          isPassword={isPassword}
+          setPassword={setPassword}
+          setIsPassword={setIsPassword}
+        />
 
         {/* 패스워드 재검증 */}
-        <SignInPasswordReConfirmInput 
-            isReconfirmPassword={isReconfirmPassword} 
-            password={password} 
-            setIsReconfirmPassword={setIsReconfirmPassword} 
-            setReConfirmPw={setReConfirmPw} />
-        
+        <SignInPasswordReConfirmInput
+          isReconfirmPassword={isReconfirmPassword}
+          password={password}
+          setIsReconfirmPassword={setIsReconfirmPassword}
+          setReConfirmPw={setReConfirmPw}
+        />
+
         {/* 전송버튼 */}
-        <SignInSubmitButton 
-            email={email} 
-            password={password} 
-            existsEmail={existsEmail} 
-            isVaildForm={isVaildForm} 
-            userInfoPostFetch={userInfoPostFetch} />
+        <SignInSubmitButton
+          email={email}
+          password={password}
+          existsEmail={existsEmail}
+          isVaildForm={isVaildForm}
+          userInfoPostFetch={userInfoPostFetch}
+        />
       </form>
     </>
   )

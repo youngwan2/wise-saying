@@ -8,7 +8,7 @@ export const deleteUserQuote = (hasToken: boolean, id: number) => {
     const headers = {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
     }
-    const url = `/api/posts/${id}`
+    const url = `/api/quotes/users/post/${id}`
     fetch(url, {
       method: 'DELETE',
       headers,

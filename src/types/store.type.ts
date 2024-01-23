@@ -92,3 +92,8 @@ export interface NavDisplayState {
   isDisplay: boolean
   setIsDisplay: (display: boolean) => void
 }
+
+export interface HeaderSearchFormDisplayState {
+  isDisplay: boolean
+  setIsDisplay: (display: boolean) => void
+}

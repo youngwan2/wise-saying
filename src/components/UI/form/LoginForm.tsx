@@ -18,9 +18,9 @@ export default function LoginForm() {
 
   // 토큰 존재 시 리디렉트
   useEffect(() => {
-      if (hasToken) {
-        redirect('/')
-      }
+    if (hasToken) {
+      redirect('/')
+    }
   }, [router, hasToken])
 
   // 드래그어블 적용
@@ -79,7 +79,7 @@ export default function LoginForm() {
             className="rounded-s-lg bg-[#3F3F3F] text-[white] p-[0.8em] text-center inline-block min-w-[50px]"
             htmlFor="user-password"
           >
-            <HiOutlineLockClosed className={"inline-block"} />
+            <HiOutlineLockClosed className={'inline-block'} />
           </label>
           <input
             className="pl-[5px] rounded-e-lg min-w-[230px]  w-[100%] bg-[#ffffffce]"
