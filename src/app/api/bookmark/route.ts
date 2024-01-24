@@ -8,54 +8,52 @@ export async function GET(req: NextRequest) {
   const page = req.nextUrl.searchParams.get('page') || 0
   const limit = req.nextUrl.searchParams.get('limit') || 5
 
-  try {
-    const user = accessTokenVerify(req)
-    const userId = user.userId
 
-    const db = await openDb()
+  const { status, meg, success, user } = accessTokenVerify(req)
 
-    const query = `
+  if (status === 400) {
+    return NextResponse.json({ status, success, meg })
+  }
+
+  if (status === 401) {
+    return NextResponse.json({ status, success, meg })
+  }
+  const userId = user.userId
+
+  const db = await openDb()
+
+  const query = `
           SELECT url, quote, A.quote_id AS id, author
           FROM bookmarks A 
           JOIN quotes_all B ON A.quote_id = B.quote_id 
           WHERE A.user_id = ?
           LIMIT ? OFFSET ?*5
         `
-    const countSelectQuery = `
+  const countSelectQuery = `
           SELECT COUNT(*) AS count
           FROM bookmarks
           WHERE user_id = ?
         `
-    try {
-      const items = await db.all(query, [userId, limit, page])
-      const countSelectResult = await db.get(countSelectQuery, [userId])
-      const totalCount = countSelectResult.count
+  try {
+    const items = await db.all(query, [userId, limit, page])
+    const countSelectResult = await db.get(countSelectQuery, [userId]) || { count: 0 }
+    const totalCount = countSelectResult.count
 
-      // 존재하는 경우
-      return NextResponse.json({
-        meg: '성공적으로 북마크 목록을 가져왔습니다.',
-        success: true,
-        status: 200,
-        items,
-        totalCount,
-      })
-      // 존재하지 않는 경우
-    } catch (error) {
-      console.log(error)
-      return NextResponse.json({
-        meg: '조회된 북마크 목록이 존재하지 않습니다.',
-        success: true,
-        status: 200,
-        items: [],
-        totalCount: 0,
-      })
-    }
-  } catch (error) {
-    console.log(error)
+    // 존재하는 경우
     return NextResponse.json({
-      meg: '유효한 토큰이 아니거나 만료된 토큰 입니다. 다시 로그인을 시도해주세요.',
+      meg: '성공적으로 북마크 목록을 가져왔습니다.',
+      success: true,
+      status: 200,
+      items,
+      totalCount,
+    })
+
+  } catch (error) {
+    console.error('/api/bookmark/route.ts')
+    return NextResponse.json({
+      meg: '서버에서 문제가 발생하였습니다. 나중에 다시시도해 주세요',
       success: false,
-      status: 401,
+      status: 500,
     })
   }
 }
@@ -63,7 +61,18 @@ export async function GET(req: NextRequest) {
 // POST | 북마크 추가 처리
 export async function POST(req: NextRequest) {
   const { quoteId } = await req.json()
-  const user = accessTokenVerify(req)
+
+  // 토큰 유효성 검증
+  const { status, meg, success, user } = accessTokenVerify(req)
+
+  if (status === 400) {
+    return NextResponse.json({ status, success, meg })
+  }
+
+  if (status === 401) {
+    return NextResponse.json({ status, success, meg })
+  }
+
   const url = headers().get('referer')
   try {
     const db = await openDb()
@@ -101,10 +110,11 @@ export async function POST(req: NextRequest) {
       status: 201,
     })
   } catch (error) {
+    console.error('/api/bookmark/route.ts')
     return NextResponse.json({
-      meg: '만료된 토큰 입니다. 다시 로그인을 시도해주세요.',
+      meg: '서버에서 문제가 발생하였습니다. 나중에 다시시도 해주세요.',
       success: false,
-      status: 401,
+      status: 500,
     })
   }
 }

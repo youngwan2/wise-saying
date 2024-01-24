@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { openDb } from '@/connect'
-import jwt, { JwtPayload } from 'jsonwebtoken'
+import { accessTokenVerify } from '@/utils/validation'
 
-// 회원가입 시 유저가 이미 존재하는지 검증
+// POST | 회원가입 시 유저가 이미 존재하는지 검증
 export async function POST(req: NextRequest) {
   try {
     const email = await req.json()
@@ -29,34 +29,34 @@ export async function POST(req: NextRequest) {
       success: true,
     })
   } catch (error) {
-    console.error(error)
+    console.error('/api/users/route.ts', error)
     return NextResponse.json({
-      meg: '서버 문제가 발생하였습니다. 나중에 다시 시도해주세요.',
+      meg: '서버 문제가 발생하였습니다. 나중에 다시시도 해주세요.',
       status: 500,
       success: false,
     })
   }
 }
 
+// GET | 유저 프로필 정보 요청
 export async function GET(req: NextRequest) {
   try {
     const db = await openDb()
-    const rawToken = req.headers.get('authorization')?.split(' ') || ''
-    const scrept = process.env.JWT_SCREPT || ''
-    const reqPrefix = rawToken[0]
-    const prefix = 'Bearer'
 
-    if (prefix !== reqPrefix)
-      return NextResponse.json({
-        meg: '올바른 토큰 형식이 아닙니다.',
-        status: 400,
-        success: false,
-      })
+    // 토큰 검증
+    const { status, success, meg, user } = accessTokenVerify(req)
 
-    const token = rawToken[1]
-    const result = jwt.verify(token, scrept) as JwtPayload
-    const { userId } = result.data
+    if (status === 400) {
+      return NextResponse.json({ status, success, meg })
+    }
 
+    if (status === 401) {
+      return NextResponse.json({ status, success, meg })
+    }
+
+
+    // 검증 후 처리
+    const { userId } = user
     const query = `
         SELECT user_id, email, nickname, profile_image FROM users_group
         WHERE user_id = ?
@@ -70,6 +70,7 @@ export async function GET(req: NextRequest) {
       items,
     })
   } catch (error) {
+    console.error('/api/users/route.ts', error)
     return NextResponse.json({
       meg: '처리중입니다.',
       success: false,

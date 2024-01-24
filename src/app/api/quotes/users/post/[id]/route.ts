@@ -2,7 +2,7 @@ import { openDb } from '@/connect'
 import { NextRequest, NextResponse } from 'next/server'
 import { accessTokenVerify } from '@/utils/validation'
 
-// 단일 포스트 조회
+// GET | 단일 포스트 조회
 export async function GET(req: NextRequest, res: { params: { id: number } }) {
   try {
     const postId = res.params.id
@@ -24,7 +24,7 @@ export async function GET(req: NextRequest, res: { params: { id: number } }) {
       success: true,
     })
   } catch (error) {
-    console.error(error)
+    console.log('/api/quotes/user/post/[id]/route.ts:', error)
     return NextResponse.json({
       meg: '서버에서 문제가 발생하였습니다. 나중에 다시시도 해주세요.',
       status: 500,
@@ -33,7 +33,57 @@ export async function GET(req: NextRequest, res: { params: { id: number } }) {
   }
 }
 
-// 단일 포스트 삭제
+// PATCH | 단일 포스트 수정
+export async function PATCH(
+  req: NextRequest,
+  res: { params: { id: number } },
+) {
+  try {
+    const db = await openDb()
+    const postId = res.params.id
+
+    //  접근 토큰 검증
+    const { status, meg, success } = accessTokenVerify(req)
+
+
+    if (status === 400) {
+        return NextResponse.json({ status, success, meg })
+    }
+
+    if (status === 401) {
+        return NextResponse.json({ status, success, meg })
+    }
+
+
+    const { content: quote, category, author } = await req.json()
+
+    const query = `
+            UPDATE quotes_user 
+            SET quote = ?, category = ?, author = ?
+            WHERE user_quote_id = ?
+        `
+
+    db.all(query, [quote, category, author, postId])
+
+    // db.close()
+    return NextResponse.json({
+      status: 201,
+      success: true,
+      meg: '요청을 성공적으로 처리하였습니다.',
+    })
+  } catch (error) {
+    console.error('/api/users/post/route.ts', error)
+
+    return NextResponse.json({
+      status: 500,
+      success: false,
+      meg: '서버에서 문제가 발생하였습니다. 나중에 다시시도 해주세요.',
+    })
+  }
+}
+
+
+// DELETE | 단일 포스트 삭제
 export async function DELETE(
   req: NextRequest,
   res: { params: { id: string } },
@@ -43,25 +93,36 @@ export async function DELETE(
   try {
     const db = await openDb()
 
-    accessTokenVerify(req)
+    // 토큰 검증 및 에러 처리
+    const { status, meg, success } = accessTokenVerify(req)
+
+    if (status === 400) {
+      return NextResponse.json({ status, success, meg })
+    }
+
+    if (status === 401) {
+      return NextResponse.json({ status, success, meg })
+    }
+
+    // 토큰 검증 성공 후 처리
     const query = `
             DELETE FROM quotes_user
             WHERE user_quote_id = ?
         `
     db.get(query, [id])
-
+    console.log(status, meg, success)
     return NextResponse.json({
       status: 201,
       success: true,
       meg: '성공적으로 처리 되었습니다.',
     })
   } catch (error) {
-    console.log(error)
+    console.error('/api/quotes/user/post/[id]/route.ts', error)
 
     return NextResponse.json({
-      status: 401,
+      status: 500,
       success: false,
-      message: '유효한 토큰이 아닙니다.',
+      message: '서버에서 문제가 발생하였습니다. 나중에 다시시도 해주세요',
     })
   }
 }

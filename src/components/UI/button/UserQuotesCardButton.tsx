@@ -24,6 +24,20 @@ export default function UserQuotesCardButton({
 
   const setPostId = useUserPostIdStore((state) => state.setPostId)
 
+  // 삭제버튼
+  const onClickDelete = async () => {
+    const success = await deleteUserQuote(hasToken, item.id)
+    if (success) {
+      router.back()
+      router.refresh()
+    }
+  }
+  // 수정버튼
+  const onClickUpdate = () => {
+    setPostId(Number(item.id))
+    router.push('/update-wisesaying')
+  }
+
   useEffect(() => {
     if (hasToken) {
       const json = localStorage.getItem('user')!
@@ -40,17 +54,13 @@ export default function UserQuotesCardButton({
     >
       <div className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">
         <article
-          className={`${
-            userEmail === item.email ? 'block' : 'hidden'
-          } min-h-[60px] min-w-[60px]`}
+          className={`${userEmail === item.email ? 'block' : 'hidden'
+            } min-h-[60px] min-w-[60px]`}
         >
           {/* 수정 */}
           <button
             className={`min-w-[48px]  p-[5px] hover:bg-[tomato] text-[2em] hover:text-[white] bg-[white] rounded-[0.3em] mr-[0.15em] mb-[0.4em]`}
-            onClick={() => {
-              setPostId(Number(item.id))
-              router.push('/update-wisesaying')
-            }}
+            onClick={onClickUpdate}
             aria-label="수정버튼"
           >
             <HiOutlinePencil />
@@ -60,9 +70,7 @@ export default function UserQuotesCardButton({
           {/* 삭제 */}
           <button
             className={`min-w-[48px]  p-[5px] hover:bg-[tomato] text-[2em] hover:text-[white] bg-[white] rounded-[0.3em] mx-[0.3em]`}
-            onClick={() => {
-              deleteUserQuote(hasToken, item.id)
-            }}
+            onClick={onClickDelete}
             aria-label="삭제버튼"
           >
             <HiOutlineTrash />

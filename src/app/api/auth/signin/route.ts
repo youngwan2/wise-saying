@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
   try {
     const db = await openDb()
 
-    // 유효성 검사
+    // 1. 유효성 조건식 작성
     const { email, password, reConfirmPw } = await req.json()
     const schema = joi.object({
       email: joi
@@ -26,27 +26,29 @@ export async function POST(req: NextRequest) {
       reConfirmPw: joi.ref(`password`),
     })
 
-    // 검증 결과
+    // 2. 유효성 검증 
     const result = schema.validate({ email, password, reConfirmPw })
 
-    // 검증 실패 처리
+    // 3. 검증 실패 시 처리
     if (result.error) {
       return NextResponse.json({
         meg: result.error.details,
         success: false,
-        status: 401,
+        status: 400,
       })
     }
+
+    // 4. 검증 성공 시 비밀번호 해시 암호화
     const { email: validEmail, password: validPs } = result.value
 
-    //검증 성공 시 비밀번호 해시 암호화
+
     bcrpt.hash(validPs, SALT, function (err, hash) {
       const query = `
       INSERT INTO users_group(email, password, create_date)
       VALUES (?,?,?)
   `
       const createDate = new Date().toLocaleString()
-      db.all(query, [validEmail, hash, createDate])
+      db.get(query, [validEmail, hash, createDate])
     })
 
     return NextResponse.json({
@@ -57,6 +59,7 @@ export async function POST(req: NextRequest) {
 
     // 그 외 서버 에러 처리
   } catch (error) {
+    console.error('/api/auth/signin/route.ts')
     return NextResponse.json({
       status: 500,
       success: false,

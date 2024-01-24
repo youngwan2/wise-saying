@@ -15,7 +15,7 @@ export default function SearchForm() {
     (state) => state.setIsDisplay,
   )
 
-  useDraggable(formRef, 'search')
+  useDraggable(formRef, 'x')
 
   const search = async (formData: FormData) => {
     const value = formData.get('search')

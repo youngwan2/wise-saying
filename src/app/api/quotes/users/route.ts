@@ -1,16 +1,11 @@
 import { openDb } from '@/connect'
 import { NextResponse } from 'next/server'
 
-// 유저가 작성한 명언 카드의 카테고리를 가져온다.
+// GET | 유저가 작성한 명언 카드의 카테고리를 가져온다.
 export async function GET() {
   try {
     const db = await openDb()
-    // const joinQuery = `
-    //     SELECT DISTINCT A.category AS category
-    //     FROM quotes_user A JOIN users_group B
-    //     ON A.user_id = B.user_id
-    //     ORDER BY A.uesr_quote_id DESC
-    // `
+
     const joinQuery = `
       SELECT category FROM quotes_user
     `
@@ -34,8 +29,8 @@ export async function GET() {
         success: false,
       })
     }
-  } catch (error) {
-    console.log(error)
+  } catch (error) {  
+    console.log('/api/quotes/user/post/route.ts:', error)
     return NextResponse.json({
       status: 500,
       meg: '서버에서 문제가 발생하였습니다. 나중에 다시시도 해주세요.',

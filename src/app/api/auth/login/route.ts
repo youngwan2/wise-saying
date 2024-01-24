@@ -8,22 +8,24 @@ export async function POST(req: NextRequest) {
     const scrept = process.env.JWT_SCREPT as string
     const db = await openDb()
 
-    // 유저 정보
+    // 0. 이메일로 유저 정보 찾기
     const { email, password } = await req.json()
-    console.log(email, password)
+
     const query = `
         SELECT user_id, email, password,profile_image, nickname FROM users_group
         WHERE email = ?
     `
     const user = await db.get(query, [email])
 
-    // 1. 유저 정보 존재 유무 판단
+    // 1. 유저 유효성 판단
     if (!user)
       return NextResponse.json({
         success: false,
         meg: '유저 정보(이메일) 존재하지 않거나, 잘못 입력하였습니다.',
-        status: 403,
+        status: 400,
       })
+
+    // 1-2. 데이터베이스에서 가져온 데이터 저장
     const {
       email: dbEmail,
       password: dbPassword,
@@ -39,10 +41,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({
         success: false,
         meg: '비밀번호가 일치하지 않습니다.',
-        status: 403,
+        status: 400,
       })
 
-    // 3. 액세스 토큰 생성
+    // 3. 액세스 토큰 발급
     const createAccessToken = jwt.sign(
       {
         exp: Math.floor(Date.now() / 1000) + 60 * 60,
@@ -51,7 +53,7 @@ export async function POST(req: NextRequest) {
       scrept,
     )
 
-    // 4. 토큰 디코딩
+    // 4. 토큰 디코딩 후 클라이언트로 응답
     const decode = jwt.verify(createAccessToken, scrept) as jwt.JwtPayload
     const { dbEmail: validEmail } = decode.data
 
@@ -66,9 +68,11 @@ export async function POST(req: NextRequest) {
 
     // 5. 그 외 에러 처리
   } catch (error) {
+    console.error('/api/auth/login/route.ts',error)
+
     return NextResponse.json({
       success: false,
-      meg: ' 서버 측에서 예상치 못한 문제가 발생하였습니다. 나중에 다시 시도해주세요.',
+      meg: ' 서버에서 문제가 발생하였습니다. 나중에 다시시도 해주세요.',
       status: 500,
     })
   }

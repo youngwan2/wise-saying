@@ -5,27 +5,29 @@ import { postUserPost } from '@/api/user/post'
 import useDraggable from '@/custom/useDraggable'
 import { useRef } from 'react'
 
-export default function PostForm() {
+export default function AddPostForm() {
   const formRef = useRef<HTMLFormElement>(null)
   const hasToken = useHasToken()
 
   // UI 드래그 이벤트 등록
-
   useDraggable(formRef, null)
 
   const router = useRouter()
 
+
+  // 포스트 요청
   const addPost = async (form: FormData) => {
-    const category = form.get('category')
-    const content = form.get('content')
-    const author = form.get('author')
+    const category = form.get('category') || ''
+    const content = form.get('content') || ''
+    const author = form.get('author') || ''
 
     const body = {
       category,
-      wise_sayings: content,
+      content,
       author,
     }
     postUserPost(router, hasToken, body)
+
   }
   return (
     <form
@@ -38,10 +40,11 @@ export default function PostForm() {
         명언 등록
       </h2>
       <article className="px-[2em]">
-        <label htmlFor="subject" className="block font-bold">
+        <label htmlFor="category" className="block font-bold">
           주제
         </label>
         <input
+          id='category'
           type="text"
           name="category"
           className="min-w-[200px] w-full max-w-[500px] min-h-[40px] px-[10px] rounded-[5px] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.5)]"
@@ -55,8 +58,8 @@ export default function PostForm() {
           내용
         </label>
         <textarea
-          name="content"
           id="content"
+          name="content"
           className="min-w-[200px] w-full max-w-[500px] p-[10px] min-h-[150px] rounded-[5px] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.5)]"
           placeholder="남기고자 하는 명언을 입력해주세요. ex) 해내지 못할 것을 걱정할게 아니라 시도조차 하지 않으려는 자신을 걱정해라."
         ></textarea>
@@ -64,10 +67,11 @@ export default function PostForm() {
       <br />
       {/* 작성자(닉네임) */}
       <article className="px-[2em]">
-        <label htmlFor="content" className="block font-bold">
+        <label htmlFor="author" className="block font-bold">
           작성자
         </label>
         <input
+          id='author'
           type="text"
           name="author"
           className="min-w-[200px] w-full max-w-[500px]  px-[10px] min-h-[40px] rounded-[5px] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.5)]"

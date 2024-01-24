@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { openDb } from '@/connect'
 import { accessTokenVerify } from '@/utils/validation'
 
-// 조회
+// GET | 유저가 작성한 포스트 정보 조회
 export async function GET(
   req: NextRequest,
   res: { params: { category: string } },
@@ -21,7 +21,7 @@ export async function GET(
         `
       const result = await db.get(countSelectQuery, [category])
       const { count } = result
-      const MAX_PAGE = Math.ceil(count / Number(limit))
+      const MAX_PAGE = Math.ceil(count / Number(limit)) || 1
 
       await db.close()
       return NextResponse.json({ TOTAL_COUNT: count, MAX_PAGE })
@@ -38,45 +38,8 @@ export async function GET(
     await db.close()
     return NextResponse.json(items)
   } catch (error) {
+    console.log('api/quotes/user/[category]/route.ts:', error)
     return NextResponse.json({ items: [] })
   }
 }
 
-// 수정
-export async function PATCH(
-  req: NextRequest,
-  res: { params: { category: string } },
-) {
-  try {
-    const db = await openDb()
-    const postId = res.params.category
-
-    //  접근 토큰 검증
-    accessTokenVerify(req)
-
-    const { quote, category, author } = await req.json()
-
-    const query = `
-            UPDATE quotes_user 
-            SET quote = ?, category = ?, author = ?
-            WHERE user_quote_id = ?
-        `
-
-    db.all(query, [quote, category, author, postId])
-
-    // db.close()
-    return NextResponse.json({
-      status: 201,
-      success: true,
-      meg: '요청을 성공적으로 처리하였습니다.',
-    })
-  } catch (error) {
-    console.log(error)
-
-    return NextResponse.json({
-      status: 500,
-      success: false,
-      meg: '서버에서 문제가 발생하였습니다. 나중에 다시시도 해주세요.',
-    })
-  }
-}

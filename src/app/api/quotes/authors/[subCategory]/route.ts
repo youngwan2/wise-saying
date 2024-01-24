@@ -45,6 +45,7 @@ export async function GET(
     await db.close()
     return NextResponse.json(items)
   } catch (error) {
+    console.error('/api/quotes/authors/[subCategory]/route.ts',error)
     return NextResponse.json({
       status: 500,
       success: false,

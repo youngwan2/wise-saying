@@ -1,13 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { openDb } from '@/connect'
 
-interface ItemsType {
-  items: {
-    id: number
-    author: string
-  }[]
-}
-
 export async function GET(req: NextRequest) {
   try {
     const db = await openDb()
@@ -31,9 +24,10 @@ export async function GET(req: NextRequest) {
       SELECT DISTINCT author AS category FROM quotes_all
       LIMIT ? OFFSET ? * ?
     `
-    const items: ItemsType = await db.all(query, [limit, limit, page])
+    const items = await db.all(query, [limit, limit, page])
     return NextResponse.json(items)
   } catch (error) {
+    console.error('/api/quotes/category/routs.ts',error)
     return NextResponse.json({
       status: 500,
       success: false,

@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
     if (!userId)
       return NextResponse.json({
         meg: '잘못된 요청입니다. 쿼리 변수를 다시 확인해주세요.',
-        status: 403,
+        status: 400,
         success: false,
       })
 
@@ -24,23 +24,24 @@ export async function GET(req: NextRequest) {
     `
 
     const countQuery = `
-        SELECT COUNT(*) AS itemCount
+        SELECT COUNT(*) AS count
         FROM quotes_user A JOIN users_group B
         ON A.user_id = B.user_id AND A.user_id = ?
         
     `
 
     const items = await db.all(joinQuery, [userId, page])
-    const { itemCount } = await db.get(countQuery, [userId])
+    const { count} = await db.get(countQuery, [userId])
 
     return NextResponse.json({
       meg: '요청을 완료하였습니다.',
       status: 200,
       success: true,
       items,
-      count: itemCount,
+      count,
     })
   } catch (error) {
+    console.log('/api/user/mypage/posts/route.ts')
     return NextResponse.json({
       status: 500,
       success: false,

@@ -13,27 +13,25 @@ export async function GET(req: NextRequest) {
     const result = (await db.get(countSelectQuery)) || { totalCount: 0 }
     const { totalResult: count } = result
 
-    const randomResult = (Math.random() * count).toFixed(0)
-    const randomResult2 = (Math.random() * count).toFixed(0)
-    const randomResult3 = (Math.random() * count).toFixed(0)
-    const randomResult4 = (Math.random() * count).toFixed(0)
-    const randomResult5 = (Math.random() * count).toFixed(0)
+    const randomNumbers:number[] = []
+    
+    while (randomNumbers.length < 5){
+      let randomNumber = Math.floor(Math.random() * count) + 1
+      if(!randomNumbers.includes(randomNumber)) {
+        randomNumbers.push(randomNumber)
+      }
+    }
 
     const query = `
         SELECT DISTINCT quote_id AS id, author, quote
         FROM quotes_all
         WHERE id IN (?,?,?,?,?)
     `
-    const items = await db.all(query, [
-      randomResult,
-      randomResult2,
-      randomResult3,
-      randomResult4,
-      randomResult5,
-    ])
+    const items = await db.all(query, randomNumbers)
 
     return NextResponse.json(items)
   } catch (error) {
+    console.error('/api/quotes/random/routs.ts',error)
     return NextResponse.json({
       status: 500,
       success: false,

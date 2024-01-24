@@ -7,6 +7,8 @@ interface PropsType {
     quote: string
   }[]
 }
+
+
 export default function TodayQuotelist({ quotes }: PropsType) {
   return (
     <article className=" top-[2em] absolute left-[50%] translate-x-[-50%] w-full max-w-[700px] max-h-[450px]">

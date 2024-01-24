@@ -41,7 +41,7 @@ export const getBookmarkListFormDB = async (
   url: string,
   token: string,
 ): Promise<any> => {
-  if (token === '') return
+  if (token.length<2) return
   try {
     const response = await fetch(url, {
       headers: {
@@ -54,6 +54,7 @@ export const getBookmarkListFormDB = async (
     if (status === 401) {
       localStorage.removeItem('token')
       localStorage.removeItem('user')
+      location.reload()
     }
     return items
   } catch (error) {

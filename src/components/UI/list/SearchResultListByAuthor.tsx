@@ -59,7 +59,7 @@ export default function SearchResultListByAuthor({ items }: PropsType) {
             검색된 결과가 존재하지 않습니다.
           </p>
         )}
-        {splitQuotes?.map((item) => {
+        {currentQuoteCount >=1 && splitQuotes?.map((item) => {
           return (
             <li
               key={item.id}

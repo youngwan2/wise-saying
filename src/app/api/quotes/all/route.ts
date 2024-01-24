@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { openDb } from '@/connect'
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     const db = await openDb()
 
@@ -13,6 +13,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(items)
   } catch (error) {
+    console.error('/api/quotes/all/route.ts',error)
     return NextResponse.json({
       status: 500,
       success: false,

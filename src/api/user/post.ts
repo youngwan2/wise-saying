@@ -1,3 +1,5 @@
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime"
+
 /**
  * POST | 로그인 요청
  * @param email
@@ -36,6 +38,7 @@ export const reqLogin = async (
       localStorage.setItem('user', JSON.stringify(user))
       localStorage.setItem('token', accessToken)
       alert(`${dbEmail}님 환영합니다!. 잠시 후 Home 화면으로 이동합니다.`)
+      location.reload()
     }
 
     if (status !== 201) {
@@ -45,7 +48,7 @@ export const reqLogin = async (
     alert('네트워크 통신에 문제가 발생하였습니다. 나중에 다시시도 해주세요.')
   }
 
-  location.reload()
+
 }
 
 /**
@@ -55,12 +58,12 @@ export const reqLogin = async (
  * @param router
  */
 export const postUserPost = async (
-  router: any,
+  router: AppRouterInstance,
   hasToken: boolean,
   userPost: {
-    category: FormDataEntryValue | null
-    wise_sayings: FormDataEntryValue | null
-    author: FormDataEntryValue | null
+    category: FormDataEntryValue 
+    content: FormDataEntryValue 
+    author: FormDataEntryValue 
   },
 ) => {
   if (!hasToken) {
@@ -68,31 +71,35 @@ export const postUserPost = async (
     return router.push('/login')
   }
 
-  const { category, wise_sayings, author } = userPost
-  if (!(category && wise_sayings && author))
+  const { category, content, author } = userPost
+
+  // 유효성 검증 
+  if (!(category && content && author))
     return alert('모든 빈 칸을 채워주세요')
   if (category.toString().length < 1)
     return alert(`주제를 최소 2자 이상 적어 주세요.`)
-  if (wise_sayings.toString().length < 3)
+  if (content.toString().length < 3)
     return alert(`내용을 최소 3자 이상 적어 주세요.`)
-  if (author.toString().length <= 2)
+  if (author.toString().length < 2)
     return alert('작성자를 최소 2자 이상 적어주세요.')
 
+  // 포스트 요청
   try {
     const accessToken = localStorage.getItem('token') || ''
     const headers = {
       authorization: `Bearer ${accessToken}`,
     }
-    const response = await fetch('/api/add-post', {
+    const response = await fetch('/api/quotes/users/post', {
       method: 'POST',
       headers,
       body: JSON.stringify(userPost),
     })
     const { status, success, meg } = await response.json()
 
+    // 응답 처리
     if (status === 201) {
-      alert(meg)
-      return router.push('/user-quotes')
+       router.back()
+       router.refresh()
     }
     if (success !== 201) {
       alert(meg)
@@ -122,7 +129,7 @@ export async function updateUserInfo(
   }
 
   try {
-    const response = await fetch('/api/users/upload', {
+    const response = await fetch('/api/users/upload?tag=user', {
       method: 'POST',
       body: JSON.stringify(userInfo),
       headers: {

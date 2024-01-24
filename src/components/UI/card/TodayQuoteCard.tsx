@@ -15,8 +15,8 @@ export default function TodayQuoteCard({
   quote,
   index,
 }: PropsType) {
-  const refs = useRef<HTMLElement[]>([])
-  useEffect(() => {})
+
+
   return (
     <li
       key={id}

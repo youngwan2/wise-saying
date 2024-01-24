@@ -18,11 +18,6 @@ export default function Logout() {
     setNickname(nickname)
   }, [])
 
-  useEffect(() => {
-    if (!hasToken) {
-      redirect('/')
-    }
-  }, [hasToken])
   if (hasToken) {
     return (
       <>
