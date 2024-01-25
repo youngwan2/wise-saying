@@ -1,106 +1,102 @@
-## 프로젝트 명
+## 📓 프로젝트 명
 
 - my wise saying app
 - ※ 프로젝트 진행 사항에 따라 달라질 수 있는 화면입니다.
   ![image](https://github.com/youngwan2/wise-saying/assets/107159871/afe06c37-af4f-41ba-ad6a-4f71a753c78b)
 
-## 프로젝트 개요
+## 🎫 프로젝트 요약
 
-- 다양한 주제별 명언/글귀를 간단한 인터페이스를 사용해서 정리하여 볼 수 있는 웹 사이트 입니다. 사용자가 직접 자신의 명언을 등록할 수 있으며, 자신의 명언 혹은 글귀를 이미지로 생성할 수 있는 AI 서비스를 제공하는 것이 특징입니다.
+- 800개가 넘는 명언 목록을 조회하고, 원하는 명언을 커스텀 카드로 공유할 수 있는 웹 사이트
 
-# 개발 기간/유지보수
+## 📅 개발 기간/유지보수
 
 - (개발기간) 2023년 12월 15일 ~ 2024년 1월 15일
 - (유지보수) 2024년 1월 15일 ~
 
-## 프레임워크 / 라이브러리 / 그 외 도구
+## 🧰 프레임워크 / 라이브러리 / 그 외 도구
 
-### 프론트엔드
+### 프론트엔드/백엔드
 
-<details>
-<summary>ReactJS(^18)</summary>
-</details>
-<details>
-<summary>NextJS(^14.0.4)</summary>
-</details>
-<details>
-<summary>Typescript(^5)</summary>
-</details>
-<details>
-<summary>tailwindcss(^3.3.0)</summary>
-  - 미리 스타일이 정의된 클래스를 기반으로 빠르게 css를 프로젝트에 적용할 수 있으며, 별도로 css 파일 생성 및 선택자 지정이 필요하지 않다는 이점이 매력적으로 다가와 선택하였습니다.
-</details>
-<details>
-<summary>Gsap(^3.12.3)</summary>
-  - css 애니메이션에 있어서 성능 최적화가 잘 되어 있고, 사용방법이 간단하다는 이점이 있어서 선택하였습니다. <br>
-  - 사용자가 화면에 띄운 로그인, 회원가입, 글작성 창에 있어서 사용성을 높이기 위해 드래그 이벤트를 적용하는 데 활용하였습니다.
-</details>
-<details>
-<summary>Next-Auth(^4.24.5)</summary>
-  - 소셜 로그인 인증을 간편하게 실행하기 위한 목적으로 사용하였습니다.
-</details>
-<details>
-<summary>Zustand(^4.4.7)</summary>
-  - 복잡한 전역상태가 아닌 단순한 상태의 전역 관리를 목적으로 사용하였습니다. <br>
-  - 리덕스와 마찬가지로 불변성을 중요시 하지만, 리덕스는 루트 컴포넌트인 App 을 랩핑하여 전역적으로 스토어를 관리하기 때문에, 상태가 변경되면 관련된 모든 컴포넌트가 리렌더링 됩니다. 그러나 Zustand 의 경우에는 그럴 필요 없이 해당 컴포넌트만 리렌더링 되므로 초기 렌더링이나 상태 변경에 따른 성능상 이점에 대한 고민, 전역 상태 관리의 단순성 등을 고려하여 선택하게 되었습니다.
-</details>
-<details>
-<summary>React-icons(^4.12.0)</summary>
-</details>
-</details>
-<details>
-<summary>React-color(^2.19.3)</summary>
-
-- 사용자가 명언집을 만들 때, 선택할 수 있는 컬러 선택기 라이브러리 입니다.
-- 3년 전을 이후로 릴리즈되지 않고 있지만, 꾸준히 주간 다운로드 수가 높은 점, ui 가 사용하기 편리하게 되어 있고, import 시 클래스명만 바꿔주면 다양한 이미지 편집도구에서 사용되는 컬러 픽커를 쉽게 사용할 수 있다는 점을 보고 선택하였습니다.
-</details>
-<details>
-<summary>word-wrap(^1.2.5)</summary>
-
-- 기존 Canvas API 의 textRect 로 그려진 텍스트의 경우 캔버스의 크기를 벗어나더라도 자동으로 개행해주지 못하는 문제가 존재하였습니다.
-- 이에, 다양한 라이브러리를 찾아보던 중 명언집에 입력된 글자가 캔버스 화면을 벗어나는 경우 자동으로 개행할 수 있도록 도와주는 라이브러리로 word-wrap 을 찾았습니다.
-- 사용성이 좋고, 패키지 사이즈가 가벼우며, 최근 까지도 릴리즈 하고 있는 점, 꾸준히 사용자가 주 1천만 명 이상 활용하고 있는 것을 확인하고 선택하게 되었습니다.
-</details>
+<figure style="display:flex; align-items:center;; ">
+  <img height=25 src="https://img.shields.io/badge/react(^18)-61DAFB?style=for-the-badge&logo=react&logoColor=black">  
+  <span style="padding: 0 8px"> SPA를 통해 빠른 페이지 전환으로 사용자 경험을 향상시키기 위해 적용  </span>
+</figure>
+<figure style="display:flex; align-items:center;">
+  <img height=25 src="https://img.shields.io/badge/next(^14.1.0)-0088CC?style=for-the-badge&logo=next.js&logoColor=white">  
+  <span style="padding: 0 8px">  SSR 기반의 RSC의 이점으로 빌드 시 SSG 를 통한 사전 로드를 통한 초기 렌더링 및 번들 사이즈 최적화를 위해 적용</span>
+</figure>
+<figure style="display:flex; align-items:center;">
+  <img height=25 style="padding:5px 0" src="https://img.shields.io/badge/typescript(^5)-3178C6?/>style=for-the-badge&logo=typescript&logoColor=white"> 
+  <span style="padding: 0 8px"> 타입 안정성을 높이고, 코드 가독성 향상 이점 및 Next 팀에서 적용할 것을 권장하는 점을 참고 후 적용  </span>
+</figure>
+<figure style="display:flex; align-items:center;">
+<img height=25 style="padding:5px 0" src="https://img.shields.io/badge/tailwindcss(^3.3.0)-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white">
+  <span style="padding: 0 8px"> 미리 스타일이 정의된 클래스를 기반으로 빠르게 CSS를 프로젝트에 적용하기 위해 적용  </span>
+</figure>
+<figure style="display:flex; align-items:center;">
+<img  height=25 style="padding:5px 0" src="https://img.shields.io/badge/gsap(^3.12.3)-25D366?style=for-the-badge&logo=green&logoColor=white">
+  <span style="padding: 0 8px"> 사용자 로그인창, 헤더 메뉴, 검색창 등 특정 사항에서의 사용자 경험 향상을 목적으로 애니메이션 기능을 적용하기 위해 사용  </span>
+</figure>
+<figure style="display:flex; align-items:center;">
+<img  height=25 style="padding:5px 0" src="https://img.shields.io/badge/zustand(^4.4.7)-2A3FFB?style=for-the-badge&logo=zustand&logoColor=white">
+  <span style="padding: 0 8px"> 단순한 상태의 전역 관리를 컴포넌트 단위로 쉽고, 빠르게 적용할 수 있는 이점이 있어서 활용  </span>
+</figure>
+<figure style="display:flex; align-items:center;">
+<img  height=25 style="padding:5px 0" src="https://img.shields.io/badge/react icons(^4.12.0)-CA4245?style=for-the-badge&logo=logoColor=white">
+  <span style="padding: 0 8px"> 다양한 아이콘을 하나의 패키지에서 컴포넌트 형태로 쉽게 적용할 수 있는 이점으로 활용  </span>
+</figure>
+<figure style="display:flex; align-items:center;">
+<img  height=25 style="padding:5px 0" src="https://img.shields.io/badge/react color(^2.19.3)-000000?style=for-the-badge&logo=reactcolor&logoColor=white">
+  <span style="padding: 0 8px"> 다양한 형태의 컬러 선택도구를 쉽게 커스텀하여 활용할 수 있는 이점으로 선택 후 활용  </span>
+</figure>
+<figure style="display:flex; align-items:center;">
+<img  height=25 style="padding:5px 0" src="https://img.shields.io/badge/word wrap(^1.2.5)-4B1E78?style=for-the-badge&logo=&logoColor=white">
+  <span style="padding: 0 8px"> 기존 Canvas API 의 textRect 로 그려진 텍스트의 경우 캔버스의 크기를 벗어나더라도 자동으로 개행해주지 못하는 문제를 개선하기 위해 활용 </span>
+</figure>
 
 ### 데이터베이스
 
-<details>
-<summary>SQLite3(^5.1.6)</summary>
-  - 다른 관계형 데이터베이스에 비해 가볍고, 따로 데이터베이스 서버를 구축하지 않고도 간단한 트렌잭션 처리를 간편하고 쉽게 수행할 수 있다는 이점으로 선택하였습니다. <br>
-  - 물론 보안상 좋지 못한 방식이기 때문에, 중요한 정보를 저장하기에는 제약이 따르고, 대규모 트랜잭션 처리에서는 동기적으로 동작하는 특성상 성능상 문제가 발생할 수 있음을 인지하고 있습니다. 그러나 앱의 규모나 확장성, 개발의 목적(개인 활용 목적) 등을 염두에 두었을 때 별도의 데이터베이스 서버 구축이 필요하지 않다고 판단하여 선택하였습니다. <br>
-  - 향후 실제 프로덕션에서 운영한다면 다른 관계형 데이터베이스나 NoSQL 로 마이그레이션 할 가능성이 있습니다.
-</details>
+<figure style="display:flex; align-items:center;">
+<img  height=25 style="padding:5px 0" src="https://img.shields.io/badge/SQLite(^5.1.6)-003B57?style=for-the-badge&logo=sqlite&logoColor=white">
+  <span style="padding: 0 8px"> 데이터베이스 서버 없이 CRUD 처리를 간편하게 할 수 있는 점, 향후 실제 운영 시 다른 데이터베이스로 마이그레이션하기 쉬운 점이 매력적으로 보여서 선택 </span>
+</figure>
 
 ### 유효성 검사
 
-<details>
-<summary>Joi(^17.11.0)</summary>
-</details>
+<figure style="display:flex; align-items:center;">
+<img  height=25 style="padding:5px 0" src="https://img.shields.io/badge/joi(^17.11.0)-01BC8D?style=for-the-badge&logo=joi&logoColor=white">
+  <span style="padding: 0 8px"> 회원가입 시 서버에서 전달받은 객체의 유효성 검사를  위해 활용(zod 와 비교 했을 때, 정적 타입 체크를 해주지 않아서 타입안정성이 떨어질 수 있다는 생각이 들었으나, 복잡한 유효성 검사가 목적이 아니므로 joi를 선택) </span>
+</figure>
 
-### 암호화/로그인 인증
+### 그 외 도구
 
-<details>
-<summary>Bcrypt(^5.1.1)</summary>
-</details>
-<details>
-<summary>Jsonwebtoken(^9.0.2)</summary>
-</details>
+<figure style="display:flex; align-items:center;">
+<img  height=25 style="padding:5px 0" src="https://img.shields.io/badge/Bcrypt(^5.1.1)-4B1E78?style=for-the-badge&logo=&logoColor=white">
+  <span style="padding: 0 8px"> bcrypt 해시 암호화 라이브러리 </span>
+</figure>
+<figure style="display:flex; align-items:center;">
+<img  height=25 style="padding:5px 0" src="https://img.shields.io/badge/Jsonwebtoken(^9.0.2)-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white">
+  <span style="padding: 0 8px"> JWT 발급 및 암호화를 도와주는 라이브러리 </span>
+</figure>
+<figure style="display:flex; align-items:center;">
+<img  height=25 style="padding:5px 0" src="https://img.shields.io/badge/postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white">
+  <span style="padding: 0 8px"> API 테스트 및 RESP API 문서화 도구 </span>
+</figure>
 
-### API 개발 및 테스도구
-
-<details>
-<summary>Postman</summary>
-</details>
-
-## 트러블 이슈
+## 🚬트러블 이슈
 
 - 추후 정리 예정(별도 정리중)
 
+
 ---
+<br>
+<br>
+<br>
 
-## 할일목록(참고용)
+ ## ✏ 할일목록(참고용)
 
-### 기능
+<details>
+<summary>참고 리스트</summary>
 
 - [x] 인물별 명언 추가 | 유저는 인물(위인)의 이름 카드를 클릭하면 해당 인물의 명언 목록을 조회할 수 있어야 한다.
 - [x] 날씨/계절 명언 추가 | 유저는 날씨 카테고리를 클릭하면 날씨와 계절에 관한 명언 목록을 조회할 수 있어야 한다.
@@ -118,20 +114,4 @@
 - [x] 회원가입 기능 추가 | 유저는 이메일, 닉네임, 패스워드, 패스워드 재확인을 입력 후 회원가입 버튼을 클릭하면 회원가입 할 수 있어야 한다.
 - [x] 로그인 기능 추가1(NextAuth) | 기존 로그인 기능과 충돌로 보류
 - [x] 로그인 기능 추가2(JWT) | 이메일 및 패스워드를 입력하면, API 서버에서 검증 후 accessToken 발급 처리
-- [ ] ...
-
-### 관리자
-
-- [ ] 명언 목록 조회/삭제/수정/추가 기능 | 유저가 생성한 명언을 삭제할 수 있어야 하고, 기존에 등록되어 있는 명언 목록을 조회하고 삭제, 수정할 수 있어야 한다.
-
-### 성능
-
-- [ ] ...
-
-### 데이터베이스
-
-- [ ] SQLite3 마이그레이션 -> ???
-
-### 배포
-
-- [ ] ...
+</details>
