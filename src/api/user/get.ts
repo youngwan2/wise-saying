@@ -42,7 +42,7 @@ export const getUserQuotesFromDb = async (url: string) => {
 export const getCategoryUserFromDb = async (path: string) => {
   const transformUrl = config.apiPrefix + config.apiHost + path
   const response = await fetch(transformUrl, {
-    next: {tags: ['all','user']},
+    next: {tags: ['user']},
   })
   const { status, items: categories } = await response.json()
   if (status === 200) return categories

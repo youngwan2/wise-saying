@@ -7,7 +7,7 @@ export async function GET() {
     const db = await openDb()
 
     const joinQuery = `
-      SELECT category FROM quotes_user
+      SELECT DISTINCT category FROM quotes_user
     `
     try {
       const results = await db.all(joinQuery)

@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
               VALUES (?,?,?,?,?)
           `
 
-        db.all(insertQuery, [quote, userId, category, author, createDate])
+        db.all(insertQuery, [quote, userId, category.trim(), author, createDate])
         db.close()
         return NextResponse.json({
             status: 201,

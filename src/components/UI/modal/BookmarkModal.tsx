@@ -38,7 +38,9 @@ export default function BookmarkModal() {
     [`/api/bookmark?page=${page}&limit=5`, token],
     ([url, token]) => getBookmarkListFormDB(url, token),
     {
-      refreshInterval: 4000,
+      refreshInterval:4000,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false
     },
   )
   const hasData = !!data

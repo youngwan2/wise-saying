@@ -1,6 +1,7 @@
+export const dynamic = 'force-dynamic'
+
 import type { Metadata } from 'next'
 import CategoryList from '@/components/UI/list/CategoryList'
-import { getCategoryCountFromDb } from '@/api/data/get'
 
 export const metadata: Metadata = {
   title: '저자별 | My wise saying',
@@ -9,11 +10,9 @@ export const metadata: Metadata = {
 }
 
 export default async function CategoryPage() {
-  const count = await getCategoryCountFromDb('/api/quotes/category?type=meta')
-
   return (
     <section>
-      <CategoryList categoryCount={count} />
+      <CategoryList  />
     </section>
   )
 }

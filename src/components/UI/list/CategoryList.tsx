@@ -1,21 +1,35 @@
-'use client'
+"use client"
+
 import CategoryCard from '../card/CategoryCard'
 import useInfiniteScroll from '@/custom/useInfiniteScroll'
 import LoadMoreButton from '../button/LoadMoreButton'
+import { getCategoryCountFromDb } from '@/api/data/get'
+import { useEffect, useState } from 'react'
 
-export default function CategoryList({
-  categoryCount,
-}: {
-  categoryCount: number
-}) {
+export default function CategoryList() {
+
+  const [categoryCount, setCategoryCount] = useState(0)
+
+  async function getCategoryCount() {
+    const count = await getCategoryCountFromDb('/api/quotes/authors/category-all?type=meta')
+    setCategoryCount(count)
+
+  }
+
+  // 저자 목록을 가져온다.
   const {
     items,
     setSize,
     size,
     isLoadingMore,
     itemCount: currentCount,
-  } = useInfiniteScroll('categories', '')
+  } = useInfiniteScroll('authors', 'category-all')
+
   const MAX_PAGE = Math.ceil(categoryCount / 15)
+
+  useEffect(() => {
+    getCategoryCount()
+  }, [])
 
   return (
     <>

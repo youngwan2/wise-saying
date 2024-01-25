@@ -16,7 +16,7 @@ export async function getQuotesBy(url: string): Promise<any> {
 }
 
 /**
- * * GET | 명언  카테고리 불러오기
+ * * GET | 명언  카테고리 목록 갯수 불러오기
  * @param url 경로
  * @returns
  */

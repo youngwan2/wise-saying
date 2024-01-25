@@ -3,8 +3,8 @@ import useSWRInfinite from 'swr/infinite'
 
 /**
  * SWR | 버튼형 무한 스크롤 커스텀 훅
- * @param mainCategory 첫 번째 분기 처리 경로로 사용
- * @param subCategory 페이지 경로2 두 번째 분기처리 경로로 사용(동적 라우트 처리)
+ * @param mainCategory 첫 번째 분기 처리 경로로 사용( users | authors)
+ * @param subCategory  두 번째 분기처리 경로로 사용( any | category-all )
  * @returns
  * @example
  * // 사용 예시
@@ -17,16 +17,12 @@ export default function useInfiniteScroll(
   //  데이터 식별 키(해당 키를 기반으로 fetch 함수에 url 을 공급하고, 키에 변동 사항이 생기면 서버에서 데이터를 불러온다.)
   const getKey = (pageIndex: number, previousPageData: any) => {
     if (previousPageData && !previousPageData.length) return null // 끝에 도달
-
+    console.log("디버그 로그:",mainCategory, pageIndex)
     let url = ''
     switch (mainCategory) {
       case 'users':
       case 'authors': {
         url = `/api/quotes/${mainCategory}/${subCategory}?page=${pageIndex}&limit=15`
-        break
-      }
-      case 'categories': {
-        url = `/api/quotes/category?page=${pageIndex}&limit=15`
         break
       }
     }
@@ -38,7 +34,11 @@ export default function useInfiniteScroll(
     isLoading,
     size,
     setSize,
-  } = useSWRInfinite(getKey, getQuotesBy)
+  } = useSWRInfinite(getKey, getQuotesBy, {
+    revalidateOnMount:true,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false
+  })
 
   // 데이터 후 처리 함수
   const items = itemInfo ? [].concat(...itemInfo) : []

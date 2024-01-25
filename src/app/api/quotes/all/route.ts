@@ -6,7 +6,7 @@ export async function GET() {
     const db = await openDb()
 
     const query = `
-        SELECT id, author, wise_sayings, COUNT(*) AS count 
+        SELECT quote_id, author, quote, COUNT(*) AS count 
         FROM quotes_all
     `
     const items = await db.all(query)
