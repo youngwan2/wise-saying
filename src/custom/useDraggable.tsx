@@ -8,7 +8,7 @@ import { RefObject, useEffect } from 'react'
  * @param type 특정 타입에 따라 다른 타입의 드래그어블 애니메이션을 적용(x | rotation | null)
  */
 export default function useDraggable(
-  elementRef: RefObject<HTMLFormElement>,
+  elementRef: RefObject<HTMLElement>,
   type: string | null,
 ) {
   useEffect(() => {

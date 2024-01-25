@@ -5,8 +5,8 @@ import { getCategoryUserFromDb } from '@/api/user/get'
 import ReplaceMessageCard from '@/components/UI/card/ReplaceMessageCard'
 
 export const metadata: Metadata = {
-  title: '유저별 명언 | My wise saying',
-  description: '유저가 작성한 명언 목록 페이지',
+  title: '사용자 카테고리',
+  description: '유저가 작성한 명언 목록을 볼 수 있는 페이지 입니다.',
 }
 
 export default async function UserPage() {

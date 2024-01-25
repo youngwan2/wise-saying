@@ -12,9 +12,6 @@ import QuotesStylerTaps from '../tap/QuotesStylerTaps'
 import gsap from 'gsap'
 import { Draggable } from 'gsap/Draggable'
 
-/**
- * TODO : div 와 section 그리고 내부에 article 로 각각 구분해서 하나의 컴포넌트에 모아두었는데, 눈에 잘 보여지지가 않음. 더 고민해보고 수정할 필요가 있어 보임.
- */
 export default function QuoteStyler() {
   const router = useRouter()
   const [selecTapNum, setSelectTapNum] = useState(0)
@@ -59,7 +56,7 @@ export default function QuoteStyler() {
         </article>
 
         {/* 우측  */}
-        <article className="mt-[2em] w-full flex flex-col max-w-[100%] lg:max-w-[25%] lg:block pl-[1em] lg:mt-[0] bg-[#dad6d614] rounded-[1em] shadow-[inset_-3px_-3px_5px_rgba(0,0,0,0.5)] min-h-[400px]  ">
+        <article className="mt-[2em] w-full flex flex-col max-w-[100%] lg:max-w-[25%] lg:block p-[0.8em] lg:mt-[0] bg-[#dad6d614] rounded-[1em] shadow-[inset_-3px_-3px_5px_rgba(0,0,0,0.5)] min-h-[400px]  ">
           <QuotesStylerTaps
             selectTapNum={selecTapNum}
             setSelectTapNum={setSelectTapNum}

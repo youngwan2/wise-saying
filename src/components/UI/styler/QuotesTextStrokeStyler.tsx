@@ -2,6 +2,7 @@ import { HiPaintBrush } from 'react-icons/hi2'
 import { PhotoshopPicker } from 'react-color'
 import { useState, useRef, useEffect } from 'react'
 import { useQuotesStrokeStyleStore } from '@/store/store'
+import { debounceCloser } from '@/utils/commonFunctions'
 
 export default function QuotesTextStrokeStyler() {
   const [displayState, setDisplayState] = useState(false)
@@ -38,7 +39,7 @@ export default function QuotesTextStrokeStyler() {
             placeholder="Default: 1px"
             onChange={(e) => {
               const thickness = Number(e.currentTarget.value)
-              setThickness(thickness)
+              debounceCloser(thickness, '', null, setThickness, 500)
             }}
           />
         </article>

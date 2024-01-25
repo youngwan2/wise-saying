@@ -3,6 +3,7 @@ import { HiPaintBrush } from 'react-icons/hi2'
 import { useState, useEffect, useRef } from 'react'
 import { useQuotesTextStyleStore } from '@/store/store'
 import { TextStyleType } from './QuotesTextStyler'
+import useDraggable from '@/custom/useDraggable'
 
 interface PropsType {
   setTextStyleState: (p: TextStyleType) => void
@@ -21,6 +22,7 @@ export default function QuotesTextColorStyler({
   const color = useQuotesTextStyleStore((state) => state.color)
   const unit = useQuotesTextStyleStore((state) => state.unit)
 
+
   useEffect(() => {
     if (previewInputRef.current) {
       const inputEl = previewInputRef.current
@@ -32,11 +34,11 @@ export default function QuotesTextColorStyler({
 
   return (
     <article>
-      <h2 className="flex items-center text-[1.2em] mt-[1.25em] pb-[0.25em] text-[white]">
+      <h2 className="  flex items-center text-[1.2em] mt-[1.25em] pb-[0.25em] text-[white] relative">
         <HiPaintBrush color="white" />
         <p className="ml-[0.5em]">글자 색</p>
       </h2>
-      {/* 글자색 변경 */}
+      {/* 글자색 변경(컬러 선택기) */}
       <article
         className={`${
           displayState

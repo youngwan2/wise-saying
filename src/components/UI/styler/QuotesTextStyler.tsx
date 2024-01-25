@@ -20,7 +20,6 @@ export interface TextStyleType {
   fontStyle: string
 }
 export default function QuotesTextStyler({ selectTapNum }: PropsType) {
-  // 타입 충돌로 인해 any 타입을 임시로 지정
   const [textStyle, setTextStyleState] = useState<TextStyleType>({
     size: 14,
     unit: 'px',
@@ -39,7 +38,7 @@ export default function QuotesTextStyler({ selectTapNum }: PropsType) {
   return (
     <article
       className={`${
-        selectTapNum === 0 ? ' lg:max-w-[80%] flex flex-col' : 'hidden'
+        selectTapNum === 0 ? ' lg:max-w-[90%] flex flex-col' : 'hidden'
       }`}
     >
       {/* 명언 글자색 변경 */}
