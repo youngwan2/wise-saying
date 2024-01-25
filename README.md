@@ -26,8 +26,8 @@
   <span style="padding: 0 8px">  SSR 기반의 RSC의 이점으로 빌드 시 SSG 를 통한 사전 로드를 통한 초기 렌더링 및 번들 사이즈 최적화를 위해 적용</span>
 </div>
 <div style="display:flex; align-items:center;">
-  <img height=25 style="padding:5px 0" src="https://img.shields.io/badge/typescript(^5)-3178C6?/>style=for-the-badge&logo=typescript&logoColor=white"> 
-  <span style="padding: 0 8px"> 타입 안정성을 높이고, 코드 가독성 향상 이점 및 Next 팀에서 적용할 것을 권장하는 점을 참고 후 적용  </span>
+  <img height=25 src="https://img.shields.io/badge/typescript(^5)-3178C6?style=for-the-badge&logo=typescript&logoColor=white">  
+  <span style="padding: 0 8px"> 타입 안정성을 높이고, 코드 가독성 향상 이점 및 Next 팀에서 적용할 것을 권장하는 점을 참고 후 적용</span>
 </div>
 <div style="display:flex; align-items:center;">
 <img height=25 style="padding:5px 0" src="https://img.shields.io/badge/tailwindcss(^3.3.0)-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white">
