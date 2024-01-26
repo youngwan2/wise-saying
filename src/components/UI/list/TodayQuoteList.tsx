@@ -15,7 +15,7 @@ export default function TodayQuotelist({ quotes }: PropsType) {
       <h2 className="flex justify-center items-center text-[1.5em] p-[10px]  text-center text-white max-w-[250px] mx-auto bg-gradient-to-b from-[transparent] to-[#00000033]  shadow-[0_9px_2px_0_rgba(0,0,0,0.5)] rounded-[5px] mt-[2em] mb-[1em] ">
         오늘의 명언
       </h2>
-      <ul className="pt-[1em] ">
+      <ul className="pt-[1em] mx-0 ">
         {quotes.map((quote, i) => {
           return (
             <TodayQuoteCard

@@ -8,7 +8,7 @@ import { RefObject, useEffect } from 'react'
  * @param type 특정 타입에 따라 다른 타입의 드래그어블 애니메이션을 적용(x | rotation | null)
  */
 export default function useDraggable(
-  elementRef: RefObject<HTMLElement>,
+  elementRef: RefObject<HTMLElement> | null,
   type: string | null,
 ) {
   useEffect(() => {
@@ -16,7 +16,7 @@ export default function useDraggable(
     let instance: Draggable[]
     let clear: NodeJS.Timeout
 
-    if (elementRef.current) {
+    if (elementRef?.current) {
       clear = setTimeout(() => {
         if (type === 'x') {
           instance = Draggable.create(elementRef.current, {

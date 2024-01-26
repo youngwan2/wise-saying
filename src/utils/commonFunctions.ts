@@ -1,7 +1,7 @@
 import { ItemsType } from '@/types/items.types'
-import { revalidatePath } from 'next/cache'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 import { ChangeEvent, FormEvent } from 'react'
+
 
 /**
  * 페이지 이동 함수

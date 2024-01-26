@@ -35,7 +35,7 @@ export async function GET(
       // 타입이 meta 이 아닌 경우 조회된 목록를 페이지네이션으로 처리하여 반환
       const page = req.nextUrl.searchParams.get('page') || 0
       const query = `
-        SELECT quote_id AS id, author, quote FROM quotes_all
+        SELECT quote_id AS id, author, quote, job FROM quotes_all
         WHERE author = ?
         ORDER BY id DESC
         LIMIT ? OFFSET ?*15

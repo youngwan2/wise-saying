@@ -10,14 +10,14 @@ export async function GET(req: NextRequest) {
     switch (type) {
       case 'all': {
         const authorQuery = `
-                SELECT quote_id AS id, author, quote
+                SELECT quote_id AS id, author, quote, job
                 FROM quotes_all
                 WHERE author LIKE ?
                 LIMIT 5
             `
 
         const keywordQuery = `
-                SELECT quote_id AS id, author, quote
+                SELECT quote_id AS id, author, quote, job
                 FROM quotes_all
                 WHERE quote LIKE ?
                 LIMIT 5
@@ -60,7 +60,7 @@ export async function GET(req: NextRequest) {
       }
       case 'keyword': {
         const query = `
-                SELECT quote_id AS id, author, quote
+                SELECT quote_id AS id, author, quote, job
                 FROM quotes_all
                 WHERE quote LIKE ?
             `
@@ -84,7 +84,7 @@ export async function GET(req: NextRequest) {
 
       case 'author': {
         const query = `
-                SELECT quote_id AS id, author, quote
+                SELECT quote_id AS id, author, quote, job
                 FROM quotes_all
                 WHERE author LIKE ?
             `

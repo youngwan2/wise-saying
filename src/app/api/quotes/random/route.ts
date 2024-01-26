@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
     }
 
     const query = `
-        SELECT DISTINCT quote_id AS id, author, quote
+        SELECT DISTINCT quote_id AS id, author, quote, job
         FROM quotes_all
         WHERE id IN (?,?,?,?,?)
     `

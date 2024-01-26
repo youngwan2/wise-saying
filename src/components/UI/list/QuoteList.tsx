@@ -9,7 +9,8 @@ interface PropsType {
   items: {
     id: number
     author: string
-    quote: string
+    quote: string,
+    job: string
   }[]
 }
 

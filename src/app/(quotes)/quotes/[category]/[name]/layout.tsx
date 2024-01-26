@@ -5,9 +5,9 @@ type Props = {
   params: { name: string }
 }
 
-export async function  generateMetadata ({params}:Props):Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
-  const category = decodeURIComponent( params.name)
+  const category = decodeURIComponent(params.name)
 
   return {
     title: category
@@ -16,5 +16,6 @@ export async function  generateMetadata ({params}:Props):Promise<Metadata> {
 
 export default function Layout({ children }: { children: React.ReactNode }) {
 
-  return <section>{children}</section>
+  return <section>{children}
+  </section>
 }
