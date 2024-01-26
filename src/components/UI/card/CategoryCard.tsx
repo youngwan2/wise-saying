@@ -6,10 +6,12 @@ import { useRef } from 'react'
 interface PropsType {
   item: {
     category: string
+    job: string,
   }
+  i :number
 }
 
-export default function CategoryCard({ item }: PropsType) {
+export default function CategoryCard({ item ,i}: PropsType) {
   const router = useRouter()
   const liRefs = useRef<HTMLLIElement[]>([])
 
@@ -32,8 +34,8 @@ export default function CategoryCard({ item }: PropsType) {
         router.push(`/quotes/authors/${item.category}`)
       }}
       className="
-          p-[4em]
-          pt-[3em]
+          p-[1em]
+          py-[4em]
           odd:-rotate-2 
           even:rotate-2 
           font-bold
@@ -59,9 +61,10 @@ export default function CategoryCard({ item }: PropsType) {
           hover:cursor-pointer
           hover:shadow-[0_10px_5px_0_rgba(0,0,0,0.4)]
           relative"
-      key={item.category}
+      key={i}
     >
-      {item.category}
+      {item.category} <br />
+      <span>[{item.job}]</span>
     </li>
   )
 }

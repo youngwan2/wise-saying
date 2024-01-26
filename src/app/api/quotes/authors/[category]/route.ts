@@ -66,7 +66,7 @@ export async function GET(
       // 타입이 meta 가 아닌 경우 카테고리 목록 반환
       const page = req.nextUrl.searchParams.get('page') || 0
       const query = `
-      SELECT DISTINCT author AS category FROM quotes_all
+      SELECT DISTINCT author AS category, job FROM quotes_all
       LIMIT ? OFFSET ? * ?
     `
       const items = await db.all(query, [limit, limit, page])

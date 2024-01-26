@@ -8,11 +8,11 @@ import { useEffect, useState } from 'react'
 
 export default function CategoryList() {
 
-  const [categoryCount, setCategoryCount] = useState(0)
+  const [totalCategoryCount, setTotalCategoryCount] = useState(0)
 
   async function getCategoryCount() {
     const count = await getCategoryCountFromDb('/api/quotes/authors/category-all?type=meta')
-    setCategoryCount(count)
+    setTotalCategoryCount(count)
 
   }
 
@@ -25,7 +25,7 @@ export default function CategoryList() {
     itemCount: currentCount,
   } = useInfiniteScroll('authors', 'category-all')
 
-  const MAX_PAGE = Math.ceil(categoryCount / 15)
+  const MAX_PAGE = Math.ceil(totalCategoryCount / 15)
 
   useEffect(() => {
     getCategoryCount()
@@ -34,11 +34,11 @@ export default function CategoryList() {
   return (
     <>
       <h2 className="flex justify-center items-center text-[1.5em] p-[10px]  text-center text-white max-w-[250px] mx-auto bg-gradient-to-b from-[transparent] to-[#00000033]  shadow-[0_9px_2px_0_rgba(0,0,0,0.5)] rounded-[5px] my-[2em] perspective-500  ">
-        저자별 카테고리 ({currentCount}/{categoryCount})
+        저자별 카테고리 ({currentCount}/{totalCategoryCount})
       </h2>
       <ul className="flex flex-wrap justify-center text-center">
-        {items.map((item: { category: string }) => {
-          return <CategoryCard key={item.category} item={item} />
+        {items.map((item: { category: string, job: string }, i) => {
+          return <CategoryCard key={i} item={item} i={i} />
         })}
       </ul>
       <LoadMoreButton

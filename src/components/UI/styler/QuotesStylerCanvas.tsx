@@ -10,6 +10,7 @@ import {
 } from '@/store/store'
 
 import wrap from 'word-wrap'
+import ImageDownloadButton from '../button/ImageDownloadButton'
 
 interface QuoteType {
   quote: string
@@ -17,8 +18,9 @@ interface QuoteType {
 export default function QuotesStylerCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const imageEl = useMemo(() => {
-    if (Image) return new Image()
+    if (Image !==undefined) return new Image()
   }, [])
+
 
   // 텍스트 스타일 정보
   const color = useQuotesTextStyleStore((state) => state.color)
@@ -68,13 +70,15 @@ export default function QuotesStylerCanvas() {
 
       const split = wrap(quote, { newline: '\n\n', width: 20 }).split('\n\n') // 텍스트가 일정 넓이를 벗어나면 자동 개행
       let textY = 0 // 캔버스에 그려질 텍스트의 Y 좌표축을 저장(또한, 개행 되는 텍스트의 높이를 저장)
-      if (imageEl) {
+      if (!imageEl) return 
         imageEl.alt = '명언 카드 배경 이미지'
         imageEl.addEventListener('load', () => {
           clearCanvas(ctx, canvas) // 새 그림을 추가하기 전에 이전 그림들 제거
           bgColorDraw(ctx, width, height)
           ctx.fillStyle = `${color}`
           ctx.drawImage(imageEl, 0, 0, canvas.width, canvas.height)
+
+          // 배열 형태로 분리된 텍스트를 조건에 따라서 다르게 렌더링한다.
           split.forEach((text, i) => {
             textY = height / 3 + i * lineHeight
             if (fontStyle === 'fill') {
@@ -87,8 +91,8 @@ export default function QuotesStylerCanvas() {
             }
           })
         })
+        // 모든 텍스트가 다 그려진 이후에 이미지를 추가하여 이미지가 글자 위로 덮어씌워 지는 것을 방지한다.
         imageEl.src = bgImageSrc
-      }
     },
     [
       imageEl,
@@ -108,6 +112,7 @@ export default function QuotesStylerCanvas() {
     ],
   )
 
+  // 캔버스 생성
   const createCanvas = () => {
     const canvas = canvasRef.current
     const ctx = canvas?.getContext('2d')
@@ -117,11 +122,11 @@ export default function QuotesStylerCanvas() {
   useEffect(() => {
     const { canvas, ctx } = createCanvas()
     if (canvas && ctx) {
-      // clearCanvas(ctx, canvas)
       draw(ctx, canvas)
     }
   }, [draw])
 
+  // 선택한 명언 카드의 정보를 가져오는 이펙트
   useEffect(() => {
     if (localStorage.getItem('selectedItem')) {
       const jsonQuote = localStorage.getItem('selectedItem')!
@@ -131,7 +136,7 @@ export default function QuotesStylerCanvas() {
   }, [])
 
   return (
-    <article className="min-h-[500px] w-[90%] bg-[#0f0f0fc7] p-[10px] relative shadow-inner shadow-[#303030]">
+    <article className="min-h-[500px] w-[95%] bg-[#0f0f0fa4] p-[5px] relative shadow-[inset_5px_5px_5px_rgba(0,0,0,0.3)] rounded-[5px]">
       <span className="text-white">
         {width}X{height}
       </span>
@@ -141,6 +146,14 @@ export default function QuotesStylerCanvas() {
         height={height}
         className="border shadow-[0_0px_5px_1px_rgba(1,100,500,0.7)]  mx-auto"
       ></canvas>
+      <ImageDownloadButton onClick={() => {
+        const imageURL = canvasRef.current?.toDataURL() || ''
+        const link = document.createElement('a')
+        link.href = imageURL
+        link.download = '내가 만든 카드'
+        link.click()
+      }
+      } />
     </article>
   )
 }
