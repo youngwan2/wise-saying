@@ -1,9 +1,12 @@
-import { ItemsType } from '@/types/items.types'
 
 interface PropsType {
   item: {
+    id:number
     category: string
-  } & ItemsType
+    quote:string
+    
+    
+  }
 }
 export default function MyQuoteCard({ item }: PropsType) {
   return (

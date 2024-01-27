@@ -1,10 +1,7 @@
-import BackMoveButton from "@/components/UI/button/BackMoveButton"
 import QuotesCardCommonButton from "@/components/UI/button/QuotesCardCommonButton"
 import ReplaceMessageCard from "@/components/UI/card/ReplaceMessageCard"
 import CommentList from "@/components/UI/list/CommentList"
 import { openDb } from "@/connect"
-import Link from "next/link"
-import { HiArrowLeftCircle } from "react-icons/hi2"
 
 
 type ItemType = {
@@ -16,7 +13,8 @@ type ItemType = {
 }
 export default async function DetailPage({ params }: { params: { category: string, name: string, id: string } }) {
 
-    const { category, name, id } = params
+    const { name, id } = params
+
     async function getQuoteDetail(id: string) {
         'use server'
         const db = await openDb()
@@ -38,7 +36,7 @@ export default async function DetailPage({ params }: { params: { category: strin
             <h2 className="flex justify-center items-center text-[1.5em] p-[10px]  text-center text-white">
                 <span className="mx-[3px] text-[gold] font-mono">{decodeURIComponent(name)}</span> 가라사대
             </h2>
-            <article className="bg-[white] text-center p-[5em] max-w-[700px] mx-auto rounded-[10px] mt-[2em]
+            <article className="bg-[white] text-center p-[5em] max-w-[900px] w-full mx-auto rounded-[10px] mt-[2em]
             shadow-[inset_0_5px_5px_0_rgba(0,0,0,0.5)]
             ">
                 <p className="text-[1.25em]">{item.quote}</p>

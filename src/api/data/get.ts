@@ -41,7 +41,7 @@ export const getBookmarkListFormDB = async (
   url: string,
   token: string,
 ): Promise<any> => {
-  if (token.length<2) return
+  if (token.length < 2) return
   try {
     const response = await fetch(url, {
       headers: {
@@ -91,9 +91,7 @@ export const getApiMetaDataFromServer = async (
 export const todayQuoteFetch = async () => {
   try {
     const url = config.apiPrefix + config.apiHost + '/api/quotes/random'
-    const response = await fetch(url, {
-      next: { revalidate: 3600 },
-    })
+    const response = await fetch(url)
     const items = await response.json()
     return items
   } catch (error) {
@@ -102,14 +100,18 @@ export const todayQuoteFetch = async () => {
 }
 
 
-
-export const getCommentsFormDb=async(id:string)=>{
-  const url = config.apiPrefix + config.apiHost + `/api/quotes/${id}/comments`
-  const response = await fetch(url)
-  const {items, status} = await response.json()
-  if(status !==200) {
-    return []
-  }
+/**
+ * GET | 특정 포스트에 등록된 댓글 목록 불러오기
+ * @param id 
+ * @returns 
+ */
+export const getCommentsFormDb = async (url: string) => {
+  const response = await fetch(url, {
+    next: {
+      tags: ['comment'],
+    }
+  })
+  const { items } = await response.json()
   return items
 
 }

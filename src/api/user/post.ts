@@ -166,17 +166,20 @@ export const postComment = async (comment: FormDataEntryValue, quoteId: string |
     comment
   }
 
-  const url = `/api/quotes/${quoteId}/comments`
+  const url = `/api/quotes/${quoteId}/comments?tag=comment`
   try {
     const resposne = await fetch(url, {
       method:'POST',
       headers: {
         'authorization': `Bearer ${token}`
       },
-      body:JSON.stringify(body)
+      body:JSON.stringify(body),
+      next: {
+        tags:['comment']
+      }
     })
-    const items = await resposne.json()
-    return items
+    await resposne.json()
+    return true
   } catch (error) {
     console.error("에러발생", error)
   }

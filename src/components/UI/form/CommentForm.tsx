@@ -1,21 +1,27 @@
 "use client"
 import { postComment } from "@/api/user/post"
-import { useParams, useRouter } from "next/navigation"
+import { useParams} from "next/navigation"
+import { useRef } from "react"
 
 export default function CommentForm() {
 
     const { id } = useParams()
-    const router = useRouter()
-
-    function addComment(formData: FormData) {
+    const textareaRef  = useRef<HTMLTextAreaElement>(null)
+    async function addComment(formData: FormData) {
         const comment = formData.get('comment') || ''
-        postComment(comment, id)
-        router.refresh()
+       const isSuccess =await postComment(comment, id)
+        textareaRef.current && (textareaRef.current.value='')
+
+        if(isSuccess) {
+            alert('댓글이 등록되었습니다. 잠시 후 갱신 됩니다.')
+        }
+
     }
 
     return (
         <form action={addComment} className="mt-[1em]">
             <textarea
+                ref={textareaRef}
                 className="w-full min-h-[70px] rounded-[10px] p-[10px]"
                 name="comment" id="comment"></textarea>
             <div className="flex mt-[10px] justify-end">
