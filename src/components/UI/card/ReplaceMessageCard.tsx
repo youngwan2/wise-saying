@@ -15,6 +15,7 @@ export default function ReplaceMessageCard({
         rounded-[10px] shadow-[5px_10px_10px_0_rgba(0,0,0,0.5)] bg-gradient-to-tr from-orange-50 to-white"
     >
       {childern}
+      <br />
       <button
         className="bg-[#162557] text-white p-[4px] px-[8px] mt-[1em] text-[16px] hover:bg-[tomato]"
         onClick={() => {

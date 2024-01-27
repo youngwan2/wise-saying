@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
     const db = await openDb()
 
     const joinQuery = `
-        SELECT A.id AS id, A.wise_sayings AS wise_sayings, A.category AS category, A.author AS author, B.email AS email
+        SELECT A.user_quote_id AS id, A.quote AS quote, A.category AS category, A.author AS author, B.email AS email
         FROM quotes_user A JOIN users_group B
         ON A.user_id = B.user_id AND A.user_id = ?
         ORDER BY id DESC
@@ -25,9 +25,8 @@ export async function GET(req: NextRequest) {
 
     const countQuery = `
         SELECT COUNT(*) AS count
-        FROM quotes_user A JOIN users_group B
-        ON A.user_id = B.user_id AND A.user_id = ?
-        
+        FROM quotes_user
+        WHERE user_id = ?
     `
 
     const items = await db.all(joinQuery, [userId, page])
