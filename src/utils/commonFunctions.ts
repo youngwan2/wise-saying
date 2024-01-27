@@ -17,11 +17,9 @@ export const pageSwitch = (router: any, id: number) => {
 
 /**
  * * 명언 선택 함수
- * @param items - 전체 아이템 목록
- * @param id - 선택할 아이템의 식별자
+ * @param item - 아이템
  */
-export function quotesSelector(items: ItemsType[], id: number) {
-  const item = items.find((item) => item.id === id)
+export function quotesSelector(item: ItemsType) {
   localStorage.setItem('selectedItem', JSON.stringify(item))
 }
 

@@ -2,6 +2,7 @@ export const dynamic = 'force-dynamic'
 
 import type { Metadata } from 'next'
 import CategoryList from '@/components/UI/list/CategoryList'
+import BackMoveButton from '@/components/UI/button/BackMoveButton'
 
 export const metadata: Metadata = {
   title: '저자별 카테고리 | My wise saying',
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
 export default async function CategoryPage() {
   return (
     <section>
+      <BackMoveButton/>
       <CategoryList  />
     </section>
   )

@@ -1,3 +1,5 @@
+"use client"
+
 import { HiOutlineZoomIn } from 'react-icons/hi'
 import { SlEarphones } from 'react-icons/sl'
 import useHasToken from '@/custom/useHasToken'
@@ -12,11 +14,10 @@ import { useState } from 'react'
 import AlertCard from '../card/AlertCard'
 
 export default function QuotesCardCommonButton({
-  itemId,
-  items,
+  item,
   index,
 }: PropsType) {
-  
+
   const setIsZoomIn = useCardZoomInOutStore((state) => state.setIsZoomIn)
   const setCardIndex = useCardZoomInOutStore((state) => state.setCardIndex)
   const hasToken = useHasToken()
@@ -24,56 +25,54 @@ export default function QuotesCardCommonButton({
   const [alertToggle, setAlertToggle] = useState({ toggle: false, messgae: '' })
 
   const onClickBookmarkAdd = () => {
-    if (!items) return
-    addBookmarkItem(hasToken, itemId)
+    if(!item) return
+    const {id} = item
+    addBookmarkItem(hasToken, id)
   }
 
   const onClickStylerPageSwitch = () => {
-    if (!items) return
-    const id = itemId
+    if(!item) return
+    const {id} = item
     pageSwitch(router, id)
-    quotesSelector(items, id)
+    quotesSelector(item)
   }
 
   const onClickCardZoomInOut = () => {
-      setIsZoomIn(true)
-      setCardIndex(index)
+    setIsZoomIn(true)
+    setCardIndex(index)
   }
-
 
   return (
     <>
-      <article className="flex min-h-[60px] min-w-[60px]">
+      <button> </button>
+      <article className="pt-[5px]">
         {/* 카드 만들기 버튼 */}
         <button
           onClick={onClickStylerPageSwitch}
-          className="p-[5px] hover:bg-[tomato] text-[2em] hover:text-[white] bg-[white] rounded-[0.3em] mx-[0.1em]"
+          className=" hover:bg-[tomato] text-[1em] hover:text-[white] rounded-[0.3em] p-[5px] mt-[2px] "
           aria-label="명언 꾸미기 편집화면 이동 버튼"
         >
-          <HiScissors className="ml-[4px]" />{' '}
-          <p className="text-[14px] font-semibold">꾸미기</p>
+          <HiScissors />
         </button>
 
         {/* 북마크 추가 버튼 */}
         <button
           onClick={onClickBookmarkAdd}
-          className="p-[5px] hover:bg-[tomato] text-[2em] hover:text-[white] bg-[white] rounded-[0.3em] mx-[0.3em]"
+          className=" hover:bg-[tomato] text-[1em] hover:text-[white] rounded-[0.3em] p-[5px] mt-[2px] "
           aria-label="명언 북마크 버튼"
         >
-          <HiOutlineBookmark className="ml-[4px]" />
-          <p className="text-[14px] font-semibold">북마크</p>
+          <HiOutlineBookmark />
         </button>
-      </article>
-      <article className="flex min-h-[60px] min-w-[100px] mt-[0.8em]">
+
         {/* 확대 버튼 */}
         <button
           onClick={onClickCardZoomInOut}
-          className="min-w-[48px]  p-[5px] hover:bg-[tomato] text-[2em] hover:text-[white] bg-[white] rounded-[0.3em] mx-[0.1em]"
+          className="hover:bg-[tomato] text-[1em] hover:text-[white] rounded-[0.3em]  p-[5px] mt-[2px] "
           aria-label="명언 확대해서 보기 버튼"
         >
           <HiOutlineZoomIn />
-          <p className="text-[14px] font-semibold">확대</p>
         </button>
+
         {/* 듣기 버튼 */}
         <button
           onClick={() => {
@@ -83,11 +82,10 @@ export default function QuotesCardCommonButton({
               messgae: '준비중입니다.',
             })
           }}
-          className="min-w-[48px]  p-[5px] hover:bg-[tomato] text-[2em] hover:text-[white] bg-[white] rounded-[0.3em] mx-[0.3em]"
+          className="hover:bg-[tomato] text-[1em] hover:text-[white] rounded-[0.3em] p-[5px] mt-[2px] mr-[5px] "
           aria-label="명언 듣기 버튼"
         >
-          <SlEarphones className="ml-[4px]" />
-          <p className="text-[14px] font-semibold">듣기</p>
+          <SlEarphones />
         </button>
       </article>
       <AlertCard toggle={alertToggle.toggle} message={alertToggle.messgae} />

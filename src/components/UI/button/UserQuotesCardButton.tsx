@@ -77,7 +77,6 @@ export default function UserQuotesCardButton({
             <p className="text-[14px] font-semibold">삭제</p>
           </button>
         </article>
-        <QuotesCardCommonButton itemId={item.id} items={items} index={index} />
       </div>
     </article>
   )

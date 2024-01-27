@@ -61,9 +61,9 @@ export const postUserPost = async (
   router: AppRouterInstance,
   hasToken: boolean,
   userPost: {
-    category: FormDataEntryValue 
-    content: FormDataEntryValue 
-    author: FormDataEntryValue 
+    category: FormDataEntryValue
+    content: FormDataEntryValue
+    author: FormDataEntryValue
   },
 ) => {
   if (!hasToken) {
@@ -98,8 +98,8 @@ export const postUserPost = async (
 
     // 응답 처리
     if (status === 201) {
-       router.back()
-       router.refresh()
+      router.back()
+      router.refresh()
     }
     if (success !== 201) {
       alert(meg)
@@ -129,7 +129,7 @@ export async function updateUserInfo(
   }
 
   try {
-    const response = await fetch('/api/users/upload?tag=user', {
+    const response = await fetch('/api/users/mypage/upload?tag=user', {
       method: 'POST',
       body: JSON.stringify(userInfo),
       headers: {
@@ -148,4 +148,38 @@ export async function updateUserInfo(
       '전송 중 예기치 못한 문제가 발생하였습니다. 나중에 다시시도 해주세요.',
     )
   }
+}
+
+
+/**
+ * POST | 유저가 작성한 댓글을 등록
+ * @param comment 코멘트
+ * @param quoteId 명언 id
+ */
+
+export const postComment = async (comment: FormDataEntryValue, quoteId: string | string[]) => {
+
+  const token = localStorage.getItem('token')
+  if (!token) return alert('로그인 후 이용 부탁 드립니다.')
+
+  const body = {
+    comment
+  }
+
+  const url = `/api/quotes/${quoteId}/comments`
+  try {
+    const resposne = await fetch(url, {
+      method:'POST',
+      headers: {
+        'authorization': `Bearer ${token}`
+      },
+      body:JSON.stringify(body)
+    })
+    const items = await resposne.json()
+    return items
+  } catch (error) {
+    console.error("에러발생", error)
+  }
+
+
 }

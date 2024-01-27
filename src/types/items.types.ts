@@ -2,6 +2,7 @@ export interface ItemsType {
   id: number
   author: string
   quote: string
+  job:string
   email?: string
 }
 

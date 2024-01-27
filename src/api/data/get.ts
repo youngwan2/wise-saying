@@ -100,3 +100,16 @@ export const todayQuoteFetch = async () => {
     console.error(error)
   }
 }
+
+
+
+export const getCommentsFormDb=async(id:string)=>{
+  const url = config.apiPrefix + config.apiHost + `/api/quotes/${id}/comments`
+  const response = await fetch(url)
+  const {items, status} = await response.json()
+  if(status !==200) {
+    return []
+  }
+  return items
+
+}

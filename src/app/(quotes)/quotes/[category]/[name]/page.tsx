@@ -5,7 +5,7 @@ import useInfiniteScroll from '@/custom/useInfiniteScroll'
 import QuoteList from '@/components/UI/list/QuoteList'
 import ReplaceMessageCard from '@/components/UI/card/ReplaceMessageCard'
 import { useItemMetadataFetch } from '@/custom/useItemMetadataFetch'
-import ScrollButton from '@/components/UI/button/ScrollButton'
+import ScrollButton from '@/components/UI/button/MoveButton'
 
 interface PropsType {
   params: {

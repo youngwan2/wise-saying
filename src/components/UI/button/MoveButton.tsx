@@ -1,14 +1,16 @@
 "use client"
 
 import useDraggable from "@/custom/useDraggable"
+import { useRouter } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
-import { HiArrowCircleDown, HiArrowCircleUp, HiDotsCircleHorizontal, HiDotsVertical, HiX } from "react-icons/hi"
+import { HiArrowCircleDown, HiArrowCircleLeft, HiArrowCircleRight, HiArrowCircleUp, HiDotsCircleHorizontal, HiDotsVertical, HiX } from "react-icons/hi"
 import { HiXMark } from "react-icons/hi2"
 
-export default function ScrollButton() {
+export default function MoveButton() {
     const [isDisplay, setIsDisplay] = useState(false)
     const asideRef = useRef<HTMLElement>(null)
 
+    const router = useRouter()
     useDraggable(asideRef, 'x')
 
     useEffect(() => {
@@ -26,8 +28,14 @@ export default function ScrollButton() {
                 <button onClick={() => {
                     window.scrollTo({ top: 2000000000000000 })
                 }} className="flex flex-col items-center mt-[0.5em] bg-[tomato] rounded-full text-white text-[1.8em] "><HiArrowCircleDown /></button>
+                <button onClick={() => {
+                    router.back()
+                }} className="flex flex-col items-center mt-[0.5em] bg-[tomato] rounded-full text-white text-[1.8em] " ><HiArrowCircleLeft /></button>
+                <button onClick={() => {
+                    router.forward()
+                }} className="flex flex-col items-center mt-[0.5em] bg-[tomato] rounded-full text-white text-[1.8em] " ><HiArrowCircleRight /></button>
             </article>
-            <button  onClick={() => {
+            <button onClick={() => {
                 setIsDisplay(!isDisplay)
             }} className="transition-all  fixed my-[0.25em] bg-[#ff6347d4] rounded-full text-white text-[1.8em] bottom-[1em] right-[1em]"> {isDisplay ? <HiXMark /> : <HiDotsVertical />}  </button>
         </>

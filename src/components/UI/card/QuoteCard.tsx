@@ -3,7 +3,7 @@ import QuotesCardButton from '../button/QuotesCardButton'
 import UserQuotesCardButton from '../button/UserQuotesCardButton'
 import useIntersectionObserver from '@/custom/useIntersectionObserver'
 import { useCardZoomInOutStore } from '@/store/store'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { ItemsType } from '@/types/items.types'
 import ReplaceMessageCard from './ReplaceMessageCard'
 import gsap from 'gsap/all'
@@ -17,6 +17,8 @@ interface PropsType {
 export default function QuoteCard({ item, items, index }: PropsType) {
   const liRefs = useRef<HTMLLIElement[]>([])
   const pathName = usePathname()
+
+  const router = useRouter()
   const isZoomIn = useCardZoomInOutStore((state) => state.isZoomIn)
   const cardIndex = useCardZoomInOutStore((state) => state.cardIndex)
 
@@ -26,7 +28,6 @@ export default function QuoteCard({ item, items, index }: PropsType) {
 
   // 인터섹션 옵저버 적용하는 커스텀 훅
   useIntersectionObserver(liRefs)
-
   /**
    * @param target gsap 애니메이션 대상
    *  */
@@ -70,14 +71,17 @@ export default function QuoteCard({ item, items, index }: PropsType) {
         }
       }}
       key={item.id}
-      className={`
-                text-[1.15em] group
-                p-[1.5em] my-[1em] m-3 w-[100%] max-h-[600px]  max-w-[330px] min-h-[250px]  text-center bg-[#f6e9a0] 
-                odd:-rotate-1  even:rotate-1
+      className={
+        `
+                text-[1.15em] 
+                p-[1.5em] pb-[4em] my-[1em] m-3 w-[100%] max-h-[600px]  max-w-[330px] min-h-[250px]  text-center bg-[#ffffff] 
+                odd:-rotate-2  even:rotate-2
                 transition-all duration-700 shadow-[5px_10px_5px_0_rgba(0,0,0,0.3)] antialiased
+                hover:bg-[#f8e992] hover:rotate-0
                 hover:shadow-[-1px_20px_10px_0_rgba(0,0,0,0.5)] hover:translate-y-[-20px] hover:cursor-pointer
                 `}
     >
+
       <span className="absolute left-2 top-2 underline decoration-wavy decoration-[#fb6e6e]">
         {item.id}
       </span>
@@ -89,8 +93,26 @@ export default function QuoteCard({ item, items, index }: PropsType) {
       {pathName.includes('/user-quotes') ? (
         <UserQuotesCardButton index={index} item={item} items={items} />
       ) : (
-        <QuotesCardButton index={index} itemId={item.id} items={items} />
+        <QuotesCardButton index={index} item={item} />
       )}
+      <button onClick={(e) => {
+        const tl = gsap.timeline()
+        tl.to(e.currentTarget.parentElement, {
+         rotateX:-20,
+         translateY:-300,
+         opacity:0,
+         translateZ:-1000,
+         backfaceVisibility:'hidden',
+         perspective:600
+        })
+        tl.to(e.currentTarget.parentElement, {
+          onComplete() {
+            router.push(`/quotes/authors/${item.author}/${item.id}`)
+            tl.kill()
+          }
+        })
+
+      }} className='absolute bottom-2 left-[50%] translate-x-[-50%] bg-[#454599] text-white p-[5px] rounded-[10px] shadow-[inset_-2px_-2px_5px_rgba(0,0,0,0.5)] hover:bg-[tomato]'>자세히보기 </button>
     </li>
   )
 }
