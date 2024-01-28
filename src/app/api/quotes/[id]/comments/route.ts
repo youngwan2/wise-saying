@@ -43,6 +43,7 @@ export async function GET(req: NextRequest, res: { params: { id: string } }) {
 // POST | 댓글 등록
 export async function POST(req: NextRequest, res: { params: { id: string } }) {
     const tag = req.nextUrl.searchParams.get('tag') || ''
+    
     // 토큰 유효성 검증
     const { status, meg, success, user } = accessTokenVerify(req)
     if (status === 400) {
@@ -82,33 +83,37 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
 
 
 // PATCH | 특정 포스트 댓글 수정
-// export async function PATCH(req: NextRequest, res: { params: { id: string } }) {
-//     const quoteId = res.params.id
+export async function PATCH(req: NextRequest, res: { params: { id: string } }) {
+    const commentId = res.params.id
+    const { comment } = await req.json() || { comment: '' }
+    const { status, meg, success, user } = accessTokenVerify(req)
 
-//     const { status, meg, success, user } = accessTokenVerify(req)
-//     if (status === 400) {
-//         return NextResponse.json({ status, success, meg })
-//     }
+    if (status === 400) {
+        return NextResponse.json({ status, success, meg })
+    }
 
-//     if (status === 401) {
-//         return NextResponse.json({ status, success, meg })
-//     }
+    if (status === 401) {
+        return NextResponse.json({ status, success, meg })
+    }
 
-//     try {
-//         const db = await openDb()
-//         const { userId } = user
-//         const updateQuery = `
-//         UPDATE comments
-//         SET comment = ?, update_date =?
-//         WHERE user_id = ? AND comment_id = ?
-//         `
-//         const updateDate = new Date().toLocaleString()
-//         await db.get(updateQuery, [commewnt, updateDate, userId])
+    try {
+        const db = await openDb()
+        const { userId } = user
+        const updateQuery = `
+        UPDATE comments
+        SET comment = ?, update_date =?
+        WHERE user_id = ? AND comment_id = ?
+        `
+        const updateDate = new Date().toLocaleString()
+        await db.get(updateQuery, [comment, updateDate, userId, commentId])
 
-//     } catch (error) {
+        return NextResponse.json({ status: 201, meg: '정상적으로 수정되었습니다.', success: true })
 
-//     }
-// }
+    } catch (error) {
+        console.error('/api/quotes/[id]/comments/route.ts', error)
+        return NextResponse.json({ status: 500, meg: '서버에서 문제가 발생하였습니다. 나중에 다사시도 해주세요.', success: false })
+    }
+}
 
 
 // DELECT | 특정 포스트 댓글 삭제
@@ -127,7 +132,7 @@ export async function DELETE(req: NextRequest, res: { params: { id: string } }) 
         }
 
 
-        if (commentId ) {
+        if (commentId) {
             const db = await openDb()
             const { userId } = user
             const userQuery = `

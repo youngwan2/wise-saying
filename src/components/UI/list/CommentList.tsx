@@ -44,12 +44,14 @@ export default function CommentList({ id }: PropsType) {
             <CommentSortSelect setSort={setSort} />
             <Suspense fallback={<h3>로드 중..</h3>}>
 
-                {items.length>0 ?          <ul className="mt-[2em] min-h-[550px]">
-                    {items?.map((item) => {
-                        return <CommentCard item={item} key={item.id} />
-                    })}
-                </ul>: <p className="text-white text-[1.25em] text-center mx-auto mt-[2em]">해당 명언/속담/글귀에 대한 의견을 공유해주세요!</p> }
-       
+                {items.length > 0
+                    ? <ul className="mt-[2em] min-h-[550px]">
+                        {items?.map((item) => {
+                            return <CommentCard item={item} key={item.id} />
+                        })}
+                    </ul>
+                    : <p className="text-white text-[1.25em] text-center mx-auto mt-[2em]">해당 명언/속담/글귀에 대한 의견을 공유해주세요!</p>}
+
             </Suspense>
 
             <CommentLoadMoreButton
@@ -58,11 +60,9 @@ export default function CommentList({ id }: PropsType) {
                 minPage={MIN_PAGE}
                 onClickPrev={() => {
                     setPage(Math.max(page - 1, MIN_PAGE))
-                    console.log(page)
                 }}
                 onClickNext={() => {
                     setPage(Math.min(page + 1, MAX_PAGE))
-                    console.log(page)
                 }}
             />
         </section>

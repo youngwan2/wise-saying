@@ -55,7 +55,7 @@ export default function CommentCard({ item }: PropsType) {
         <>
             <li className="comment-card bg-white  min-h-[50px] rounded-[5px] first:mt-[2em] mt-[1em] flex justify-start items-center w-full mx-auto relative">
                 <Image src={item.profile_iamge ?? "/images/image1.png"} alt="프로필 이미지" width={68} height={60} className="rounded-[5px] absolute left-[-1.5em] shadow-[0_0px_5px_0_rgba(0,0,0,0.8)] top-[50%] translate-y-[-50%]" />
-                <div className=" ml-[4em] py-[10px]">
+                <div className=" ml-[4em] py-[10px] pr-[1.5em]">
                     <span className="font-semibold inline-block mt-[0.2em] text-[14px]">{item.nickname || '무명의 위인'}({item.email.replace(item.email.slice(2, 4), '**')})</span>
                     <p>{item.comment}</p>
                     <span className="inline-block mt-[4px] text-[14px]">{item.create_date}</span>
@@ -67,7 +67,7 @@ export default function CommentCard({ item }: PropsType) {
                 {display ? <CommentUpdateButton onClickDeleteComment={onClickDeleteComment} onClickFormDisplay={onClickFormDisplay} /> : null}
 
             </li>
-            <li>{editFormDisplay ? <CommentUpdateForm onClickEditCancel={onClickEditCancel} /> : null}</li>
+            <li>{editFormDisplay ? <CommentUpdateForm onClickEditCancel={onClickEditCancel} commentId={item.id} setEditFormDisplay={setEditFormDisplay} /> : null}</li>
         </>
     )
 }
