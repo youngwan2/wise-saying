@@ -111,7 +111,7 @@ export const getCommentsFormDb = async (url: string) => {
       tags: ['comment'],
     }
   })
-  const { items } = await response.json()
-  return items
+  const data = await response.json()
+  return data
 
 }
