@@ -7,6 +7,7 @@ import { Suspense, useState } from "react";
 import useSWR from "swr";
 import ReplaceMessageCard from "../card/ReplaceMessageCard";
 import CommentLoadMoreButton from "../button/CommentLoadMoreButton";
+import CommentSortSelect from "../select/CommentSortSelect";
 
 interface PropsType {
     id: string
@@ -26,12 +27,12 @@ interface CommentsInfoType {
 const MIN_PAGE = 0
 export default function CommentList({ id }: PropsType) {
     const [page, setPage] = useState(0)
-    const { data: commentsInfo, isLoading, error } = useSWR<CommentsInfoType>(`/api/quotes/${id}/comments?page=${page}`, getCommentsFormDb, {
+    const [sort, setSort] = useState('recent')
+    const { data: commentsInfo, isLoading, error } = useSWR<CommentsInfoType>(`/api/quotes/${id}/comments?page=${page}&sort=${sort}`, getCommentsFormDb, {
         refreshInterval: 5000
     })
 
     const items = commentsInfo && commentsInfo.items || []
-    const currentCount = items?.length || 0
     const totalCount = commentsInfo && commentsInfo.totalCount || 0
     const MAX_PAGE = Math.ceil(totalCount / 5)
 
@@ -40,8 +41,9 @@ export default function CommentList({ id }: PropsType) {
         <section className="py-[1em] ">
             <h2 className="text-white text-[1.5em] mt-[2em]">댓글({totalCount})</h2>
             <CommentForm />
+            <CommentSortSelect setSort={setSort} />
             <Suspense fallback={<h3>로드 중..</h3>}>
-                <ul className="mt-[5em] min-h-[550px]">
+                <ul className="mt-[2em] min-h-[550px]">
                     {items?.map((item) => {
                         return <CommentCard item={item} key={item.id} />
                     })}

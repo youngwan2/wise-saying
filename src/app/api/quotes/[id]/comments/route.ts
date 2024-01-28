@@ -8,6 +8,9 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest, res: { params: { id: string } }) {
     const quoteId = res.params.id
     const tag = req.nextUrl.searchParams.get('tag') || ''
+    const sort = req.nextUrl.searchParams.get('sort') || 'ASC'
+
+    console.log(sort)
 
     try {
             const db = await openDb()
@@ -26,6 +29,7 @@ export async function GET(req: NextRequest, res: { params: { id: string } }) {
                 FROM users_group A
                 JOIN comments B ON A.user_id = B.user_id
                 WHERE quote_id = ?
+                ORDER BY B.comment_id ${sort}
                 LIMIT 5 OFFSET 5*?
             `
             const count = await db.get(countQuery, [quoteId])
