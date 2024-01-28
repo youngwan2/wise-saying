@@ -33,7 +33,6 @@ export default function useDraggable(
         } else {
           instance = Draggable.create(elementRef.current, {
             dragClickables: false,
-            bounds: document.querySelector('body'),
           })
         }
       }, 1000)

@@ -8,23 +8,20 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest, res: { params: { id: string } }) {
     const quoteId = res.params.id
     const tag = req.nextUrl.searchParams.get('tag') || ''
-    const sort = req.nextUrl.searchParams.get('sort') || 'ASC'
-
-    console.log(sort)
+    const sort = req.nextUrl.searchParams.get('sort') || 'DESC'
 
     try {
-            const db = await openDb()
-            const page = req.nextUrl.searchParams.get('page') || 0
+        const db = await openDb()
+        const page = req.nextUrl.searchParams.get('page') || 0
 
-            const countQuery =`
+        const countQuery = `
                 SELECT COUNT(*) AS count
                 FROM users_group A
                 JOIN comments B ON A.user_id = B.user_id
                 WHERE quote_id = ?
             `
 
-
-            const userQuery = `
+        const userQuery = `
                 SELECT B.comment_id AS id, A.email AS email, A.nickname AS nickname, A.profile_image AS profile_image, B.comment AS comment, B.create_date AS create_date
                 FROM users_group A
                 JOIN comments B ON A.user_id = B.user_id
@@ -32,11 +29,11 @@ export async function GET(req: NextRequest, res: { params: { id: string } }) {
                 ORDER BY B.comment_id ${sort}
                 LIMIT 5 OFFSET 5*?
             `
-            const count = await db.get(countQuery, [quoteId])
-            const {count: totalCount} = count
-            const comments = await db.all(userQuery, [quoteId, page])
-            revalidateTag(tag)
-            return NextResponse.json({ status: 200, meg: '정상적으로 처리되었습니다.', success: true, items: comments, totalCount })
+        const count = await db.get(countQuery, [quoteId])
+        const { count: totalCount } = count
+        const comments = await db.all(userQuery, [quoteId, page])
+        revalidateTag(tag)
+        return NextResponse.json({ status: 200, meg: '정상적으로 처리되었습니다.', success: true, items: comments, totalCount })
     } catch (error) {
         console.error('/api/quotes/[id]/comments/route.ts', error)
         return NextResponse.json({ status: 500, meg: '서버에서 문제가 발생하였습니다. 나중에 다사시도 해주세요.', success: false })
@@ -85,51 +82,61 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
 
 
 // PATCH | 특정 포스트 댓글 수정
-export async function PATCH(req: NextRequest, res: { params: { id: string } }) {
-    const quoteId = res.params.id
+// export async function PATCH(req: NextRequest, res: { params: { id: string } }) {
+//     const quoteId = res.params.id
 
-    const { status, meg, success, user } = accessTokenVerify(req)
-    if (status === 400) {
-        return NextResponse.json({ status, success, meg })
-    }
+//     const { status, meg, success, user } = accessTokenVerify(req)
+//     if (status === 400) {
+//         return NextResponse.json({ status, success, meg })
+//     }
 
-    if (status === 401) {
-        return NextResponse.json({ status, success, meg })
-    }
+//     if (status === 401) {
+//         return NextResponse.json({ status, success, meg })
+//     }
 
-    try {
+//     try {
+//         const db = await openDb()
+//         const { userId } = user
+//         const updateQuery = `
+//         UPDATE comments
+//         SET comment = ?, update_date =?
+//         WHERE user_id = ? AND comment_id = ?
+//         `
+//         const updateDate = new Date().toLocaleString()
+//         await db.get(updateQuery, [commewnt, updateDate, userId])
 
+//     } catch (error) {
 
-    } catch (error) {
-
-    }
-}
+//     }
+// }
 
 
 // DELECT | 특정 포스트 댓글 삭제
-export async function DELECT(req: NextRequest, res: { params: { id: string } }) {
-    const quoteId = res.params.id
-    const tag = req.nextUrl.searchParams.get('tag')
-
-    // 토큰 유효성 검증
-    const { status, meg, success, user } = accessTokenVerify(req)
-    if (status === 400) {
-        return NextResponse.json({ status, success, meg })
-    }
-
-    if (status === 401) {
-        return NextResponse.json({ status, success, meg })
-    }
+export async function DELETE(req: NextRequest, res: { params: { id: string } }) {
 
     try {
-        if (quoteId && tag) {
+        const commentId = res.params.id
+        // 토큰 유효성 검증
+        const { status, meg, success, user } = accessTokenVerify(req)
+        if (status === 400) {
+            return NextResponse.json({ status, success, meg })
+        }
+
+        if (status === 401) {
+            return NextResponse.json({ status, success, meg })
+        }
+
+
+        if (commentId ) {
             const db = await openDb()
             const { userId } = user
             const userQuery = `
-                WHERE quote_id = ? AND user_id = ?
+                DELETE FROM comments
+                WHERE comment_id = ? AND user_id = ?
             `
-            await db.get(userQuery, [quoteId, userId])
-            return NextResponse.json({ status: 203, meg: '정상적으로 삭제 처리되었습니다.', success: true })
+            console.log(commentId, userId)
+            await db.get(userQuery, [commentId, userId])
+            return NextResponse.json({ status: 200, meg: '정상적으로 삭제 처리되었습니다.', success: true })
         }
     } catch (error) {
         console.error('/api/quotes/[id]/comments/route.ts', error)

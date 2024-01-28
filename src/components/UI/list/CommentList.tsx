@@ -27,27 +27,29 @@ interface CommentsInfoType {
 const MIN_PAGE = 0
 export default function CommentList({ id }: PropsType) {
     const [page, setPage] = useState(0)
-    const [sort, setSort] = useState('recent')
+    const [sort, setSort] = useState('DESC')
     const { data: commentsInfo, isLoading, error } = useSWR<CommentsInfoType>(`/api/quotes/${id}/comments?page=${page}&sort=${sort}`, getCommentsFormDb, {
         refreshInterval: 5000
     })
 
     const items = commentsInfo && commentsInfo.items || []
-    const totalCount = commentsInfo && commentsInfo.totalCount || 0
+    const totalCount = commentsInfo && commentsInfo.totalCount || 1
     const MAX_PAGE = Math.ceil(totalCount / 5)
 
     if (isLoading || !commentsInfo) return <ReplaceMessageCard childern='데이터를 불러오는 중입니다.' />
     return (
         <section className="py-[1em] ">
-            <h2 className="text-white text-[1.5em] mt-[2em]">댓글({totalCount})</h2>
+            <h2 className="text-white text-[1.5em] mt-[2em]">댓글({items.length})</h2>
             <CommentForm />
             <CommentSortSelect setSort={setSort} />
             <Suspense fallback={<h3>로드 중..</h3>}>
-                <ul className="mt-[2em] min-h-[550px]">
+
+                {items.length>0 ?          <ul className="mt-[2em] min-h-[550px]">
                     {items?.map((item) => {
                         return <CommentCard item={item} key={item.id} />
                     })}
-                </ul>
+                </ul>: <p className="text-white text-[1.25em] text-center mx-auto mt-[2em]">해당 명언/속담/글귀에 대한 의견을 공유해주세요!</p> }
+       
             </Suspense>
 
             <CommentLoadMoreButton
