@@ -18,39 +18,39 @@
 ### 프론트엔드/백엔드
 |사용 스텍 | 선택 이유|
 |:---:|:---|
-|  <img  style="border-radius:15px; min-height:30px; max-height:30px;  max-width:180px; min-width:180px "  src="https://img.shields.io/badge/react(^18)-61DAFB?style=for-the-badge&logo=react&logoColor=black"> | SPA를 통해 빠른 페이지 전환으로 사용자 경험을 향상시키기 위해 적용 |  
-|  <img  style="border-radius:15px; min-height:30px; max-height:30px;  max-width:180px; min-width:180px " src="https://img.shields.io/badge/next(^14.1.0)-0088CC?style=for-the-badge&logo=next.js&logoColor=white">  |SSR 기반의 RSC의 이점으로 빌드 시 SSG 를 통한 사전 로드를 통한 초기 렌더링 및 번들 사이즈 최적화를 위해 적용|
-|<img  style="border-radius:15px; min-height:30px; max-height:30px;  max-width:180px; min-width:180px "  src="https://img.shields.io/badge/typescript(^5)-0088CC?style=for-the-badge&logo=typescript&logoColor=white"> |타입 안정성을 높이고, 코드 가독성 향상 이점 및 Next 팀에서 적용할 것을 권장하는 점을 참고 후 적용 |
-|<img  style="border-radius:15px; min-height:30px; max-height:30px;  max-width:180px; min-width:180px "  style="padding:5px 0" src="https://img.shields.io/badge/tailwindcss(^3.3.0)-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white"> | 미리 스타일이 정의된 클래스를 기반으로 빠르게 CSS를 프로젝트에 적용하기 위해 적용|
-|<img  style="border-radius:15px; min-height:30px; max-height:30px;  max-width:180px; min-width:180px "  style="padding:5px 0" src="https://img.shields.io/badge/gsap(^3.12.3)-12A811?style=for-the-badge&logo=green&logoColor=white">|사용자 로그인창, 헤더 메뉴, 검색창 등 특정 사항에서의 사용자 경험 향상을 목적으로 애니메이션 기능을 적용하기 위해 사용
-|<img  style="border-radius:15px; min-height:30px; max-height:30px;  max-width:180px; min-width:180px "  style="padding:5px 0" src="https://img.shields.io/badge/zustand(^4.4.7)-2A3FFB?style=for-the-badge&logo=zustand&logoColor=white">|단순한 상태의 전역 관리를 컴포넌트 단위로 쉽고, 빠르게 적용할 수 있는 이점이 있어서 활용|
-|<img  style="border-radius:15px; min-height:30px; max-height:30px;  max-width:180px; min-width:180px "  style="padding:5px 0" src="https://img.shields.io/badge/react icons(^4.12.0)-CA4245?style=for-the-badge&logo=logoColor=white">| 다양한 아이콘을 하나의 패키지에서 컴포넌트 형태로 쉽게 적용할 수 있는 이점으로 활용| 
-|<img  style="border-radius:15px; min-height:30px; max-height:30px;  max-width:180px; min-width:180px "  style="padding:5px 0" src="https://img.shields.io/badge/react color(^2.19.3)-000000?style=for-the-badge&logo=reactcolor&logoColor=white">|다양한 형태의 컬러 선택도구를 쉽게 커스텀하여 활용할 수 있는 이점으로 선택 후 활용  </span>|
-|<img  style="border-radius:15px; min-height:30px; max-height:30px;  max-width:180px; min-width:180px "  style="padding:5px 0" src="https://img.shields.io/badge/word wrap(^1.2.5)-4B1E78?style=for-the-badge&logo=&logoColor=white">|기존 Canvas API 의 textRect 로 그려진 텍스트의 경우 캔버스의 크기를 벗어나더라도 자동으로 개행해주지 못하는 문제를 개선하기 위해 활용|
+|Typeccript(^5) |(언어) 타입 안정성을 높이고, 코드 가독성 향상 이점 및 Next 팀에서 적용할 것을 권장하는 점을 참고 후 적용 |
+| ReactJS(^18) | (라이브러리) SPA를 통해 빠른 페이지 전환으로 사용자 경험을 향상시키기 위해 적용 |  
+| NextJS(^14.1.0) |(리액트 프레임워크) SSR 기반의 RSC의 이점으로 빌드 시 SSG 를 통한 사전 로드를 통한 초기 렌더링 및 번들 사이즈 최적화를 위해 적용|
+|Tailwindcss(^3.3.0)|(CSS) 미리 스타일이 정의된 클래스를 기반으로 빠르게 CSS를 프로젝트에 적용하기 위해 적용|
+|Zustand(^4.4.7)|(상태관리) 단순한 상태의 전역 관리를 컴포넌트 단위로 쉽고, 빠르게 적용할 수 있는 이점이 있어서 활용|
+|React icons(^4.12.0)|다양한 아이콘을 하나의 패키지에서 컴포넌트 형태로 쉽게 적용할 수 있는 이점으로 활용|
+|React color(^2.19.3)|다양한 형태의 컬러 선택도구를 쉽게 커스텀하여 활용할 수 있는 이점으로 선택 후 활용|
+|Word wrap(^1.2.5)|기존 Canvas API 의 textRect 로 그려진 텍스트의 경우 캔버스의 크기를 벗어나더라도 자동으로 개행해주지 못하는 문제를 개선하기 위해 활용|
+gsap(^3.12.3)|사용자 로그인창, 헤더 메뉴, 검색창 등 특정 사항에서의 사용자 경험 향상을 목적으로 애니메이션 기능을 적용하기 위해 사용
 
 
 ### 데이터베이스
 |사용 스텍 | 선택 이유|
 |:---:|:---|
-|<img  style="border-radius:15px; min-height:30px; max-height:30px;  max-width:180px; min-width:180px " style="padding:5px 0" src="https://img.shields.io/badge/SQLite(^5.1.6)-003B57?style=for-the-badge&logo=sqlite&logoColor=white">|데이터베이스 서버 없이 CRUD 처리를 간편하게 할 수 있는 점, 향후 실제 운영 시 다른 데이터베이스로 마이그레이션하기 쉬운 점이 매력적으로 보여서 선택|
+|SQLite(^5.1.6)|(임시) 데이터베이스 서버 없이 CRUD 처리를 간편하게 할 수 있는 점, 향후 실제 운영 시 다른 데이터베이스로 마이그레이션하기 쉬운 점이 매력적으로 보여서 선택|
 
 ### 유효성 검사
 |사용 스텍 | 선택 이유|
 |:---:|:---|
-|<img  style="border-radius:15px; min-height:30px; max-height:30px;  max-width:180px; min-width:180px "  style="padding:5px 0" src="https://img.shields.io/badge/joi(^17.11.0)-01BC8D?style=for-the-badge&logo=joi&logoColor=white">|회원가입 시 서버에서 전달받은 객체의 유효성 검사를  위해 활용(zod 와 비교 했을 때, 정적 타입 체크를 해주지 않아서 타입안정성이 떨어질 수 있다는 생각이 들었으나, 복잡한 유효성 검사가 목적이 아니므로 joi를 선택)|
+|Joi(^17.11.0)|회원가입 시 서버에서 전달받은 객체의 유효성 검사를  위해 활용(zod 와 비교 했을 때, 정적 타입 체크를 해주지 않아서 타입안정성이 떨어질 수 있다는 생각이 들었으나, 복잡한 유효성 검사가 목적이 아니므로 joi를 선택)|
 
 
 ### 그 외 도구
 |사용 스텍 | 선택 이유|
 |:---:|:---|
-|<img  style="border-radius:15px; min-height:30px; max-height:30px;  max-width:180px; min-width:180px "  style="padding:5px 0" src="https://img.shields.io/badge/Bcrypt(^5.1.1)-4B1E78?style=for-the-badge&logo=&logoColor=white">|bcrypt 해시 암호화 라이브러리로 회원가입 시 패스워드 암호화를 위해 사용|
-|<img  style="border-radius:15px; min-height:30px; max-height:30px;  max-width:180px; min-width:180px "  style="padding:5px 0" src="https://img.shields.io/badge/Jsonwebtoken(^9.0.2)-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white">|AccessToken 기반 로그인 기능 구현을 위해 사용(향후 데이터베이스 변경 및 암호화 라이브러리로 Next-auth 으로 넘어갈 시 빠질 가능성 있음)|
-|<img  style="border-radius:15px; min-height:30px; max-height:30px;  max-width:180px; min-width:180px "  style="padding:5px 0" src="https://img.shields.io/badge/postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white">|서버단에서 REST API 테스트 및 api 문서화를 위한 용도로 사용|
+|Bcrypt(^5.1.1)|bcrypt 해시 암호화 라이브러리로 회원가입 시 패스워드 암호화를 위해 사용|
+|jsonwebtoken(^9.0.2)|AccessToken 기반 로그인 기능 구현을 위해 사용(향후 데이터베이스 변경 및 암호화 라이브러리로 Next-auth 으로 넘어갈 시 빠질 가능성 있음)|
+|Postman|서버단에서 REST API 테스트 및 api 문서화를 위한 용도로 사용|
 
 
 
 ## ⚙ 구현된 기능
-
+- 추후 정리 예정
 
 
 
