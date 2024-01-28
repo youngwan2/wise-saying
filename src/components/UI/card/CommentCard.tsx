@@ -2,7 +2,7 @@ import Image from "next/image";
 import './CommentCard.css'
 import ReplaceMessageCard from "./ReplaceMessageCard";
 import { HiDotsVertical, HiOutlineX } from "react-icons/hi";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CommentUpdateButton from "../button/CommentUpdateButton";
 import CommentUpdateForm from "../form/CommentUpdateForm";
 import useHasToken from "@/custom/useHasToken";
@@ -21,6 +21,9 @@ export default function CommentCard({ item }: PropsType) {
     const [display, setDisplay] = useState(false)
     const [editFormDisplay, setEditFormDisplay] = useState(false)
     const hasToken = useHasToken()
+
+    const user = localStorage && localStorage?.getItem && localStorage?.getItem('user') || '{"dbEmail":""}'
+    const { dbEmail: userEmail } = JSON.parse(user)
 
     // 편집 창을 활성화한다.
     function onClickFormDisplay() {
@@ -43,7 +46,7 @@ export default function CommentCard({ item }: PropsType) {
         })
         const { status, meg } = await response.json()
         if (status == 200) return alert(meg)
-            alert(meg)
+        alert(meg)
     }
 
     function onClickEditCancel() {
@@ -61,10 +64,15 @@ export default function CommentCard({ item }: PropsType) {
                     <span className="inline-block mt-[4px] text-[14px]">{item.create_date}</span>
                     <button onClick={() => {
                         setDisplay(!display)
-                    }} className="absolute right-[5px] top-[50%] translate-y-[-50%] hover:shadow-[0_0_0_1px_tomato] rounded-[50%] p-[5px]"> {display ? <HiOutlineX /> : <HiDotsVertical />}  </button>
+                    }} className="absolute right-[5px] top-[0.5em]  hover:shadow-[0_0_0_1px_tomato] rounded-[50%] p-[5px]"> {display ? <HiOutlineX /> : <HiDotsVertical />}  </button>
 
                 </div>
-                {display ? <CommentUpdateButton onClickDeleteComment={onClickDeleteComment} onClickFormDisplay={onClickFormDisplay} /> : null}
+                {
+                    userEmail !== item.email
+                        ? null
+                        : display
+                            ? <CommentUpdateButton onClickDeleteComment={onClickDeleteComment} onClickFormDisplay={onClickFormDisplay} />
+                            : null}
 
             </li>
             <li>{editFormDisplay ? <CommentUpdateForm onClickEditCancel={onClickEditCancel} commentId={item.id} setEditFormDisplay={setEditFormDisplay} /> : null}</li>
