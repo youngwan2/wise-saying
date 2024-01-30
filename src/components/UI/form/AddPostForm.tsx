@@ -25,6 +25,7 @@ export default function AddPostForm() {
       category,
       content,
       author,
+      isUser:true
     }
     postUserPost(router, hasToken, body)
 
@@ -85,7 +86,7 @@ export default function AddPostForm() {
           등록하기
         </button>
         <button
-          type="button"
+          type="reset"
           onClick={() => {
             router.push('/')
           }}

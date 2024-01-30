@@ -1,15 +1,13 @@
-
-
 import { openDb } from '@/connect'
 import { NextRequest, NextResponse } from 'next/server'
 import { accessTokenVerify } from '@/utils/validation'
+
 
 
 // POST | 유저가 작성한 포스트 등록(추가) 요청
 export async function POST(req: NextRequest) {
     // 토큰 유효성 검증
     const { status, meg, success, user } = accessTokenVerify(req)
-
 
     if (status === 400) {
         return NextResponse.json({ status, success, meg })
@@ -19,28 +17,18 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ status, success, meg })
     }
 
-    /** 게시글 등록 요청 */
+    const { userId } = user
+
     try {
         const db = await openDb()
         const { category, content: quote, author } = await req.json()
 
-        console.log(category, quote, author)
-
-        const { dbEmail } = user
-
-        // 유저 정보 찾기 및 게시글 등록
-        const selectQuery = `
-              SELECT user_id FROM users_group
-              WHERE email = ?
-          `
-        const { user_id: userId } = await db.get(selectQuery, [dbEmail])
         const createDate = new Date().toLocaleString()
         const insertQuery = `
-              INSERT INTO quotes_user(quote, user_id, category, author, create_date)
-              VALUES (?,?,?,?,?)
+              INSERT INTO quotes_all(quote,category, sub_category, author,job, create_date,user_id)
+              VALUES (?,?,?,?,?,?,?)
           `
-
-        db.all(insertQuery, [quote, userId, category.trim(), author, createDate])
+        db.get(insertQuery, [quote, 'all', category.trim(), author, '사용자', createDate, userId])
         db.close()
         return NextResponse.json({
             status: 201,

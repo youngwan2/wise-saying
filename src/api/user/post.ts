@@ -47,8 +47,6 @@ export const reqLogin = async (
   } catch (error) {
     alert('네트워크 통신에 문제가 발생하였습니다. 나중에 다시시도 해주세요.')
   }
-
-
 }
 
 /**
@@ -64,6 +62,7 @@ export const postUserPost = async (
     category: FormDataEntryValue
     content: FormDataEntryValue
     author: FormDataEntryValue
+    isUser: boolean
   },
 ) => {
   if (!hasToken) {
@@ -71,13 +70,13 @@ export const postUserPost = async (
     return router.push('/login')
   }
 
-  const { category, content, author } = userPost
+  const { category, content, author, isUser } = userPost
 
   // 유효성 검증 
   if (!(category && content && author))
     return alert('모든 빈 칸을 채워주세요')
-  if (category.toString().length < 1)
-    return alert(`주제를 최소 2자 이상 적어 주세요.`)
+  if (category.toString().length < 1 || category.toString().length >3)
+    return alert(`주제를 최소 2자 이상~ 3자 이하로 적어 주세요.`)
   if (content.toString().length < 3)
     return alert(`내용을 최소 3자 이상 적어 주세요.`)
   if (author.toString().length < 2)

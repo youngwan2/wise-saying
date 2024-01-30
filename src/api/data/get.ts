@@ -70,18 +70,32 @@ export const getBookmarkListFormDB = async (
  * @example `http://localhost:3000/api/quotes/${mainCategory}/${subCategory}}`
  * → ` http://localhost:3000/api/quotes/authors/소크라테스`
  */
+
+async function fetchModule(url:string){
+
+  const response = await fetch(url)
+  const result = await response.json()
+
+  return result
+}
+
+
 export const getApiMetaDataFromServer = async (
   mainCategory: string,
   subCategory: string,
+  type: string
 ) => {
-  try {
-    const url = `${config.apiPrefix}${config.apiHost}/api/quotes/${mainCategory}/${subCategory}?type=meta`
-    const response = await fetch(url)
-    const result = await response.json()
 
-    return result
-  } catch (error) {
-    console.error(error)
+  switch (type) {
+    case 'users': {
+      const url = `${config.apiPrefix}${config.apiHost}/api/quotes/${mainCategory}/post/categories/${subCategory}?type=meta`
+      return await fetchModule(url)
+
+    }
+    case 'authors': {
+      const url = `${config.apiPrefix}${config.apiHost}/api/quotes/${mainCategory}/${subCategory}?type=meta`
+      return await fetchModule(url)
+    }
   }
 }
 

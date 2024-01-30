@@ -9,15 +9,15 @@ interface PropsType {
   params: { category: string }
 }
 
-export default function AuthorPage({ params }: PropsType) {
+export default function UsersPage({ params }: PropsType) {
   const pathName: string = decodeURIComponent(params.category)
 
   const { items, size, setSize, isLoadingMore, itemCount } = useInfiniteScroll(
-    'users',
+    'users', // 메인 카테고리
     pathName,
   )
 
-  const { totalCount, maxPage } = useItemMetadataFetch('users', pathName)
+  const { totalCount, maxPage } = useItemMetadataFetch('users', pathName,'users')
 
   if (!items)
     return (

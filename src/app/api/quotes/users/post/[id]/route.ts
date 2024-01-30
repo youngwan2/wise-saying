@@ -8,8 +8,9 @@ export async function GET(req: NextRequest, res: { params: { id: number } }) {
     const postId = res.params.id
     const db = await openDb()
     const query = `
-    SELECT user_quote_id, quote, category, author, B.email AS email
-    FROM quotes_user A JOIN users_group B
+    SELECT quote_id AS user_quote_id, quote, sub_category AS category, author, B.email AS email
+    FROM quotes_all A 
+    JOIN users_group B
     ON A.user_id = B.user_id 
     WHERE user_quote_id = ?
     LIMIT 1
@@ -65,7 +66,7 @@ export async function PATCH(
 
     db.all(query, [quote, category, author, postId])
 
-    // db.close()
+    db.close()
     return NextResponse.json({
       status: 201,
       success: true,

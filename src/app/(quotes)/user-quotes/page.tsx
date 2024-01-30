@@ -10,8 +10,7 @@ export const metadata: Metadata = {
 }
 
 export default async function UserPage() {
-  const categories = await getCategoryUserFromDb('/api/quotes/users')
-  console.log(categories)
+  const categories = await getCategoryUserFromDb('/api/quotes/users/post/categories')
   const itemCount = categories?.length || 0
 
   if (categories.length < 1)
