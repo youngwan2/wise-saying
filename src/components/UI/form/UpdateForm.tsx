@@ -55,6 +55,7 @@ export default function UpdateForm() {
     return <ReplaceMessageCard childern="포스트가 존재하지 않습니다..." />
 
 
+  // 글 수정
   function updateFormAction(form: FormData) {
     const content = form.get('content') || ''
     const category = form.get('category') || ''
@@ -70,7 +71,7 @@ export default function UpdateForm() {
       <form
         action={updateFormAction}
         ref={formRef}
-        className="z-[1000]  max-w-[560px]  bg-[#fc7e54]  rounded-[10px] shadow-[inset_-2px_-2px_5px_0_rgba(0,0,0,0.5)] fixed left-[50%] top-[45%] translate-x-[-50%] translate-y-[-50%] "
+        className="z-[1000] w-full  max-w-[560px]  bg-[#fc7e54]  rounded-[10px] shadow-[inset_-2px_-2px_5px_0_rgba(0,0,0,0.5)] fixed left-[50%] top-[45%] translate-x-[-50%] translate-y-[-50%] "
       // onSubmit={onSubmit}
       >
         {/* 주제(카테고리) */}

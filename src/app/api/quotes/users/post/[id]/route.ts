@@ -57,11 +57,12 @@ export async function PATCH(
 
 
     const { content: quote, category, author } = await req.json()
+    console.log(quote,category, author)
 
     const query = `
-            UPDATE quotes_user 
+            UPDATE quotes_all
             SET quote = ?, category = ?, author = ?
-            WHERE user_quote_id = ?
+            WHERE quote_id = ?
         `
 
     db.all(query, [quote, category, author, postId])
