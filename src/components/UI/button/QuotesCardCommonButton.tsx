@@ -44,33 +44,35 @@ export default function QuotesCardCommonButton({
 
   return (
     <>
-      <button> </button>
-      <article className="pt-[5px]">
+      <article className="">
         {/* 카드 만들기 버튼 */}
         <button
           onClick={onClickStylerPageSwitch}
-          className=" hover:bg-[tomato] text-[1em] hover:text-[white] rounded-[0.3em] p-[5px] mt-[2px] "
+          className=" flex items-center hover:bg-[tomato] text-[0.95em] hover:text-[white] rounded-[0.3em] p-[5px] "
           aria-label="명언 꾸미기 편집화면 이동 버튼"
         >
           <HiScissors />
+          꾸미기
         </button>
 
         {/* 북마크 추가 버튼 */}
         <button
           onClick={onClickBookmarkAdd}
-          className=" hover:bg-[tomato] text-[1em] hover:text-[white] rounded-[0.3em] p-[5px] mt-[2px] "
+          className="flex items-center hover:bg-[tomato] text-[0.95em] hover:text-[white] rounded-[0.3em] p-[5px] "
           aria-label="명언 북마크 버튼"
         >
           <HiOutlineBookmark />
+          북마크
         </button>
 
         {/* 확대 버튼 */}
         <button
           onClick={onClickCardZoomInOut}
-          className="hover:bg-[tomato] text-[1em] hover:text-[white] rounded-[0.3em]  p-[5px] mt-[2px] "
+          className="flex items-center hover:bg-[tomato] text-[0.95em] hover:text-[white] rounded-[0.3em] p-[5px]"
           aria-label="명언 확대해서 보기 버튼"
         >
           <HiOutlineZoomIn />
+          확대
         </button>
 
         {/* 듣기 버튼 */}
@@ -82,10 +84,11 @@ export default function QuotesCardCommonButton({
               messgae: '준비중입니다.',
             })
           }}
-          className="hover:bg-[tomato] text-[1em] hover:text-[white] rounded-[0.3em] p-[5px] mt-[2px] mr-[5px] "
+          className="flex items-center hover:bg-[tomato] text-[0.95em] hover:text-[white] rounded-[0.3em] p-[5px] "
           aria-label="명언 듣기 버튼"
         >
           <SlEarphones />
+          듣기
         </button>
       </article>
       <AlertCard toggle={alertToggle.toggle} message={alertToggle.messgae} />

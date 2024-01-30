@@ -89,3 +89,6 @@ function debounce() {
  * @example  예를들어, debounceCloser(50, 'height',size, setSize,300) 와 같이 호출한다.
  */
 export const debounceCloser = debounce()
+
+
+

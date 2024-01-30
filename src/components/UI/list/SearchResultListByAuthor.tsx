@@ -1,6 +1,6 @@
 import { HiArchiveBoxXMark } from 'react-icons/hi2'
 import ReplaceMessageCard from '../card/ReplaceMessageCard'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import SearchResultSwitchButton from '../button/SearchResultSwitchButton'
 import { useState } from 'react'
 import useSimplePagination from '@/custom/useSimplePagination'
@@ -23,6 +23,7 @@ export interface QuoteType {
 }
 export default function SearchResultListByAuthor({ items }: PropsType) {
   const searchText = useSearchParams().get('searchText')
+  const router = useRouter()
 
   const [page, setPage] = useState(0)
   const { quotes, totalCount } = items ?? { quotes: [], totalCount: 0 }
@@ -38,7 +39,6 @@ export default function SearchResultListByAuthor({ items }: PropsType) {
       <div className="border-b-[2px] border-[white] flex items-center justify-between text-white">
         <h3 className=" py-[5px] text-[1.15em] ">
           <span className="text-[white] flex items-center  ">
-            {' '}
             <HiArchiveBoxXMark className="mr-[3px]" /> 저자별 검색
           </span>
         </h3>
@@ -62,6 +62,9 @@ export default function SearchResultListByAuthor({ items }: PropsType) {
         {currentQuoteCount >=1 && splitQuotes?.map((item) => {
           return (
             <li
+            onClick={() => {
+              router.push(`/quotes/authors/${item.author}/${item.id}`)
+            }}
               key={item.id}
               className="flex p-[5px] py-[10px] min-h-[50px] border-b-[1px] border-dashed text-white items-center hover:bg-[#ffffff3c]"
             >

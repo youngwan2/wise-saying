@@ -1,5 +1,6 @@
 import QuotesCardCommonButton from "@/components/UI/button/QuotesCardCommonButton"
 import ReplaceMessageCard from "@/components/UI/card/ReplaceMessageCard"
+import DetailPageButtonContainer from "@/components/UI/container/DetailPageButtonContainer"
 import CommentList from "@/components/UI/list/CommentList"
 import { openDb } from "@/connect"
 
@@ -40,10 +41,11 @@ export default async function DetailPage({ params }: { params: { category: strin
             shadow-[inset_0_5px_5px_0_rgba(0,0,0,0.5)]
             ">
                 <p className="text-[1.25em]">{item.quote}</p>
-                <span className="flex absolute bottom-[-4.5em] text-white text-[1.5em] left-[50%] translate-x-[-50%] rounded-[10px] ">
-                    <QuotesCardCommonButton index={Number(id)} item={item} />
-                </span>
+   
             </article>
+            <span className="flex text-white text-[1em] rounded-[10px] ">
+                    <DetailPageButtonContainer item={item}/>
+            </span>
             <CommentList id={id} />
         </section>
     )
