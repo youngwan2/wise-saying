@@ -9,23 +9,21 @@ export const deleteUserQuote = async (hasToken: boolean, id: number) => {
   if (!isDelete) return alert('삭제 요청을 취소하였습니다.')
   if (hasToken) {
     const headers = {
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      'authorization': `Bearer ${localStorage.getItem('token')}`,
     }
     const url = `/api/quotes/users/post/${id}`
     const response = await fetch(url, {
       method: 'DELETE',
       headers,
     })
-    const { success } = await response.json()
-    if (success === true) {
-     
-      alert('정상적으로 삭제처리 되었습니다. 이전 페이지로 이동합니다.')
+    const { status,meg } = await response.json()
+    if (status === 201) {
+      alert( meg+' 이전 페이지로 이동합니다.')
       
       return true
     }
-    if (success === false) {
-      localStorage.clear()
-      alert('로그인 가능 시간이 만료되었습니다. 다시 로그인 해주세요.')
+    if (status !== 201) {
+      alert(meg)
       return false
     }
   }

@@ -57,8 +57,6 @@ export async function PATCH(
 
 
     const { content: quote, category, author } = await req.json()
-    console.log(quote,category, author)
-
     const query = `
             UPDATE quotes_all
             SET quote = ?, category = ?, author = ?
@@ -96,7 +94,7 @@ export async function DELETE(
     const db = await openDb()
 
     // 토큰 검증 및 에러 처리
-    const { status, meg, success } = accessTokenVerify(req)
+    const { status, meg, success, user } = accessTokenVerify(req)
 
     if (status === 400) {
       return NextResponse.json({ status, success, meg })
@@ -107,12 +105,14 @@ export async function DELETE(
     }
 
     // 토큰 검증 성공 후 처리
+    const userId= user.userId
     const query = `
-            DELETE FROM quotes_user
-            WHERE user_quote_id = ?
+            DELETE FROM quotes_all
+            WHERE quote_id = ? AND user_id = ?
         `
-    db.get(query, [id])
-    console.log(status, meg, success)
+    db.get(query, [id, userId])
+
+
     return NextResponse.json({
       status: 201,
       success: true,

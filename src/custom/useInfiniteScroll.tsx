@@ -44,8 +44,6 @@ export default function useInfiniteScroll(
     revalidateOnReconnect: false
   })
 
-  console.log(itemInfo)
-
   // 데이터 후 처리 함수
   const items = itemInfo ? [].concat(...itemInfo) : []
   const itemCount = items?.length || 0 // 현재 로드 중인 아이템 갯수

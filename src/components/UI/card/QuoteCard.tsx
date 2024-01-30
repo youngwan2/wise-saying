@@ -78,7 +78,7 @@ export default function QuoteCard({ item, items, index }: PropsType) {
                 odd:-rotate-2  even:rotate-2
                 transition-all duration-700 shadow-[5px_10px_5px_0_rgba(0,0,0,0.3)] antialiased
                 hover:bg-[#f8e992] hover:rotate-0
-                hover:shadow-[-1px_20px_10px_0_rgba(0,0,0,0.5)] hover:translate-y-[-20px] hover:cursor-pointer
+                hover:shadow-[-1px_20px_10px_0_rgba(0,0,0,0.5)] hover:translate-y-[-20px]
                 `}
     >
 
@@ -112,7 +112,7 @@ export default function QuoteCard({ item, items, index }: PropsType) {
           }
         })
 
-      }} className='absolute bottom-2 left-[50%] translate-x-[-50%] bg-[#454599] text-white p-[5px] rounded-[10px] shadow-[inset_-2px_-2px_5px_rgba(0,0,0,0.5)] hover:bg-[tomato]'>자세히보기 </button>
+      }} className='absolute bottom-2 right-[5px]  bg-[#ffffff] text-black p-[5px] py-[8px] rounded-full shadow-[inset_-2px_-2px_5px_rgba(0,0,0,0.5)] hover:bg-[tomato] hover:text-white' >상세 </button>
     </li>
   )
 }

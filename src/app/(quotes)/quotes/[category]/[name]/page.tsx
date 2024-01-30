@@ -5,7 +5,6 @@ import useInfiniteScroll from '@/custom/useInfiniteScroll'
 import QuoteList from '@/components/UI/list/QuoteList'
 import ReplaceMessageCard from '@/components/UI/card/ReplaceMessageCard'
 import { useItemMetadataFetch } from '@/custom/useItemMetadataFetch'
-import ScrollButton from '@/components/UI/button/MoveButton'
 
 interface PropsType {
   params: {
@@ -28,6 +27,7 @@ export default function AuthorPage({ params }: PropsType) {
   const { totalCount, maxPage } = useItemMetadataFetch(
     mainCategory,
     subCategory,
+    'authors'
   )
 
   if (!items)
