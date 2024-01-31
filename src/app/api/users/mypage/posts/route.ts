@@ -16,16 +16,16 @@ export async function GET(req: NextRequest) {
     const db = await openDb()
 
     const joinQuery = `
-        SELECT A.user_quote_id AS id, A.quote AS quote, A.category AS category, A.author AS author, B.email AS email
-        FROM quotes_user A JOIN users_group B
-        ON A.user_id = B.user_id AND A.user_id = ?
+        SELECT quote_id AS id,author, quote, sub_category AS category, create_date
+        FROM quotes_all
+        WHERE user_id = ?
         ORDER BY id DESC
         LIMIT 5 OFFSET ? * 5
     `
 
     const countQuery = `
         SELECT COUNT(*) AS count
-        FROM quotes_user
+        FROM quotes_all
         WHERE user_id = ?
     `
 
@@ -40,7 +40,7 @@ export async function GET(req: NextRequest) {
       count,
     })
   } catch (error) {
-    console.log('/api/user/mypage/posts/route.ts')
+    console.log('/api/user/mypage/posts/route.ts',error)
     return NextResponse.json({
       status: 500,
       success: false,

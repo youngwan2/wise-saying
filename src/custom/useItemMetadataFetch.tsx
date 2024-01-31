@@ -1,4 +1,4 @@
-import { getApiMetaDataFromServer } from '@/api/data/get'
+import { getApiMetaDataFromServer } from '@/services/data/get'
 import { useEffect, useState } from 'react'
 
 /**

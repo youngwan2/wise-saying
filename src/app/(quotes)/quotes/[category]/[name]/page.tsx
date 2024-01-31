@@ -1,9 +1,9 @@
 'use client'
 
-import LoadMoreButton from '@/components/UI/button/LoadMoreButton'
+import LoadMoreButton from '@/components/UI/common/ListLoadMoreButton'
 import useInfiniteScroll from '@/custom/useInfiniteScroll'
-import QuoteList from '@/components/UI/list/QuoteList'
-import ReplaceMessageCard from '@/components/UI/card/ReplaceMessageCard'
+import QuoteList from '@/components/UI/quote/QuoteList'
+import ReplaceMessageCard from '@/components/UI/common/ReplaceMessageCard'
 import { useItemMetadataFetch } from '@/custom/useItemMetadataFetch'
 
 interface PropsType {

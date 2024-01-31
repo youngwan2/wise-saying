@@ -1,7 +1,6 @@
-import QuotesCardCommonButton from "@/components/UI/button/QuotesCardCommonButton"
-import ReplaceMessageCard from "@/components/UI/card/ReplaceMessageCard"
-import DetailPageButtonContainer from "@/components/UI/container/DetailPageButtonContainer"
-import CommentList from "@/components/UI/list/CommentList"
+import ReplaceMessageCard from "@/components/UI/common/ReplaceMessageCard"
+import DetailPageControlButtons from "@/components/UI/button/DetailPageControlButtons"
+import CommentList from "@/components/UI/comment/CommentList"
 import { openDb } from "@/connect"
 
 
@@ -44,7 +43,7 @@ export default async function DetailPage({ params }: { params: { category: strin
    
             </article>
             <span className="flex text-white text-[1em] rounded-[10px] ">
-                    <DetailPageButtonContainer item={item}/>
+                    <DetailPageControlButtons item={item}/>
             </span>
             <CommentList id={id} />
         </section>

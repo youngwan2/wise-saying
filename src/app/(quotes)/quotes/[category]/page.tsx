@@ -1,8 +1,8 @@
 export const dynamic = 'force-dynamic'
 
 import type { Metadata } from 'next'
-import CategoryList from '@/components/UI/list/CategoryList'
-import BackMoveButton from '@/components/UI/button/BackMoveButton'
+import CategoryList from '@/components/UI/quote/QuotesCategoryList'
+import BackMoveButton from '@/components/UI/common/BackMoveButton'
 
 export const metadata: Metadata = {
   title: '저자별 카테고리 | My wise saying',

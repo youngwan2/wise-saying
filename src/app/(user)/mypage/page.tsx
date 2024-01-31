@@ -1,5 +1,5 @@
-import MypageContainer from '@/components/UI/container/MypageContainer'
-import MypageTaps from '@/components/UI/tap/MypageTaps'
+import MypageContainer from '@/components/UI/mypage/MypageContainer'
+import MypageTaps from '@/components/UI/mypage/MypageTaps'
 
 export default function Mypage() {
   return (

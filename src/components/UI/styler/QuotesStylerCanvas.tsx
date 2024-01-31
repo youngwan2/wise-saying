@@ -10,7 +10,7 @@ import {
 } from '@/store/store'
 
 import wrap from 'word-wrap'
-import ImageDownloadButton from '../button/ImageDownloadButton'
+import QuotesStylerImageDownloadButton from './QuotesStylerImageDownloadButton'
 
 interface QuoteType {
   quote: string
@@ -146,7 +146,7 @@ export default function QuotesStylerCanvas() {
         height={height}
         className="border shadow-[0_0px_5px_1px_rgba(1,100,500,0.7)]  mx-auto"
       ></canvas>
-      <ImageDownloadButton onClick={() => {
+      <QuotesStylerImageDownloadButton onClick={() => {
         const imageURL = canvasRef.current?.toDataURL() || ''
         const link = document.createElement('a')
         link.href = imageURL

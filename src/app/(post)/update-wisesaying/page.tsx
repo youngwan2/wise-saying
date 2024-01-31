@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 }
 
 
-import UpdateForm from '@/components/UI/form/UpdateForm'
+import UpdateForm from '@/components/UI/post/UpdatePostForm'
 
 export default function UpdatePage() {
   return (

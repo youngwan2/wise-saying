@@ -1,9 +1,9 @@
 'use client'
 
-import SearchResultAllList from '@/components/UI/list/SearchResultAllList'
-import SearchResultListByAuthor from '@/components/UI/list/SearchResultListByAuthor'
-import SearchResultListByKeyword from '@/components/UI/list/SearchResultListByKeyword'
-import SearchTaps from '@/components/UI/tap/SearchTaps'
+import SearchResultAllList from '@/components/UI/search/SearchResultAllList'
+import SearchResultListByAuthor from '@/components/UI/search/SearchResultListByAuthor'
+import SearchResultListByKeyword from '@/components/UI/search/SearchResultListByKeyword'
+import SearchTaps from '@/components/UI/search/SearchTaps'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { MouseEvent, useCallback, useEffect, useState } from 'react'
 import { HiSearch } from 'react-icons/hi'

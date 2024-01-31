@@ -41,11 +41,9 @@ export async function PATCH(
 ) {
   try {
     const db = await openDb()
-    const postId = res.params.id
 
     //  접근 토큰 검증
     const { status, meg, success } = accessTokenVerify(req)
-
 
     if (status === 400) {
         return NextResponse.json({ status, success, meg })
@@ -56,10 +54,12 @@ export async function PATCH(
     }
 
 
+    const postId = res.params.id
     const { content: quote, category, author } = await req.json()
+
     const query = `
             UPDATE quotes_all
-            SET quote = ?, category = ?, author = ?
+            SET quote = ?, sub_category = ?, author = ?
             WHERE quote_id = ?
         `
 

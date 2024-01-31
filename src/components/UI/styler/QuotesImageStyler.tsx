@@ -1,5 +1,5 @@
-import Carousel from '../carousel/Carousel'
+import QuotesStylerCarosel from './QuotesStylerCarosel'
 
 export default function QuotesImageStyler() {
-  return <Carousel />
+  return <QuotesStylerCarosel />
 }

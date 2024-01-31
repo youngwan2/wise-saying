@@ -1,4 +1,4 @@
-import BackMoveButton from "@/components/UI/button/BackMoveButton";
+import BackMoveButton from "@/components/UI/common/BackMoveButton";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
 

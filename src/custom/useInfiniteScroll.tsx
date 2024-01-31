@@ -1,4 +1,4 @@
-import { getQuotesBy } from '@/api/data/get'
+import { getQuotesBy } from '@/services/data/get'
 import useSWRInfinite from 'swr/infinite'
 
 /**

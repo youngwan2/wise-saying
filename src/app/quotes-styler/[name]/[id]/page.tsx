@@ -6,7 +6,7 @@ export const metadata: Metadata = {
 }
 
 
-import QuoteStyler from '@/components/UI/styler/QuoteStyler'
+import QuoteStylerContainer from '@/components/UI/styler/QuoteStylerContainer'
 export default function QuoteStylerPage() {
-  return <QuoteStyler />
+  return <QuoteStylerContainer />
 }

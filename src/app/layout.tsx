@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import { Gowun_Dodum } from 'next/font/google'
 import './globals.css'
-import Header from '@/components/Layout/Header'
-import MoveButton from '@/components/UI/button/MoveButton'
+import Header from '@/components/layout/Header'
+import ScrollAndNavButtons from '@/components/UI/button/ScrollAndNavButtons'
 
 const gowunDodum = Gowun_Dodum({ weight: '400', subsets: ['latin'] })
 
@@ -38,7 +38,7 @@ export default function RootLayout({
         {/* <Nav /> */}
         <main className="min-h-[100vh] h-full w-full mx-auto max-w-[1700px] relative">
           {children}
-          <MoveButton/>
+          <ScrollAndNavButtons/>
         </main>
       </body>
     </html>
