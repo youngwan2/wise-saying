@@ -68,7 +68,6 @@ export default function MypageMyQuotesList({
   }, [userQuotes])
 
 
-
   // 명언 필터기
   const onClickQuotesFilter = (category: string = 'all') => {
     const result = userQuotes.filter((userQuote) => {
@@ -103,7 +102,7 @@ export default function MypageMyQuotesList({
             }} />
           )
         })}
-        {selectedUserQuotes.map((item) => {
+        {(selectedUserQuotes.length>0? selectedUserQuotes : userQuotes).map((item) => {
           return <MypageUserQuoteCard key={item.id} item={item} />
         })}
       </ul>
