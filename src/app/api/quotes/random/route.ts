@@ -13,9 +13,9 @@ export async function GET(req: NextRequest) {
     const result = (await db.get(countSelectQuery)) || { totalCount: 0 }
     const { totalResult: count } = result
 
-    const randomNumbers:number[] = []
+    const randomNumbers:number[] = [] ||[1]
     
-    while (randomNumbers.length < 5){
+    while (randomNumbers.length < 3){
       let randomNumber = Math.floor(Math.random() * count) + 1
       if(!randomNumbers.includes(randomNumber)) {
         randomNumbers.push(randomNumber)
@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
     }
 
     const query = `
-        SELECT DISTINCT quote_id AS id, author, quote, job
+        SELECT quote_id AS id, author, quote, job
         FROM quotes_all
         WHERE id IN (?,?,?,?,?)
     `

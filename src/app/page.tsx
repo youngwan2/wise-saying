@@ -1,3 +1,4 @@
+
 export const dynamic = 'force-dynamic'
 
 import TodayQuotelist from '@/components/UI/quote/TodayQuoteList'
@@ -7,8 +8,6 @@ export default async function Home() {
   const items = await todayQuoteFetch()
 
   return (
-    <section className="w-[100%] pt-[15px]">
       <TodayQuotelist quotes={items} />
-    </section>
   )
 }

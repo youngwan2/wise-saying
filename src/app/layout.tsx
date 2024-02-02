@@ -36,7 +36,7 @@ export default function RootLayout({
       <body className={`${gowunDodum.className} h-[100vh]`}>
         <Header />
         {/* <Nav /> */}
-        <main className="min-h-[100vh] h-full w-full mx-auto max-w-[1700px] relative">
+        <main className="min-h-[100vh] w-full mx-auto max-w-[1700px] relative">
           {children}
           <ScrollAndNavButtons/>
         </main>
