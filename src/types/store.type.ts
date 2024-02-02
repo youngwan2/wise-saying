@@ -97,3 +97,8 @@ export interface HeaderSearchFormDisplayState {
   isDisplay: boolean
   setIsDisplay: (display: boolean) => void
 }
+
+export interface TtsTraceIndexState {
+  traceIndex: number,
+  setTraceIndex : (index: number) => void
+}

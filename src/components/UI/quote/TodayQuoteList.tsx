@@ -18,7 +18,7 @@ interface PropsType {
 }
 
 export default function TodayQuotelist({ quotes }: PropsType) {
-  const [setText] = useTTS()
+  const { setText } = useTTS()
   const textRefs = useRef<HTMLParagraphElement[]>([])
   useLayoutEffect(() => {
     if (!textRefs.current) return
@@ -26,10 +26,14 @@ export default function TodayQuotelist({ quotes }: PropsType) {
     const context = gsap.context(() => {
       const tl = gsap.timeline()
       textRefs.current.forEach((text, i) => {
-        tl.set(text, { bg: 0, transformOrigin: '0 50%' })
+        tl.set(text, {  transformOrigin: '0 50%' })
         tl.to(text, {
           scale: 1,
-          text: quotes[i].quote, ease: 'none', duration: 4
+          text: {
+            value: quotes[i].quote,
+            speed: 1.2
+          }
+          , ease: 'none',
         })
       })
     })

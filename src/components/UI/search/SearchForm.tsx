@@ -16,7 +16,7 @@ export default function SearchForm() {
     (state) => state.setIsDisplay,
   )
 
-  const [setText] = useTTL()
+  const {setText} = useTTL()
 
   useDraggable(formRef, 'x')
 

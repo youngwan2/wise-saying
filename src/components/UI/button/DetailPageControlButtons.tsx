@@ -26,7 +26,7 @@ export default function DetailPageControlButtons({
     const router = useRouter()
 
 
-    const [setText] = useTTL()
+    const {setText} = useTTL()
     const onClickBookmarkAdd = () => {
         if (!item) return
         const { id } = item

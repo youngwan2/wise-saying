@@ -8,6 +8,8 @@ import ReplaceMessageCard from '../common/ReplaceMessageCard'
 import gsap from 'gsap/all'
 import QuotesCardControlButtons from './QuotesCardControlButtons'
 import { HiDocumentMagnifyingGlass } from 'react-icons/hi2'
+import { SlEarphones } from 'react-icons/sl'
+import useTTS from '@/custom/useTTS'
 
 interface PropsType {
   item: ItemsType
@@ -18,6 +20,7 @@ interface PropsType {
 export default function QuoteCard({ item, items, index }: PropsType) {
   const liRefs = useRef<HTMLLIElement[]>([])
   const pathName = usePathname()
+  const { status, setText } = useTTS()
 
   const router = useRouter()
   const isZoomIn = useCardZoomInOutStore((state) => state.isZoomIn)
@@ -34,6 +37,7 @@ export default function QuoteCard({ item, items, index }: PropsType) {
     (target: HTMLLIElement) => {
       // 줌 인(확대) 시 해당 li 는 사라진다.
       if (isZoomIn) {
+        gsap.set(target, {perspective:600})
         gsap.to(target, {
           visibility: 'hidden',
           opacity: 0,
@@ -91,11 +95,11 @@ export default function QuoteCard({ item, items, index }: PropsType) {
         }
       }}
       key={item.id}
-      className='invisible shadow-[inset_0_0_0_3px_white] rounded-[10px] w-[95%] my-[1em] max-w-[500px] bg-transparent  px-[15px] py-[35px] mx-auto relative hover:bg-[#d5d5d533] '
+      className='invisible shadow-[inset_0_0_0_3px_white] perspective-500 rounded-[10px] w-[95%] my-[1em] max-w-[500px] bg-transparent  px-[15px] py-[35px] mx-auto relative hover:bg-[#d5d5d533] '
     >
-      <button onClick={onClickPushAnimation} className='absolute right-[1.8em] top-[0.45em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-white  '><HiDocumentMagnifyingGlass /></button>
+
       <blockquote className="mt-[1em] text-white ">
-        <p className=" p-[1em]">{item.quote}</p>
+        <p className=" p-[1em] text-[1.15em]">{item.quote}</p>
         <footer className="font-bold mt-[1em] text-right">- {item.author} -</footer>
       </blockquote>
 
@@ -104,6 +108,14 @@ export default function QuoteCard({ item, items, index }: PropsType) {
       ) : (
         <QuotesCardControlButtons index={index} item={item} />
       )}
+      {/* 상세 페이지 이동 버튼 */}
+      <button onClick={onClickPushAnimation} className='absolute right-[1.8em] top-[0.45em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-white  '><HiDocumentMagnifyingGlass /></button>
+      {/* 듣기 버튼 */}
+      <button
+        onClick={() => { setText(item.quote); }} aria-label="명언 듣기 버튼"
+        className='absolute right-[3.3em] top-[0.429em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-white '
+      > <SlEarphones className='pr-[2px]' /> </button>
+      
     </li>
   )
 }

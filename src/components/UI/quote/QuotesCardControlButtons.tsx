@@ -24,12 +24,13 @@ export default function QuotesCardControlButtons({
 
   const setIsZoomIn = useCardZoomInOutStore((state) => state.setIsZoomIn)
   const setCardIndex = useCardZoomInOutStore((state) => state.setCardIndex)
+  
   const hasToken = useHasToken()
   const router = useRouter()
   const [isDisplay, setIsDisplay] = useState(false)
 
 
-  const [setText] = useTTS()
+
 
   const onClickBookmarkAdd = () => {
     if (!item) return
@@ -90,17 +91,7 @@ export default function QuotesCardControlButtons({
           확대
         </button>
 
-        {/* 듣기 버튼 */}
-        <button
-          onClick={() => {
-            setText(item.quote)
-          }}
-          className="flex items-center hover:bg-[tomato] text-[0.95em] hover:text-[white] rounded-[0.3em] p-[5px] w-full "
-          aria-label="명언 듣기 버튼"
-        >
-          <SlEarphones className='pr-[2px]' />
-          듣기
-        </button>
+
       </article>
     </>
   )
