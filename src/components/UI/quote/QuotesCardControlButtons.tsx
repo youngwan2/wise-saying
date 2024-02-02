@@ -4,16 +4,13 @@ import { HiDotsVertical, HiOutlineZoomIn } from 'react-icons/hi'
 import { SlEarphones } from 'react-icons/sl'
 import useHasToken from '@/custom/useHasToken'
 import { pageSwitch, quotesSelector } from '@/utils/commonFunctions'
-
 import { HiOutlineBookmark, HiScissors, HiXMark } from 'react-icons/hi2'
-
 import { useRouter } from 'next/navigation'
 import { useCardZoomInOutStore } from '@/store/store'
 import { addBookmarkItem } from '@/services/data/post'
 import { useState } from 'react'
-import AlertCard from '../common/AlertCard'
 import type { ItemsType } from '@/types/items.types'
-import useTTL from '@/custom/useTTS'
+import useTTS from '@/custom/useTTS'
 
 
 interface PropsType {
@@ -29,11 +26,10 @@ export default function QuotesCardControlButtons({
   const setCardIndex = useCardZoomInOutStore((state) => state.setCardIndex)
   const hasToken = useHasToken()
   const router = useRouter()
-  const [alertToggle, setAlertToggle] = useState({ toggle: false, messgae: '' })
   const [isDisplay, setIsDisplay] = useState(false)
 
 
-  const [setText] = useTTL()
+  const [setText] = useTTS()
 
   const onClickBookmarkAdd = () => {
     if (!item) return
@@ -57,7 +53,7 @@ export default function QuotesCardControlButtons({
     <>
       <button onClick={() => {
         setIsDisplay(!isDisplay)
-      }} className=' hover:border-[tomato] border border-[transparent] absolute top-[0.5em] right-[0.55em]  p-[4px] text-[1.05em]'> {isDisplay ? <HiXMark /> : <HiDotsVertical />} </button>
+      }} className='text-white hover:border-[tomato] border border-[transparent] absolute top-[0.5em] right-[0.55em]  p-[4px] text-[1.05em]'> {isDisplay ? <HiXMark /> : <HiDotsVertical />} </button>
 
       <article
         onMouseLeave={() => {
@@ -98,11 +94,6 @@ export default function QuotesCardControlButtons({
         <button
           onClick={() => {
             setText(item.quote)
-            // alert("준비중 입니다.")
-            // setAlertToggle({
-            //   toggle: true,
-            //   messgae: '준비중입니다.',
-            // })
           }}
           className="flex items-center hover:bg-[tomato] text-[0.95em] hover:text-[white] rounded-[0.3em] p-[5px] w-full "
           aria-label="명언 듣기 버튼"
@@ -111,7 +102,6 @@ export default function QuotesCardControlButtons({
           듣기
         </button>
       </article>
-      <AlertCard toggle={alertToggle.toggle} message={alertToggle.messgae} />
     </>
   )
 }

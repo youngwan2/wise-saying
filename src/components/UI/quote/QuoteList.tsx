@@ -22,7 +22,7 @@ export default function QuoteList({ items }: PropsType) {
     <>
       <ul
         ref={ulRef}
-        className="mt-[1em] pt-[2em] w-full flex justify-center flex-wrap perspective-500 transform-style-3d"
+        className="mt-[1em] pt-[2em]  w-full flex flex-wrap perspective-500 transform-style-3d"
       >
         {items.map((item, i) => {
           return <QuoteCard key={item.id} index={i} item={item} items={items} />

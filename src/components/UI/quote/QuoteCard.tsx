@@ -7,6 +7,7 @@ import { ItemsType } from '@/types/items.types'
 import ReplaceMessageCard from '../common/ReplaceMessageCard'
 import gsap from 'gsap/all'
 import QuotesCardControlButtons from './QuotesCardControlButtons'
+import { HiDocumentMagnifyingGlass } from 'react-icons/hi2'
 
 interface PropsType {
   item: ItemsType
@@ -29,7 +30,6 @@ export default function QuoteCard({ item, items, index }: PropsType) {
   // 인터섹션 옵저버 적용하는 커스텀 훅
   useIntersectionObserver(liRefs)
 
-
   const cardZoomInoutSwitch = useCallback(
     (target: HTMLLIElement) => {
       // 줌 인(확대) 시 해당 li 는 사라진다.
@@ -50,16 +50,18 @@ export default function QuoteCard({ item, items, index }: PropsType) {
     [isZoomIn],
   )
 
-  const onClickPushAnimation=(e:MouseEvent<HTMLButtonElement>)=>{
+  // 상세 페이지 이동
+  const onClickPushAnimation = (e: MouseEvent<HTMLButtonElement>) => {
+    router.prefetch(`/quotes/authors/${item.author}/${item.id}`)
     const tl = gsap.timeline()
     tl.to(e.currentTarget.parentElement, {
-     rotateX:-20,
-     translateY:-300,
-     opacity:0,
-     scale:0,
-     translateZ:-1000,
-     backfaceVisibility:'hidden',
-     perspective:600
+      rotateX: -20,
+      translateY: -300,
+      opacity: 0,
+      scale: 0,
+      translateZ: -1000,
+      backfaceVisibility: 'hidden',
+      perspective: 600
     })
     tl.to(e.currentTarget.parentElement, {
       onComplete() {
@@ -89,22 +91,12 @@ export default function QuoteCard({ item, items, index }: PropsType) {
         }
       }}
       key={item.id}
-      className={ `
-                text-[1.15em] 
-                p-[1.5em] pb-[4em] my-[1em] m-3 w-[100%] max-h-[600px]  max-w-[330px] min-h-[250px]  text-center bg-[#ffffff] 
-                odd:-rotate-2  even:rotate-2
-                transition-all duration-700 shadow-[5px_10px_5px_0_rgba(0,0,0,0.3)] antialiased
-                hover:bg-[#f8e992] hover:rotate-0
-                hover:shadow-[-1px_20px_10px_0_rgba(0,0,0,0.5)] hover:translate-y-[-20px]
-                `}
+      className='invisible shadow-[inset_0_0_0_3px_white] rounded-[10px] w-[95%] my-[1em] max-w-[500px] bg-transparent  px-[15px] py-[35px] mx-auto relative hover:bg-[#d5d5d533] '
     >
-
-      <span className="absolute left-2 top-2 underline decoration-wavy decoration-[#fb6e6e]">
-        {item.id}
-      </span>
-      <blockquote className="mt-[1em]">
+      <button onClick={onClickPushAnimation} className='absolute right-[1.8em] top-[0.45em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-white  '><HiDocumentMagnifyingGlass /></button>
+      <blockquote className="mt-[1em] text-white ">
         <p className=" p-[1em]">{item.quote}</p>
-        <footer className="font-bold mt-[1em]">{item.author}</footer>
+        <footer className="font-bold mt-[1em] text-right">- {item.author} -</footer>
       </blockquote>
 
       {pathName.includes('/user-quotes') ? (
@@ -112,7 +104,6 @@ export default function QuoteCard({ item, items, index }: PropsType) {
       ) : (
         <QuotesCardControlButtons index={index} item={item} />
       )}
-      <button onClick={onClickPushAnimation} className='absolute bottom-2 left-2  bg-[#ffffff] text-black p-[5px] py-[8px] rounded-[5px] shadow-[inset_-2px_-2px_5px_rgba(0,0,0,0.5)] hover:bg-[tomato] hover:text-white'>상세</button>
     </li>
   )
 }
