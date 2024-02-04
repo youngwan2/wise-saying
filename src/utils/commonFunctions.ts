@@ -29,6 +29,7 @@ export function quotesSelector(item: ItemsType) {
 export const logoutUser = (router: AppRouterInstance) => {
   localStorage.removeItem('token')
   localStorage.removeItem('user')
+  alert('로그인 가능 시간 만료 또는 사용자 요청에 의해 로그아웃 되었습니다.')
   router.push('/')
   location.reload()
 

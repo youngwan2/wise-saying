@@ -1,4 +1,4 @@
-import { openDB, openDb } from '@/utils/connect'
+import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 import { accessTokenVerify } from '@/utils/validation'
 
