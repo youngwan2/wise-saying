@@ -1,4 +1,4 @@
-import { openDb } from '@/connect'
+import { openDB} from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 import { accessTokenVerify } from '@/utils/validation'
 
@@ -9,7 +9,7 @@ export async function DELETE(
 ) {
   const { id: quoteId } = res.params
 
-  const db = await openDb()
+  const db = await openDB()
 
   // 토큰 유효성 검증
   const { status, meg, success, user } = accessTokenVerify(req)
@@ -27,13 +27,13 @@ export async function DELETE(
 
   const query = `
     DELETE FROM bookmarks
-    WHERE quote_id = ? AND user_id = ?
+    WHERE quote_id = $1 AND user_id = $2
 `
   try {
-    await db.get(query, [quoteId, userId])
-    db.close()
+    await db.query(query, [quoteId, userId])
+    db.end()
     return NextResponse.json({
-      meg: '정상적으로 처리되었습니다.',
+      meg: '정상적으로 삭제 처리되었습니다.',
       status: 204,
       success: true,
     })

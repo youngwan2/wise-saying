@@ -1,4 +1,4 @@
-import { openDb } from '@/connect'
+import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 import { accessTokenVerify } from '@/utils/validation'
 
@@ -6,18 +6,18 @@ import { accessTokenVerify } from '@/utils/validation'
 export async function GET(req: NextRequest, res: { params: { id: number } }) {
   try {
     const postId = res.params.id
-    const db = await openDb()
+    const db = await openDB()
     const query = `
-    SELECT quote_id AS user_quote_id, quote, sub_category AS category, author, B.email AS email
-    FROM quotes_all A 
-    JOIN users_group B
+    SELECT quote_id, quote, category, author, B.email
+    FROM quotes A 
+    JOIN users B
     ON A.user_id = B.user_id 
-    WHERE user_quote_id = ?
+    WHERE quote_id = $1
     LIMIT 1
 `
-    const item = await db.get(query, [postId])
-
-    db.close()
+    const result = await db.query(query, [postId])
+    const item = result.rows[0]
+    db.end()
     return NextResponse.json({
       meg: '성공적으로 처리되었습니다.',
       status: 200,
@@ -40,7 +40,7 @@ export async function PATCH(
   res: { params: { id: number } },
 ) {
   try {
-    const db = await openDb()
+    const db = await openDB()
 
     //  접근 토큰 검증
     const { status, meg, success } = accessTokenVerify(req)
@@ -58,14 +58,14 @@ export async function PATCH(
     const { content: quote, category, author } = await req.json()
 
     const query = `
-            UPDATE quotes_all
-            SET quote = ?, sub_category = ?, author = ?
-            WHERE quote_id = ?
+            UPDATE quotes
+            SET quote = $1, category = $2, author = $3
+            WHERE quote_id = $4
         `
 
-    db.all(query, [quote, category, author, postId])
+    await db.query(query, [quote, category, author, postId])
 
-    db.close()
+    await db.end()
     return NextResponse.json({
       status: 201,
       success: true,
@@ -91,7 +91,7 @@ export async function DELETE(
   const { id } = res.params
 
   try {
-    const db = await openDb()
+    const db = await openDB()
 
     // 토큰 검증 및 에러 처리
     const { status, meg, success, user } = accessTokenVerify(req)
@@ -107,10 +107,10 @@ export async function DELETE(
     // 토큰 검증 성공 후 처리
     const userId= user.userId
     const query = `
-            DELETE FROM quotes_all
-            WHERE quote_id = ? AND user_id = ?
+            DELETE FROM quotes
+            WHERE quote_id = $1 AND user_id = $2
         `
-    db.get(query, [id, userId])
+    db.query(query, [id, userId])
 
 
     return NextResponse.json({

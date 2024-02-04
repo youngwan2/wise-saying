@@ -1,4 +1,4 @@
-import { openDb } from '@/connect'
+import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 import { headers } from 'next/headers'
 import { accessTokenVerify } from '@/utils/validation'
@@ -7,6 +7,8 @@ import { accessTokenVerify } from '@/utils/validation'
 export async function GET(req: NextRequest) {
   const page = req.nextUrl.searchParams.get('page') || 0
   const limit = req.nextUrl.searchParams.get('limit') || 5
+  const pageNum = Number(page)
+  const limitNum = Number(limit)
 
 
   const { status, meg, success, user } = accessTokenVerify(req)
@@ -20,24 +22,26 @@ export async function GET(req: NextRequest) {
   }
   const userId = user.userId
 
-  const db = await openDb()
+  const db = await openDB()
 
   const query = `
-          SELECT url, quote, A.quote_id AS id, author
+          SELECT quote_url AS url, quote, A.quote_id AS id, author
           FROM bookmarks A 
-          JOIN quotes_all B ON A.quote_id = B.quote_id 
-          WHERE A.user_id = ?
-          LIMIT ? OFFSET ?*5
+          JOIN quotes B ON A.quote_id = B.quote_id 
+          WHERE A.user_id = $1
+          LIMIT $2 OFFSET $3
         `
   const countSelectQuery = `
           SELECT COUNT(*) AS count
           FROM bookmarks
-          WHERE user_id = ?
+          WHERE user_id = $1
         `
   try {
-    const items = await db.all(query, [userId, limit, page])
-    const countSelectResult = await db.get(countSelectQuery, [userId]) || { count: 0 }
-    const totalCount = countSelectResult.count
+    const itemResults = await db.query(query, [userId, limit, pageNum*limitNum])
+    const countResults = await db.query(countSelectQuery, [userId])
+
+    const items = itemResults.rows
+    const totalCount = countResults.rows[0].count || 0
 
     // 존재하는 경우
     return NextResponse.json({
@@ -49,7 +53,7 @@ export async function GET(req: NextRequest) {
     })
 
   } catch (error) {
-    console.error('/api/bookmark/route.ts')
+    console.error('/api/bookmark/route.ts', error)
     return NextResponse.json({
       meg: '서버에서 문제가 발생하였습니다. 나중에 다시시도해 주세요',
       success: false,
@@ -75,17 +79,18 @@ export async function POST(req: NextRequest) {
 
   const url = headers().get('referer')
   try {
-    const db = await openDb()
+    const db = await openDB()
 
     const userId = user.userId
 
     // (북마크 목록에 이미 존재하는 경우) 북마크 목록에 추가하지 않기
     const selectQuery = `
         SELECT user_id, quote_id FROM bookmarks
-        WHERE user_id = ? AND quote_id = ?   
+        WHERE user_id = $1 AND quote_id = $2
         `
 
-    const isExistingItem = !!(await db.get(selectQuery, [userId, quoteId]))
+    const bookmarkResults = await db.query(selectQuery, [userId, quoteId])
+    const isExistingItem = bookmarkResults.rows[0]
 
     if (isExistingItem) {
       return NextResponse.json({
@@ -97,12 +102,11 @@ export async function POST(req: NextRequest) {
 
     // (북마크 목록에 없는 경우) 북마크 목록에 추가하기
     const insertQuery = `
-        INSERT INTO bookmarks(user_id, quote_id , url, create_date)
-        VALUES (?, ?, ?, ?)
+        INSERT INTO bookmarks(user_id, quote_id , quote_url)
+        VALUES ($1, $2, $3)
         `
-    const createDate = Date.now()
 
-    db.get(insertQuery, [userId, quoteId, url, createDate])
+    db.query(insertQuery, [userId, quoteId, url])
 
     return NextResponse.json({
       meg: '북마크에 추가되었습니다.',

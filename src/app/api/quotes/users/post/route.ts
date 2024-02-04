@@ -1,4 +1,4 @@
-import { openDb } from '@/connect'
+import { openDB} from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 import { accessTokenVerify } from '@/utils/validation'
 
@@ -20,16 +20,15 @@ export async function POST(req: NextRequest) {
     const { userId } = user
 
     try {
-        const db = await openDb()
+        const db = await openDB()
         const { category, content: quote, author } = await req.json()
 
-        const createDate = new Date().toLocaleString()
         const insertQuery = `
-              INSERT INTO quotes_all(quote,category, sub_category, author,job, create_date,user_id)
-              VALUES (?,?,?,?,?,?,?)
+              INSERT INTO quotes(quote, category, author,job, user_id)
+              VALUES ($1,$2,$3,$4,$5)
           `
-        db.get(insertQuery, [quote, 'all', category.trim(), author, '사용자', createDate, userId])
-        db.close()
+        await db.query(insertQuery, [quote, category.trim(), author, '사용자', userId])
+        await db.end()
         return NextResponse.json({
             status: 201,
             success: true,

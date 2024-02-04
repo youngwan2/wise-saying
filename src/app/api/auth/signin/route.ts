@@ -1,14 +1,14 @@
 import joi from 'joi'
 import bcrpt from 'bcrypt'
 import { NextRequest, NextResponse } from 'next/server'
-import { openDb } from '@/connect'
+import { openDB } from '@/utils/connect'
 
 // 암호화 설정(옵션)
 const SALT = 10
 
 export async function POST(req: NextRequest) {
   try {
-    const db = await openDb()
+    const db =await openDB()
 
     // 1. 유효성 조건식 작성
     const { email, password, reConfirmPw } = await req.json()
@@ -41,15 +41,15 @@ export async function POST(req: NextRequest) {
     // 4. 검증 성공 시 비밀번호 해시 암호화
     const { email: validEmail, password: validPs } = result.value
 
-
-    bcrpt.hash(validPs, SALT, function (err, hash) {
+    bcrpt.hash(validPs, SALT, async function (err, hash) {
       const query = `
-      INSERT INTO users_group(email, password, create_date)
-      VALUES (?,?,?)
-  `
-      const createDate = new Date().toLocaleString()
-      db.get(query, [validEmail, hash, createDate])
+      INSERT INTO users(email, password)
+      VALUES ($1, $2)
+   `
+      db.query(query, [validEmail, hash])
+      await db.end()
     })
+
 
     return NextResponse.json({
       meg: '정상적으로 처리되었습니다.',

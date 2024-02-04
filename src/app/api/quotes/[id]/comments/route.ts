@@ -1,4 +1,4 @@
-import { openDb } from "@/connect";
+import { openDB } from "@/utils/connect";
 import { accessTokenVerify } from "@/utils/validation";
 import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
@@ -11,28 +11,32 @@ export async function GET(req: NextRequest, res: { params: { id: string } }) {
     const sort = req.nextUrl.searchParams.get('sort') || 'DESC'
 
     try {
-        const db = await openDb()
+        const db = await openDB()
         const page = req.nextUrl.searchParams.get('page') || 0
+        const pageNum = Number(page)
+        const limit = 5
 
         const countQuery = `
                 SELECT COUNT(*) AS count
-                FROM users_group A
-                JOIN comments B ON A.user_id = B.user_id
-                WHERE quote_id = ?
+                FROM users A
+                JOIN usercomments B ON A.user_id = B.user_id
+                WHERE quote_id = $1
             `
 
         const userQuery = `
-                SELECT B.comment_id AS id, A.email AS email, A.nickname AS nickname, A.profile_image AS profile_image, B.comment AS comment, B.create_date AS create_date
-                FROM users_group A
-                JOIN comments B ON A.user_id = B.user_id
-                WHERE quote_id = ?
+                SELECT B.comment_id AS id, A.email AS email, A.nickname AS nickname, A.profile_img_url AS profile_image, B.comment AS comment, B.created_at AS create_date
+                FROM users A
+                JOIN usercomments B ON A.user_id = B.user_id
+                WHERE quote_id = $1
                 ORDER BY B.comment_id ${sort}
-                LIMIT 5 OFFSET 5*?
+                LIMIT $2 OFFSET $3
             `
-        const count = await db.get(countQuery, [quoteId])
-        const { count: totalCount } = count
-        const comments = await db.all(userQuery, [quoteId, page])
+        const countResults = await db.query(countQuery, [quoteId])
+        const totalCount = countResults.rowCount || 0
+        const commentResults = await db.query(userQuery, [quoteId, limit, pageNum*limit])
+        const comments = commentResults.rows
         revalidateTag(tag)
+        db.end()
         return NextResponse.json({ status: 200, meg: '정상적으로 처리되었습니다.', success: true, items: comments, totalCount })
     } catch (error) {
         console.error('/api/quotes/[id]/comments/route.ts', error)
@@ -54,24 +58,23 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
         return NextResponse.json({ status, success, meg })
     }
 
-    const { comment } = await req.json() || ''
+    const { comment } = await req.json() || {comment : ''}
 
     // 댓글 유효성 검사
     if (comment.length < 2) return NextResponse.json({ status: 400, meg: '댓글 형식은 공백을 포함하여 2자 이상 입력해야 합니다.', success: false })
 
     try {
-        const db = await openDb()
+        const db = await openDB()
         const { userId } = user
         const quoteId = res.params.id
-        const createDate = new Date().toLocaleString()
 
         const query = `
-            INSERT INTO comments(comment, user_id, quote_id, create_date)
-            VALUES (?,?,?,?)
+            INSERT INTO usercomments(comment, user_id, quote_id)
+            VALUES ($1,$2,$3)
             `
-        db.get(query, [comment, userId, quoteId, createDate])
+        db.query(query, [comment, userId, quoteId])
         revalidateTag(tag)
-        db.close()
+        db.end()
         return NextResponse.json({ status: 201, meg: '정상적으로 처리되었습니다.', success: true })
 
     } catch (error) {
@@ -97,16 +100,16 @@ export async function PATCH(req: NextRequest, res: { params: { id: string } }) {
     }
 
     try {
-        const db = await openDb()
+        const db = await openDB()
         const { userId } = user
         const updateQuery = `
-        UPDATE comments
-        SET comment = ?, update_date =?
-        WHERE user_id = ? AND comment_id = ?
+        UPDATE usercomments
+        SET comment = $1, updated_at = CURRENT_TIMESTAMP
+        WHERE user_id = $2 AND comment_id = $3
         `
-        const updateDate = new Date().toLocaleString()
-        await db.get(updateQuery, [comment, updateDate, userId, commentId])
+        await db.query(updateQuery, [comment, userId, commentId])
 
+        db.end()
         return NextResponse.json({ status: 201, meg: '정상적으로 수정되었습니다.', success: true })
 
     } catch (error) {
@@ -131,16 +134,15 @@ export async function DELETE(req: NextRequest, res: { params: { id: string } }) 
             return NextResponse.json({ status, success, meg })
         }
 
-
         if (commentId) {
-            const db = await openDb()
+            const db = await openDB()
             const { userId } = user
             const userQuery = `
-                DELETE FROM comments
-                WHERE comment_id = ? AND user_id = ?
+                DELETE FROM usercomments
+                WHERE comment_id = $1 AND user_id = $2
             `
-            console.log(commentId, userId)
-            await db.get(userQuery, [commentId, userId])
+            await db.query(userQuery, [commentId, userId])
+            db.end()
             return NextResponse.json({ status: 200, meg: '정상적으로 삭제 처리되었습니다.', success: true })
         }
     } catch (error) {

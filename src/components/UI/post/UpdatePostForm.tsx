@@ -96,6 +96,7 @@ export default function UpdatePostForm() {
           </button>
           {/* 취소 버튼 */}
           <button
+            type='button'
             onClick={() => {
               router.push('/user-quotes')
             }}

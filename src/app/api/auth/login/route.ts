@@ -1,24 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server'
 import jwt from 'jsonwebtoken'
 import bycrypt from 'bcrypt'
-import { openDb } from '@/connect'
+import { openDB } from '@/utils/connect'
 
 export async function POST(req: NextRequest) {
   try {
     const scrept = process.env.JWT_SCREPT as string
-    const db = await openDb()
+    const db = await openDB()
 
     // 0. 이메일로 유저 정보 찾기
     const { email, password } = await req.json()
 
     const query = `
-        SELECT user_id, email, password,profile_image, nickname FROM users_group
-        WHERE email = ?
+        SELECT user_id, email, password,profile_img_url, nickname FROM users
+        WHERE email = $1
     `
-    const user = await db.get(query, [email])
+    const user = await db.query(query, [email])
+    await db.end()
 
     // 1. 유저 유효성 판단
-    if (!user)
+    if (user.rows.length < 1)
       return NextResponse.json({
         success: false,
         meg: '유저 정보(이메일) 존재하지 않거나, 잘못 입력하였습니다.',
@@ -32,7 +33,7 @@ export async function POST(req: NextRequest) {
       user_id: userId,
       profile_image,
       nickname,
-    } = user
+    } = user.rows[0]
 
     // 2. 유효한 비밀번호 인지 판단
     const vaildPw = await bycrypt.compare(password, dbPassword)
@@ -68,7 +69,7 @@ export async function POST(req: NextRequest) {
 
     // 5. 그 외 에러 처리
   } catch (error) {
-    console.error('/api/auth/login/route.ts',error)
+    console.error('/api/auth/login/route.ts', error)
 
     return NextResponse.json({
       success: false,

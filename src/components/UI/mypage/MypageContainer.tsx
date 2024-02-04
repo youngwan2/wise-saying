@@ -16,9 +16,7 @@ export default function MypageContainer() {
 
   const token = (hasToken && localStorage.getItem('token')) || ''
 
-  const { data: userInfo, error } = useSWR(['/api/users/', token], ([url, token]) => getUserInfoFromDb(url, token), { refreshInterval: 5000 },
-  )
-
+  const { data: userInfo, error } = useSWR(['/api/users/', token], ([url, token]) => getUserInfoFromDb(url, token) )
   const { data: userQuotesInfo } = useSWR(
     () =>
       tapId === 1

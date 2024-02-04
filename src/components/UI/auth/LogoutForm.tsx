@@ -1,7 +1,7 @@
 'use client'
 import useHasToken from '@/custom/useHasToken'
 import { logoutUser } from '@/utils/commonFunctions'
-import { redirect, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 export default function Logout() {

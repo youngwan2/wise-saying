@@ -11,11 +11,11 @@ export default function MypageImageUploadInput({src, onChange}:PropsType){
     return (
         <article className="relative group">
         <Image
-          className="mx-auto rounded-full"
+          className="mx-auto rounded-full min-w-[230px] max-w-[230px] min-h-[230px] max-h-[230px] w-full"
           src={src}
           alt="유저의 프로필 이미지"
           width={250}
-          height={250}
+          height={230}
         />
         <label
           htmlFor="profile_image"

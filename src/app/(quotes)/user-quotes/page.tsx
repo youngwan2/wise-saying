@@ -4,8 +4,6 @@ import UserCategoryList from '@/components/UI/quote/UserQuotesCategoryList'
 import ReplaceMessageCard from '@/components/UI/common/ReplaceMessageCard'
 import useInfiniteScroll from '@/custom/useInfiniteScroll'
 import ListLoadMoreButton from '@/components/UI/common/ListLoadMoreButton'
-import { getCategoryCountFromDb } from '@/services/data/get'
-import { useEffect, useState } from 'react'
 import { useItemMetadataFetch } from '@/custom/useItemMetadataFetch'
 
 
