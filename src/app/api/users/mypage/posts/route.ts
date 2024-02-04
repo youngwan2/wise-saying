@@ -1,9 +1,13 @@
-import { openDb } from '@/connect'
+import { openDB} from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 
+
+// GET | 특정 유저가 작성한 포스트(명언) 목록을 가져온다.
 export async function GET(req: NextRequest) {
   const userId = req.nextUrl.searchParams.get('userId')
   const page = req.nextUrl.searchParams.get('page')
+  const limit = 5
+  const pageNum = Number(page)
 
   try {
     if (!userId)
@@ -13,24 +17,21 @@ export async function GET(req: NextRequest) {
         success: false,
       })
 
-    const db = await openDb()
+    const db = await openDB()
 
     const joinQuery = `
-        SELECT quote_id AS id,author, quote, sub_category AS category, create_date
-        FROM quotes_all
-        WHERE user_id = ?
+        SELECT quote_id AS id, author, quote, category, created_at AS create_date 
+        FROM quotes
+        WHERE user_id = $1
         ORDER BY id DESC
-        LIMIT 5 OFFSET ? * 5
+        LIMIT $2 OFFSET $3 * 5
     `
 
-    const countQuery = `
-        SELECT COUNT(*) AS count
-        FROM quotes_all
-        WHERE user_id = ?
-    `
 
-    const items = await db.all(joinQuery, [userId, page])
-    const { count} = await db.get(countQuery, [userId])
+    const itemsResults = await db.query(joinQuery, [userId, limit, pageNum * limit])
+
+    const items = itemsResults.rows
+    const count = itemsResults.rowCount
 
     return NextResponse.json({
       meg: '요청을 완료하였습니다.',
@@ -40,7 +41,7 @@ export async function GET(req: NextRequest) {
       count,
     })
   } catch (error) {
-    console.log('/api/user/mypage/posts/route.ts',error)
+    console.log('/api/user/mypage/posts/route.ts', error)
     return NextResponse.json({
       status: 500,
       success: false,

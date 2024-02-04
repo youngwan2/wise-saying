@@ -20,7 +20,6 @@ interface PropsType {
 }
 
 export default function MypageProfileForm({ userInfo }: PropsType) {
-
   const hasToken = useHasToken()
   const [src, setSrc] = useState('')
   const [imageUrl, setImageUrl] = useState('')

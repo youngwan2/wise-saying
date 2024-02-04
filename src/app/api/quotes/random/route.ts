@@ -1,19 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { openDb } from '@/connect'
+import { openDB } from '@/utils/connect'
 
 export async function GET(req: NextRequest) {
   try {
-    const db = await openDb()
-
+    const db = await openDB()
     const countSelectQuery = `
         SELECT COUNT(*) AS totalResult
-        FROM quotes_all
+        FROM quotes
   `
 
-    const result = (await db.get(countSelectQuery)) || { totalCount: 0 }
-    const { totalResult: count } = result
-
-    const randomNumbers:number[] = [] ||[1]
+    const result = (await db.query(countSelectQuery)) 
+    
+    const { totalresult: count } = result.rows[0] || { count: 0 }
+    const randomNumbers:number[] = []
     
     while (randomNumbers.length < 3){
       let randomNumber = Math.floor(Math.random() * count) + 1
@@ -24,12 +23,14 @@ export async function GET(req: NextRequest) {
 
     const query = `
         SELECT quote_id AS id, author, quote, job
-        FROM quotes_all
-        WHERE id IN (?,?,?,?,?)
+        FROM quotes
+        WHERE quote_id IN ($1,$2,$3)
     `
-    const items = await db.all(query, randomNumbers)
-
+    const results = await db.query(query, randomNumbers)
+    await db.end()
+    const items = results.rows
     return NextResponse.json(items)
+
   } catch (error) {
     console.error('/api/quotes/random/routs.ts',error)
     return NextResponse.json({

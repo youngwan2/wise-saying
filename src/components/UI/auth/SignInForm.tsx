@@ -10,7 +10,6 @@ import SignInPasswordInput from './SignInPasswordInput'
 import SignInPasswordReConfirmInput from './SignInPwReConfirmInput'
 import SignInSubmitButton from './SignInSubmitButton'
 import { onSubmit } from '@/utils/commonFunctions'
-import { HiXCircle, HiXMark } from 'react-icons/hi2'
 
 /**
  *  TODO: 하나의 페이지에 너무 긴 코드가 존재함 상태관리가 복잡해 보이고, 가독성도 매우 떨어짐. 별도의 컴포넌트로 분리하여 가독성을 높일 필요가 있음

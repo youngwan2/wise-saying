@@ -1,4 +1,4 @@
-import { openDb } from "@/connect";
+import { openDB } from "@/utils/connect";
 import { NextRequest, NextResponse } from "next/server";
 
 
@@ -8,6 +8,8 @@ export async function GET(req: NextRequest, res: { params: { category: string } 
 
     const type = req.nextUrl.searchParams.get('type') || ''
     const page = req.nextUrl.searchParams.get('page') || 0
+    const pageNum = Number(page)
+    const limit = 15
     const { category } = res.params
 
     try {
@@ -16,15 +18,15 @@ export async function GET(req: NextRequest, res: { params: { category: string } 
 
             // 유저 전체 카테고리 메타데이터
             if (type === 'meta') {
-                const db = await openDb()
+                const db = await openDB()
                 const query = `
-                SELECT COUNT(DISTINCT sub_category) AS count
-                FROM quotes_all A
-                JOIN users_group B
+                SELECT COUNT(DISTINCT category) AS count
+                FROM quotes A
+                JOIN users B
                 ON A.user_id = B.user_id
                 `
-                const result = await db.get(query)
-                const TOTAL_COUNT = result.count
+                const result = await db.query(query)
+                const TOTAL_COUNT = result.rowCount || 0
                 const MAX_PAGE = Math.ceil(TOTAL_COUNT / LIMIT)
 
                 return NextResponse.json({ TOTAL_COUNT, MAX_PAGE})
@@ -32,56 +34,58 @@ export async function GET(req: NextRequest, res: { params: { category: string } 
             }
 
             // 전체 카테고리 목록 조회
-            const db = await openDb()
+            const db = await openDB()
             const joinQuery = `
-                SELECT DISTINCT sub_category AS category
-                FROM quotes_all A
-                JOIN users_group B
+                SELECT DISTINCT category
+                FROM quotes A
+                JOIN users B
                 ON A.user_id = B.user_id
-                LIMIT 15 OFFSET 15*?
+                LIMIT $1 OFFSET $2
             `
-            const results = await db.all(joinQuery, [page])
-            const items = results.map((categories, i) => {
+            const results = await db.query(joinQuery, [limit, pageNum * limit])
+            const items = results.rows.map((categories, i) => {
                 return { category: categories.category, category_id: i }
             }) || [{ category: '', category_id: 0 }]
 
-            db.close()
+            db.end()
             return NextResponse.json(items)
 
         }
 
-        /**--------- 각 카테고리별 명언 목록 조회--------- */
+        /**--------- 각 카테고리 클릭시 명언 목록 조회--------- */
         if (category !== 'category-all') {
             // 유저가 작성한 각 명언 목록의 메타데이터
             if (type === 'meta') {
-                const db = await openDb()
+                const db = await openDB()
                 const query = `
                     SELECT COUNT(*) AS count
-                    FROM users_group A  JOIN quotes_all B
+                    FROM users A  JOIN quotes B
                     ON A.user_id = B.user_id
-                    WHERE sub_category = ?
+                    WHERE category = $1
                     
                 `
 
-                const { count: TOTAL_COUNT } = await db.get(query, [category])
-                db.close()
+                const result = await db.query(query, [category])
+                const TOTAL_COUNT = result.rowCount || 0
                 const MAX_PAGE = Math.ceil(TOTAL_COUNT / 15)
 
+                db.end()
                 return NextResponse.json({ TOTAL_COUNT, MAX_PAGE })
             }
 
 
             // 유저가 작성한 명언 목록 조회
-            const db = await openDb()
+            const db = await openDB()
             const query = `
-            SELECT quote_id AS id, quote, sub_category AS category, author, email, nickname
-            FROM users_group A JOIN quotes_all B 
+            SELECT quote_id AS id, quote, category, author, email, nickname
+            FROM users A JOIN quotes B 
             ON A.user_id = B.user_id
-            WHERE sub_category = ?
+            WHERE category = $1
             ORDER BY quote_id DESC
-            LIMIT 15 OFFSET 15 * ?
-        `
-            const items = await db.all(query, [category, page])
+            LIMIT $2 OFFSET $3
+        `   
+            const results = await db.query(query, [category,limit, pageNum * limit])
+            const items = results.rows[0]
             return NextResponse.json(items)
         }
 

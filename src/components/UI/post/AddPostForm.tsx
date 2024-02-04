@@ -48,8 +48,10 @@ export default function AddPostForm() {
           id='category'
           type="text"
           name="category"
+          maxLength={3}
+          minLength={0}
           className="min-w-[200px] w-full max-w-[500px] min-h-[40px] px-[10px] rounded-[5px] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.5)]"
-          placeholder="작성할 명언의 주제를 입력해주세요 ex) 사랑"
+          placeholder="2자 이상 3자 이하의 명언의 주제 ex) 사랑"
         />
       </article>
       <br />
@@ -62,7 +64,7 @@ export default function AddPostForm() {
           id="content"
           name="content"
           className="min-w-[200px] w-full max-w-[500px] p-[10px] min-h-[150px] rounded-[5px] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.5)]"
-          placeholder="남기고자 하는 명언을 입력해주세요. ex) 해내지 못할 것을 걱정할게 아니라 시도조차 하지 않으려는 자신을 걱정해라."
+          placeholder="최소 3자 이상 ex) 해내지 못할 것을 걱정할게 아니라 시도조차 하지 않으려는 자신을 걱정해라."
         ></textarea>
       </article>
       <br />
@@ -75,8 +77,10 @@ export default function AddPostForm() {
           id='author'
           type="text"
           name="author"
+          maxLength={8}
+          minLength={2}
           className="min-w-[200px] w-full max-w-[500px]  px-[10px] min-h-[40px] rounded-[5px] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.5)]"
-          placeholder="명언의 작성자로 표기할 이름을 입력해주세요 ex) 지나가는 고양이"
+          placeholder="최소 2자 이상 8자 이하 ex) 지나가는 고양이"
         />
       </article>
       <br />

@@ -3,7 +3,6 @@ interface PropsType {
     email:string
 }
 export default function MypageEmailInput({email}:PropsType) {
-
     return (
         <div className="mx-auto my-[1em]">
             <label
@@ -16,7 +15,7 @@ export default function MypageEmailInput({email}:PropsType) {
                 readOnly
                 value={email}
                 id="email"
-                className="bg-[transparent] shadow-[inset_0_-2px_0_0_black]  min-w-[200px]  p-[6px]"
+                className="text-black bg-[transparent] shadow-[inset_0_-2px_0_0_black]  min-w-[200px]  p-[6px]"
             ></input>
         </div>
     )

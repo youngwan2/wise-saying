@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { openDb } from '@/connect'
+import { openDB} from '@/utils/connect'
 import { accessTokenVerify } from '@/utils/validation'
 import { revalidateTag } from 'next/cache'
 
@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
 
   const tag = req.nextUrl.searchParams.get('tag')
   try {
-    const db = await openDb()
+    const db = await openDB()
     const { nickname, profile_image } = await req.json()
 
     // 토큰 유효성 검증
@@ -27,12 +27,12 @@ export async function POST(req: NextRequest) {
     const { dbEmail, userId } = user
 
     const query = `
-            UPDATE users_group 
-            SET nickname = ?, profile_image = ?
-            WHERE email = ? AND user_id = ?
+            UPDATE users
+            SET nickname = $1, profile_img_url = $2, updated_at = CURRENT_TIMESTAMP
+            WHERE email = $3 AND user_id = $4
             `
-    await db.all(query, [nickname, profile_image, dbEmail, userId])
-
+    await db.query(query, [nickname, profile_image, dbEmail, userId])
+    db.end()
     tag && revalidateTag(tag) // 업로드 후 데이터 재유효화(캐시 비우기)
 
     return NextResponse.json({

@@ -1,24 +1,42 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { openDb } from '@/connect'
+import { openDB } from '@/utils/connect'
 import { accessTokenVerify } from '@/utils/validation'
+import joi from 'joi'
 
 // POST | 회원가입 시 유저가 이미 존재하는지 검증
 export async function POST(req: NextRequest) {
   try {
     const email = await req.json()
-    const db = await openDb()
 
+    // 이메일 유효성 검사
+    const schema = joi.object({
+      email: joi.string()
+        .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+    })
+
+    const vaildEmail = schema.validate({ email })
+
+    if (vaildEmail.error) {
+      return NextResponse.json({
+        meg: '잘못된 형식의 이메일 입니다.',
+        status: 400,
+        success: false,
+      })
+    }
+
+    // 유효한 이메일 형식이라면 유저정보 찾기
+    const db = await openDB()
     const query = `
-        SELECT * FROM users_group
-        WHERE email = ?
+        SELECT * FROM users
+        WHERE email = $1
     `
-    const user = await db.get(query, [email])
-
-    // 유저 정보가 있으면
-    if (user) {
+    const results = await db.query(query, [email])
+    const userCount = results.rowCount
+    db.end()
+    if (userCount && userCount > 0) {
       return NextResponse.json({
         meg: '이미 존재하는 이메일 입니다.',
-        status: 409,
+        status: 400,
         success: false,
       })
     }
@@ -41,7 +59,7 @@ export async function POST(req: NextRequest) {
 // GET | 유저 프로필 정보 요청
 export async function GET(req: NextRequest) {
   try {
-    const db = await openDb()
+    const db = await openDB()
 
     // 토큰 검증
     const { status, success, meg, user } = accessTokenVerify(req)
@@ -58,10 +76,11 @@ export async function GET(req: NextRequest) {
     // 검증 후 처리
     const { userId } = user
     const query = `
-        SELECT user_id, email, nickname, profile_image FROM users_group
-        WHERE user_id = ?
+        SELECT user_id, email, nickname, profile_img_url AS profile_image FROM users
+        WHERE user_id = $1
         `
-    const items = await db.get(query, [userId])
+    const results = await db.query(query, [userId])
+    const items = results.rows[0]
 
     return NextResponse.json({
       meg: '정상처리되었습니다.',

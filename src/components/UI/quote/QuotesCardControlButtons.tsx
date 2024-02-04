@@ -60,7 +60,7 @@ export default function QuotesCardControlButtons({
         onMouseLeave={() => {
           setIsDisplay(false)
         }}
-        className={` ${isDisplay ? 'visible opacity-100 top-2' : 'invisible opacity-0'} transition-all absolute top-0 right-[2.6em] bg-white shadow-[inset_0_0_5px_0_rgba(0,0,0,0.5)] rounded-[5px] `}>
+        className={` ${isDisplay ? 'visible opacity-100 top-2 z-50' : 'invisible opacity-0'} transition-all absolute top-0 right-[2.6em] bg-white shadow-[inset_0_0_5px_0_rgba(0,0,0,0.5)] rounded-[5px] `}>
         {/* 카드 만들기 버튼 */}
         <button
           onClick={onClickStylerPageSwitch}

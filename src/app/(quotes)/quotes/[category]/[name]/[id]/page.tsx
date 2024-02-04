@@ -1,31 +1,31 @@
 import ReplaceMessageCard from "@/components/UI/common/ReplaceMessageCard"
 import DetailPageControlButtons from "@/components/UI/button/DetailPageControlButtons"
 import CommentList from "@/components/UI/comment/CommentList"
-import { openDb } from "@/connect"
+import { openDB } from "@/utils/connect"
 
 
-type ItemType = {
-    id: number
-    quote: string
-    author: string
-    job: string
-    create_date: string
-}
+
 export default async function DetailPage({ params }: { params: { category: string, name: string, id: string } }) {
 
     const { name, id } = params
 
     async function getQuoteDetail(id: string) {
         'use server'
-        const db = await openDb()
+        try {
+        const db = await openDB()
         const query = `
-            SELECT quote_id AS id, quote, author, job, create_date
-            FROM quotes_all
-            WHERE quote_id = ? AND author = ?
+            SELECT quote_id AS id, quote, author, job, created_at AS create_date
+            FROM quotes
+            WHERE quote_id = $1 AND author = $2
         `
 
-        const item: ItemType | undefined = await db.get(query, [id, decodeURIComponent(name)])
+        const result= await db.query(query, [id, decodeURIComponent(name)])
+        const item = result.rows[0]
         return item
+    } catch(error){
+        console.error('/app/(quotes)/quotes/[category]/[name]/[id]/page.tsx')
+        return false
+    }
     }
 
     const item = await getQuoteDetail(id)

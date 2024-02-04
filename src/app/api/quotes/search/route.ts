@@ -1,106 +1,91 @@
-import { openDb } from '@/connect'
+import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(req: NextRequest) {
-  const db = await openDb()
+  const db = await openDB()
   const type = req.nextUrl.searchParams.get('type')
   const searchText = req.nextUrl.searchParams.get('searchText') || ''
 
   try {
     switch (type) {
+      // 전체 검색
       case 'all': {
         const authorQuery = `
                 SELECT quote_id AS id, author, quote, job
-                FROM quotes_all
-                WHERE author LIKE ?
+                FROM quotes
+                WHERE author LIKE $1
                 LIMIT 5
             `
 
         const keywordQuery = `
                 SELECT quote_id AS id, author, quote, job
-                FROM quotes_all
-                WHERE quote LIKE ?
+                FROM quotes
+                WHERE quote LIKE $1
                 LIMIT 5
             `
+        const resultByKeyword = await db.query(keywordQuery, [`%${searchText}%`])
+        const resultByAuthor = await db.query(authorQuery, [`%${searchText}%`])
+        const byAuthor = resultByAuthor.rows
+        const byKeyword = resultByKeyword.rows
+        const byAuthorCount = resultByAuthor.rowCount
+        const byKeywordCount = resultByKeyword.rowCount
 
-        const authorCountQuery = `
-                SELECT COUNT(*) AS  count
-                FROM quotes_all
-                WHERE author LIKE ?
-            `
-
-        const keywordCountQuery = `
-                SELECT COUNT(*) AS count
-                FROM quotes_all
-                WHERE quote LIKE ?
-            
-            `
-        const resultByKeyword = await db.all(keywordQuery, [`%${searchText}%`])
-        const resultByAuthor = await db.all(authorQuery, [`%${searchText}%`])
-        const resultByAuthorCount = await db.get(authorCountQuery, [
-          `%${searchText}%`,
-        ])
-        const resultByKeywordCount = await db.get(keywordCountQuery, [
-          `%${searchText}%`,
-        ])
-
+        db.end()
         return NextResponse.json({
           status: 200,
           meg: '성공적으로 처리 되었습니다.',
           success: true,
           totalCounts: {
-            byAuthorCount: resultByAuthorCount.count,
-            byKeywordCount: resultByKeywordCount.count,
+            byAuthorCount,
+            byKeywordCount,
           },
           items: {
-            byAuthor: resultByAuthor,
-            byKeyword: resultByKeyword,
+            byAuthor,
+            byKeyword,
           },
         })
       }
+
+      // 키워드 검색
       case 'keyword': {
         const query = `
                 SELECT quote_id AS id, author, quote, job
-                FROM quotes_all
-                WHERE quote LIKE ?
+                FROM quotes
+                WHERE quote LIKE $1
             `
-        const keywordCountQuery = `
-                SELECT COUNT(*) AS count
-                FROM quotes_all
-                WHERE quote LIKE ?
-            
-            `
-        const result = await db.all(query, [`%${searchText}%`])
-        const totalResult = await db.get(keywordCountQuery, [`%${searchText}%`])
+        const results = await db.query(query, [`%${searchText}%`])
+        const totalCount = results.rowCount
+        const items = results.rows
 
+        db.end()
         return NextResponse.json({
           status: 200,
           meg: '성공적으로 처리 되었습니다.',
           success: true,
-          items: result,
-          totalCount: totalResult.count,
+          items,
+          totalCount,
         })
       }
 
+      // 저자별 검색
       case 'author': {
         const query = `
                 SELECT quote_id AS id, author, quote, job
-                FROM quotes_all
-                WHERE author LIKE ?
+                FROM quotes
+                WHERE author LIKE $1
             `
-        const authorCountQuery = `
-                SELECT COUNT(*) AS  count
-                FROM quotes_all
-                WHERE author LIKE ?
-            `
-        const result = await db.all(query, [`%${searchText}%`])
-        const totalResult = await db.get(authorCountQuery, [`%${searchText}%`])
+
+        const result = await db.query(query, [`%${searchText}%`])
+        const items = result.rows
+        const totalCount = result.rowCount
+
+        db.end()
         return NextResponse.json({
           status: 200,
           meg: '성공적으로 처리 되었습니다.',
           success: true,
-          items: result,
-          totalCount: totalResult.count,
+          items,
+          totalCount,
         })
       }
     }

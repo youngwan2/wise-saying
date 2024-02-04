@@ -11,7 +11,7 @@ export default function MypageNicknameInput({nickname}:PropsType){
   useEffect(() => {
     if (!nicknameRef.current) return
     const nicknameInput = nicknameRef.current
-    nicknameInput.value = nickname
+    nicknameInput.value = nickname || ''
   }, [nickname])
 
     return (
