@@ -19,10 +19,10 @@ export default function ReplaceMessageCard({
       <button
         className="bg-[#162557] text-white p-[4px] px-[8px] mt-[1em] text-[16px] hover:bg-[tomato]"
         onClick={() => {
-          router.back()
+          router.push('/')
         }}
       >
-        뒤로가기
+        홈으로
       </button>
     </h2>
   )

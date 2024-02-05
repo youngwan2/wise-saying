@@ -10,7 +10,6 @@ import { useCallback, useEffect, useState } from 'react';
 export default function useTTS() {
   const [text, setText] = useState('');
   const [textId, setTextId] = useState<number | null>(null)
-  const [traceTextIndex, setTraceTextIndex] = useState(0)
   const [status, setStatus] = useState(false)
 
   const speakText = useCallback((text: string) => {

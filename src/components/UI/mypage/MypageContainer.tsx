@@ -54,7 +54,7 @@ export default function MypageContainer() {
           count={userQuotesInfo?.count}
         />
       )}
-      {tapId === 2 && <MypageUserInfoForm />}
+      {tapId === 2 && <MypageUserInfoForm userInfo={userInfo} />}
     </>
   )
 }
