@@ -1,7 +1,7 @@
 'use client'
 import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi2'
 import useHasToken from '@/custom/useHasToken'
-import { useState, useEffect, MouseEventHandler } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useUserPostIdStore } from '@/store/store'
 import { ItemsType } from '@/types/items.types'

@@ -24,7 +24,7 @@ export default function UpdatePostForm() {
   const formRef = useRef<HTMLFormElement>(null)
   const hasToken = useHasToken()
 
-  const [post, setPost] = useState<PostType>()
+  const [post, setPost] = useState<PostType | null>(null)
   const postId = useUserPostIdStore((state) => state.postId)
 
   const [loading, setLoading] = useState(false)
@@ -54,7 +54,6 @@ export default function UpdatePostForm() {
   if (!post)
     return <ReplaceMessageCard childern="포스트가 존재하지 않습니다..." />
 
-
   // 글 수정
   function updateFormAction(form: FormData) {
     const content = form.get('content') || ''
@@ -63,7 +62,7 @@ export default function UpdatePostForm() {
     const userPost = {
       category, content, author
     }
-    updateUserPost(postId, hasToken, router, userPost, )
+    updateUserPost(postId, hasToken, router, userPost )
   }
   return (
     <>

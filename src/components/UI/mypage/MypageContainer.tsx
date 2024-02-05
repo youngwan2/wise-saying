@@ -8,6 +8,7 @@ import MypageMyQuotesList from './MypageUserQuotesList'
 import { useState } from 'react'
 import ReplaceMessageCard from '../common/ReplaceMessageCard'
 import { getUserInfoFromDb, getUserQuotesFromDb } from '@/services/user/get'
+import MypageUserInfoForm from './MypageUserInfoForm'
 
 export default function MypageContainer() {
   const tapId = useMypageTapsStore((state) => state.tapId)
@@ -16,7 +17,7 @@ export default function MypageContainer() {
 
   const token = (hasToken && localStorage.getItem('token')) || ''
 
-  const { data: userInfo, error } = useSWR(['/api/users/', token], ([url, token]) => getUserInfoFromDb(url, token) )
+  const { data: userInfo, error } = useSWR(['/api/users/', token], ([url, token]) => getUserInfoFromDb(url, token))
   const { data: userQuotesInfo } = useSWR(
     () =>
       tapId === 1
@@ -53,6 +54,7 @@ export default function MypageContainer() {
           count={userQuotesInfo?.count}
         />
       )}
+      {tapId === 2 && <MypageUserInfoForm />}
     </>
   )
 }

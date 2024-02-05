@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import TextPlugin from 'gsap/TextPlugin'
 import { SlEarphones } from 'react-icons/sl'
 import useTTS from '@/custom/useTTS'
+import ReplaceMessageCard from '../common/ReplaceMessageCard'
 gsap.registerPlugin(ScrollTrigger)
 gsap.registerPlugin(TextPlugin)
 
@@ -24,6 +25,7 @@ export default function TodayQuotelist({ quotes }: PropsType) {
     if (!textRefs.current) return
 
     const context = gsap.context(() => {
+      if(!quotes) return 
       const tl = gsap.timeline()
       textRefs.current.forEach((text, i) => {
         tl.set(text, {  transformOrigin: '0 50%' })
@@ -40,6 +42,8 @@ export default function TodayQuotelist({ quotes }: PropsType) {
 
     return () => context.revert();
   }, [quotes])
+
+  if(!quotes) return <ReplaceMessageCard childern='데이터를 불러오는 중입니다..'/>
   return (
     <>
       <h2 className="flex justify-center items-center text-[1.5em] p-[10px]  text-center text-white max-w-[250px] mx-auto bg-gradient-to-b from-[transparent] to-[#00000033]  shadow-[0_9px_2px_0_rgba(0,0,0,0.5)] rounded-[5px] mt-[2em] mb-[1em] ">

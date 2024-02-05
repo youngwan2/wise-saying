@@ -12,8 +12,7 @@ export default function UserPage() {
   const {maxPage, totalCount:totalCategoryCount} = useItemMetadataFetch('users', 'category-all', 'users')
   const { items: categories, itemCount, size, isLoadingMore, setSize } = useInfiniteScroll('users', 'category-all')
 
-
-  if (!categories) return
+  if (!categories) return <ReplaceMessageCard childern='데이터를 불러오는 중입니다..'/>
   if (categories.length < 1)
     return <ReplaceMessageCard childern="데이터가 존재하지 않습니다." />
   return (

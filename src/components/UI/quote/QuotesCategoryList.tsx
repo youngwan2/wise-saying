@@ -11,7 +11,7 @@ export default function QuotesCategoryList() {
   const [totalCategoryCount, setTotalCategoryCount] = useState(0)
 
   async function getCategoryCount() {
-    const count = await getCategoryCountFromDb('/api/quotes/authors/category-all?type=meta')
+    const count = await getCategoryCountFromDb('/api/quotes/authors/category-all?type=meta')||0
     setTotalCategoryCount(count)
   }
 
