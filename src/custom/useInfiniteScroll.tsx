@@ -4,7 +4,7 @@ import useSWRInfinite from 'swr/infinite'
 /**
  * SWR | 버튼형 무한 스크롤 커스텀 훅
  * @param mainCategory 첫 번째 분기 처리 경로로 사용( authors | 기타 추가되는 로직 있을 시 활용)
- * @param subCategory  두 번째 분기처리 경로로 사용( usePathname 등을 사용하여 얻은 params 값 /quotes/[category] )
+ * @param subCategory  두 번째 분기처리 경로로 사용( usePathname 등을 사용하여 얻은 params 값 )
  * @returns
  * @example
  * // 사용 예시

@@ -12,6 +12,7 @@ export default function LoginPasswordInput(){
             <HiOutlineLockClosed className={'inline-block'} />
           </label>
           <input
+            aria-label="비밀번호 입력창"
             className="pl-[5px] rounded-e-lg min-w-[230px]  w-[100%] bg-[#ffffffce]"
             type="password"
             id="user-password"

@@ -37,7 +37,7 @@ export default function BookmarkModal() {
     [`/api/bookmark?page=${page}&limit=5`, token],
     ([url, token]) => getBookmarkListFormDB(url, token),
     {
-      refreshInterval:4000,
+      refreshInterval: 4000,
       revalidateOnFocus: false,
       revalidateOnReconnect: false
     },
@@ -73,12 +73,12 @@ export default function BookmarkModal() {
   }, [bookmarkListUpdate, data, hasData])
 
   return (
-    <section
-      className={`${
-        toggleState
+    <article
+      aria-hidden={!toggleState}
+      className={`${toggleState
           ? 'z-40 fixed left-0 right-0 top-0 bottom-0 bg-[#000000a4] block'
           : ' z-40 fixed left-0 right-0 top-0 bottom-0 bg-[#000000a4] hidden'
-      }`}
+        }`}
     >
       <h2 className="text-white text-[2em] mb-[1em] pl-[10px] flex items-center justify-center mt-[2em]">
         <HiBookmarkSquare className="pr-[5px]" />
@@ -86,7 +86,7 @@ export default function BookmarkModal() {
       </h2>
       <BookmarkCloseButton />
 
-      {bookmarkList.length<1 ? (
+      {bookmarkList.length < 1 ? (
         <ReplaceMessageCard childern={<p>조회 결과가 존재하지 않습니다.</p>} />
       ) : null}
 
@@ -109,6 +109,6 @@ export default function BookmarkModal() {
         onClickPrevSwitch={() => setPage(Math.max(0, page - 1))}
         onClickNextSwitch={() => setPage(Math.min(maxPage, page + 1))}
       />
-    </section>
+    </article>
   )
 }

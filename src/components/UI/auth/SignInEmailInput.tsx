@@ -1,3 +1,4 @@
+import { EMAIL_REGEXP } from '@/const'
 import { HiOutlineMail } from 'react-icons/hi'
 
 interface PropsType {
@@ -17,8 +18,7 @@ export default function SignInEmailInput({
 }: PropsType) {
   // 이메일 유효성 검사
   function emailChecker(email: string) {
-    const regex = /[a-z0-9]+@[a-z]+\.[a-z]{2,}/g
-    const test = regex.test(email)
+    const test = EMAIL_REGEXP.test(email)
     if (test) return setIsEmail(true)
     return setIsEmail(false)
   }
@@ -30,14 +30,14 @@ export default function SignInEmailInput({
       body: JSON.stringify(email),
     }).then(async (response) => {
       const res = await response.json()
-      const { status } = res
+      const { status, meg } = res
       if (status === 201) {
         setExistsEmail(true)
         alert('확인 되었습니다. 다음을 진행해주세요.')
       }
-      if (status === 409) {
+      if (status !== 201) {
         setExistsEmail(false)
-        alert('중복된 이메일입니다.')
+        alert(meg)
       }
     })
   }

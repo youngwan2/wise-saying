@@ -20,7 +20,7 @@ interface PropsType {
 export default function QuoteCard({ item, items, index }: PropsType) {
   const liRefs = useRef<HTMLLIElement[]>([])
   const pathName = usePathname()
-  const { status, setText } = useTTS()
+  const { setText } = useTTS()
 
   const router = useRouter()
   const isZoomIn = useCardZoomInOutStore((state) => state.isZoomIn)

@@ -54,7 +54,7 @@ export default function TodayQuotelist({ quotes }: PropsType) {
         {quotes.map((quote, i) => {
           return (
             <li className='shadow-[inset_0_0_0_3px_white] rounded-[10px]  my-[1em] max-w-[600px] bg-transparent  px-[15px] py-[35px] mx-auto relative hover:bg-[#d5d5d533] ' key={quote.id}>
-              <button onClick={() => {
+              <button aria-label='명언 듣기' onClick={() => {
                 setText(quote.quote)
               }} className='absolute top-2 right-2 hover:border hover:border-[tomato] text-white p-[5px]'><SlEarphones /> </button>
               <p ref={ref => ref && (textRefs.current[i] = ref)} className='text-[1.25em] text-white'>{''}</p>

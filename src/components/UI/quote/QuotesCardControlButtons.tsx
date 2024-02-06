@@ -24,7 +24,7 @@ export default function QuotesCardControlButtons({
 
   const setIsZoomIn = useCardZoomInOutStore((state) => state.setIsZoomIn)
   const setCardIndex = useCardZoomInOutStore((state) => state.setCardIndex)
-  
+
   const hasToken = useHasToken()
   const router = useRouter()
   const [isDisplay, setIsDisplay] = useState(false)

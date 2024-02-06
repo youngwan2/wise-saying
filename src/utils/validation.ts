@@ -4,7 +4,7 @@ import jwt, { JwtPayload } from 'jsonwebtoken'
 /**
  * * accessToken 유효성 검증
  * @param req NextRequest
- * @returns user, {meg, status, success}
+ * @returns 반환 {meg, status, success, user}
  */
 export const accessTokenVerify = (req: NextRequest) => {
   const rawToken = req.headers.get('authorization')?.split(' ') || []
@@ -25,7 +25,7 @@ export const accessTokenVerify = (req: NextRequest) => {
     const user = decode.data
     return {user}
   } catch (error) {
-    console.error('/utis/validation.ts')
+    console.error('/utis/validation.ts',error)
     return {
       meg: '토큰이 만료되었습니다. 다시 로그인을 시도해주세요.',
       status: 401,

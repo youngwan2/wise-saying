@@ -19,6 +19,7 @@ export default function LoginEmailInput(){
           </span>
         </label>
         <input
+          aria-label="이메일 입력창"
           ref={emailInputRef}
           className="pl-[5px] rounded-e-lg min-w-[230px] w-[100%] bg-[#ffffffce]"
           type="email"

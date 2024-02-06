@@ -49,6 +49,23 @@ export const reqLogin = async (
   }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * POST | 유저가 작성한 포스트를 등록 요청하는 메소드
  * @param hasToken accessToken
@@ -70,7 +87,7 @@ export const postUserPost = async (
     return router.push('/login')
   }
 
-  const { category, content, author, isUser } = userPost
+  const { category, content, author} = userPost
 
   // 유효성 검증 
   if (!(category && content && author))
@@ -182,6 +199,4 @@ export const postComment = async (comment: FormDataEntryValue, quoteId: string |
   } catch (error) {
     console.error("에러발생", error)
   }
-
-
 }

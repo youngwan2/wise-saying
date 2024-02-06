@@ -1,8 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { HiOutlineLockClosed,HiOutlineX } from 'react-icons/hi'
-import { BsGithub } from 'react-icons/bs'
+import { HiOutlineX } from 'react-icons/hi'
 import { useEffect, useRef } from 'react'
 import useHasToken from '@/custom/useHasToken'
 import { reqLogin } from '@/services/user/post'
@@ -61,6 +60,7 @@ export default function LoginForm() {
 
         {/* 로그인 요청 */}
         <input
+          aria-label='로그인 요청'     
           className="rounded-[5px] my-[2.5em] text-[black] bg-[#FFFFFF] max-w-[150px] py-[0.5em] min-w-[150px] mx-auto hover: cursor-pointer hover:bg-[#ffd9d9] font-bold"
           type="submit"
           value={'로그인'}

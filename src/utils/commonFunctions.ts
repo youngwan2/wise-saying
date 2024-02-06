@@ -37,7 +37,7 @@ export const logoutUser = (router: AppRouterInstance) => {
     return response.json()
   }).then((result) => {
     console.log(result)
-  })
+  }).catch((error)=> alert('로그아웃에 실패하였습니다. 나중에 다시시도 해주세요.'))
 }
 
 /**
@@ -61,6 +61,7 @@ export const imagePreviewReader = (e: ChangeEvent<HTMLInputElement>) => {
 export const onSubmit = (e: FormEvent) => {
   e.preventDefault()
 }
+
 
 function debounce() {
   let timerId: NodeJS.Timeout;

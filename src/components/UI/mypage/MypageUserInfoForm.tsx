@@ -50,6 +50,7 @@ export default function MypageUserInfoForm({ userInfo }: PropsType) {
             <div className="mb-4">
                 <label className="text-lg font-semibold mb-2" htmlFor={uId + 'password'}>비밀번호(Password)</label>
                 <input
+                    aria-label="알파벳(a 부터 z), 0에서 9까지 중 각각 1개 이상을 포함하고, 특수문자를 1개 이상 포함하여 8자 이상 작성"
                     pattern="^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&+=])[a-zA-Z0-9!@#$%^&+=]{8,}$"
                     type="password"
                     name="password"
@@ -62,6 +63,7 @@ export default function MypageUserInfoForm({ userInfo }: PropsType) {
             <div className="mb-4">
                 <label className="text-lg font-semibold mb-2" htmlFor={uId + 'confirm'}>비밀번호 재확인(Confirm)</label>
                 <input
+                   aria-label="비밀번호 재확인 창으로, 앞서 비밀번호와 동일한 값을 입력"
                     pattern="^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&+=])[a-zA-Z0-9!@#$%^&+=]{8,}$"
                     type="password"
                     name="confirm"
@@ -72,10 +74,10 @@ export default function MypageUserInfoForm({ userInfo }: PropsType) {
             </div>
             {/* 수정 및 탈퇴 버튼 */}
             <article className="mt-[2em]">
-                <button className="bg-blue-500 text-white px-4 py-2 rounded-lg mr-2">
+                <button aria-label="수정하기 버튼으로, 클릭 시 입력된 정보로 패스워드(비밀번호)가 변경" className="bg-blue-500 text-white px-4 py-2 rounded-lg mr-2">
                     수정하기
                 </button>
-                <button type="button" onClick={() => {
+                <button aria-label="탈퇴하기 버튼으로, 버튼 클릭 시 회원탈퇴 라고 입력 후 확인을 엔터 혹은 클릭해야 하는 창 생성 " type="button" onClick={() => {
                     if (!hasToken || !userInfo?.user_id) return alert('접근 권한이 없습니다.')
                     deleteUserInfo(userInfo.user_id, router)
                 }} className="bg-red-500 text-white px-4 py-2 rounded-lg">

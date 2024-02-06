@@ -24,6 +24,7 @@ export default function MypageImageUploadInput({src, onChange}:PropsType){
           <HiUpload />
         </label>
         <input
+          aria-label="유저의 프로필 이미지 업로드 창"
           id="profile_image"
           type="file"
           className="hidden"

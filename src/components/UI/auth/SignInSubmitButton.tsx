@@ -1,24 +1,20 @@
+import { MouseEventHandler } from "react"
+
 interface PropsType {
-  email: string
-  password: string
   isVaildForm: boolean
   existsEmail: boolean
-  userInfoPostFetch: (email: string, password: string) => void
+  onClick: MouseEventHandler<HTMLButtonElement>
 }
 export default function SignInSubmitButton({
   isVaildForm,
   existsEmail,
-  email,
-  password,
-  userInfoPostFetch,
+  onClick
 }: PropsType) {
   return (
     <>
       {isVaildForm && existsEmail ? (
         <button
-          onClick={() => {
-            userInfoPostFetch(email, password)
-          }}
+          onClick={onClick}
           className={`rounded-[5px] my-[2.5em] text-[black] bg-[#FFFFFF] max-w-[150px] py-[0.5em] min-w-[150px] mx-auto hover: cursor-pointer hover:bg-[#ffd9d9] font-bold ${
             isVaildForm && existsEmail ? 'visible' : 'invisible'
           }`}

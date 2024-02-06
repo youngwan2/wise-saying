@@ -106,10 +106,9 @@ export const todayQuoteFetch = async () => {
     const items = await response.json()
     return items
   } catch (error) {
-    console.error(error)
+    console.error('services/data/get.ts',error)
   }
 }
-
 
 /**
  * GET | 특정 포스트에 등록된 댓글 목록 불러오기

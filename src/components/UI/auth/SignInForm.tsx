@@ -2,14 +2,13 @@
 
 import { HiOutlineX } from 'react-icons/hi'
 import { useRouter } from 'next/navigation'
-import { gsap } from 'gsap/all'
-import { Draggable } from 'gsap/Draggable'
 import { useEffect, useRef, useState } from 'react'
 import SignInEmailInput from './SignInEmailInput'
 import SignInPasswordInput from './SignInPasswordInput'
 import SignInPasswordReConfirmInput from './SignInPwReConfirmInput'
 import SignInSubmitButton from './SignInSubmitButton'
 import { onSubmit } from '@/utils/commonFunctions'
+import useDraggable from '@/custom/useDraggable'
 
 /**
  *  TODO: 하나의 페이지에 너무 긴 코드가 존재함 상태관리가 복잡해 보이고, 가독성도 매우 떨어짐. 별도의 컴포넌트로 분리하여 가독성을 높일 필요가 있음
@@ -31,24 +30,15 @@ export default function SignInForm() {
 
   const [messageDisplay, setMessageDisplay] = useState(true)
 
-  useEffect(() => {
-    if (formRef.current) {
-      gsap.registerPlugin(Draggable)
-      const form = formRef.current
-
-      Draggable.create(form, {
-        dragClickables: false,
-        bounds: document.querySelector('body'),
-      })
-    }
-  }, [])
+  useDraggable(formRef, null)
 
   useEffect(() => {
     if (isSuccess) return router.push('/')
   }, [isSuccess, router])
 
+
   /** 회원가입 요청 */
-  function userInfoPostFetch(email: string, password: string) {
+  function onClickRequestSingIn(email: string, password: string, reConfirmPw: string) {
     const body = {
       email,
       password,
@@ -72,6 +62,7 @@ export default function SignInForm() {
         alert('요청에 실패하였습니다. 나중에 다시 시도해주세요.')
       })
   }
+
 
   return (
     <>
@@ -135,11 +126,12 @@ export default function SignInForm() {
 
         {/* 전송버튼 */}
         <SignInSubmitButton
-          email={email}
-          password={password}
           existsEmail={existsEmail}
           isVaildForm={isVaildForm}
-          userInfoPostFetch={userInfoPostFetch}
+          onClick={()=>{
+            onClickRequestSingIn(email, password, reConfirmPw)
+          }}
+ 
         />
       </form>
     </>

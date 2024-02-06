@@ -13,9 +13,6 @@ import { HiPhotograph } from 'react-icons/hi'
 import React, { MouseEventHandler } from 'react'
 import { IconType } from 'react-icons'
 
-/**
- * TODO : 반복되는 로직이라면 반복문으로 줄일 수 있는 경우 줄일 필요가 있어 보임.
- */
 
 interface PropsType {
   onClick: MouseEventHandler<HTMLButtonElement>
@@ -54,6 +51,7 @@ export default function HeaderNavModal() {
 
   return (
     <article
+      aria-hidden={!isDisplay}
       aria-label="하단 네비게이션"
       className={`max-w-[950px] left-[50%] translate-x-[-50%] fixed bottom-0 z-50 h-[full] w-[100vw] flex flex-wrap
                      justify-center items-center text-center overflow-hidden bg-[#ffffff]
