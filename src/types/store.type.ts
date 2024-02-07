@@ -102,3 +102,8 @@ export interface TtsTraceIndexState {
   traceIndex: number,
   setTraceIndex : (index: number) => void
 }
+
+export interface BodyOverflowState {
+  isHidden: boolean,
+  setIsHidden : ((isHidden:boolean)=> void)
+}

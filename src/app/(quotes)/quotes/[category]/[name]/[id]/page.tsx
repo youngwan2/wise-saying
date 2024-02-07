@@ -35,7 +35,7 @@ export default async function DetailPage({ params }: { params: { category: strin
                 <span className="mx-[3px] text-[gold] font-mono">{decodeURIComponent(name)}</span> 가라사대
             </h2>
             {/* 명언 텍스트 영역 */}
-            <article className="bg-[white] text-center p-[5em] max-w-[900px] w-full mx-auto rounded-[10px] mt-[2em]
+            <article className="bg-[#ffffff11] text-white text-center p-[5em] max-w-[900px] w-full mx-auto rounded-[10px] mt-[2em]
             shadow-[inset_0_5px_5px_0_rgba(0,0,0,0.5)]
             ">
                 <p className="text-[1.25em]">{item.quote}</p>

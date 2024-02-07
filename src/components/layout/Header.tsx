@@ -7,6 +7,7 @@ import LoginButton from '../UI/auth/LoginButton'
 import LogoutButton from '../UI/auth/LogoutButton'
 import SearchForm from '../UI/search/SearchForm'
 import HeaderSearchButton from '../UI/header/HeaderSearchButton'
+import FocusModeButton from '../UI/button/FocusModeButton'
 
 export default function Header() {
   return (
@@ -16,6 +17,7 @@ export default function Header() {
           <Link aria-label='홈페이지 로고 이면서 홈 이동 링크' href={'/'}> Wise Sayings</Link>
         </h1>
         <div className="flex items-center">
+          <FocusModeButton/>
           <HeaderSearchButton />
           <LoginButton />
           <LogoutButton />

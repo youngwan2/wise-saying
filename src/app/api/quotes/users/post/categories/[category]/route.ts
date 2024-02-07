@@ -25,8 +25,9 @@ export async function GET(req: NextRequest, res: { params: { category: string } 
                 JOIN users B
                 ON A.user_id = B.user_id
                 `
+
                 const result = await db.query(query)
-                const TOTAL_COUNT = result.rowCount || 0
+                const TOTAL_COUNT = (result.rows[0].count) || 0
                 const MAX_PAGE = Math.ceil(TOTAL_COUNT / LIMIT)
 
                 return NextResponse.json({ TOTAL_COUNT, MAX_PAGE})

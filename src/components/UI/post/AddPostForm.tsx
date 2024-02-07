@@ -4,6 +4,7 @@ import useHasToken from '@/custom/useHasToken'
 import { postUserPost } from '@/services/user/post'
 import useDraggable from '@/custom/useDraggable'
 import { useRef } from 'react'
+import ReplaceMessageCard from '../common/ReplaceMessageCard'
 
 export default function AddPostForm() {
   const formRef = useRef<HTMLFormElement>(null)
@@ -13,7 +14,6 @@ export default function AddPostForm() {
   useDraggable(formRef, null)
 
   const router = useRouter()
-
 
   // 포스트 요청
   const addPost = async (form: FormData) => {
@@ -28,8 +28,9 @@ export default function AddPostForm() {
       isUser:true
     }
     postUserPost(router, hasToken, body)
-
   }
+
+  if(!hasToken) return <ReplaceMessageCard childern='로그인 후 이용해주세요.'/>
   return (
     <form
       ref={formRef}
