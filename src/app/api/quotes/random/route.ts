@@ -9,14 +9,14 @@ export async function GET(req: NextRequest) {
         FROM quotes
   `
 
-    const result = (await db.query(countSelectQuery)) 
-    
+    const result = await db.query(countSelectQuery)
+
     const { totalresult: count } = result.rows[0] || { count: 0 }
-    const randomNumbers:number[] = []
-    
-    while (randomNumbers.length < 3){
+    const randomNumbers: number[] = []
+
+    while (randomNumbers.length < 3) {
       let randomNumber = Math.floor(Math.random() * count) + 1
-      if(!randomNumbers.includes(randomNumber)) {
+      if (!randomNumbers.includes(randomNumber)) {
         randomNumbers.push(randomNumber)
       }
     }
@@ -30,9 +30,8 @@ export async function GET(req: NextRequest) {
     await db.end()
     const items = results.rows
     return NextResponse.json(items)
-
   } catch (error) {
-    console.error('/api/quotes/random/routs.ts',error)
+    console.error('/api/quotes/random/routs.ts', error)
     return NextResponse.json({
       status: 500,
       success: false,

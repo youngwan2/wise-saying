@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { HiDotsVertical, HiOutlineZoomIn } from 'react-icons/hi'
 import { SlEarphones } from 'react-icons/sl'
@@ -12,25 +12,17 @@ import { useState } from 'react'
 import type { ItemsType } from '@/types/items.types'
 import useTTS from '@/custom/useTTS'
 
-
 interface PropsType {
   item: ItemsType
   index: number | 0
 }
-export default function QuotesCardControlButtons({
-  item,
-  index,
-}: PropsType) {
-
+export default function QuotesCardControlButtons({ item, index }: PropsType) {
   const setIsZoomIn = useCardZoomInOutStore((state) => state.setIsZoomIn)
   const setCardIndex = useCardZoomInOutStore((state) => state.setCardIndex)
 
   const hasToken = useHasToken()
   const router = useRouter()
   const [isDisplay, setIsDisplay] = useState(false)
-
-
-
 
   const onClickBookmarkAdd = () => {
     if (!item) return
@@ -52,15 +44,24 @@ export default function QuotesCardControlButtons({
 
   return (
     <>
-      <button onClick={() => {
-        setIsDisplay(!isDisplay)
-      }} className='text-white hover:border-[tomato] border border-[transparent] absolute top-[0.5em] right-[0.55em]  p-[4px] text-[1.05em]'> {isDisplay ? <HiXMark /> : <HiDotsVertical />} </button>
+      <button
+        onClick={() => {
+          setIsDisplay(!isDisplay)
+        }}
+        className="text-white hover:border-[tomato] border border-[transparent] absolute top-[0.5em] right-[0.55em]  p-[4px] text-[1.05em]"
+      >
+        {' '}
+        {isDisplay ? <HiXMark /> : <HiDotsVertical />}{' '}
+      </button>
 
       <article
         onMouseLeave={() => {
           setIsDisplay(false)
         }}
-        className={` ${isDisplay ? 'visible opacity-100 top-2 z-50' : 'invisible opacity-0'} transition-all absolute top-0 right-[2.6em] bg-white shadow-[inset_0_0_5px_0_rgba(0,0,0,0.5)] rounded-[5px] `}>
+        className={` ${
+          isDisplay ? 'visible opacity-100 top-2 z-50' : 'invisible opacity-0'
+        } transition-all absolute top-0 right-[2.6em] bg-white shadow-[inset_0_0_5px_0_rgba(0,0,0,0.5)] rounded-[5px] `}
+      >
         {/* 카드 만들기 버튼 */}
         <button
           onClick={onClickStylerPageSwitch}
@@ -90,8 +91,6 @@ export default function QuotesCardControlButtons({
           <HiOutlineZoomIn />
           확대
         </button>
-
-
       </article>
     </>
   )

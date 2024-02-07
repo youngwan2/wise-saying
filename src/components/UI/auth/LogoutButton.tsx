@@ -10,7 +10,7 @@ export default function LogoutButton() {
   if (!hasToken) return <></>
   return (
     <button
-      aria-label='로그아웃 아이콘'
+      aria-label="로그아웃 아이콘"
       onClick={() => {
         router.push('/logout')
       }}

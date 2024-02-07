@@ -17,19 +17,20 @@ export default function MypageContainer() {
 
   const token = (hasToken && localStorage.getItem('token')) || ''
 
-  const { data: userInfo, error } = useSWR(['/api/users/', token], ([url, token]) => getUserInfoFromDb(url, token))
+  const { data: userInfo, error } = useSWR(
+    ['/api/users/', token],
+    ([url, token]) => getUserInfoFromDb(url, token),
+  )
   const { data: userQuotesInfo } = useSWR(
     () =>
       tapId === 1
-        ? '/api/users/mypage/posts?userId=' +
-        userInfo.user_id +
-        '&page=' +
-        page
+        ? '/api/users/mypage/posts?userId=' + userInfo.user_id + '&page=' + page
         : null,
     getUserQuotesFromDb,
   )
 
-  if (!hasToken) return <ReplaceMessageCard childern='로그인 후 이용해주세요.' />
+  if (!hasToken)
+    return <ReplaceMessageCard childern="로그인 후 이용해주세요." />
   if (!userInfo)
     return (
       <ReplaceMessageCard

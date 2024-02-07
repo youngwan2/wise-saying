@@ -7,7 +7,7 @@ export default function BookmarkCloseButton() {
 
   return (
     <button
-      aria-label='북마크 모달 닫기'
+      aria-label="북마크 모달 닫기"
       onClick={() => {
         setToggleState(!toggleState)
       }}

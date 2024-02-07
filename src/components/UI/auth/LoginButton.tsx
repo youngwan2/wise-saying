@@ -10,7 +10,7 @@ export default function LoginButton() {
   if (hasToken) return <></>
   return (
     <button
-      aria-label='로그인 아이콘'
+      aria-label="로그인 아이콘"
       onClick={() => {
         router.push('/login')
       }}

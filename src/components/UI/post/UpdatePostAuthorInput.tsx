@@ -4,7 +4,7 @@ import useInitialValueSetter from '@/custom/useInitialValueSetter'
 
 interface PropsType {
   post: PostType
-  name:string
+  name: string
 }
 export default function UpdatePostAuthorInput({ post, name }: PropsType) {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -16,7 +16,7 @@ export default function UpdatePostAuthorInput({ post, name }: PropsType) {
         작성자
       </label>
       <input
-      ref={inputRef}
+        ref={inputRef}
         name={name}
         type="text"
         className="min-w-[200px] w-[500px]  px-[10px] min-h-[40px]  rounded-[5px] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.5)]"

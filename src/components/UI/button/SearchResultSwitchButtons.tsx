@@ -23,7 +23,10 @@ export default function SearchResultSwitchButtons({
       >
         <HiArrowLeftCircle />
       </button>
-      <span aria-label={`전체 ${MAX_PAGE} 페이지 중 현재, ${page + 1}페이지.`} className="mx-[10px] text-white">
+      <span
+        aria-label={`전체 ${MAX_PAGE} 페이지 중 현재, ${page + 1}페이지.`}
+        className="mx-[10px] text-white"
+      >
         {page + 1}/{MAX_PAGE}
       </span>
 

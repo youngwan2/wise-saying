@@ -1,7 +1,6 @@
 'use client'
 
-import UserQuotesCategoryCard from "./UserQuotesCategoryCard"
-
+import UserQuotesCategoryCard from './UserQuotesCategoryCard'
 
 interface PropsType {
   categories: {

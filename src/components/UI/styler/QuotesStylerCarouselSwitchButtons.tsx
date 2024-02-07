@@ -4,7 +4,9 @@ import { EmblaCarouselType } from 'embla-carousel-react'
 interface PropsType {
   emblaApi: EmblaCarouselType
 }
-export default function QuotesStylerCarouselSwitchButtons({ emblaApi }: PropsType) {
+export default function QuotesStylerCarouselSwitchButtons({
+  emblaApi,
+}: PropsType) {
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev()
   }, [emblaApi])

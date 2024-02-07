@@ -163,14 +163,10 @@ export const useHeaderSearchFormStateStore =
     setIsDisplay: (display) => set(() => ({ isDisplay: display })),
   }))
 
-
-
 /**
  * * Zustand | 바디 객체의 오버플로우 옵션 활성화 상태 저장
  */
-  export const useBodyOverflowStore =
-  create<BodyOverflowState>((set) => ({
-    isHidden:false,
-    setIsHidden : (isHidden) => set(()=> ({isHidden}))
-
-  }))
+export const useBodyOverflowStore = create<BodyOverflowState>((set) => ({
+  isHidden: false,
+  setIsHidden: (isHidden) => set(() => ({ isHidden })),
+}))

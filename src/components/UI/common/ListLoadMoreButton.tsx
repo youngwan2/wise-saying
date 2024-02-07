@@ -1,5 +1,3 @@
-
-
 import { MouseEventHandler, useEffect, useState } from 'react'
 
 interface PropsType {

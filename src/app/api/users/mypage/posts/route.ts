@@ -1,6 +1,5 @@
-import { openDB} from '@/utils/connect'
+import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
-
 
 // GET | 특정 유저가 작성한 포스트(명언) 목록을 가져온다.
 export async function GET(req: NextRequest) {
@@ -27,8 +26,11 @@ export async function GET(req: NextRequest) {
         LIMIT $2 OFFSET $3 * 5
     `
 
-
-    const itemsResults = await db.query(joinQuery, [userId, limit, pageNum * limit])
+    const itemsResults = await db.query(joinQuery, [
+      userId,
+      limit,
+      pageNum * limit,
+    ])
 
     const items = itemsResults.rows
     const count = itemsResults.rowCount

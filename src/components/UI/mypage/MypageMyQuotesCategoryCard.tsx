@@ -1,12 +1,13 @@
-import { MouseEventHandler } from "react"
-
+import { MouseEventHandler } from 'react'
 
 interface PropsType {
   category: string
   onClickQuotesFilter: MouseEventHandler<HTMLLIElement>
 }
-export default function MypageQuotesCategoryCard({ category, onClickQuotesFilter }: PropsType) {
-
+export default function MypageQuotesCategoryCard({
+  category,
+  onClickQuotesFilter,
+}: PropsType) {
   return (
     <li
       tabIndex={0}

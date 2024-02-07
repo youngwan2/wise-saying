@@ -48,7 +48,7 @@ export default function useScrollBasedIconPosition(
             zIndex: 1000,
           })
           draggableInstance = Draggable.create(element, {
-            type:'x',
+            type: 'x',
             bounds: document.querySelector('body'),
           })
         },

@@ -13,7 +13,6 @@ import LoginPasswordInput from './LoginPasswordInput'
 export default function LoginForm() {
   const loginFormRef = useRef<HTMLFormElement>(null)
 
-
   const router = useRouter()
   const hasToken = useHasToken()
 
@@ -25,7 +24,7 @@ export default function LoginForm() {
   }, [router, hasToken])
 
   // 드래그어블 적용
-  useDraggable(loginFormRef,null)
+  useDraggable(loginFormRef, null)
 
   async function login(form: FormData) {
     const email = form.get('email')
@@ -54,13 +53,13 @@ export default function LoginForm() {
         </button>
 
         {/* 이메일 */}
-          <LoginEmailInput/>
+        <LoginEmailInput />
         {/* 패스워드 */}
-          <LoginPasswordInput/>
+        <LoginPasswordInput />
 
         {/* 로그인 요청 */}
         <input
-          aria-label='로그인 요청'     
+          aria-label="로그인 요청"
           className="rounded-[5px] my-[2.5em] text-[black] bg-[#FFFFFF] max-w-[150px] py-[0.5em] min-w-[150px] mx-auto hover: cursor-pointer hover:bg-[#ffd9d9] font-bold"
           type="submit"
           value={'로그인'}
@@ -84,12 +83,14 @@ export default function LoginForm() {
   )
 }
 
-
 /**
  * 임서저장
  */
-        {/* 소셜 로그인 */}
-        {/* <button
+{
+  /* 소셜 로그인 */
+}
+{
+  /* <button
           className="hover:bg-[white] hover:text-[tomato] font-bold p-[5px] border w-[50%] mx-auto mb-[10px] flex items-center justify-center"
           onClick={() => {
             alert('향후 추가 예정입니다.')
@@ -98,4 +99,5 @@ export default function LoginForm() {
         >
           <BsGithub />
           <span className="pl-[5px]">GitHub</span>
-        </button> */}
+        </button> */
+}

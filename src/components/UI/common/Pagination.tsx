@@ -44,7 +44,7 @@ export default function Pagination({
       <button
         onClick={() => {
           setPage(Math.min(++page, limit))
-          console.log(page,limit)
+          console.log(page, limit)
         }}
         className={`mx-[8px ${
           page === limit - 1 ? 'invisible opacity-0' : 'visible opacity-100'

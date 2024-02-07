@@ -1,4 +1,3 @@
-
 export const dynamic = 'force-dynamic'
 
 import ReplaceMessageCard from '@/components/UI/common/ReplaceMessageCard'
@@ -6,11 +5,11 @@ import TodayQuotelist from '@/components/UI/quote/TodayQuoteList'
 import { todayQuoteFetch } from '@/services/data/get'
 
 export default async function Home() {
-  const items = await todayQuoteFetch() || []
+  const items = (await todayQuoteFetch()) || []
 
-  if(!items) return <ReplaceMessageCard childern='데이터를 불러오는 중입니다..'/>
-  if(items.length<1) return <ReplaceMessageCard childern='데이터 목록이 존재하지 않습니다.'/>
-  return (
-      <TodayQuotelist quotes={items} />
-  )
+  if (!items)
+    return <ReplaceMessageCard childern="데이터를 불러오는데 실패하였습니다." />
+  if (items.length < 1)
+    return <ReplaceMessageCard childern="데이터를 불러오는 중입니다.." />
+  return <TodayQuotelist quotes={items} />
 }

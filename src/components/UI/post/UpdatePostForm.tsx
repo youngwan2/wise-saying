@@ -60,9 +60,11 @@ export default function UpdatePostForm() {
     const category = form.get('category') || ''
     const author = form.get('author') || ''
     const userPost = {
-      category, content, author
+      category,
+      content,
+      author,
     }
-    updateUserPost(postId, hasToken, router, userPost )
+    updateUserPost(postId, hasToken, router, userPost)
   }
   return (
     <>
@@ -89,13 +91,13 @@ export default function UpdatePostForm() {
           {/* 전송버튼 */}
           <button
             className=" bg-[#ffffff] p-[10px] mr-[1em] font-bold hover:bg-[#162557] hover:text-white rounded-[5px]"
-          // onClick={updateUserPost}
+            // onClick={updateUserPost}
           >
             등록하기
           </button>
           {/* 취소 버튼 */}
           <button
-            type='button'
+            type="button"
             onClick={() => {
               router.push('/user-quotes')
             }}

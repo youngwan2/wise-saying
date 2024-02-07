@@ -4,7 +4,7 @@ import { useMypageTapsStore } from '@/store/store'
 import { useState } from 'react'
 
 export default function MypageTaps() {
-  const [tapNameList] = useState(['프로필', '나의 명언','회원정보'])
+  const [tapNameList] = useState(['프로필', '나의 명언', '회원정보'])
   const setTapId = useMypageTapsStore((state) => state.setTapId)
   const tapId = useMypageTapsStore((state) => state.tapId)
   return (

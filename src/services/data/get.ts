@@ -1,4 +1,4 @@
-import { config } from "@/configs/config"
+import { config } from '@/configs/config'
 
 /**
  * * GET | 서버로부터 특정 경로에 대한 명언 리스트 불러오기
@@ -71,7 +71,7 @@ export const getBookmarkListFormDB = async (
  * → ` http://localhost:3000/api/quotes/authors/소크라테스`
  */
 
-async function fetchModule(url:string){
+async function fetchModule(url: string) {
   const response = await fetch(url)
   const result = await response.json()
   return result
@@ -80,14 +80,12 @@ async function fetchModule(url:string){
 export const getApiMetaDataFromServer = async (
   mainCategory: string,
   subCategory: string,
-  type: string
+  type: string,
 ) => {
-
   switch (type) {
     case 'users': {
       const url = `${config.apiPrefix}${config.apiHost}/api/quotes/${mainCategory}/post/categories/${subCategory}?type=meta`
       return await fetchModule(url)
-
     }
     case 'authors': {
       const url = `${config.apiPrefix}${config.apiHost}/api/quotes/${mainCategory}/${subCategory}?type=meta`
@@ -106,22 +104,21 @@ export const todayQuoteFetch = async () => {
     const items = await response.json()
     return items
   } catch (error) {
-    console.error('services/data/get.ts',error)
+    console.error('services/data/get.ts', error)
   }
 }
 
 /**
  * GET | 특정 포스트에 등록된 댓글 목록 불러오기
- * @param id 
- * @returns 
+ * @param id
+ * @returns
  */
 export const getCommentsFormDb = async (url: string) => {
   const response = await fetch(url, {
     next: {
       tags: ['comment'],
-    }
+    },
   })
   const data = await response.json()
   return data
-
 }

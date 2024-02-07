@@ -49,12 +49,10 @@ export default function MypageProfileForm({ userInfo }: PropsType) {
     }
   }
 
-
   // 프로필 이미지 초깃값 지정
   useEffect(() => {
     setImageUrl(userInfo?.profile_image)
   }, [userInfo?.profile_image])
-
 
   // 프로필 업데이트
   function profileUpdate(form: FormData) {
@@ -79,13 +77,15 @@ export default function MypageProfileForm({ userInfo }: PropsType) {
           action={profileUpdate}
         >
           {/* 이미지 업로드 */}
-          <MypageImageUploadInput src={initialImageSrc} onChange={onChangeImageUpload} />
+          <MypageImageUploadInput
+            src={initialImageSrc}
+            onChange={onChangeImageUpload}
+          />
 
           {/* 닉네임 수정 */}
           <article className="mt-[2em] text-center">
             <MypageNicknameInput nickname={userInfo.nickname} />
             <MypageEmailInput email={userInfo.email} />
-
           </article>
           <MypageProfileUpdateButton />
         </form>

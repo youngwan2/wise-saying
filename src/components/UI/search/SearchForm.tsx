@@ -16,14 +16,14 @@ export default function SearchForm() {
     (state) => state.setIsDisplay,
   )
 
-  const {setText} = useTTL()
+  const { setText } = useTTL()
 
   useDraggable(formRef, 'x')
 
   const search = async (formData: FormData) => {
     const value = formData.get('search')
     router.push(`/quotes/search?type=all&searchText=${value}`)
-    setText("검색된 키워드는, "+value +' 입니다.')
+    setText('검색된 키워드는, ' + value + ' 입니다.')
   }
   return (
     // 검색창

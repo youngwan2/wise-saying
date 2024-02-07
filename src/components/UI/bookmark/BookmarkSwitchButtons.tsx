@@ -25,7 +25,10 @@ export default function BookmarkSwitchButtons({
       >
         이전
       </button>
-      <span aria-label={`총 ${maxPageSize} 페이지 중 ${page+1} 페이지`} className={'mx-[10px] text-white'}>
+      <span
+        aria-label={`총 ${maxPageSize} 페이지 중 ${page + 1} 페이지`}
+        className={'mx-[10px] text-white'}
+      >
         {page + 1}/{maxPageSize}
       </span>
       {/* 다음 */}

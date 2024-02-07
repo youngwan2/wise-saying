@@ -27,7 +27,7 @@ export default function AuthorPage({ params }: PropsType) {
   const { totalCount, maxPage } = useItemMetadataFetch(
     mainCategory,
     subCategory,
-    'authors'
+    'authors',
   )
 
   if (!items)

@@ -13,7 +13,6 @@ import { HiPhotograph } from 'react-icons/hi'
 import React, { MouseEventHandler } from 'react'
 import { IconType } from 'react-icons'
 
-
 interface PropsType {
   onClick: MouseEventHandler<HTMLButtonElement>
   icon: IconType

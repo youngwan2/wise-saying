@@ -1,4 +1,4 @@
-import { MouseEventHandler } from "react"
+import { MouseEventHandler } from 'react'
 
 interface PropsType {
   isVaildForm: boolean
@@ -8,7 +8,7 @@ interface PropsType {
 export default function SignInSubmitButton({
   isVaildForm,
   existsEmail,
-  onClick
+  onClick,
 }: PropsType) {
   return (
     <>

@@ -8,7 +8,7 @@ import { config } from '@/configs/config'
  */
 export const getUserInfoFromDb = async (url: string, token: string) => {
   const response = await fetch(url, {
-    next: {tags: ['all','user']},
+    next: { tags: ['all', 'user'] },
     method: 'GET',
     headers: {
       authorization: `Bearer ${token}`,
@@ -27,7 +27,7 @@ export const getUserInfoFromDb = async (url: string, token: string) => {
  */
 export const getUserQuotesFromDb = async (url: string) => {
   const response = await fetch(url, {
-    next: {tags: ['all','user']},
+    next: { tags: ['all', 'user'] },
     method: 'GET',
   })
   const { items: userInfo, count } = await response.json()
@@ -42,7 +42,7 @@ export const getUserQuotesFromDb = async (url: string) => {
 export const getCategoryUserFromDb = async (path: string) => {
   const transformUrl = config.apiPrefix + config.apiHost + path
   const response = await fetch(transformUrl, {
-    next: {tags: ['user']},
+    next: { tags: ['user'] },
   })
   const { status, items: categories } = await response.json()
   if (status === 200) return categories

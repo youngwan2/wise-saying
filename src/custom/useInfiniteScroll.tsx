@@ -31,17 +31,17 @@ export default function useInfiniteScroll(
     }
     return url
   }
-  
-   // SWR 인피니티 훅
+
+  // SWR 인피니티 훅
   const {
     data: itemInfo = [],
     isLoading,
     size,
     setSize,
   } = useSWRInfinite(getKey, getQuotesBy, {
-    revalidateOnMount:true,
+    revalidateOnMount: true,
     revalidateOnFocus: false,
-    revalidateOnReconnect: false
+    revalidateOnReconnect: false,
   })
 
   // 데이터 후 처리 함수

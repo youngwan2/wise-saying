@@ -99,11 +99,11 @@ export interface HeaderSearchFormDisplayState {
 }
 
 export interface TtsTraceIndexState {
-  traceIndex: number,
-  setTraceIndex : (index: number) => void
+  traceIndex: number
+  setTraceIndex: (index: number) => void
 }
 
 export interface BodyOverflowState {
-  isHidden: boolean,
-  setIsHidden : ((isHidden:boolean)=> void)
+  isHidden: boolean
+  setIsHidden: (isHidden: boolean) => void
 }

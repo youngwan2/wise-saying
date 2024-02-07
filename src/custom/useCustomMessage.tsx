@@ -1,18 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 
+export default function useCustomMessage(message: string) {
+  const [display, setDisplay] = useState(false)
 
-export default function useCustomMessage( message: string) {
-
-    const [display, setDisplay] = useState(false)
-
-    useEffect(() => {
-        let timerId: NodeJS.Timeout
-        setDisplay(true)
-        if (display) {
-            const span = document.createElement('span')
-            span.textContent = message
-            document.body.appendChild(span)
-            span.style.cssText = `
+  useEffect(() => {
+    let timerId: NodeJS.Timeout
+    setDisplay(true)
+    if (display) {
+      const span = document.createElement('span')
+      span.textContent = message
+      document.body.appendChild(span)
+      span.style.cssText = `
                 transition:1s ;
                 display:inline-block;
                 position: fixed;
@@ -28,25 +26,20 @@ export default function useCustomMessage( message: string) {
                 box-shadow : inset -2px -2px 5px 0 rgba(0,0,0,0.5);
                 color: white;
                 `
-    
 
-            timerId = setTimeout(() => {
-                span.style.cssText = `
+      timerId = setTimeout(() => {
+        span.style.cssText = `
                 visibility: hidden;
                 opacity: 0;
                 `
-                setDisplay(false)
-                document.body.removeChild(span)
-            }, 2000)
-        }
+        setDisplay(false)
+        document.body.removeChild(span)
+      }, 2000)
+    }
 
-        return () => {
-            clearTimeout(timerId)
-            setDisplay(false)
-        }
-
-    }, [display, message])
-
-
-
+    return () => {
+      clearTimeout(timerId)
+      setDisplay(false)
+    }
+  }, [display, message])
 }

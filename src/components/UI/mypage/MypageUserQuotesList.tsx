@@ -23,15 +23,15 @@ export default function MypageMyQuotesList({
   page,
   count,
 }: PropsType) {
-
   interface UserQuotesType {
-    id: number;
-    quote: string;
-    author: string;
-    category: string;
+    id: number
+    quote: string
+    author: string
+    category: string
   }
-  const [selectedUserQuotes, setSelectedUserQuotes] = useState<UserQuotesType[]>([])
-
+  const [selectedUserQuotes, setSelectedUserQuotes] = useState<
+    UserQuotesType[]
+  >([])
 
   const [limit, setLimit] = useState(0)
   const [firstPage, setFirstPage] = useState(1)
@@ -62,11 +62,10 @@ export default function MypageMyQuotesList({
   const categoryCreator = useCallback(() => {
     const tempCategories: string[] = []
 
-    userQuotes?.forEach(item => tempCategories.push(item.category))
+    userQuotes?.forEach((item) => tempCategories.push(item.category))
     const dedupeCategories = [...new Set(tempCategories)]
     setCategories(dedupeCategories)
   }, [userQuotes])
-
 
   // 명언 필터기
   const onClickQuotesFilter = (category: string = 'all') => {
@@ -92,19 +91,33 @@ export default function MypageMyQuotesList({
   return (
     <>
       <ul className="mt-[3em] text-center min-h-[630px]">
-        <li tabIndex={0} aria-label='전체 명언 보기' onClick={() => { onClickQuotesFilter('all') }}
+        <li
+          tabIndex={0}
+          aria-label="전체 명언 보기"
+          onClick={() => {
+            onClickQuotesFilter('all')
+          }}
           className="hover:cursor-pointer hover:bg-[white] hover:text-black inline-block border rounded-[2em] py-[3px] px-[10px] bg-[tomato] text-white m-[3px]"
-        > 전체 </li>
+        >
+          {' '}
+          전체{' '}
+        </li>
         {categories.map((category) => {
           return (
-            <MypageQuotesCategoryCard key={category} category={category}  onClickQuotesFilter={() => {
-              onClickQuotesFilter(category)
-            }} />
+            <MypageQuotesCategoryCard
+              key={category}
+              category={category}
+              onClickQuotesFilter={() => {
+                onClickQuotesFilter(category)
+              }}
+            />
           )
         })}
-        {(selectedUserQuotes.length>0? selectedUserQuotes : userQuotes).map((item) => {
-          return <MypageUserQuoteCard key={item.id} item={item} />
-        })}
+        {(selectedUserQuotes.length > 0 ? selectedUserQuotes : userQuotes).map(
+          (item) => {
+            return <MypageUserQuoteCard key={item.id} item={item} />
+          },
+        )}
       </ul>
       <Pagination
         limit={limit}

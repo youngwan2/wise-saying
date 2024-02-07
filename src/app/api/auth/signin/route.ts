@@ -8,7 +8,7 @@ const SALT = 10
 
 export async function POST(req: NextRequest) {
   try {
-    const db =await openDB()
+    const db = await openDB()
 
     // 1. 유효성 조건식 작성
     const { email, password, reConfirmPw } = await req.json()
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
       reConfirmPw: joi.ref(`password`),
     })
 
-    // 2. 유효성 검증 
+    // 2. 유효성 검증
     const result = schema.validate({ email, password, reConfirmPw })
 
     // 3. 검증 실패 시 처리
@@ -49,7 +49,6 @@ export async function POST(req: NextRequest) {
       db.query(query, [validEmail, hash])
       await db.end()
     })
-
 
     return NextResponse.json({
       meg: '정상적으로 처리되었습니다.',

@@ -17,24 +17,23 @@ export default function QuotesSizeStyler({ selectTapNum }: PropsType) {
     setSizeStore(size)
   }, [setSizeStore, size])
 
-
   // 디바운스 클로저
-  function debounce(){
-    let timerId: NodeJS.Timeout;
-   
-    return function (newValue: number, targetName:string, delayTime:number) {
+  function debounce() {
+    let timerId: NodeJS.Timeout
+
+    return function (newValue: number, targetName: string, delayTime: number) {
       clearTimeout(timerId)
 
-      timerId = setTimeout(()=>{
+      timerId = setTimeout(() => {
         console.log('디바운스 적용 후', newValue)
-        setSize({...size, [targetName]:newValue})
+        setSize({ ...size, [targetName]: newValue })
       }, delayTime)
     }
   }
 
   // 디바운스 함수 호출 : debonce 함수의 클로저 반환하고 이를 활용.
   const debounceFunWrapper = debounce()
- 
+
   return (
     <article
       className={`${selectTapNum === 2 ? 'block' : 'hidden'} transition-all`}
@@ -52,8 +51,8 @@ export default function QuotesSizeStyler({ selectTapNum }: PropsType) {
           placeholder="넓이(기본: 300px)"
           onChange={(e) => {
             const width = Number(e.currentTarget.value)
-            console.log("디바운스 적용전:",width)
-            debounceFunWrapper(width, 'width',500)
+            console.log('디바운스 적용전:', width)
+            debounceFunWrapper(width, 'width', 500)
           }}
         ></input>
         <HiX className="text-[2em] ml-[5px] pb-[5px]" color="white" />
@@ -66,7 +65,7 @@ export default function QuotesSizeStyler({ selectTapNum }: PropsType) {
           placeholder="높이(기본: 400px)"
           onChange={(e) => {
             const height = Number(e.currentTarget.value)
-   
+
             debounceFunWrapper(height, 'height', 1000)
           }}
         ></input>

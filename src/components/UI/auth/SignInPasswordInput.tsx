@@ -11,7 +11,6 @@ export default function SignInPasswordInput({
   setPassword,
   setIsPassword,
 }: PropsType) {
-  
   /** 패스워드 체크 */
   function passwordChecker(password: string) {
     // 8자 이상 (a-z, 0-9 무조건 1개 이상 포함, 특수문자 1개 이상 포함)

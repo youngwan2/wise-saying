@@ -22,7 +22,6 @@ export default function QuotesTextColorStyler({
   const color = useQuotesTextStyleStore((state) => state.color)
   const unit = useQuotesTextStyleStore((state) => state.unit)
 
-
   useEffect(() => {
     if (previewInputRef.current) {
       const inputEl = previewInputRef.current

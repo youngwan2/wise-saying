@@ -1,6 +1,4 @@
-import { RefObject, useEffect } from "react";
-
-
+import { RefObject, useEffect } from 'react'
 
 /**
  * ref 와 value 을 전달 받아 초깃값을 지정하는 커스텀 훅
@@ -15,11 +13,13 @@ import { RefObject, useEffect } from "react";
     },[initialValue,ref])
 }
  */
-export default function useInitialValueSetter(ref:RefObject<HTMLInputElement | HTMLTextAreaElement> , initialValue:string){
-
-    useEffect(()=>{
-        if(ref.current) {
-            ref.current.value = initialValue
-        }
-    },[initialValue,ref])
+export default function useInitialValueSetter(
+  ref: RefObject<HTMLInputElement | HTMLTextAreaElement>,
+  initialValue: string,
+) {
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.value = initialValue
+    }
+  }, [initialValue, ref])
 }

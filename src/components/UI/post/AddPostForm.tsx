@@ -25,12 +25,13 @@ export default function AddPostForm() {
       category,
       content,
       author,
-      isUser:true
+      isUser: true,
     }
     postUserPost(router, hasToken, body)
   }
 
-  if(!hasToken) return <ReplaceMessageCard childern='로그인 후 이용해주세요.'/>
+  if (!hasToken)
+    return <ReplaceMessageCard childern="로그인 후 이용해주세요." />
   return (
     <form
       ref={formRef}
@@ -46,7 +47,7 @@ export default function AddPostForm() {
           주제
         </label>
         <input
-          id='category'
+          id="category"
           type="text"
           name="category"
           maxLength={3}
@@ -75,7 +76,7 @@ export default function AddPostForm() {
           작성자
         </label>
         <input
-          id='author'
+          id="author"
           type="text"
           name="author"
           maxLength={8}

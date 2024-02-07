@@ -1,4 +1,4 @@
-import { NextRequest} from 'next/server'
+import { NextRequest } from 'next/server'
 import jwt, { JwtPayload } from 'jsonwebtoken'
 
 /**
@@ -23,9 +23,9 @@ export const accessTokenVerify = (req: NextRequest) => {
 
     const decode = jwt.verify(token, scrept) as JwtPayload
     const user = decode.data
-    return {user}
+    return { user }
   } catch (error) {
-    console.error('/utis/validation.ts',error)
+    console.error('/utis/validation.ts', error)
     return {
       meg: '토큰이 만료되었습니다. 다시 로그인을 시도해주세요.',
       status: 401,

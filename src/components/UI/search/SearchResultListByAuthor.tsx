@@ -35,7 +35,7 @@ export default function SearchResultListByAuthor({ items }: PropsType) {
   if (!items && !quotes)
     return <ReplaceMessageCard childern="데이터를 가져오는 중입니다." />
   return (
-    <article className="bg-[#e3dddd12] max-w-[730px] mx-auto rounded-[10px] shadow-[inset_-2px_-2px_5px_0_rgba(0,0,0,0.5)] mt-[1.5em] p-[20px]">
+    <article className="bg-[#e3dddd12] max-w-[730px] mx-auto rounded-[10px] shadow-[inset_-2px_-2px_5px_0_rgba(0,0,0,0.5)] mt-[1.5em] p-[20px] hover:cursor-pointer">
       <div className="border-b-[2px] border-[white] flex items-center justify-between text-white">
         <h3 className=" py-[5px] text-[1.15em] ">
           <span className="text-[white] flex items-center  ">
@@ -59,20 +59,21 @@ export default function SearchResultListByAuthor({ items }: PropsType) {
             검색된 결과가 존재하지 않습니다.
           </p>
         )}
-        {currentQuoteCount >=1 && splitQuotes?.map((item) => {
-          return (
-            <li
-            onClick={() => {
-              router.push(`/quotes/authors/${item.author}/${item.id}`)
-            }}
-              key={item.id}
-              className="flex p-[5px] py-[10px] min-h-[50px] border-b-[1px] border-dashed text-white items-center hover:bg-[#ffffff3c]"
-            >
-              <p className="mr-[5px] w-[80%]">{item.quote}</p>
-              <span className=" w-[20%]">{item.author}</span>
-            </li>
-          )
-        })}
+        {currentQuoteCount >= 1 &&
+          splitQuotes?.map((item) => {
+            return (
+              <li
+                onClick={() => {
+                  router.push(`/quotes/authors/${item.author}/${item.id}`)
+                }}
+                key={item.id}
+                className="flex p-[5px] py-[10px] min-h-[50px] border-b-[1px] border-dashed text-white items-center hover:bg-[#ffffff3c]"
+              >
+                <p className="mr-[5px] w-[80%]">{item.quote}</p>
+                <span className=" w-[20%]">{item.author}</span>
+              </li>
+            )
+          })}
       </ul>
       {/* 버튼 컨테이너 */}
       <SearchResultSwitchButton

@@ -34,7 +34,6 @@ export default function SearchResultAllList({ items }: PropsType) {
   const authorResultTotal = items.byAuthorCount ?? 0
   const keywordResultTotal = items.byKeywordCount ?? 0
 
-
   return (
     <>
       <section className="bg-[#e3dddd12] max-w-[730px] mx-auto rounded-[10px] shadow-[inset_-2px_-2px_5px_0_rgba(0,0,0,0.5)] p-[2px] mt-[1.5em]">

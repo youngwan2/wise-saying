@@ -6,7 +6,10 @@ interface PropsType {
   setImages: (src: string[]) => void
   images: string[]
 }
-export default function QuoteStylerImageUploadForm({ setImages, images }: PropsType) {
+export default function QuoteStylerImageUploadForm({
+  setImages,
+  images,
+}: PropsType) {
   const imageSrcReader = (e: ChangeEvent<HTMLInputElement>) => {
     try {
       if (e.target && e.target.files) {

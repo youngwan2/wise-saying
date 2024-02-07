@@ -1,4 +1,4 @@
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime"
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 
 /**
  * POST | 로그인 요청
@@ -49,23 +49,6 @@ export const reqLogin = async (
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /**
  * POST | 유저가 작성한 포스트를 등록 요청하는 메소드
  * @param hasToken accessToken
@@ -87,12 +70,11 @@ export const postUserPost = async (
     return router.push('/login')
   }
 
-  const { category, content, author} = userPost
+  const { category, content, author } = userPost
 
-  // 유효성 검증 
-  if (!(category && content && author))
-    return alert('모든 빈 칸을 채워주세요')
-  if (category.toString().length < 1 || category.toString().length >3)
+  // 유효성 검증
+  if (!(category && content && author)) return alert('모든 빈 칸을 채워주세요')
+  if (category.toString().length < 1 || category.toString().length > 3)
     return alert(`주제를 최소 2자 이상~ 3자 이하로 적어 주세요.`)
   if (content.toString().length < 3)
     return alert(`내용을 최소 3자 이상 적어 주세요.`)
@@ -166,37 +148,38 @@ export async function updateUserInfo(
   }
 }
 
-
 /**
  * POST | 유저가 작성한 댓글을 등록
  * @param comment 코멘트
  * @param quoteId 명언 id
  */
 
-export const postComment = async (comment: FormDataEntryValue, quoteId: string | string[]) => {
-
+export const postComment = async (
+  comment: FormDataEntryValue,
+  quoteId: string | string[],
+) => {
   const token = localStorage.getItem('token')
   if (!token) return alert('로그인 후 이용 부탁 드립니다.')
 
   const body = {
-    comment
+    comment,
   }
 
   const url = `/api/quotes/${quoteId}/comments?tag=comment`
   try {
     const resposne = await fetch(url, {
-      method:'POST',
+      method: 'POST',
       headers: {
-        'authorization': `Bearer ${token}`
+        authorization: `Bearer ${token}`,
       },
-      body:JSON.stringify(body),
+      body: JSON.stringify(body),
       next: {
-        tags:['comment']
-      }
+        tags: ['comment'],
+      },
     })
     await resposne.json()
     return true
   } catch (error) {
-    console.error("에러발생", error)
+    console.error('에러발생', error)
   }
 }

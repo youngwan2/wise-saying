@@ -16,7 +16,7 @@ export default function QuotesTextLineHeightStyler() {
         placeholder="Defalut : 35"
         onChange={(e) => {
           const height = Number(e.currentTarget.value)
-          debounceCloser(height, '', null, setLineHeight,500)
+          debounceCloser(height, '', null, setLineHeight, 500)
           // setLineHeight(height)
         }}
       />

@@ -13,8 +13,8 @@ export const metadata: Metadata = {
 export default async function CategoryPage() {
   return (
     <>
-      <BackMoveButton/>
-      <CategoryList  />
+      <BackMoveButton />
+      <CategoryList />
     </>
   )
 }

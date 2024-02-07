@@ -1,12 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { openDB} from '@/utils/connect'
+import { openDB } from '@/utils/connect'
 import { accessTokenVerify } from '@/utils/validation'
 import { revalidateTag } from 'next/cache'
 
-
 // POST | 유저 프로필 정보 업데이트
 export async function POST(req: NextRequest) {
-
   const tag = req.nextUrl.searchParams.get('tag')
   try {
     const db = await openDB()

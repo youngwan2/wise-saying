@@ -10,8 +10,9 @@ export async function POST(req: NextRequest) {
 
     // 이메일 유효성 검사
     const schema = joi.object({
-      email: joi.string()
-        .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+      email: joi
+        .string()
+        .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
     })
 
     const vaildEmail = schema.validate({ email })
@@ -71,7 +72,6 @@ export async function GET(req: NextRequest) {
     if (status === 401) {
       return NextResponse.json({ status, success, meg })
     }
-
 
     // 검증 후 처리
     const { userId } = user

@@ -35,10 +35,7 @@ export async function GET(req: NextRequest, res: { params: { id: number } }) {
 }
 
 // PATCH | 단일 포스트 수정
-export async function PATCH(
-  req: NextRequest,
-  res: { params: { id: number } },
-) {
+export async function PATCH(req: NextRequest, res: { params: { id: number } }) {
   try {
     const db = await openDB()
 
@@ -46,13 +43,12 @@ export async function PATCH(
     const { status, meg, success } = accessTokenVerify(req)
 
     if (status === 400) {
-        return NextResponse.json({ status, success, meg })
+      return NextResponse.json({ status, success, meg })
     }
 
     if (status === 401) {
-        return NextResponse.json({ status, success, meg })
+      return NextResponse.json({ status, success, meg })
     }
-
 
     const postId = res.params.id
     const { content: quote, category, author } = await req.json()
@@ -82,7 +78,6 @@ export async function PATCH(
   }
 }
 
-
 // DELETE | 단일 포스트 삭제
 export async function DELETE(
   req: NextRequest,
@@ -105,13 +100,12 @@ export async function DELETE(
     }
 
     // 토큰 검증 성공 후 처리
-    const userId= user.userId
+    const userId = user.userId
     const query = `
             DELETE FROM quotes
             WHERE quote_id = $1 AND user_id = $2
         `
     db.query(query, [id, userId])
-
 
     return NextResponse.json({
       status: 201,

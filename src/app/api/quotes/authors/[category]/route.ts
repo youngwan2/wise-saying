@@ -1,7 +1,6 @@
 import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 
-
 export async function GET(
   req: NextRequest,
   res: { params: { category: string } },
@@ -32,7 +31,6 @@ export async function GET(
         return NextResponse.json({ TOTAL_COUNT: count, MAX_PAGE })
       }
 
-
       // 타입이 meta 이 아닌 경우 조회된 목록를 페이지네이션으로 처리하여 반환
       const page = req.nextUrl.searchParams.get('page') || 0
       const pageNum = Number(page)
@@ -43,7 +41,11 @@ export async function GET(
         LIMIT $2 OFFSET $3
         `
 
-      const results = await db.query(query, [category, limit, pageNum*limitNum])
+      const results = await db.query(query, [
+        category,
+        limit,
+        pageNum * limitNum,
+      ])
       const items = results.rows
       await db.end()
       return NextResponse.json(items)
@@ -75,15 +77,13 @@ export async function GET(
       SELECT DISTINCT author AS category, job FROM quotes
       LIMIT $1 OFFSET $2
     `
-      const results = await db.query(query, [limit, pageNum  * limitNum])
-      const items  = results.rows
+      const results = await db.query(query, [limit, pageNum * limitNum])
+      const items = results.rows
       return NextResponse.json(items)
-
     }
 
     // 그 외 에러 처리
-  }
-  catch (error) {
+  } catch (error) {
     console.error('/api/quotes/authors/[subCategory]/route.ts', error)
     return NextResponse.json({
       status: 500,

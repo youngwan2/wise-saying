@@ -6,12 +6,12 @@ import { useRef } from 'react'
 interface PropsType {
   item: {
     category: string
-    job: string,
+    job: string
   }
-  i :number
+  i: number
 }
 
-export default function QuotesCategoryCard({ item ,i}: PropsType) {
+export default function QuotesCategoryCard({ item, i }: PropsType) {
   const router = useRouter()
   const liRefs = useRef<HTMLLIElement[]>([])
 

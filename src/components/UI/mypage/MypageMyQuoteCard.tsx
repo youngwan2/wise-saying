@@ -1,11 +1,8 @@
-
 interface PropsType {
   item: {
-    id:number
+    id: number
     category: string
-    quote:string
-    
-    
+    quote: string
   }
 }
 export default function MyQuoteCard({ item }: PropsType) {

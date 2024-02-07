@@ -10,16 +10,23 @@ import { useEffect, useState } from 'react'
 export const useItemMetadataFetch = (
   mainCategory: string,
   subCategory: string,
-  type: string
-
+  type: string,
 ) => {
   const [meta, setMeta] = useState({
     totalCount: 0,
     maxPage: 1,
   })
 
-  async function setMetadata(mainCategory: string, subCategory: string, type: string) {
-    const { TOTAL_COUNT, MAX_PAGE } = await getApiMetaDataFromServer(mainCategory, subCategory, type) || { TOTAL_COUNT: 0, MAX_PAGE: 1 }
+  async function setMetadata(
+    mainCategory: string,
+    subCategory: string,
+    type: string,
+  ) {
+    const { TOTAL_COUNT, MAX_PAGE } = (await getApiMetaDataFromServer(
+      mainCategory,
+      subCategory,
+      type,
+    )) || { TOTAL_COUNT: 0, MAX_PAGE: 1 }
 
     setMeta({ totalCount: TOTAL_COUNT, maxPage: MAX_PAGE })
   }

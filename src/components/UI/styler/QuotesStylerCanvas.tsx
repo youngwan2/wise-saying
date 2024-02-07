@@ -18,9 +18,8 @@ interface QuoteType {
 export default function QuotesStylerCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const imageEl = useMemo(() => {
-    if (Image !==undefined) return new Image()
+    if (Image !== undefined) return new Image()
   }, [])
-
 
   // 텍스트 스타일 정보
   const color = useQuotesTextStyleStore((state) => state.color)
@@ -70,29 +69,29 @@ export default function QuotesStylerCanvas() {
 
       const split = wrap(quote, { newline: '\n\n', width: 20 }).split('\n\n') // 텍스트가 일정 넓이를 벗어나면 자동 개행
       let textY = 0 // 캔버스에 그려질 텍스트의 Y 좌표축을 저장(또한, 개행 되는 텍스트의 높이를 저장)
-      if (!imageEl) return 
-        imageEl.alt = '명언 카드 배경 이미지'
-        imageEl.addEventListener('load', () => {
-          clearCanvas(ctx, canvas) // 새 그림을 추가하기 전에 이전 그림들 제거
-          bgColorDraw(ctx, width, height)
-          ctx.fillStyle = `${color}`
-          ctx.drawImage(imageEl, 0, 0, canvas.width, canvas.height)
+      if (!imageEl) return
+      imageEl.alt = '명언 카드 배경 이미지'
+      imageEl.addEventListener('load', () => {
+        clearCanvas(ctx, canvas) // 새 그림을 추가하기 전에 이전 그림들 제거
+        bgColorDraw(ctx, width, height)
+        ctx.fillStyle = `${color}`
+        ctx.drawImage(imageEl, 0, 0, canvas.width, canvas.height)
 
-          // 배열 형태로 분리된 텍스트를 조건에 따라서 다르게 렌더링한다.
-          split.forEach((text, i) => {
-            textY = height / 3 + i * lineHeight
-            if (fontStyle === 'fill') {
-              ctx.fillText(text, width / 2, textY)
-            }
-            if (fontStyle === 'stroke') ctx.strokeText(text, width / 2, textY)
-            if (fontStyle === 'hybrid') {
-              ctx.strokeText(text, width / 2, textY)
-              ctx.fillText(text, width / 2, textY)
-            }
-          })
+        // 배열 형태로 분리된 텍스트를 조건에 따라서 다르게 렌더링한다.
+        split.forEach((text, i) => {
+          textY = height / 3 + i * lineHeight
+          if (fontStyle === 'fill') {
+            ctx.fillText(text, width / 2, textY)
+          }
+          if (fontStyle === 'stroke') ctx.strokeText(text, width / 2, textY)
+          if (fontStyle === 'hybrid') {
+            ctx.strokeText(text, width / 2, textY)
+            ctx.fillText(text, width / 2, textY)
+          }
         })
-        // 모든 텍스트가 다 그려진 이후에 이미지를 추가하여 이미지가 글자 위로 덮어씌워 지는 것을 방지한다.
-        imageEl.src = bgImageSrc
+      })
+      // 모든 텍스트가 다 그려진 이후에 이미지를 추가하여 이미지가 글자 위로 덮어씌워 지는 것을 방지한다.
+      imageEl.src = bgImageSrc
     },
     [
       imageEl,
@@ -146,14 +145,15 @@ export default function QuotesStylerCanvas() {
         height={height}
         className="border shadow-[0_0px_5px_1px_rgba(1,100,500,0.7)]  mx-auto"
       ></canvas>
-      <QuotesStylerImageDownloadButton onClick={() => {
-        const imageURL = canvasRef.current?.toDataURL() || ''
-        const link = document.createElement('a')
-        link.href = imageURL
-        link.download = '내가 만든 카드'
-        link.click()
-      }
-      } />
+      <QuotesStylerImageDownloadButton
+        onClick={() => {
+          const imageURL = canvasRef.current?.toDataURL() || ''
+          const link = document.createElement('a')
+          link.href = imageURL
+          link.download = '내가 만든 카드'
+          link.click()
+        }}
+      />
     </article>
   )
 }

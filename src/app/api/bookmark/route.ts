@@ -10,7 +10,6 @@ export async function GET(req: NextRequest) {
   const pageNum = Number(page)
   const limitNum = Number(limit)
 
-
   const { status, meg, success, user } = accessTokenVerify(req)
 
   if (status === 400) {
@@ -37,7 +36,11 @@ export async function GET(req: NextRequest) {
           WHERE user_id = $1
         `
   try {
-    const itemResults = await db.query(query, [userId, limit, pageNum*limitNum])
+    const itemResults = await db.query(query, [
+      userId,
+      limit,
+      pageNum * limitNum,
+    ])
     const countResults = await db.query(countSelectQuery, [userId])
 
     const items = itemResults.rows
@@ -51,7 +54,6 @@ export async function GET(req: NextRequest) {
       items,
       totalCount,
     })
-
   } catch (error) {
     console.error('/api/bookmark/route.ts', error)
     return NextResponse.json({

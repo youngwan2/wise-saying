@@ -2,7 +2,6 @@ import { ItemsType } from '@/types/items.types'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 import { ChangeEvent, FormEvent } from 'react'
 
-
 /**
  * 페이지 이동 함수
  * @param router next/navigation의 useRouter()
@@ -31,13 +30,18 @@ export const logoutUser = (router: AppRouterInstance) => {
   localStorage.removeItem('user')
   alert('로그인 가능 시간 만료 또는 사용자 요청에 의해 로그아웃 되었습니다.')
 
-  fetch('/api/revalidate?tag=all').then((response) => {
-    router.push('/login')
-    window.location.reload()
-    return response.json()
-  }).then((result) => {
-    console.log(result)
-  }).catch((error)=> alert('로그아웃에 실패하였습니다. 나중에 다시시도 해주세요.'))
+  fetch('/api/revalidate?tag=all')
+    .then((response) => {
+      router.push('/login')
+      window.location.reload()
+      return response.json()
+    })
+    .then((result) => {
+      console.log(result)
+    })
+    .catch((error) =>
+      alert('로그아웃에 실패하였습니다. 나중에 다시시도 해주세요.'),
+    )
 }
 
 /**
@@ -62,11 +66,16 @@ export const onSubmit = (e: FormEvent) => {
   e.preventDefault()
 }
 
-
 function debounce() {
-  let timerId: NodeJS.Timeout;
+  let timerId: NodeJS.Timeout
 
-  return function (newValue: number, targetName: string, state: any, setState: any, delayTime: number) {
+  return function (
+    newValue: number,
+    targetName: string,
+    state: any,
+    setState: any,
+    delayTime: number,
+  ) {
     clearTimeout(timerId)
 
     timerId = setTimeout(() => {
@@ -91,6 +100,3 @@ function debounce() {
  * @example  예를들어, debounceCloser(50, 'height',size, setSize,300) 와 같이 호출한다.
  */
 export const debounceCloser = debounce()
-
-
-

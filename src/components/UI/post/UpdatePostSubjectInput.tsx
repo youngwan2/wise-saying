@@ -7,7 +7,6 @@ interface PropsType {
   name: string
 }
 export default function UpdatePostSubjectInput({ post, name }: PropsType) {
-
   const inputRef = useRef<HTMLInputElement>(null)
 
   useInitialValueSetter(inputRef, post.category)

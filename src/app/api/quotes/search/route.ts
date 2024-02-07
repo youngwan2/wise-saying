@@ -23,7 +23,9 @@ export async function GET(req: NextRequest) {
                 WHERE quote LIKE $1
                 LIMIT 5
             `
-        const resultByKeyword = await db.query(keywordQuery, [`%${searchText}%`])
+        const resultByKeyword = await db.query(keywordQuery, [
+          `%${searchText}%`,
+        ])
         const resultByAuthor = await db.query(authorQuery, [`%${searchText}%`])
         const byAuthor = resultByAuthor.rows
         const byKeyword = resultByKeyword.rows

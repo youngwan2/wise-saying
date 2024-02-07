@@ -45,7 +45,7 @@ export default function QuotesStylerCarosel() {
             ></Image>
           )
         })}
-        <QuoteStylerImageUploadForm  setImages={setImages}  images={images}/>
+        <QuoteStylerImageUploadForm setImages={setImages} images={images} />
       </figure>
       {/* 캐러셀 조작 버튼 */}
       <StylerCarouselSwitchButtons emblaApi={emblaApi} />

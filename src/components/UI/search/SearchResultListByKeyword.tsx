@@ -56,20 +56,21 @@ export default function SearchResultListByAuthor({ items }: PropsType) {
             검색된 결과가 존재하지 않습니다.
           </p>
         )}
-        {currentQuoteCount >= 1 && splitQuotes?.map((item) => {
-          return (
-            <li
-              onClick={() => {
-                router.push(`/quotes/authors/${item.author}/${item.id}`)
-              }}
-              key={item.id}
-              className="flex p-[5px] py-[10px] min-h-[50px] border-b-[1px] border-dashed text-white items-center hover:bg-[#ffffff3c] hover:cursor-pointer"
-            >
-              <p className="mr-[5px] w-[80%]">{item.quote}</p>
-              <span className=" w-[20%]">{item.author}</span>
-            </li>
-          )
-        })}
+        {currentQuoteCount >= 1 &&
+          splitQuotes?.map((item) => {
+            return (
+              <li
+                onClick={() => {
+                  router.push(`/quotes/authors/${item.author}/${item.id}`)
+                }}
+                key={item.id}
+                className="flex p-[5px] py-[10px] min-h-[50px] border-b-[1px] border-dashed text-white items-center hover:bg-[#ffffff3c] hover:cursor-pointer"
+              >
+                <p className="mr-[5px] w-[80%]">{item.quote}</p>
+                <span className=" w-[20%]">{item.author}</span>
+              </li>
+            )
+          })}
       </ul>
       {/* 버튼 컨테이너 */}
       <SearchResultSwitchButton
