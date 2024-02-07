@@ -42,7 +42,7 @@ export default function DetailPageControlButtons({
 
     return (
         <>
-            <article  className='flex justify-center w-full '>
+            <article  className='flex items-start  w-full text-white '>
                 {/* 카드 만들기 버튼 */}
                 <button
                     onClick={onClickStylerPageSwitch}
