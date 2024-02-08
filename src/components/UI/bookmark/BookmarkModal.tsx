@@ -20,9 +20,8 @@ interface BookmarkListType {
   url: string
 }
 
-/**
- * TODO: 분리 가능한 부분은 컴포넌트로 분리할 필요가 있어 보임.
- */
+
+const MIN_BOOKLIST_COUNT = 1
 export default function BookmarkModal() {
   const toggleState = useBookmarkStore((state) => state.toggleState)
   const setBookmarkList = useBookmarkStore((state) => state.setBookmarkList)
@@ -87,7 +86,7 @@ export default function BookmarkModal() {
       </h2>
       <BookmarkCloseButton />
 
-      {bookmarkList.length < 1 ? (
+      {bookmarkList.length < MIN_BOOKLIST_COUNT ? (
         <ReplaceMessageCard childern={<p>조회 결과가 존재하지 않습니다.</p>} />
       ) : null}
 

@@ -24,7 +24,7 @@ export default async function DetailPage({
       const item = result.rows[0]
       return item
     } catch (error) {
-      console.error('/app/(quotes)/quotes/[category]/[name]/[id]/page.tsx')
+      console.error('/app/(quotes)/quotes/[category]/[name]/[id]/page.tsx', error)
       return false
     }
   }

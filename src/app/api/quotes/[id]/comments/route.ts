@@ -1,5 +1,5 @@
 import { openDB } from '@/utils/connect'
-import { accessTokenVerify } from '@/utils/validation'
+import { tokenVerify } from '@/utils/auth'
 import { revalidateTag } from 'next/cache'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -62,7 +62,7 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
   const tag = req.nextUrl.searchParams.get('tag') || ''
 
   // 토큰 유효성 검증
-  const { status, meg, success, user } = accessTokenVerify(req)
+  const { status, meg, success, user } = tokenVerify(req, true)
   if (status === 400) {
     return NextResponse.json({ status, success, meg })
   }
@@ -83,7 +83,7 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
 
   try {
     const db = await openDB()
-    const { userId } = user
+    const { sub:userId } = user
     const quoteId = res.params.id
 
     const query = `
@@ -112,7 +112,7 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
 export async function PATCH(req: NextRequest, res: { params: { id: string } }) {
   const commentId = res.params.id
   const { comment } = (await req.json()) || { comment: '' }
-  const { status, meg, success, user } = accessTokenVerify(req)
+  const { status, meg, success, user } = tokenVerify(req, true)
 
   if (status === 400) {
     return NextResponse.json({ status, success, meg })
@@ -124,7 +124,7 @@ export async function PATCH(req: NextRequest, res: { params: { id: string } }) {
 
   try {
     const db = await openDB()
-    const { userId } = user
+    const { sub:userId } = user
     const updateQuery = `
         UPDATE usercomments
         SET comment = $1, updated_at = CURRENT_TIMESTAMP
@@ -156,7 +156,7 @@ export async function DELETE(
   try {
     const commentId = res.params.id
     // 토큰 유효성 검증
-    const { status, meg, success, user } = accessTokenVerify(req)
+    const { status, meg, success, user } = tokenVerify(req, true)
     if (status === 400) {
       return NextResponse.json({ status, success, meg })
     }
@@ -167,7 +167,7 @@ export async function DELETE(
 
     if (commentId) {
       const db = await openDB()
-      const { userId } = user
+      const { sub:userId } = user
       const userQuery = `
                 DELETE FROM usercomments
                 WHERE comment_id = $1 AND user_id = $2

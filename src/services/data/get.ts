@@ -1,17 +1,18 @@
 import { config } from '@/configs/config'
+import { requestNewAccessToken } from '../user/post'
 
 /**
  * * GET | 서버로부터 특정 경로에 대한 명언 리스트 불러오기
  * @param url
- * @returns {Promise} 아이템 목록 반환
+ * @returns 아이템 목록 반환
  */
-export async function getQuotesBy(url: string): Promise<any> {
+export async function getQuotesBy(url: string) {
   try {
     const response = await fetch(url)
     const items = await response.json()
     return items
   } catch (error) {
-    console.error(error)
+    console.error('에러 발생:', error)
   }
 }
 
@@ -24,10 +25,12 @@ export async function getCategoryCountFromDb(url: string) {
   try {
     const transformURL = config.apiPrefix + config.apiHost + url
     const response = await fetch(transformURL)
+    if (!response.ok) throw new Error('명언 카테고리 목록를 가져오지 못 했습니다.')
+
     const { count } = await response.json()
     return count
   } catch (error) {
-    console.error(error)
+    console.error('에러 발생:', error)
   }
 }
 
@@ -35,32 +38,31 @@ export async function getCategoryCountFromDb(url: string) {
  * * GET | 북마크 리스트 불러오기
  * @param url
  * @param token accessToken
- * @returns {Promise}
  */
-export const getBookmarkListFormDB = async (
-  url: string,
-  token: string,
-): Promise<any> => {
+export const getBookmarkListFormDB = async (url: string, token: string) => {
   if (token.length < 2) return
   try {
     const response = await fetch(url, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        authorization: `Bearer ${token}`,
       },
     })
-    const items = response.json()
+
+
+    const items = await response.json()
     const { status } = await items
 
+    if (status === 200) return items
     if (status === 401) {
-      localStorage.removeItem('token')
-      localStorage.removeItem('user')
-      location.reload()
+      const newToken = await requestNewAccessToken()
+      localStorage.setItem('token', newToken)
     }
-    return items
   } catch (error) {
-    console.error(error)
+    console.error('에러 발생:', error)
   }
 }
+
+
 
 /**
  * * GET | 각 페이지의 카테고리별 메타데이터 불러오기
@@ -73,7 +75,10 @@ export const getBookmarkListFormDB = async (
 
 async function fetchModule(url: string) {
   const response = await fetch(url)
+  if (!response.ok) throw new Error('명언 카테고리 목록를 가져오지 못 했습니다.')
+
   const result = await response.json()
+
   return result
 }
 
@@ -104,7 +109,7 @@ export const todayQuoteFetch = async () => {
     const items = await response.json()
     return items
   } catch (error) {
-    console.error('services/data/get.ts', error)
+    console.error('에러 발생:', error)
   }
 }
 
