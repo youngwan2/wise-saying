@@ -1,5 +1,5 @@
 import { openDB } from '@/utils/connect'
-import { accessTokenVerify } from '@/utils/validation'
+import { tokenVerify } from '@/utils/auth'
 import { NextRequest, NextResponse } from 'next/server'
 import bcrpt from 'bcrypt'
 import joi from 'joi'
@@ -36,7 +36,7 @@ export async function PATCH(
   }
 
   // 토큰 검증
-  const { meg, success, status, user } = accessTokenVerify(req)
+  const { meg, success, status, user } = tokenVerify(req, true)
 
   if (status === 400) {
     return NextResponse.json({ status, success, meg })
@@ -80,11 +80,10 @@ export async function DELETE(
   req: NextRequest,
   res: { params: { userId: number } },
 ) {
-  const userId = res.params.userId
 
   try {
     // 토큰 검증
-    const { meg, success, status, user } = accessTokenVerify(req)
+    const { meg, success, status, user } = tokenVerify(req, true)
 
     if (status === 400) {
       return NextResponse.json({ status, success, meg })
@@ -94,8 +93,8 @@ export async function DELETE(
       return NextResponse.json({ status, success, meg })
     }
 
-    const { userId: decodeUserid, dbEmail } = user
-    if (Number(userId) !== Number(decodeUserid)) {
+    const { email:dbEmail, sub:userId } = user
+    if (Number(userId) !== Number(userId)) {
       return NextResponse.json({
         meg: '해당 유저가 아닙니다.',
         status: 403,
@@ -109,7 +108,7 @@ export async function DELETE(
             WHERE email = $1 AND user_id = $2
         `
 
-    await db.query(query, [dbEmail, decodeUserid])
+    await db.query(query, [dbEmail, userId])
 
     return NextResponse.json({
       meg: '정상적으로 삭제처리되었습니다. 이용해 주셔서 감사합니다. 회원 관련 서비스 이외에는 정상 이용 가능하니 생각나실 때 한 번씩 사용해주세요~.',
