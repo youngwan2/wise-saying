@@ -1,5 +1,30 @@
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 
+
+/**
+ * POST | 새로운 accessToken 발급
+ * @returns 
+ */
+export const requestNewAccessToken = async () => {
+  const config = { method: 'POST' }
+
+  try {
+    const respone = await fetch('/api/auth/access', config)
+
+    if (!respone.ok) throw new Error('토큰 발급 요청이 실패하였습니다.')
+
+    const { status, accessToken } = await respone.json();
+
+    if (status === 201) {
+      return accessToken
+    }
+
+  } catch (error) {
+    console.error('에러 발생: ', error)
+  }
+}
+
+
 /**
  * POST | 로그인 요청
  * @param email
@@ -49,6 +74,7 @@ export const reqLogin = async (
   }
 }
 
+
 /**
  * POST | 유저가 작성한 포스트를 등록 요청하는 메소드
  * @param hasToken accessToken
@@ -76,8 +102,10 @@ export const postUserPost = async (
   if (!(category && content && author)) return alert('모든 빈 칸을 채워주세요')
   if (category.toString().length < 1 || category.toString().length > 3)
     return alert(`주제를 최소 2자 이상~ 3자 이하로 적어 주세요.`)
+
   if (content.toString().length < 3)
-    return alert(`내용을 최소 3자 이상 적어 주세요.`)
+      return alert(`내용을 최소 3자 이상 적어 주세요.`)
+    
   if (author.toString().length < 2)
     return alert('작성자를 최소 2자 이상 적어주세요.')
 
@@ -134,6 +162,7 @@ export async function updateUserInfo(
         authorization: `Bearer ${token}`,
       },
     })
+
     const { status, meg } = await response.json()
     if (status === 201) {
       alert(meg)
@@ -142,6 +171,7 @@ export async function updateUserInfo(
       alert(meg)
     }
   } catch (error) {
+    console.error('전송 실패:', error)
     alert(
       '전송 중 예기치 못한 문제가 발생하였습니다. 나중에 다시시도 해주세요.',
     )

@@ -1,7 +1,7 @@
 import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 import { headers } from 'next/headers'
-import { accessTokenVerify } from '@/utils/validation'
+import { tokenVerify } from '@/utils/auth'
 
 //  GET | 북마크 조회 처리
 export async function GET(req: NextRequest) {
@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
   const pageNum = Number(page)
   const limitNum = Number(limit)
 
-  const { status, meg, success, user } = accessTokenVerify(req)
+  const { status, meg, success, user } = tokenVerify(req,true)
 
   if (status === 400) {
     return NextResponse.json({ status, success, meg })
@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
   if (status === 401) {
     return NextResponse.json({ status, success, meg })
   }
-  const userId = user.userId
+  const userId = user.sub
 
   const db = await openDB()
 
@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
   const { quoteId } = await req.json()
 
   // 토큰 유효성 검증
-  const { status, meg, success, user } = accessTokenVerify(req)
+  const { status, meg, success, user } =tokenVerify(req, true)
 
   if (status === 400) {
     return NextResponse.json({ status, success, meg })
@@ -83,7 +83,7 @@ export async function POST(req: NextRequest) {
   try {
     const db = await openDB()
 
-    const userId = user.userId
+    const userId = user.sub
 
     // (북마크 목록에 이미 존재하는 경우) 북마크 목록에 추가하지 않기
     const selectQuery = `

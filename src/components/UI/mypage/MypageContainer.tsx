@@ -17,10 +17,13 @@ export default function MypageContainer() {
 
   const token = (hasToken && localStorage.getItem('token')) || ''
 
+  // 유저 정보
   const { data: userInfo, error } = useSWR(
     ['/api/users/', token],
     ([url, token]) => getUserInfoFromDb(url, token),
   )
+
+  // 유저 명언 목록
   const { data: userQuotesInfo } = useSWR(
     () =>
       tapId === 1

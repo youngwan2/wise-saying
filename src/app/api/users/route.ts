@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { openDB } from '@/utils/connect'
-import { accessTokenVerify } from '@/utils/validation'
 import joi from 'joi'
+import { tokenVerify } from '@/utils/auth'
 
 // POST | 회원가입 시 유저가 이미 존재하는지 검증
 export async function POST(req: NextRequest) {
@@ -63,7 +63,9 @@ export async function GET(req: NextRequest) {
     const db = await openDB()
 
     // 토큰 검증
-    const { status, success, meg, user } = accessTokenVerify(req)
+    const { status, success, meg, user } = tokenVerify(req,true)
+
+    console.log(user)
 
     if (status === 400) {
       return NextResponse.json({ status, success, meg })
@@ -74,7 +76,8 @@ export async function GET(req: NextRequest) {
     }
 
     // 검증 후 처리
-    const { userId } = user
+    const { sub:userId } = user
+
     const query = `
         SELECT user_id, email, nickname, profile_img_url AS profile_image FROM users
         WHERE user_id = $1

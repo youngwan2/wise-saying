@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { openDB } from '@/utils/connect'
-import { accessTokenVerify } from '@/utils/validation'
+import { tokenVerify } from '@/utils/auth'
 import { revalidateTag } from 'next/cache'
 
 // POST | 유저 프로필 정보 업데이트
@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     const { nickname, profile_image } = await req.json()
 
     // 토큰 유효성 검증
-    const { status, meg, success, user } = accessTokenVerify(req)
+    const { status, meg, success, user } = tokenVerify(req, true)
 
     if (status === 400) {
       return NextResponse.json({ status, success, meg })
