@@ -6,11 +6,7 @@ import joi from 'joi'
 
 // PATCH | 단일 회원의 비밀번호 변경
 const SALT = 10
-export async function PATCH(
-  req: NextRequest,
-  res: { params: { userId: number } },
-) {
-  const userId = res.params.userId
+export async function PATCH( req: NextRequest ) {
   const password = (await req.json()) || ''
 
   // 유효성 검증
@@ -37,6 +33,9 @@ export async function PATCH(
 
   // 토큰 검증
   const { meg, success, status, user } = tokenVerify(req, true)
+
+
+  const {sub: userId} = user
 
   if (status === 400) {
     return NextResponse.json({ status, success, meg })
@@ -76,10 +75,7 @@ export async function PATCH(
 }
 
 // DELETE | 회원탈퇴
-export async function DELETE(
-  req: NextRequest,
-  res: { params: { userId: number } },
-) {
+export async function DELETE( req: NextRequest ) {
 
   try {
     // 토큰 검증

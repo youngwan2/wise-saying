@@ -1,6 +1,6 @@
 import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
-import { accessTokenVerify } from '@/utils/validation'
+import { tokenVerify } from '@/utils/auth'
 
 // GET | 단일 포스트 조회
 export async function GET(req: NextRequest, res: { params: { id: number } }) {
@@ -40,7 +40,7 @@ export async function PATCH(req: NextRequest, res: { params: { id: number } }) {
     const db = await openDB()
 
     //  접근 토큰 검증
-    const { status, meg, success } = accessTokenVerify(req)
+    const { status, meg, success } = tokenVerify(req, true)
 
     if (status === 400) {
       return NextResponse.json({ status, success, meg })
@@ -89,7 +89,7 @@ export async function DELETE(
     const db = await openDB()
 
     // 토큰 검증 및 에러 처리
-    const { status, meg, success, user } = accessTokenVerify(req)
+    const { status, meg, success, user } = tokenVerify(req,true)
 
     if (status === 400) {
       return NextResponse.json({ status, success, meg })
@@ -100,7 +100,7 @@ export async function DELETE(
     }
 
     // 토큰 검증 성공 후 처리
-    const userId = user.userId
+    const {sub: userId} = user
     const query = `
             DELETE FROM quotes
             WHERE quote_id = $1 AND user_id = $2
