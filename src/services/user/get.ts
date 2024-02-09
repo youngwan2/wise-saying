@@ -17,10 +17,10 @@ export const getUserInfoFromDb = async (url: string, token: string) => {
       },
     })
 
-    if(!response.ok) throw new Error('데이터 조회에 실패하였습니다.')
+    if (!response.ok) throw new Error('데이터 조회에 실패하였습니다.')
 
     const result = await response.json()
-    const { status, meg } = result
+    const { status } = result
 
     if (status === 401) {
       const newToken = await requestNewAccessToken()
@@ -67,4 +67,3 @@ export const getCategoryUserFromDb = async (path: string) => {
   if (status === 200) return categories
   return []
 }
-

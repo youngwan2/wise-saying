@@ -22,7 +22,7 @@ export async function deleteUserInfo(
       const response = await fetch(`/api/users/${userId}`, {
         method: 'DELETE',
         headers: {
-          authorization: `Bearer ${localStorage.getItem('token')}`,
+          authorization: `Bearer ${sessionStorage.getItem('token')}`,
         },
       })
       const { meg, status } = await response.json()

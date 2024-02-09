@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
   const pageNum = Number(page)
   const limitNum = Number(limit)
 
-  const { status, meg, success, user } = tokenVerify(req,true)
+  const { status, meg, success, user } = tokenVerify(req, true)
 
   if (status === 400) {
     return NextResponse.json({ status, success, meg })
@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
   const { quoteId } = await req.json()
 
   // 토큰 유효성 검증
-  const { status, meg, success, user } =tokenVerify(req, true)
+  const { status, meg, success, user } = tokenVerify(req, true)
 
   if (status === 400) {
     return NextResponse.json({ status, success, meg })

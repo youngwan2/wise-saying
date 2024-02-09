@@ -13,23 +13,26 @@ export async function POST(req: NextRequest) {
     const { email, password } = await req.json()
 
     const schema = Joi.object({
-      email: Joi
-        .string()
-        .email({ maxDomainSegments: 2, tlds: { allow: [`com`, `net`] } }),
-      password: Joi
-        .string()
-        .pattern(
-          new RegExp(
-            /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&+=])[a-zA-Z0-9!@#$%^&+=]{8,}$/,
-          ),
-        )
+      email: Joi.string().email({
+        maxDomainSegments: 2,
+        tlds: { allow: [`com`, `net`] },
+      }),
+      password: Joi.string().pattern(
+        new RegExp(
+          /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&+=])[a-zA-Z0-9!@#$%^&+=]{8,}$/,
+        ),
+      ),
     })
 
     // 0-1. 요청 유저 정보의 유효성 판단
     const validResults = schema.validate({ email, password })
-  
-    if(validResults.error?.name === 'ValidationError') {
-      return NextResponse.json({success:false, meg:validResults.error.message, status:400})
+
+    if (validResults.error?.name === 'ValidationError') {
+      return NextResponse.json({
+        success: false,
+        meg: validResults.error.message,
+        status: 400,
+      })
     }
 
     const query = `
@@ -66,28 +69,25 @@ export async function POST(req: NextRequest) {
         status: 400,
       })
 
+    const accessToken = createToken({ userEmail, userId }, true)
+    const refreshToken = createToken({ userEmail, userId }, false)
 
-    const accessToken = createToken({userEmail, userId },true)
-    const refreshToken = createToken({userEmail, userId },false)
-
-    cookies().set ({
-      name:'refreshToken', // 쿠키 이름
-      value:'Bearer '+ refreshToken, // 쿠키에 저장할 값
+    cookies().set({
+      name: 'refreshToken', // 쿠키 이름
+      value: 'Bearer ' + refreshToken, // 쿠키에 저장할 값
       httpOnly: true, // 자바스크립트로 접근 불가능(Only HTTP 로만 전송 가능, XSS 공격 방지)
-      secure:true, // 오직 안전한 연결인 HTTPS 에서만 사용가능(로컬 환경에서는 http 허용 해줌)
-      path:'/', // 쿠키에 접근할 수 있는 사이트 경로
+      secure: true, // 오직 안전한 연결인 HTTPS 에서만 사용가능(로컬 환경에서는 http 허용 해줌)
+      path: '/', // 쿠키에 접근할 수 있는 사이트 경로
     })
-    
 
     return NextResponse.json({
       success: true,
       meg: '정상적으로 처리 되었습니다..',
       status: 201,
       email: userEmail,
-      profile: { image: profile_image, nickname:nickname || '익명의 명인' },
+      profile: { image: profile_image, nickname: nickname || '익명의 명인' },
       accessToken,
     })
-
 
     // 5. 그 외 에러 처리
   } catch (error) {

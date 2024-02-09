@@ -63,7 +63,7 @@ export async function GET(req: NextRequest) {
     const db = await openDB()
 
     // 토큰 검증
-    const { status, success, meg, user } = tokenVerify(req,true)
+    const { status, success, meg, user } = tokenVerify(req, true)
 
     console.log(user)
 
@@ -76,7 +76,7 @@ export async function GET(req: NextRequest) {
     }
 
     // 검증 후 처리
-    const { sub:userId } = user
+    const { sub: userId } = user
 
     const query = `
         SELECT user_id, email, nickname, profile_img_url AS profile_image FROM users

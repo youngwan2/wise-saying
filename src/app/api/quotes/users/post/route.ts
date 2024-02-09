@@ -5,7 +5,7 @@ import { tokenVerify } from '@/utils/auth'
 // POST | 유저가 작성한 포스트 등록(추가) 요청
 export async function POST(req: NextRequest) {
   // 토큰 유효성 검증
-  const { status, meg, success, user } = tokenVerify(req,true)
+  const { status, meg, success, user } = tokenVerify(req, true)
 
   if (status === 400) {
     return NextResponse.json({ status, success, meg })

@@ -12,7 +12,6 @@ export default function ShareButtons() {
   const [isDisplay, setIsDisplay] = useState(false)
   const articleRef = useRef<HTMLElement>(null)
 
-
   useDraggable(articleRef, null)
 
   enum ShareType {
@@ -72,74 +71,78 @@ export default function ShareButtons() {
       <article
         ref={articleRef}
         aria-hidden={!isDisplay}
-        className={` ${
-          isDisplay
-            ? 'flex fixed left-[50%] top-[30%]  translate-x-[-50%] translate-y-[-50%] '
+        className={` ${isDisplay
+            ? 'fixed left-[50%] top-[30%]  translate-x-[-50%] translate-y-[-50%] '
             : 'hidden'
-        }  rounded-[10px] flex items-center justify-center my-[1.5em] py-[0.5em] max-w-[300px] mx-auto w-full px-[2em] bg-[white] min-h-[250px] shadow-[0_0_0_1000px_rgba(0,0,0,0.5)] `}
+          }  rounded-[10px] items-center justify-center my-[1.5em] py-[0.5em] max-w-[300px] mx-auto w-full px-[1em] bg-[white] min-h-[250px] shadow-[0_0_0_1000px_rgba(0,0,0,0.5)] `}
       >
-        <h3 className="fixed top-[0.78em] font-bold text-[1.25em]">공유하기</h3>
-        <button
-          onClick={() => setIsDisplay(false)}
-          aria-label="공유하기 모달창 닫기"
-          className="fixed right-2 top-3 hover:bg-[tomato] rounded-[10px] hover:text-white p-[5px]"
-        >
-          <HiXCircle className='text-[1.8em]'/>
-        </button>
-        {/* 페이스북 */}
-        <button
-          aria-label="페이스북 공유"
-          className="hover:bg-[#45454527] rounded-[3px] flex flex-col items-center text-[1em] mx-[0.5em] min-w-[60px] "
-          onClick={() => {
-            shareWithSns(ShareType.Facebook)
-          }}
-        >
-          <BiLogoFacebook
-            className="m-[3px] rounded-[3px] text-[2em] bg-[rgb(65,93,155)]"
-            color="white"
-          />
-          페이스북
-        </button>
-        {/* X(트위터) */}
-        <button
-          aria-label="X(구. 트위터) 공유"
-          className="hover:bg-[#45454527] rounded-[3px] flex flex-col items-center text-[1em] mx-[0.5em] min-w-[50px] "
-          onClick={() => {
-            shareWithSns(ShareType.X)
-          }}
-        >
-          <BsTwitterX
-            className="m-[3px] bg-black text-[2em] p-[3px] rounded-[3px]"
-            color="white"
-          />
-          X
-        </button>
-        {/* 네이버 */}
-        <button
-          aria-label="네이버 공유"
-          className="hover:bg-[#45454527] rounded-[3px] flex flex-col items-center text-[1em] mx-[0.5em] min-w-[50px] "
-          onClick={() => {
-            shareWithSns(ShareType.Naver)
-          }}
-        >
-          <SiNaver
-            className="m-[3px] bg-[rgb(0,198,59)] text-[2em] p-[5px] rounded-[3px]"
-            color="white"
-          />
-          네이버
-        </button>
-        {/* URL 복사 */}
-        <button
-          aria-label="직접 URL 복사. 해당 URL 을 공유하고자 하는 곳에서 붙여넣기."
-          onClick={shareClip}
-          className="hover:bg-[#45454527] flex-col rounded-[5px] text-[1em] p-[3px] text-black mx-[0.3em] flex items-center"
-        >
-          <IoIosLink
-            color="white"
-            className="m-[3px] bg-black text-[2em] p-[3px] rounded-[3px]"
-          />
-          URL
-        </button>
+        <div className='mb-[3em] flex justify-between w-full items-center'>
+          <h3 className="font-bold text-[1.25em]">공유하기</h3>
+          <button
+            onClick={() => setIsDisplay(false)}
+            aria-label="공유하기 모달창 닫기"
+            className=" hover:bg-[tomato] rounded-[10px] hover:text-white p-[5px]"
+          >
+            <HiXCircle className="text-[1.8em]" />
+          </button>
+        </div>
+        <div className='flex '>
+
+          {/* 페이스북 */}
+          <button
+            aria-label="페이스북 공유"
+            className="hover:bg-[#45454527] rounded-[3px] flex flex-col items-center text-[1em] mx-[0.5em] min-w-[60px] "
+            onClick={() => {
+              shareWithSns(ShareType.Facebook)
+            }}
+          >
+            <BiLogoFacebook
+              className="m-[3px] rounded-[3px] text-[2em] bg-[rgb(65,93,155)]"
+              color="white"
+            />
+            페이스북
+          </button>
+          {/* X(트위터) */}
+          <button
+            aria-label="X(구. 트위터) 공유"
+            className="hover:bg-[#45454527] rounded-[3px] flex flex-col items-center text-[1em] mx-[0.5em] min-w-[50px] "
+            onClick={() => {
+              shareWithSns(ShareType.X)
+            }}
+          >
+            <BsTwitterX
+              className="m-[3px] bg-black text-[2em] p-[3px] rounded-[3px]"
+              color="white"
+            />
+            X
+          </button>
+          {/* 네이버 */}
+          <button
+            aria-label="네이버 공유"
+            className="hover:bg-[#45454527] rounded-[3px] flex flex-col items-center text-[1em] mx-[0.5em] min-w-[50px] "
+            onClick={() => {
+              shareWithSns(ShareType.Naver)
+            }}
+          >
+            <SiNaver
+              className="m-[3px] bg-[rgb(0,198,59)] text-[2em] p-[5px] rounded-[3px]"
+              color="white"
+            />
+            네이버
+          </button>
+          {/* URL 복사 */}
+          <button
+            aria-label="직접 URL 복사. 해당 URL 을 공유하고자 하는 곳에서 붙여넣기."
+            onClick={shareClip}
+            className="hover:bg-[#45454527] flex-col rounded-[5px] text-[1em] p-[3px] text-black mx-[0.3em] flex items-center"
+          >
+            <IoIosLink
+              color="white"
+              className="m-[3px] bg-black text-[2em] p-[3px] rounded-[3px]"
+            />
+            URL
+          </button>
+        </div>
       </article>
     </>
   )

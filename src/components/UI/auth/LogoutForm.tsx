@@ -10,9 +10,9 @@ export default function Logout() {
   const [nickname, setNickname] = useState('익명')
 
   useEffect(() => {
-    if (localStorage.getItem('user') === null) return
+    if (sessionStorage.getItem('user') === null) return
 
-    const profile = localStorage.getItem('user') as string
+    const profile = sessionStorage.getItem('user') as string
     const user = JSON.parse(profile)
     const nickname = user.profile.nickname
     setNickname(nickname)
@@ -39,7 +39,7 @@ export default function Logout() {
             className="bg-[#ff5100] text-[white] p-[10px] rounded-[5px] my-[1em]"
             onClick={() => {
               alert('곧 로그아웃 처리가 완료 됩니다.')
-              logoutUser(router)
+              logoutUser()
             }}
           >
             로그아웃

@@ -75,10 +75,13 @@ export default function TodayQuotelist({ quotes }: PropsType) {
               >
                 {''}
               </p>
-              <strong onClick={()=>{
-                router.prefetch(`/quotes/authors/${quote.author}`)
-                router.push(`/quotes/authors/${quote.author}`)
-              }} className="inline-block mt-[2em] mr-[1em] text-white text-right w-full hover:text-[tomato] hover:cursor-pointer">
+              <strong
+                onClick={() => {
+                  router.prefetch(`/quotes/authors/${quote.author}`)
+                  router.push(`/quotes/authors/${quote.author}`)
+                }}
+                className="inline-block mt-[2em] mr-[1em] text-white text-right w-full hover:text-[tomato] hover:cursor-pointer"
+              >
                 {quote.author}
               </strong>
               <div className="max-w-[100px] border-t-[20px] border-b-[20px] absolute  right-0 z-[1] top-0"></div>

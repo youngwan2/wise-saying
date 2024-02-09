@@ -5,11 +5,11 @@ export default function useHasToken() {
   const [validToken, setValidToken] = useState(false)
 
   useEffect(() => {
-    if (localStorage.getItem('token')) {
+    if (sessionStorage.getItem('token')) {
       setValidToken(true)
     }
 
-    if (!localStorage.getItem('token')) {
+    if (!sessionStorage.getItem('token')) {
       setValidToken(false)
     }
   }, [])

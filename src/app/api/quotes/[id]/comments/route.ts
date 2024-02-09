@@ -59,7 +59,6 @@ export async function GET(req: NextRequest, res: { params: { id: string } }) {
 
 // POST | 댓글 등록
 export async function POST(req: NextRequest, res: { params: { id: string } }) {
-  const tag = req.nextUrl.searchParams.get('tag') || ''
 
   // 토큰 유효성 검증
   const { status, meg, success, user } = tokenVerify(req, true)
@@ -83,7 +82,7 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
 
   try {
     const db = await openDB()
-    const { sub:userId } = user
+    const { sub: userId } = user
     const quoteId = res.params.id
 
     const query = `
@@ -91,7 +90,6 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
             VALUES ($1,$2,$3)
             `
     db.query(query, [comment, userId, quoteId])
-    revalidateTag(tag)
     db.end()
     return NextResponse.json({
       status: 201,
@@ -124,7 +122,7 @@ export async function PATCH(req: NextRequest, res: { params: { id: string } }) {
 
   try {
     const db = await openDB()
-    const { sub:userId } = user
+    const { sub: userId } = user
     const updateQuery = `
         UPDATE usercomments
         SET comment = $1, updated_at = CURRENT_TIMESTAMP
@@ -167,7 +165,7 @@ export async function DELETE(
 
     if (commentId) {
       const db = await openDB()
-      const { sub:userId } = user
+      const { sub: userId } = user
       const userQuery = `
                 DELETE FROM usercomments
                 WHERE comment_id = $1 AND user_id = $2

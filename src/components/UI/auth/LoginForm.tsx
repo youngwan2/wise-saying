@@ -29,7 +29,7 @@ export default function LoginForm() {
   async function login(form: FormData) {
     const email = form.get('email')
     const password = form.get('password')
-    
+
     reqLogin(email, password)
   }
 

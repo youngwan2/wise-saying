@@ -8,7 +8,7 @@ export const deleteUserQuote = async (hasToken: boolean, id: number) => {
   if (!isDelete) return alert('삭제 요청을 취소하였습니다.')
   if (hasToken) {
     const headers = {
-      authorization: `Bearer ${localStorage.getItem('token')}`,
+      authorization: `Bearer ${sessionStorage.getItem('token')}`,
     }
     const url = `/api/quotes/users/post/${id}`
     const response = await fetch(url, {

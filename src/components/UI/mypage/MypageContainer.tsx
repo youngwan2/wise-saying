@@ -15,7 +15,7 @@ export default function MypageContainer() {
   const hasToken = useHasToken()
   const [page, setPage] = useState(0)
 
-  const token = (hasToken && localStorage.getItem('token')) || ''
+  const token = (hasToken && sessionStorage.getItem('token')) || ''
 
   // 유저 정보
   const { data: userInfo, error } = useSWR(

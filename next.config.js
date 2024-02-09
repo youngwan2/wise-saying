@@ -1,4 +1,3 @@
-
 /** @type {import('next').NextConfig} */
 
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
@@ -16,6 +15,5 @@ const nextConfig = {
     ],
   },
 }
-
 
 module.exports = withBundleAnalyzer(nextConfig)

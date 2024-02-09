@@ -1,9 +1,31 @@
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 
+/**
+ * POST | 새로운 refreshToken 발급
+ */
+const requestNewRefreshToken = async () => {
+  const token = sessionStorage.getItem('token')
+  const config = { method: 'POST', header : {
+    authorization: 'Bearer '+ token
+  } }
+
+  try {
+    const response = await fetch('/api/auth/refresh', config)
+    if (!response.ok) throw new Error('토큰 발급 요청이 실패하였습니다.')
+
+    const { status } = await response.json()
+
+    if (status === 201) return true
+    if (status === 401) return false
+
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 /**
  * POST | 새로운 accessToken 발급
- * @returns 
+ * @returns
  */
 export const requestNewAccessToken = async () => {
   const config = { method: 'POST' }
@@ -11,19 +33,15 @@ export const requestNewAccessToken = async () => {
   try {
     const respone = await fetch('/api/auth/access', config)
 
-    if (!respone.ok) throw new Error('토큰 발급 요청이 실패하였습니다.')
+    // if (!respone.ok) throw new Error('토큰 발급 요청이 실패하였습니다.')
+    const { status, accessToken } = await respone.json()
 
-    const { status, accessToken } = await respone.json();
-
-    if (status === 201) {
-      return accessToken
-    }
+    if (status === 201) return accessToken
 
   } catch (error) {
     console.error('에러 발생: ', error)
   }
 }
-
 
 /**
  * POST | 로그인 요청
@@ -60,8 +78,8 @@ export const reqLogin = async (
         dbEmail,
         profile,
       }
-      localStorage.setItem('user', JSON.stringify(user))
-      localStorage.setItem('token', accessToken)
+      sessionStorage.setItem('user', JSON.stringify(user))
+      sessionStorage.setItem('token', accessToken)
       alert(`${dbEmail}님 환영합니다!. 잠시 후 Home 화면으로 이동합니다.`)
       location.reload()
     }
@@ -73,7 +91,6 @@ export const reqLogin = async (
     alert('네트워크 통신에 문제가 발생하였습니다. 나중에 다시시도 해주세요.')
   }
 }
-
 
 /**
  * POST | 유저가 작성한 포스트를 등록 요청하는 메소드
@@ -104,8 +121,8 @@ export const postUserPost = async (
     return alert(`주제를 최소 2자 이상~ 3자 이하로 적어 주세요.`)
 
   if (content.toString().length < 3)
-      return alert(`내용을 최소 3자 이상 적어 주세요.`)
-    
+    return alert(`내용을 최소 3자 이상 적어 주세요.`)
+
   if (author.toString().length < 2)
     return alert('작성자를 최소 2자 이상 적어주세요.')
 

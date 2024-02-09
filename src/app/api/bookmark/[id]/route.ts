@@ -12,7 +12,7 @@ export async function DELETE(
   const db = await openDB()
 
   // 토큰 유효성 검증
-  const { status, meg, success, user } = tokenVerify(req,true)
+  const { status, meg, success, user } = tokenVerify(req, true)
 
   if (status === 400) {
     return NextResponse.json({ status, success, meg })
@@ -23,7 +23,7 @@ export async function DELETE(
   }
 
   // 검증 통과 후 처리
-  const { sub:userId } = user
+  const { sub: userId } = user
 
   const query = `
     DELETE FROM bookmarks

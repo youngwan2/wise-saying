@@ -89,7 +89,7 @@ export async function DELETE(
     const db = await openDB()
 
     // 토큰 검증 및 에러 처리
-    const { status, meg, success, user } = tokenVerify(req,true)
+    const { status, meg, success, user } = tokenVerify(req, true)
 
     if (status === 400) {
       return NextResponse.json({ status, success, meg })
@@ -100,7 +100,7 @@ export async function DELETE(
     }
 
     // 토큰 검증 성공 후 처리
-    const {sub: userId} = user
+    const { sub: userId } = user
     const query = `
             DELETE FROM quotes
             WHERE quote_id = $1 AND user_id = $2

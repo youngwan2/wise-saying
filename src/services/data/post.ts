@@ -6,7 +6,7 @@
 export const addBookmarkItem = (hasToken: boolean, itemId: number) => {
   if (!hasToken) return alert('로그인 후 이용해주시길 바랍니다.')
 
-  const token = localStorage.getItem('token')
+  const token = sessionStorage.getItem('token')
   const postData = {
     quoteId: itemId,
   }

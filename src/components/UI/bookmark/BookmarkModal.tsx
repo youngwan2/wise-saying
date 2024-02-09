@@ -20,7 +20,6 @@ interface BookmarkListType {
   url: string
 }
 
-
 const MIN_BOOKLIST_COUNT = 1
 export default function BookmarkModal() {
   const toggleState = useBookmarkStore((state) => state.toggleState)
@@ -29,9 +28,11 @@ export default function BookmarkModal() {
   const setListCount = useBookmarkStore((state) => state.setListCount)
   const [page, setPage] = useState(0)
   const hasToken = useHasToken()
-  const token = hasToken ? localStorage.getItem('token')! : ''
+  const token = hasToken ? sessionStorage.getItem('token')! : ''
 
   const router = useRouter()
+
+  // SWR | 북마크 리스트 불러온다.
   const { data, isLoading } = useSWR(
     [`/api/bookmark?page=${page}&limit=5`, token],
     ([url, token]) => getBookmarkListFormDB(url, token),

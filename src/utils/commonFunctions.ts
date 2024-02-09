@@ -6,9 +6,9 @@ import { ChangeEvent, FormEvent } from 'react'
  * 페이지 이동 함수
  * @param router next/navigation의 useRouter()
  * @param id 페이지 식별자
- * @returns {boolean} 페이지 전환 유무를 반환
+ * @returns 페이지 전환 유무를 반환
  */
-export const pageSwitch = (router: any, id: number) => {
+export const pageSwitch = (router: AppRouterInstance, id: number) => {
   router.push(`/quotes-styler/auhtor/${id}`)
 
   return true
@@ -23,31 +23,29 @@ export function quotesSelector(item: ItemsType) {
 }
 
 /**
- * * 토큰 만료 이후 강제 로그아웃 함수
+ * *  로그아웃 함수
  * */
-export const logoutUser = (router: AppRouterInstance) => {
-  localStorage.removeItem('token')
-  localStorage.removeItem('user')
-  alert('로그인 가능 시간 만료 또는 사용자 요청에 의해 로그아웃 되었습니다.')
+export const logoutUser = async () => {
 
-  fetch('/api/revalidate?tag=all')
-    .then((response) => {
-      router.push('/login')
-      window.location.reload()
-      return response.json()
-    })
-    .then((result) => {
-      console.log(result)
-    })
-    .catch((error) =>
-      alert('로그아웃에 실패하였습니다. 나중에 다시시도 해주세요.'),
-    )
+  try {
+    const { status, meg } = await (await fetch('/api/auth/clear-token')).json()
+
+    if (status === 200) alert(meg)
+    sessionStorage.removeItem('token')
+    sessionStorage.removeItem('user')
+    window.location.reload()
+
+  } catch (error) {
+    console.error(error)
+
+  }
+
 }
 
 /**
  * * 이미지 미리보기 주소(src)를 반환하는 함수
  * @param e ChangeEvent
- * @returns {string} 이미지 주소를 반환(src)
+ * @returns 이미지 주소를 반환(src)
  */
 export const imagePreviewReader = (e: ChangeEvent<HTMLInputElement>) => {
   if (e.target && e.target.files) {
@@ -66,6 +64,7 @@ export const onSubmit = (e: FormEvent) => {
   e.preventDefault()
 }
 
+// 디바운스
 function debounce() {
   let timerId: NodeJS.Timeout
 

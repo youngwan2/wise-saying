@@ -87,45 +87,45 @@ export default function QuoteCard({ item, items, index }: PropsType) {
   if (!item)
     return <ReplaceMessageCard childern="게시글이 존재하지 않습니다." />
   return (
-      <li
-        ref={(element) => {
-          if (typeof index === 'number' && element instanceof HTMLLIElement) {
-            setLiRefs(index, element)
-          }
-        }}
-        key={item.id}
-        className="invisible shadow-[inset_0_0_0_3px_white] perspective-500 rounded-[10px] w-[95%] my-[1em] max-w-[500px] bg-transparent  px-[15px] py-[35px] mx-auto relative hover:bg-[#d5d5d533] "
-      >
-        <blockquote className="mt-[1em] text-white ">
-          <p className=" p-[1em] text-[1.15em]">{item.quote}</p>
-          <footer className="font-bold mt-[1em] text-right">
-            - {item.author} -
-          </footer>
-        </blockquote>
+    <li
+      ref={(element) => {
+        if (typeof index === 'number' && element instanceof HTMLLIElement) {
+          setLiRefs(index, element)
+        }
+      }}
+      key={item.id}
+      className="invisible shadow-[inset_0_0_0_3px_white] perspective-500 rounded-[10px] w-[95%] my-[1em] max-w-[500px] bg-transparent  px-[15px] py-[35px] mx-auto relative hover:bg-[#d5d5d533] "
+    >
+      <blockquote className="mt-[1em] text-white ">
+        <p className=" p-[1em] text-[1.15em]">{item.quote}</p>
+        <footer className="font-bold mt-[1em] text-right">
+          - {item.author} -
+        </footer>
+      </blockquote>
 
-        {pathName.includes('/user-quotes') ? (
-          <UserQuotesCardControlButtons index={index} item={item} items={items} />
-        ) : (
-          <QuotesCardControlButtons index={index} item={item} />
-        )}
-        {/* 상세 페이지 이동 버튼 */}
-        <button
-          onClick={onClickPushAnimation}
-          className="absolute right-[1.8em] top-[0.45em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-white  "
-        >
-          <HiDocumentMagnifyingGlass />
-        </button>
-        {/* 듣기 버튼 */}
-        <button
-          onClick={() => {
-            setText(item.quote)
-          }}
-          aria-label="명언 듣기 버튼"
-          className="absolute right-[3.3em] top-[0.429em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-white "
-        >
-          {' '}
-          <SlEarphones className="pr-[2px]" />{' '}
-        </button>
-      </li>
+      {pathName.includes('/user-quotes') ? (
+        <UserQuotesCardControlButtons index={index} item={item} items={items} />
+      ) : (
+        <QuotesCardControlButtons index={index} item={item} />
+      )}
+      {/* 상세 페이지 이동 버튼 */}
+      <button
+        onClick={onClickPushAnimation}
+        className="absolute right-[1.8em] top-[0.45em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-white  "
+      >
+        <HiDocumentMagnifyingGlass />
+      </button>
+      {/* 듣기 버튼 */}
+      <button
+        onClick={() => {
+          setText(item.quote)
+        }}
+        aria-label="명언 듣기 버튼"
+        className="absolute right-[3.3em] top-[0.429em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-white "
+      >
+        {' '}
+        <SlEarphones className="pr-[2px]" />{' '}
+      </button>
+    </li>
   )
 }

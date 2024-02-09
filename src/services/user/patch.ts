@@ -33,7 +33,7 @@ export const updateUserPost = async (
   if (author.toString().length <= 2)
     return alert('작성자를 최소 2자 이상 적어주세요.')
 
-  const accessToken = localStorage.getItem('token')
+  const accessToken = sessionStorage.getItem('token')
   const headers = {
     authorization: `Bearer ${accessToken}`,
   }
@@ -78,7 +78,7 @@ export async function updateUserInfoFetcher(
       method: 'PATCH',
       body: JSON.stringify(password),
       headers: {
-        authorization: `Bearer ${localStorage.getItem('token')}`,
+        authorization: `Bearer ${sessionStorage.getItem('token')}`,
       },
     })
     const { meg, status } = await response.json()

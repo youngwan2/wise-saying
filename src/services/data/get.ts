@@ -25,7 +25,8 @@ export async function getCategoryCountFromDb(url: string) {
   try {
     const transformURL = config.apiPrefix + config.apiHost + url
     const response = await fetch(transformURL)
-    if (!response.ok) throw new Error('명언 카테고리 목록를 가져오지 못 했습니다.')
+    if (!response.ok)
+      throw new Error('명언 카테고리 목록를 가져오지 못 했습니다.')
 
     const { count } = await response.json()
     return count
@@ -48,21 +49,31 @@ export const getBookmarkListFormDB = async (url: string, token: string) => {
       },
     })
 
-
     const items = await response.json()
     const { status } = await items
 
     if (status === 200) return items
     if (status === 401) {
       const newToken = await requestNewAccessToken()
-      localStorage.setItem('token', newToken)
+      if(newToken) {
+        sessionStorage.setItem('token', newToken)
+      }
     }
   } catch (error) {
-    console.error('에러 발생:', error)
+    console.error(error)
   }
 }
 
 
+
+async function fetchModule(url: string) {
+  const response = await fetch(url)
+  if (!response.ok)
+    throw new Error('명언 카테고리 목록를 가져오지 못 했습니다.')
+
+  const result = await response.json()
+  return result
+}
 
 /**
  * * GET | 각 페이지의 카테고리별 메타데이터 불러오기
@@ -72,16 +83,6 @@ export const getBookmarkListFormDB = async (url: string, token: string) => {
  * @example `http://localhost:3000/api/quotes/${mainCategory}/${subCategory}}`
  * → ` http://localhost:3000/api/quotes/authors/소크라테스`
  */
-
-async function fetchModule(url: string) {
-  const response = await fetch(url)
-  if (!response.ok) throw new Error('명언 카테고리 목록를 가져오지 못 했습니다.')
-
-  const result = await response.json()
-
-  return result
-}
-
 export const getApiMetaDataFromServer = async (
   mainCategory: string,
   subCategory: string,

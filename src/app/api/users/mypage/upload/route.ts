@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     }
 
     // 검증 통과 후 유저 프로필 업로드 처리
-    const { email:dbEmail, sub:userId } = user
+    const { email: dbEmail, sub: userId } = user
 
     const query = `
             UPDATE users
