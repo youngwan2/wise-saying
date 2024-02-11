@@ -1,4 +1,5 @@
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
+import toaster from 'react-hot-toast'
 
 /**
  * POST | 새로운 refreshToken 발급
@@ -85,10 +86,10 @@ export const reqLogin = async (
     }
 
     if (status !== 201) {
-      alert(meg)
+      toaster.error(meg)
     }
   } catch (error) {
-    alert('네트워크 통신에 문제가 발생하였습니다. 나중에 다시시도 해주세요.')
+    toaster.error('네트워크 통신에 문제가 발생하였습니다. 나중에 다시시도 해주세요.')
   }
 }
 
@@ -109,26 +110,26 @@ export const postUserPost = async (
   },
 ) => {
   if (!hasToken) {
-    alert('로그인 해주세요')
+    toaster.error('로그인 후 이용해주세요.')
     return router.push('/login')
   }
 
   const { category, content, author } = userPost
 
   // 유효성 검증
-  if (!(category && content && author)) return alert('모든 빈 칸을 채워주세요')
+  if (!(category && content && author)) return toaster.error('모든 빈칸을 채워주세요.')
   if (category.toString().length < 1 || category.toString().length > 3)
-    return alert(`주제를 최소 2자 이상~ 3자 이하로 적어 주세요.`)
+    return toaster.error('주제를 최소 2자 이상~ 3자 이하로 적어 주세요.') 
 
   if (content.toString().length < 3)
-    return alert(`내용을 최소 3자 이상 적어 주세요.`)
+    return  toaster.error('내용을 최소 3자 이상 적어 주세요.')
 
   if (author.toString().length < 2)
-    return alert('작성자를 최소 2자 이상 적어주세요.')
+    return toaster.error('작성자를 최소 2자 이상 적어주세요.')
 
   // 포스트 요청
   try {
-    const accessToken = localStorage.getItem('token') || ''
+    const accessToken = sessionStorage.getItem('token') || ''
     const headers = {
       authorization: `Bearer ${accessToken}`,
     }
@@ -141,7 +142,7 @@ export const postUserPost = async (
 
     // 응답 처리
     if (status === 201) {
-      router.back()
+      router.push('/user-quotes')
       router.refresh()
     }
     if (success !== 201) {
@@ -149,6 +150,7 @@ export const postUserPost = async (
     }
   } catch (error) {
     console.error(error)
+    toaster.error('네트워크 에러가 발생하였습니다. 나중에 다시시도 해주세요.')
   }
 }
 
@@ -165,7 +167,7 @@ export async function updateUserInfo(
   imageUrl: string,
 ) {
   if (!hasToken) return alert('접근 권한이 없습니다.')
-  const token = localStorage.getItem('token')
+  const token = sessionStorage.getItem('token')
   const userInfo = {
     nickname: nickname,
     profile_image: imageUrl,
@@ -205,7 +207,7 @@ export const postComment = async (
   comment: FormDataEntryValue,
   quoteId: string | string[],
 ) => {
-  const token = localStorage.getItem('token')
+  const token = sessionStorage.getItem('token')
   if (!token) return alert('로그인 후 이용 부탁 드립니다.')
 
   const body = {

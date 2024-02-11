@@ -65,7 +65,6 @@ export const getBookmarkListFormDB = async (url: string, token: string) => {
 }
 
 
-
 async function fetchModule(url: string) {
   const response = await fetch(url)
   if (!response.ok)

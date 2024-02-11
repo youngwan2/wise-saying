@@ -8,6 +8,7 @@ import { reqLogin } from '@/services/user/post'
 import useDraggable from '@/custom/useDraggable'
 import { redirect } from 'next/navigation'
 import LoginEmailInput from './LoginEmailInput'
+import {Toaster} from 'react-hot-toast'
 import LoginPasswordInput from './LoginPasswordInput'
 
 export default function LoginForm() {
@@ -36,6 +37,7 @@ export default function LoginForm() {
   return (
     <>
       <div className="fixed left-0 right-0 bottom-0 top-0 bg-[#0000009c]"></div>
+      <Toaster/>
       <form
         ref={loginFormRef}
         action={login}

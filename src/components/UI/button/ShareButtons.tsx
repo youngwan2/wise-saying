@@ -7,7 +7,9 @@ import { HiShare } from 'react-icons/hi2'
 import { useRef, useState } from 'react'
 import { SiNaver } from 'react-icons/si'
 import { HiXCircle } from 'react-icons/hi'
+import toaster, {Toaster} from 'react-hot-toast'
 import useDraggable from '@/custom/useDraggable'
+
 export default function ShareButtons() {
   const [isDisplay, setIsDisplay] = useState(false)
   const articleRef = useRef<HTMLElement>(null)
@@ -50,15 +52,16 @@ export default function ShareButtons() {
     try {
       const url = window.location.href
       await window.navigator.clipboard.writeText(url)
-      alert('클립보드에 복사되었습니다. 이용해 주셔서 감사합니다.')
+      toaster.success('클립보드에 복사되었습니다. 이용해 주셔서 감사합니다.')
     } catch (error) {
-      alert('불편을 드려 죄송합니다. 나중에 다시시도 해주세요.')
+      toaster.error('불편을 드려 죄송합니다. 나중에 다시시도 해주세요.')
       console.error(error)
     }
   }
 
   return (
     <>
+      <Toaster/>
       <button
         onClick={() => {
           setIsDisplay(true)

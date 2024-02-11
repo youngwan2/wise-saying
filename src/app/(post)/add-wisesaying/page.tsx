@@ -1,4 +1,5 @@
 import AddPostForm from '@/components/UI/post/AddPostForm'
+import {Toaster} from 'react-hot-toast'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
 export default function AddWisesayingPage() {
   return (
     <section className="z-[1000] fixed left-0 right-0 top-0 bottom-0 bg-[#00000065] ">
+      <Toaster/>
       <AddPostForm />
     </section>
   )

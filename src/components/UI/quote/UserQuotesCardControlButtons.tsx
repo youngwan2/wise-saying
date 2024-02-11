@@ -39,7 +39,7 @@ export default function UserQuotesCardControlButtons({
 
   useEffect(() => {
     if (hasToken) {
-      const json = localStorage.getItem('user')!
+      const json = sessionStorage.getItem('user')!
       const user = JSON.parse(json)
       const { dbEmail } = user
       setUserEmail(dbEmail)

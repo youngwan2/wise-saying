@@ -23,21 +23,19 @@ export function quotesSelector(item: ItemsType) {
 }
 
 /**
- * *  로그아웃 함수
- * */
+ * * 로그아웃 함수
+ */
 export const logoutUser = async () => {
 
   try {
     const { status, meg } = await (await fetch('/api/auth/clear-token')).json()
 
     if (status === 200) alert(meg)
-    sessionStorage.removeItem('token')
-    sessionStorage.removeItem('user')
+    sessionStorage.clear()
     window.location.reload()
 
   } catch (error) {
     console.error(error)
-
   }
 
 }

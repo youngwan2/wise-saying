@@ -33,7 +33,7 @@ export default function MypageContainer() {
   )
 
   if (!hasToken)
-    return <ReplaceMessageCard childern="로그인 후 이용해주세요." />
+    return <ReplaceMessageCard childern="로그인 후 이용해주세요."/>
   if (!userInfo)
     return (
       <ReplaceMessageCard

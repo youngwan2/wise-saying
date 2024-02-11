@@ -91,7 +91,6 @@ export default function UpdatePostForm() {
           {/* 전송버튼 */}
           <button
             className=" bg-[#ffffff] p-[10px] mr-[1em] font-bold hover:bg-[#162557] hover:text-white rounded-[5px]"
-            // onClick={updateUserPost}
           >
             등록하기
           </button>

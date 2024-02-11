@@ -84,7 +84,7 @@ export async function updateUserInfoFetcher(
     const { meg, status } = await response.json()
     if (status === 201) {
       alert(meg + '보안을 위해 다시 로그인 해주세요.')
-      return logoutUser(router)
+      return logoutUser()
     }
 
     return alert(meg)

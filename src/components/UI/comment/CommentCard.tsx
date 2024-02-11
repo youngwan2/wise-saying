@@ -23,7 +23,7 @@ export default function CommentCard({ item }: PropsType) {
   const hasToken = useHasToken()
 
   const user =
-    (localStorage && localStorage?.getItem && localStorage?.getItem('user')) ||
+    (sessionStorage && sessionStorage?.getItem && sessionStorage?.getItem('user')) ||
     '{"dbEmail":""}'
   const { dbEmail: userEmail } = JSON.parse(user)
 
@@ -41,7 +41,7 @@ export default function CommentCard({ item }: PropsType) {
     const isDelete = confirm('정말 삭제하시겠습니까?')
     if (!isDelete) return alert('삭제 요청을 취소하였습니다.')
 
-    const token = localStorage.getItem('token')
+    const token = sessionStorage.getItem('token')
     const response = await fetch(`/api/quotes/${item.id}/comments`, {
       method: 'DELETE',
       headers: {
@@ -88,6 +88,7 @@ export default function CommentCard({ item }: PropsType) {
             {display ? <HiOutlineX /> : <HiDotsVertical />}{' '}
           </button>
         </div>
+        {/* 글쓴이라면 편집 버튼 활성화 */}
         {userEmail !== item.email ? null : display ? (
           <CommentUpdateButtons
             onClickDeleteComment={onClickDeleteComment}
@@ -95,6 +96,7 @@ export default function CommentCard({ item }: PropsType) {
           />
         ) : null}
       </li>
+      {/* 댓글 수정 Form */}
       <li>
         {editFormDisplay ? (
           <CommentUpdateForm

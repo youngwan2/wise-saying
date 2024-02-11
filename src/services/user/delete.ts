@@ -28,7 +28,7 @@ export async function deleteUserInfo(
       const { meg, status } = await response.json()
 
       if (status === 204) {
-        logoutUser(router)
+        logoutUser()
         return alert(meg)
       }
       return alert(meg)

@@ -2,17 +2,19 @@
 import { postComment } from '@/services/user/post'
 import { useParams } from 'next/navigation'
 import { useRef } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
+
 
 export default function CommentForm() {
   const { id } = useParams()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+  
   async function addComment(formData: FormData) {
     const comment = formData.get('comment') || ''
     const isSuccess = await postComment(comment, id)
     textareaRef.current && (textareaRef.current.value = '')
-
     if (isSuccess) {
-      alert('댓글이 등록되었습니다. 잠시 후 갱신 됩니다.')
+      toast.success('댓글 등록이 완료 되었습니다. 잠시 후 댓글창이 갱신됩니다.')
     }
   }
 
@@ -29,11 +31,12 @@ export default function CommentForm() {
         name="comment"
         id="comment"
       ></textarea>
-      <div className="flex mt-[10px] justify-end">
+      <div className="flex mt-[10px] justify-end relative">
         <button
           aria-label="댓글 등록"
           className="mr-[5px] bg-[tomato] min-w-[60px] text-white rounded-[10px] "
         >
+
           등록
         </button>
         <button
@@ -44,6 +47,10 @@ export default function CommentForm() {
           취소
         </button>
       </div>
+      <Toaster />
     </form>
+
   )
 }
+
+// ex 무게는 5kb 미만
