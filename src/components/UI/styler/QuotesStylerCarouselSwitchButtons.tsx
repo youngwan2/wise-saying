@@ -1,8 +1,8 @@
 import { useCallback } from 'react'
-import { EmblaCarouselType } from 'embla-carousel-react'
+import { EmblaCarouselType } from 'embla-carousel'
 
 interface PropsType {
-  emblaApi: EmblaCarouselType
+  emblaApi?: EmblaCarouselType
 }
 export default function QuotesStylerCarouselSwitchButtons({
   emblaApi,

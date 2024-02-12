@@ -33,5 +33,6 @@ export const addBookmarkItem = (hasToken: boolean, itemId: number) => {
     })
     .catch((error) => {
       console.error(error)
+      toaster.error('북마크 추가 요청에 실패 하였습니다. 네트워크 문제가 발생하였습니다.')
     })
 }

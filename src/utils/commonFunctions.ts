@@ -9,8 +9,7 @@ import { ChangeEvent, FormEvent } from 'react'
  * @returns 페이지 전환 유무를 반환
  */
 export const pageSwitch = (router: AppRouterInstance, id: number) => {
-  router.push(`/quotes-styler/auhtor/${id}`)
-
+  router.push(`/quotes-styler/author/${id}`)
   return true
 }
 
@@ -36,6 +35,7 @@ export const logoutUser = async () => {
 
   } catch (error) {
     console.error(error)
+    alert('로그아웃에 실패하였습니다. 나중에 다시시도 해주세요.')
   }
 
 }

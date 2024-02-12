@@ -22,10 +22,9 @@ interface BookmarkListType {
 
 const MIN_BOOKLIST_COUNT = 1
 export default function BookmarkModal() {
-  const toggleState = useBookmarkStore((state) => state.toggleState)
-  const setBookmarkList = useBookmarkStore((state) => state.setBookmarkList)
-  const bookmarkList = useBookmarkStore((state) => state.bookmarkList)
-  const setListCount = useBookmarkStore((state) => state.setListCount)
+
+  const {toggleState, bookmarkList, setBookmarkList, setListCount} = useBookmark()
+
   const [page, setPage] = useState(0)
   const hasToken = useHasToken()
   const token = hasToken ? sessionStorage.getItem('token')! : ''
@@ -37,11 +36,17 @@ export default function BookmarkModal() {
     [`/api/bookmark?page=${page}&limit=5`, token],
     ([url, token]) => getBookmarkListFormDB(url, token),
     {
-      refreshInterval: 4000,
+      refreshInterval:4000,
+      revalidateOnMount:false,
+      revalidateIfStale:false,
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
+      onErrorRetry: ({ retryCount }) => {
+        if(retryCount >=5) return
+      }
     },
   )
+
   const hasData = !!data
   const total = data?.totalCount || 0
   const currentTotal = data?.items?.length || 0
@@ -73,6 +78,7 @@ export default function BookmarkModal() {
   }, [bookmarkListUpdate, data, hasData])
 
   return (
+    <>
     <article
       aria-hidden={!toggleState}
       className={`${
@@ -111,5 +117,18 @@ export default function BookmarkModal() {
         onClickNextSwitch={() => setPage(Math.min(maxPage, page + 1))}
       />
     </article>
+    </>
   )
+}
+
+/**
+ * HOOK | bookmark 관련 전역 상태를 반환하는 훅
+ */
+const useBookmark=()=>{
+  const toggleState = useBookmarkStore((state) => state.toggleState)
+  const setBookmarkList = useBookmarkStore((state) => state.setBookmarkList)
+  const bookmarkList = useBookmarkStore((state) => state.bookmarkList)
+  const setListCount = useBookmarkStore((state) => state.setListCount)
+
+  return {toggleState, bookmarkList, setBookmarkList, setListCount}
 }

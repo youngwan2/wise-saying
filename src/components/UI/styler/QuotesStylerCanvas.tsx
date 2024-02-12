@@ -16,31 +16,17 @@ interface QuoteType {
   quote: string
 }
 export default function QuotesStylerCanvas() {
+
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const imageEl = useMemo(() => {
-    if (Image !== undefined) return new Image()
-  }, [])
+  const [imageEl, setImageEl] = useState<HTMLImageElement|null>(null)
 
-  // 텍스트 스타일 정보
-  const color = useQuotesTextStyleStore((state) => state.color)
-  const unit = useQuotesTextStyleStore((state) => state.unit)
-  const size = useQuotesTextStyleStore((state) => state.size)
-  const font = useQuotesTextStyleStore((state) => state.font)
-  const fontStyle = useQuotesTextStyleStore((state) => state.fontStyle)
-  const lineHeight = useQuotesLineHeightStore((state) => state.lineHeight)
+  const { color, font, fontStyle, size, unit, lineHeight } = useTextStyle()
+  const { color: strokeColor, thickness: strokeThickness } = useStrokeStyle()
+  const { width, height, bgColor } = useCanvasStyle()
 
-  // 캔버스 스타일 정보
-  const bgColor = useBackgroundColorStore((state) => state.bgColor)
-  const width = useQuotesCardSizeStore((state) => state.width)
-  const height = useQuotesCardSizeStore((state) => state.height)
 
   // 명언(텍스트)
   const [quote, setQuote] = useState('')
-
-  // 텍스트 외곽선
-  const strokeColor = useQuotesStrokeStyleStore((state) => state.color)
-  const strokeThickness = useQuotesStrokeStyleStore((state) => state.thickness)
-
   // 배경이미지
   const bgImageSrc = useImageElementStore((state) => state.imageSrc)
 
@@ -60,7 +46,7 @@ export default function QuotesStylerCanvas() {
 
   // 텍스트 그리기
   const draw = useCallback(
-    (ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) => {
+    (ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement, imageEl:HTMLImageElement) => {
       ctx.textAlign = 'center'
       ctx.textBaseline = 'middle'
       ctx.lineWidth = strokeThickness
@@ -71,7 +57,8 @@ export default function QuotesStylerCanvas() {
       let textY = 0 // 캔버스에 그려질 텍스트의 Y 좌표축을 저장(또한, 개행 되는 텍스트의 높이를 저장)
       if (!imageEl) return
       imageEl.alt = '명언 카드 배경 이미지'
-      imageEl.addEventListener('load', () => {
+
+      const handleImageLoad = () => {
         clearCanvas(ctx, canvas) // 새 그림을 추가하기 전에 이전 그림들 제거
         bgColorDraw(ctx, width, height)
         ctx.fillStyle = `${color}`
@@ -89,12 +76,16 @@ export default function QuotesStylerCanvas() {
             ctx.fillText(text, width / 2, textY)
           }
         })
-      })
+      }
+
+      imageEl.addEventListener('load', handleImageLoad)
       // 모든 텍스트가 다 그려진 이후에 이미지를 추가하여 이미지가 글자 위로 덮어씌워 지는 것을 방지한다.
       imageEl.src = bgImageSrc
+
+      return handleImageLoad
+
     },
     [
-      imageEl,
       color,
       fontStyle,
       width,
@@ -118,12 +109,25 @@ export default function QuotesStylerCanvas() {
     return { canvas, ctx }
   }
 
+
+  useEffect(()=>{
+    const imageEl = new Image();
+    setImageEl(imageEl)
+  },[])
+
   useEffect(() => {
     const { canvas, ctx } = createCanvas()
+  
+    if (!imageEl) return
     if (canvas && ctx) {
-      draw(ctx, canvas)
+      const handleImageLoad = draw(ctx, canvas, imageEl)
+ 
+      return () => {
+        if(!handleImageLoad) return
+        imageEl.removeEventListener('load', handleImageLoad)
+      }
     }
-  }, [draw])
+  }, [draw, imageEl])
 
   // 선택한 명언 카드의 정보를 가져오는 이펙트
   useEffect(() => {
@@ -156,4 +160,30 @@ export default function QuotesStylerCanvas() {
       />
     </article>
   )
+}
+
+const useTextStyle = () => {
+  const color = useQuotesTextStyleStore((state) => state.color)
+  const unit = useQuotesTextStyleStore((state) => state.unit)
+  const size = useQuotesTextStyleStore((state) => state.size)
+  const font = useQuotesTextStyleStore((state) => state.font)
+  const fontStyle = useQuotesTextStyleStore((state) => state.fontStyle)
+  const lineHeight = useQuotesLineHeightStore((state) => state.lineHeight)
+
+  return { color, unit, size, font, fontStyle, lineHeight }
+}
+
+const useCanvasStyle = () => {
+  const bgColor = useBackgroundColorStore((state) => state.bgColor)
+  const width = useQuotesCardSizeStore((state) => state.width)
+  const height = useQuotesCardSizeStore((state) => state.height)
+
+  return { bgColor, width, height }
+}
+
+const useStrokeStyle = () => {
+  const color = useQuotesStrokeStyleStore((state) => state.color)
+  const thickness = useQuotesStrokeStyleStore((state) => state.thickness)
+
+  return { color, thickness }
 }

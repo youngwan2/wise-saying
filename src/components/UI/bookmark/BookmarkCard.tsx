@@ -20,9 +20,7 @@ export default function BookmarkCard({ bookmark }: PropsType) {
         {bookmark.id} / {bookmark.author}/{bookmark.quote.slice(0, 25)}...
       </li>
       <li className="text-[#f77b65] text-[1.5em] absolute right-[2em] top-[3px] hover:shadow-[0_0_1px_1px_tomato] ">
-        <Link href={`${bookmark.url}`}>
-          <HiLink />
-        </Link>
+        <Link href={`${bookmark.url}`}> <HiLink /></Link>
       </li>
       <li>
         <BookmarkDeleteButton id={bookmark.id} />
