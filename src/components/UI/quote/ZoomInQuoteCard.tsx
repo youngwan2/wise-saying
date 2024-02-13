@@ -32,6 +32,7 @@ export default function ZommInQuoteCard({ item }: PropsType) {
   useEffect(() => {
     if (cardRef.current && gsap) {
       const card = cardRef.current
+      // 카드 확대 시
       if (isZoomIn) {
         const { x, y, xy } = position
         gsap.to(card, {
@@ -51,6 +52,8 @@ export default function ZommInQuoteCard({ item }: PropsType) {
           duration: 0.1,
         })
       }
+
+      // 카드 축소 시
       if (!isZoomIn) {
         gsap.to(card, {
           opacity: 0,

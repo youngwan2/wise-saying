@@ -20,7 +20,7 @@ export default function CommentUpdateForm({
   async function commentUpdate(formData: FormData) {
     if (!hasToken) return alert('로그인 해주세요')
     const comment = formData.get('comment')
-    const token = localStorage.getItem('token')
+    const token = sessionStorage.getItem('token')
 
     const body = {
       comment,

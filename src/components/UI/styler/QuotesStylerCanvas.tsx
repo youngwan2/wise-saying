@@ -9,6 +9,7 @@ import {
   useQuotesTextStyleStore,
 } from '@/store/store'
 
+import toast, {Toaster} from 'react-hot-toast'
 import wrap from 'word-wrap'
 import QuotesStylerImageDownloadButton from './QuotesStylerImageDownloadButton'
 
@@ -140,6 +141,7 @@ export default function QuotesStylerCanvas() {
 
   return (
     <article className="min-h-[500px] w-[95%] bg-[#0f0f0fa4] p-[5px] relative shadow-[inset_5px_5px_5px_rgba(0,0,0,0.3)] rounded-[5px]">
+      <Toaster/>
       <span className="text-white">
         {width}X{height}
       </span>
@@ -156,6 +158,7 @@ export default function QuotesStylerCanvas() {
           link.href = imageURL
           link.download = '내가 만든 카드'
           link.click()
+          toast.success('다운로드 되었습니다. 이용해 주셔서 감사합니다.')
         }}
       />
     </article>

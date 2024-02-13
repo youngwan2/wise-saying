@@ -1,6 +1,7 @@
 'use client'
 import { HiUpload } from 'react-icons/hi'
 import { ChangeEvent } from 'react'
+import { imagePreviewReader } from '@/utils/commonFunctions'
 
 interface PropsType {
   setImages: (src: string[]) => void
@@ -10,18 +11,7 @@ export default function QuoteStylerImageUploadForm({
   setImages,
   images,
 }: PropsType) {
-  const imageSrcReader = (e: ChangeEvent<HTMLInputElement>) => {
-    try {
-      if (e.target && e.target.files) {
-        const files = e.target.files[0]
-        const imageSrc = URL.createObjectURL(files)
-        setImages([...images, imageSrc])
-      }
-    } catch (error) {
-      console.error(error)
-      alert('유효하지 않은 이미지이거나 이미지 파일이 존재하지 않습니다.')
-    }
-  }
+
 
   return (
     <form
@@ -38,7 +28,10 @@ export default function QuoteStylerImageUploadForm({
         <p className="font-bold">업로드</p>
       </label>
       <input
-        onChange={imageSrcReader}
+        onChange={(e)=>{
+          const src = imagePreviewReader(e)
+          images && src ?  setImages([...images, src]) : null
+        }}
         id="image_upload"
         type="file"
         className="hidden"

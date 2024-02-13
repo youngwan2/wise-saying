@@ -37,7 +37,6 @@ export default function QuoteCard({ item, items, index }: PropsType) {
     (target: HTMLLIElement) => {
       // 줌 인(확대) 시 해당 li 는 사라진다.
       if (isZoomIn) {
-        gsap.set(target, { perspective: 600 })
         gsap.to(target, {
           visibility: 'hidden',
           opacity: 0,
@@ -48,7 +47,7 @@ export default function QuoteCard({ item, items, index }: PropsType) {
 
       // 줌 아웃(축소) 시 해당 li 가 다시 나타난다.
       if (!isZoomIn) {
-        gsap.to(target, { visibility: 'visible', opacity: 1, translateY: 0 })
+        gsap.to(target, { visibility: 'visible', opacity: 1, translateY: 0, translateZ: 'none' })
       }
     },
     [isZoomIn],
@@ -59,13 +58,13 @@ export default function QuoteCard({ item, items, index }: PropsType) {
     router.prefetch(`/quotes/authors/${item.author}/${item.id}`)
     const tl = gsap.timeline()
     tl.to(e.currentTarget.parentElement, {
-      rotateX: -20,
-      translateY: -300,
+      rotateY: -20,
+      translateZ:-100,
+      scale:0.1,
+      background:'tomato',
+      ease:'bounce.inOut',
       opacity: 0,
-      scale: 0,
-      translateZ: -1000,
-      backfaceVisibility: 'hidden',
-      perspective: 600,
+      duration:1,
     })
     tl.to(e.currentTarget.parentElement, {
       onComplete() {
@@ -94,7 +93,7 @@ export default function QuoteCard({ item, items, index }: PropsType) {
         }
       }}
       key={item.id}
-      className="invisible shadow-[inset_0_0_0_3px_white] perspective-500 rounded-[10px] w-[95%] my-[1em] max-w-[500px] bg-transparent  px-[15px] py-[35px] mx-auto relative hover:bg-[#d5d5d533] "
+      className="invisible shadow-[inset_0_0_0_3px_white] rounded-[10px] w-[95%] my-[1em] max-w-[500px] bg-transparent  px-[15px] py-[35px] mx-auto relative hover:bg-[#d5d5d533] "
     >
       <blockquote className="mt-[1em] text-white ">
         <p className=" p-[1em] text-[1.15em]">{item.quote}</p>

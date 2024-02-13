@@ -3,6 +3,7 @@ import DetailPageControlButtons from '@/components/UI/button/DetailPageControlBu
 import CommentList from '@/components/UI/comment/CommentList'
 import { openDB } from '@/utils/connect'
 import ShareButtons from '@/components/UI/button/ShareButtons'
+import Link from 'next/link'
 
 export default async function DetailPage({
   params,
@@ -10,6 +11,7 @@ export default async function DetailPage({
   params: { category: string; name: string; id: string }
 }) {
   const { name, id } = params
+  const decodeName = decodeURIComponent(name)
 
   async function getQuoteDetail(id: string) {
     'use server'
@@ -39,25 +41,24 @@ export default async function DetailPage({
     <div className="min-h-[100vh] h-full  mx-auto my-[3em] p-[4em] perspective-500 flex flex-col max-w-[900px] bg-[#0000001b]">
       <h2 className="flex justify-center items-center text-[1.5em] p-[10px]  text-center text-white">
         <span className="mx-[3px] text-[gold] font-mono">
-          {decodeURIComponent(name)}
+          <Link href={`/quotes/authors/${decodeName}`}>{decodeName}</Link>
         </span>{' '}
         가라사대
       </h2>
       {/* 명언 텍스트 영역 */}
-      <article
+      <blockquote
         className="bg-[#ffffff11] text-white text-center p-[5em] max-w-[900px] w-full mx-auto rounded-[10px] mt-[2em]
             shadow-[inset_0_5px_5px_0_rgba(0,0,0,0.5)]
             "
       >
         <p className="text-[1.25em]">{item.quote}</p>
-      </article>
+      </blockquote>
       <div className="flex">
         {/* 컨트롤 버튼 */}
         <DetailPageControlButtons item={item} />
         {/* 공유 버튼 */}
         <ShareButtons />
       </div>
-
       {/* 댓글 영역 */}
       <CommentList id={id} />
     </div>

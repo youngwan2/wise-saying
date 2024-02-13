@@ -50,8 +50,8 @@ export const requestNewAccessToken = async () => {
  * @param password
  */
 export const reqLogin = async (
-  email: FormDataEntryValue | null,
-  password: FormDataEntryValue | null,
+  email: string,
+  password: string,
 ) => {
   if (!(email && password)) return
 

@@ -23,9 +23,8 @@ export default function QuotesSizeStyler({ selectTapNum }: PropsType) {
 
     return function (newValue: number, targetName: string, delayTime: number) {
       clearTimeout(timerId)
-
       timerId = setTimeout(() => {
-        console.log('디바운스 적용 후', newValue)
+        console.count("함수 호출 횟수:")       
         setSize({ ...size, [targetName]: newValue })
       }, delayTime)
     }

@@ -1,6 +1,5 @@
 import { openDB } from '@/utils/connect'
 import { tokenVerify } from '@/utils/auth'
-import { revalidateTag } from 'next/cache'
 import { NextRequest, NextResponse } from 'next/server'
 
 // GET | 특정 포스트 댓글 조회
@@ -38,7 +37,6 @@ export async function GET(req: NextRequest, res: { params: { id: string } }) {
       pageNum * limit,
     ])
     const comments = commentResults.rows
-    revalidateTag(tag)
     db.end()
     return NextResponse.json({
       status: 200,

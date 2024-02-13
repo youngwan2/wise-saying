@@ -1,4 +1,3 @@
-import { PASSWORD_REGEXP } from '@/const'
 import { HiOutlineLockOpen } from 'react-icons/hi2'
 
 interface PropsType {
@@ -14,7 +13,7 @@ export default function SignInPasswordInput({
   /** 패스워드 체크 */
   function passwordChecker(password: string) {
     // 8자 이상 (a-z, 0-9 무조건 1개 이상 포함, 특수문자 1개 이상 포함)
-    const test = PASSWORD_REGEXP.test(password)
+    const test = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&+=])[a-zA-Z0-9!@#$%^&+=]{8,}$/g.test(password)
     if (test) return setIsPassword(true)
     return setIsPassword(false)
   }

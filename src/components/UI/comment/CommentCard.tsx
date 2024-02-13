@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import './CommentCard.css'
 import ReplaceMessageCard from '../common/ReplaceMessageCard'
 import { HiDotsVertical, HiOutlineX } from 'react-icons/hi'
 import { useState } from 'react'
@@ -84,7 +83,6 @@ export default function CommentCard({ item }: PropsType) {
             }}
             className="absolute right-[5px] top-[0.5em]  hover:shadow-[0_0_0_1px_tomato] rounded-[50%] p-[5px]"
           >
-            {' '}
             {display ? <HiOutlineX /> : <HiDotsVertical />}{' '}
           </button>
         </div>

@@ -2,13 +2,13 @@
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { HiOutlineX } from 'react-icons/hi'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import useHasToken from '@/custom/useHasToken'
 import { reqLogin } from '@/services/user/post'
 import useDraggable from '@/custom/useDraggable'
 import { redirect } from 'next/navigation'
 import LoginEmailInput from './LoginEmailInput'
-import {Toaster} from 'react-hot-toast'
+import { Toaster } from 'react-hot-toast'
 import LoginPasswordInput from './LoginPasswordInput'
 
 export default function LoginForm() {
@@ -16,6 +16,8 @@ export default function LoginForm() {
 
   const router = useRouter()
   const hasToken = useHasToken()
+
+  const [isLoading, setIsLoading] = useState(false)
 
   // 토큰 존재 시 리디렉트
   useEffect(() => {
@@ -28,16 +30,18 @@ export default function LoginForm() {
   useDraggable(loginFormRef, null)
 
   async function login(form: FormData) {
-    const email = form.get('email')
-    const password = form.get('password')
-
-    reqLogin(email, password)
+    setIsLoading(true)
+    const email = form.get('email')?.valueOf().toString() || ''
+    const password = form.get('password')?.valueOf().toString() || ''
+    reqLogin(email, password).then(() => {
+      setIsLoading(false)
+    })
   }
 
   return (
     <>
       <div className="fixed left-0 right-0 bottom-0 top-0 bg-[#0000009c]"></div>
-      <Toaster/>
+      <Toaster />
       <form
         ref={loginFormRef}
         action={login}
@@ -65,7 +69,7 @@ export default function LoginForm() {
           aria-label="로그인 요청"
           className="rounded-[5px] my-[2.5em] text-[black] bg-[#FFFFFF] max-w-[150px] py-[0.5em] min-w-[150px] mx-auto hover: cursor-pointer hover:bg-[#ffd9d9] font-bold"
           type="submit"
-          value={'로그인'}
+          value={isLoading ? '전송중..' : '로그인'}
         />
 
         {/* 회원가입 안내  */}

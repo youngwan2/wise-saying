@@ -1,5 +1,6 @@
-import { EMAIL_REGEXP } from '@/const'
 import { HiOutlineMail } from 'react-icons/hi'
+import toast, { Toaster } from 'react-hot-toast'
+import { useState } from 'react'
 
 interface PropsType {
   isEmail: boolean
@@ -16,15 +17,19 @@ export default function SignInEmailInput({
   setEmail,
   setExistsEmail,
 }: PropsType) {
+
+  const [isLoading, setIsLoading] = useState(false)
+
   // 이메일 유효성 검사
   function emailChecker(email: string) {
-    const test = EMAIL_REGEXP.test(email)
+    const test = /[a-z0-9]@[a-z]+\.[a-z]{3,}/g.test(email)
     if (test) return setIsEmail(true)
     return setIsEmail(false)
   }
 
   // 이미 존재하는 이메일인지 검사
   function userExists(email: string) {
+    setIsLoading(true)
     fetch(`/api/users`, {
       method: 'POST',
       body: JSON.stringify(email),
@@ -33,17 +38,19 @@ export default function SignInEmailInput({
       const { status, meg } = res
       if (status === 201) {
         setExistsEmail(true)
-        alert('확인 되었습니다. 다음을 진행해주세요.')
+        toast.success(meg + '다음을 진행해 주세요.')
       }
       if (status !== 201) {
         setExistsEmail(false)
-        alert(meg)
+        toast.error(meg)
       }
+      setIsLoading(false)
     })
   }
 
   return (
     <article className="mt-[3.5em] mb-[1em] mx-[10px]">
+      <Toaster />
       <div className="flex">
         {/* 이메일 입력 Input */}
         <label
@@ -57,6 +64,7 @@ export default function SignInEmailInput({
         <input
           onInput={(e) => {
             const email = e.currentTarget.value
+            console.log(email)
             emailChecker(email)
             setEmail(email)
           }}
@@ -74,7 +82,7 @@ export default function SignInEmailInput({
           }}
           className="bg-[white] min-w-[50px] rounded-r-[5px] hover:shadow-[0px_0px_0px_2px_black]"
         >
-          확인
+          {isLoading?'대기':'확인'}
         </button>
       </div>
 
@@ -86,7 +94,7 @@ export default function SignInEmailInput({
       ) : (
         <>
           <span className="text-[#444141] block ml-[0.5em] ">
-            - ex. email@naver.com
+            - ex. example@domain.com 혹은 domain.net
           </span>
           <span className="text-[red] block  ml-[0.5em]">
             - 이메일 형식과 일치시키세요

@@ -52,7 +52,7 @@ export const imagePreviewReader = (e: ChangeEvent<HTMLInputElement>) => {
       const src = URL.createObjectURL(file)
       return src
     } catch (error) {
-      alert('파일 업로드 중 문제가 발생하였습니다. 잠시 후 다시 시도해 주세요.')
+      return false
     }
   }
 }
