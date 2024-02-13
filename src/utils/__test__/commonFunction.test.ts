@@ -1,10 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { debounceCloser, imagePreviewReader, pageSwitch } from "./commonFunctions";
+import { debounceCloser, pageSwitch } from "../commonFunctions";
 import {
     AppRouterInstance,
 } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { afterEach } from "node:test";
-import { ChangeEvent } from "react";
 
 const { useRouter } = vi.hoisted(() => {
     const mockRouter: AppRouterInstance = {

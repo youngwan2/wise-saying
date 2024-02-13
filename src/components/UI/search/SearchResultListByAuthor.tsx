@@ -27,10 +27,11 @@ export default function SearchResultListByAuthor({ items }: PropsType) {
 
   const [page, setPage] = useState(0)
   const { quotes, totalCount } = items ?? { quotes: [], totalCount: 0 }
-  const currentQuoteCount = quotes?.length ?? 0
+
   const MAX_PAGE = Math.ceil(totalCount / 5) || 1
 
   const [splitQuotes] = useSimplePagination(page, quotes)
+  const currentQuoteCount = quotes?.length ?? 0
 
   if (!items && !quotes)
     return <ReplaceMessageCard childern="데이터를 가져오는 중입니다." />
@@ -47,10 +48,7 @@ export default function SearchResultListByAuthor({ items }: PropsType) {
             {searchText}
           </strong>{' '}
           로 조회된 결과{' '}
-          <b className="border-b-[1px] border-[tomato]">{totalCount}</b>건 중
-          상위{' '}
-          <b className="border-b-[1px] border-[tomato]">{currentQuoteCount}</b>{' '}
-          건{' '}
+          <b className="border-b-[1px] border-[tomato]">{totalCount}</b>건
         </span>
       </div>
       <ul>
