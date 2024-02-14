@@ -1,12 +1,14 @@
-import Image from 'next/image'
 import ReplaceMessageCard from '../common/ReplaceMessageCard'
 import { HiDotsVertical, HiOutlineX } from 'react-icons/hi'
-import { useState } from 'react'
-import CommentUpdateButtons from './CommentUpdateButtons'
-import CommentUpdateForm from './CommentUpdateForm'
+import { MouseEventHandler, useState } from 'react'
+import CommentEditDeleteMenu from './CommentEditDeleteMenu'
+import CommentEditForm from './CommentEditForm'
 import useHasToken from '@/custom/useHasToken'
+import { getAccessToken, getUserEmail } from '@/utils/sessionStorage'
+import CommentProfileImage from './CommentProfileImage'
+import CommentContent from './CommentContent'
 
-interface PropsType {
+export interface PropsType {
   item: {
     id: number
     email: string
@@ -20,11 +22,8 @@ export default function CommentCard({ item }: PropsType) {
   const [display, setDisplay] = useState(false)
   const [editFormDisplay, setEditFormDisplay] = useState(false)
   const hasToken = useHasToken()
+  const userEmail = getUserEmail()
 
-  const user =
-    (sessionStorage && sessionStorage?.getItem && sessionStorage?.getItem('user')) ||
-    '{"dbEmail":""}'
-  const { dbEmail: userEmail } = JSON.parse(user)
 
   // 편집 창을 활성화한다.
   function onClickFormDisplay() {
@@ -40,13 +39,14 @@ export default function CommentCard({ item }: PropsType) {
     const isDelete = confirm('정말 삭제하시겠습니까?')
     if (!isDelete) return alert('삭제 요청을 취소하였습니다.')
 
-    const token = sessionStorage.getItem('token')
-    const response = await fetch(`/api/quotes/${item.id}/comments`, {
+    const token = getAccessToken() || '';
+    const config = {
       method: 'DELETE',
       headers: {
         authorization: `Bearer ${token}`,
       },
-    })
+    }
+    const response = await fetch(`/api/quotes/${item.id}/comments`, config)
     const { status, meg } = await response.json()
     if (status == 200) return alert(meg)
     alert(meg)
@@ -56,54 +56,52 @@ export default function CommentCard({ item }: PropsType) {
     setEditFormDisplay(false)
   }
 
-  if (!item)
-    return <ReplaceMessageCard childern="데이터를 가져오는 중입니다." />
+  if (!item) return <ReplaceMessageCard childern="데이터를 가져오는 중입니다." />
   return (
-    <>
-      <li className="comment-card bg-white  min-h-[50px] rounded-[5px] first:mt-[2em] mt-[1em] flex justify-start items-center w-full mx-auto relative">
-        <Image
-          src={item.profile_iamge ?? '/images/image1.png'}
-          alt="프로필 이미지"
-          width={68}
-          height={60}
-          className="rounded-[5px] absolute left-[-1.5em] shadow-[0_0px_5px_0_rgba(0,0,0,0.8)] top-[50%] translate-y-[-50%]"
-        />
-        <div className=" ml-[4em] py-[10px] pr-[1.5em]">
-          <span className="font-semibold inline-block mt-[0.2em] text-[14px]">
-            {item.nickname || '무명의 위인'}(
-            {item.email.replace(item.email.slice(2, 4), '**')})
-          </span>
-          <p>{item.comment}</p>
-          <span className="inline-block mt-[4px] text-[14px]">
-            {item.create_date}
-          </span>
-          <button
-            onClick={() => {
-              setDisplay(!display)
-            }}
-            className="absolute right-[5px] top-[0.5em]  hover:shadow-[0_0_0_1px_tomato] rounded-[50%] p-[5px]"
-          >
-            {display ? <HiOutlineX /> : <HiDotsVertical />}{' '}
-          </button>
-        </div>
-        {/* 글쓴이라면 편집 버튼 활성화 */}
-        {userEmail !== item.email ? null : display ? (
-          <CommentUpdateButtons
-            onClickDeleteComment={onClickDeleteComment}
-            onClickFormDisplay={onClickFormDisplay}
-          />
-        ) : null}
-      </li>
-      {/* 댓글 수정 Form */}
-      <li>
-        {editFormDisplay ? (
-          <CommentUpdateForm
-            onClickEditCancel={onClickEditCancel}
-            commentId={item.id}
-            setEditFormDisplay={setEditFormDisplay}
-          />
-        ) : null}
-      </li>
-    </>
+    <li className="comment-card bg-white  min-h-[50px] rounded-[5px] first:mt-[2em] mt-[1em] flex justify-start items-center w-full mx-auto relative">
+      {/* 프로필 이미지 */}
+      <CommentProfileImage item={item} />
+      {/* 댓글 */}
+      <div className=" ml-[4em] py-[10px] pr-[1.5em]">
+        <CommentContent item={item} />
+        {/* 수정 아이콘 버튼 */}
+        <CommentMenuDropdownButton display={display} onClick={() => setDisplay(!display)} />
+      </div>
+
+      {/* 글쓴이라면 편집 버튼 활성화 */}
+      {userEmail !== item.email
+        ? null
+        : display
+          ? (
+            <CommentEditDeleteMenu
+              onClickDeleteComment={onClickDeleteComment}
+              onClickFormDisplay={onClickFormDisplay}
+            />
+          ) : null}
+      <CommentEditForm
+        commentId={item.id}
+        editFormDisplay={editFormDisplay}
+        setEditFormDisplay={setEditFormDisplay}
+        onClickEditCancel={onClickEditCancel} />
+    </li>
   )
+}
+
+
+interface MenuButtonPropsType {
+  display: boolean
+  onClick: MouseEventHandler<HTMLButtonElement>
+}
+
+function CommentMenuDropdownButton({ display, onClick }: MenuButtonPropsType) {
+
+  return (
+    <button
+      onClick={onClick}
+      className="absolute right-[5px] top-[0.5em]  hover:shadow-[0_0_0_1px_tomato] rounded-[50%] p-[5px]"
+    >
+      {display ? <HiOutlineX /> : <HiDotsVertical />}{' '}
+    </button>
+  )
+
 }

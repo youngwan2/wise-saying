@@ -30,7 +30,6 @@ export default function SearchResultListByAuthor({ items }: PropsType) {
 
   if (!items)
     return <ReplaceMessageCard childern="데이터를 가져오는 중입니다." />
-
   return (
     <article className="bg-[#e3dddd12] max-w-[730px] mx-auto rounded-[10px] shadow-[inset_-2px_-2px_5px_0_rgba(0,0,0,0.5)] mt-[1.5em] p-[20px]">
       <div className="border-b-[2px] border-[white] flex items-center justify-between text-white">
@@ -44,10 +43,7 @@ export default function SearchResultListByAuthor({ items }: PropsType) {
             {searchText}
           </strong>{' '}
           로 조회된 결과{' '}
-          <b className="border-b-[1px] border-[tomato]">{totalCount}</b>건 중
-          상위{' '}
-          <b className="border-b-[1px] border-[tomato]">{currentQuoteCount}</b>{' '}
-          건{' '}
+          <b className="border-b-[1px] border-[tomato]">{totalCount}</b>건
         </span>
       </div>
       <ul>

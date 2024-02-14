@@ -6,7 +6,7 @@ interface PropsType {
   onClickFormDisplay: MouseEventHandler<HTMLButtonElement>
   onClickDeleteComment: MouseEventHandler<HTMLButtonElement>
 }
-export default function CommentUpdateButtons({
+export default function  CommentEditDeleteMenu({
   onClickFormDisplay,
   onClickDeleteComment,
 }: PropsType) {
