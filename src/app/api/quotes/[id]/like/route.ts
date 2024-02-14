@@ -3,7 +3,6 @@ import { openDB } from "@/utils/connect";
 import { NextRequest, NextResponse } from "next/server";
 
 
-
 export async function GET(req: NextRequest, res: { params: { id: string } }) {
 
     try {
@@ -27,7 +26,6 @@ export async function GET(req: NextRequest, res: { params: { id: string } }) {
 }
 
 export async function POST(req: NextRequest, res: { params: { id: string } }) {
-
     try {
         const db = await openDB();
         const quoteId = res.params.id

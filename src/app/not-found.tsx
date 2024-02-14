@@ -9,7 +9,7 @@ export default function NotFound() {
       </p>
       <Link
         href="/"
-        className="bg-[#162557] px-[10px] p-[5px] mt-[1em] text-white hover:bg-[tomato] hover:text-[white] rounded-[5px]"
+        className="bg-[#162557] px-[10px] p-[5px] mt-[1em] text-white hover:bg-[tomato] hover:text-[white] rounded-[10px]"
       >
         홈(Hone)으로
       </Link>
