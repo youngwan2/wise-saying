@@ -4,6 +4,7 @@ import CommentList from '@/components/UI/comment/CommentList'
 import { openDB } from '@/utils/connect'
 import ShareButtons from '@/components/UI/button/ShareButtons'
 import Link from 'next/link'
+import QuoteLikeBox from '@/components/UI/quote/QuoteLikeBox'
 
 export default async function DetailPage({
   params,
@@ -48,11 +49,13 @@ export default async function DetailPage({
       {/* 명언 텍스트 영역 */}
       <blockquote
         className="bg-[#ffffff11] text-white text-center p-[5em] max-w-[900px] w-full mx-auto rounded-[10px] mt-[2em]
-            shadow-[inset_0_5px_5px_0_rgba(0,0,0,0.5)]
+            shadow-[inset_0_5px_5px_0_rgba(0,0,0,0.5)] relative
             "
       >
         <p className="text-[1.25em]">{item.quote}</p>
+        <QuoteLikeBox id={id} />
       </blockquote>
+  
       <div className="flex">
         {/* 컨트롤 버튼 */}
         <DetailPageControlButtons item={item} />

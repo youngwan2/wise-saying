@@ -7,7 +7,7 @@ import { HiShare } from 'react-icons/hi2'
 import { useRef, useState } from 'react'
 import { SiNaver } from 'react-icons/si'
 import { HiXCircle } from 'react-icons/hi'
-import toaster, {Toaster} from 'react-hot-toast'
+import toaster, { Toaster } from 'react-hot-toast'
 import useDraggable from '@/custom/useDraggable'
 
 export default function ShareButtons() {
@@ -17,9 +17,9 @@ export default function ShareButtons() {
   useDraggable(articleRef, null)
 
   enum ShareType {
-    Facebook = 'f',
-    X = 'x',
-    Naver = 'n',
+    Facebook = 'F',
+    X = 'X',
+    Naver = 'N',
   }
 
   const shareWithSns = (type: ShareType) => {
@@ -27,28 +27,16 @@ export default function ShareButtons() {
     const encodeUrl = encodeURIComponent(url)
     let urlConcat = ''
 
-    switch (type) {
-      case ShareType.Facebook: {
-        urlConcat = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeUrl
-        break
-      }
-      case ShareType.X: {
-        urlConcat = 'https://twitter.com/intent/tweet?url=' + encodeUrl
-        break
-      }
-      case ShareType.Naver: {
-        urlConcat =
-          'https://share.naver.com/web/shareView?url=' +
-          encodeUrl +
-          '&title=' +
-          '[공유] Wise Sayings '
-      }
-    }
+    const index = Object.values(ShareType).indexOf(type)
+
+    index === 0 && (urlConcat = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeUrl)
+    index === 1 && (urlConcat = 'https://twitter.com/intent/tweet?url=' + encodeUrl)
+    index === 2 && (urlConcat = 'https://share.naver.com/web/shareView?url=' + encodeUrl + '&title=[공유] Wise Sayings')
+
     window.open(urlConcat, '_blank')
   }
 
-  const shareClip = async () => {
-    if (!window) return
+  const shareWithClip = async () => {
     try {
       const url = window.location.href
       await window.navigator.clipboard.writeText(url)
@@ -61,7 +49,7 @@ export default function ShareButtons() {
 
   return (
     <>
-      <Toaster/>
+      <Toaster />
       <button
         onClick={() => {
           setIsDisplay(true)
@@ -75,8 +63,8 @@ export default function ShareButtons() {
         ref={articleRef}
         aria-hidden={!isDisplay}
         className={` ${isDisplay
-            ? 'fixed left-[50%] top-[30%]  translate-x-[-50%] translate-y-[-50%] '
-            : 'hidden'
+          ? 'fixed left-[50%] top-[30%]  translate-x-[-50%] translate-y-[-50%] '
+          : 'hidden'
           }  rounded-[10px] items-center justify-center my-[1.5em] py-[0.5em] max-w-[300px] mx-auto w-full px-[1em] bg-[white] min-h-[250px] shadow-[0_0_0_1000px_rgba(0,0,0,0.5)] `}
       >
         <div className='mb-[3em] flex justify-between w-full items-center'>
@@ -136,7 +124,7 @@ export default function ShareButtons() {
           {/* URL 복사 */}
           <button
             aria-label="직접 URL 복사. 해당 URL 을 공유하고자 하는 곳에서 붙여넣기."
-            onClick={shareClip}
+            onClick={shareWithClip}
             className="hover:bg-[#45454527] flex-col rounded-[5px] text-[1em] p-[3px] text-black mx-[0.3em] flex items-center"
           >
             <IoIosLink

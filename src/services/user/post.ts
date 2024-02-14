@@ -1,3 +1,4 @@
+import { setAccessToken, setUserInfo } from '@/utils/sessionStorage'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 import toaster from 'react-hot-toast'
 
@@ -79,8 +80,9 @@ export const reqLogin = async (
         dbEmail,
         profile,
       }
-      sessionStorage.setItem('user', JSON.stringify(user))
-      sessionStorage.setItem('token', accessToken)
+
+      setUserInfo(user)
+      setAccessToken(accessToken)
       alert(`${dbEmail}님 환영합니다!. 잠시 후 Home 화면으로 이동합니다.`)
       location.reload()
     }

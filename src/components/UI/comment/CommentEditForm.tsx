@@ -5,11 +5,13 @@ import { MouseEventHandler, useRef } from 'react'
 interface PropsType {
   onClickEditCancel: MouseEventHandler<HTMLButtonElement>
   commentId: number
+  editFormDisplay : boolean
   setEditFormDisplay: (value: boolean) => void
 }
-export default function CommentUpdateForm({
+export default function CommentEditForm({
   onClickEditCancel,
   commentId,
+  editFormDisplay,
   setEditFormDisplay,
 }: PropsType) {
   const hasToken = useHasToken()
@@ -40,6 +42,7 @@ export default function CommentUpdateForm({
     alert(meg + '잠시 후 갱신됩니다.')
     setEditFormDisplay(false)
   }
+  if(!editFormDisplay) return <></>
   return (
     <form
       ref={formRef}
