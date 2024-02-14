@@ -10,25 +10,19 @@ import { useCallback, useEffect, useState } from 'react'
 
 export default function useTTS() {
   const [text, setText] = useState('')
-  const [textId, setTextId] = useState<number | null>(null)
-  const [status, setStatus] = useState(false)
 
   const speakText = useCallback((text: string) => {
-    setStatus(true)
-    const synth = window ? window.speechSynthesis : null
+    const synth = window.speechSynthesis 
     if (synth !== null && text.length > 1) {
       const utterance = new SpeechSynthesisUtterance(text)
-
-      utterance.onend = () => {
-        setStatus(false)
-      }
       synth.speak(utterance)
     }
   }, [])
 
   useEffect(() => {
+    if(window['speechSynthesis'] === undefined) return
     speakText(text)
   }, [text, speakText])
 
-  return { status, textId, setText, setTextId }
+  return {text, setText}
 }
