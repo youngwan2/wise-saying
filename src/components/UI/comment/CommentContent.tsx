@@ -1,15 +1,16 @@
-import { PropsType } from "./CommentCard";
+import { CommentType } from "@/types/items.types"
 
-export default function CommentContent({item}:PropsType) {
+interface PropsType extends CommentType {
+}
+export default function CommentContent({ comment }: PropsType) {
     return (
         <>
-            <span className="font-semibold inline-block mt-[0.2em] text-[14px]">
-                {item.nickname || '무명의 위인'}(
-                {item.email.replace(item.email.slice(2, 5), '***')})
+            <span className="font-semibold inline-block mt-[0.2em] text-[13.5px]">
+                {comment.nickname || '무명의 위인'}(
+                {comment.email.replace(comment.email.slice(2, 5), '***')})  {comment.created_at.substring(0, 10)}
             </span>
-            <p>{item.comment}</p>
+            <p className="text-[14px] font-sans">{comment.comment}</p>
             <span className="inline-block mt-[4px] text-[14px]">
-                {item.create_date}
             </span>
         </>
     )

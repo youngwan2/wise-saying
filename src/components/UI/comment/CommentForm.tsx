@@ -2,7 +2,7 @@
 import { postComment } from '@/services/user/post'
 import { useParams } from 'next/navigation'
 import { useRef } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 
 
 export default function CommentForm() {
@@ -10,7 +10,7 @@ export default function CommentForm() {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   
   async function addComment(formData: FormData) {
-    const comment = formData.get('comment') || ''
+    const comment = formData.get('comment')?.valueOf().toString() || ''
     const isSuccess = await postComment(comment, id)
     textareaRef.current && (textareaRef.current.value = '')
     if (isSuccess) {
@@ -36,7 +36,6 @@ export default function CommentForm() {
           aria-label="댓글 등록"
           className="mr-[5px] bg-[tomato] min-w-[60px] text-white rounded-[10px] "
         >
-
           등록
         </button>
         <button
@@ -47,10 +46,7 @@ export default function CommentForm() {
           취소
         </button>
       </div>
-      <Toaster />
     </form>
 
   )
 }
-
-// ex 무게는 5kb 미만

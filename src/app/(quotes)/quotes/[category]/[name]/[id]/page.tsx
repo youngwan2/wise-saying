@@ -1,10 +1,10 @@
 import ReplaceMessageCard from '@/components/UI/common/ReplaceMessageCard'
-import DetailPageControlButtons from '@/components/UI/button/DetailPageControlButtons'
-import CommentList from '@/components/UI/comment/CommentList'
+import DetailPageControlButtons from '@/components/UI/detail-quote/DetailPageControlButtons'
+import Comment from '@/components/UI/comment/Comment'
 import { openDB } from '@/utils/connect'
-import ShareButtons from '@/components/UI/button/ShareButtons'
+import ShareButtons from '@/components/UI/detail-quote/ShareButtons'
 import Link from 'next/link'
-import QuoteLikeBox from '@/components/UI/quote/QuoteLikeBox'
+import QuoteLikeBox from '@/components/UI/detail-quote/QuoteLikeBox'
 
 export default async function DetailPage({
   params,
@@ -63,7 +63,7 @@ export default async function DetailPage({
         <ShareButtons />
       </div>
       {/* 댓글 영역 */}
-      <CommentList id={id} />
+      <Comment id={id} />
     </div>
   )
 }

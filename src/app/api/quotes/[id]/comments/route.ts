@@ -5,7 +5,6 @@ import { NextRequest, NextResponse } from 'next/server'
 // GET | 특정 포스트 댓글 조회
 export async function GET(req: NextRequest, res: { params: { id: string } }) {
   const quoteId = res.params.id
-  const tag = req.nextUrl.searchParams.get('tag') || ''
   const sort = req.nextUrl.searchParams.get('sort') || 'DESC'
 
   try {
@@ -22,7 +21,7 @@ export async function GET(req: NextRequest, res: { params: { id: string } }) {
             `
 
     const userQuery = `
-                SELECT B.comment_id AS id, A.email AS email, A.nickname AS nickname, A.profile_img_url AS profile_image, B.comment AS comment, B.created_at AS create_date
+                SELECT B.comment_id AS id, A.email AS email, A.nickname AS nickname, A.profile_img_url AS profile_image, B.comment AS comment, B.created_at AS created_at
                 FROM users A
                 JOIN usercomments B ON A.user_id = B.user_id
                 WHERE quote_id = $1
@@ -42,7 +41,7 @@ export async function GET(req: NextRequest, res: { params: { id: string } }) {
       status: 200,
       meg: '정상적으로 처리되었습니다.',
       success: true,
-      items: comments,
+      comments,
       totalCount,
     })
   } catch (error) {
