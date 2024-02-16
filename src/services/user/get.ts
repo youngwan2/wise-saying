@@ -1,14 +1,16 @@
 import { config } from '@/configs/config'
 import { requestNewAccessToken } from './post'
+import { getAccessToken } from '@/utils/sessionStorage'
 
 /**
- * GET | 데이터베이스에서 유저 정보 불어오기
- * @param url 경로
- * @param token accessToken
- * @returns 유저정보를 반환. 이 반환 정보를 바탕으로 getUserQuotesFromDb 를 호출
+ * GET | 데이터베이스로 부터 유저 정보 요청
+ * @param url 요청경로
+ * @returns 유저 정보 객체
  */
-export const getUserInfoFromDb = async (url: string, token: string) => {
+export const getUserInfoFromDb = async (url: string) => {
   try {
+
+    const token = getAccessToken() || ''
     const response = await fetch(url, {
       next: { tags: ['all', 'user'] },
       method: 'GET',
@@ -26,7 +28,7 @@ export const getUserInfoFromDb = async (url: string, token: string) => {
       const newToken = await requestNewAccessToken()
       if (newToken) {
         localStorage.setItem('token', newToken)
-        await getUserInfoFromDb(url, newToken)
+        await getUserInfoFromDb(url)
       }
     }
 

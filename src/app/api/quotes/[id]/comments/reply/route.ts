@@ -14,6 +14,7 @@ export async function GET(req: NextRequest) {
             FROM replies A INNER JOIN users B 
             ON A.user_id = B.user_id
             WHERE comment_id = $1
+            ORDER BY reply_id ASC
         `
 
         const selectResult = await db.query(selectQuery, [commentId])
@@ -71,26 +72,27 @@ export async function POST(req: NextRequest) {
 // PATCH | 대댓글 수정
 export async function PATCH(req: NextRequest) {
 
-    const { content } = await req.json() || { content: '' }
-    const commentId = req.nextUrl.searchParams.get('comment-id') || null
+    const {'0':content} = await req.json() || ''
+
     const replyId = req.nextUrl.searchParams.get('reply-id') || null
-    const { meg, status, success} = tokenVerify(req, true)
     const LENGTH_LESS_THAN_ONE = content.length < 1
+
+    const { meg, status, success } = tokenVerify(req, true)
 
     if (status === 400) return NextResponse.json({ status, success, meg })
     if (status === 401) return NextResponse.json({ status, success, meg })
-    if (!commentId && !replyId && LENGTH_LESS_THAN_ONE) return NextResponse.json({ meg: '잘못된 요청입니다. 문자는 최소 1자 이상 입력하여야 합니다.', success: false, status: 400 })
-
+    if (LENGTH_LESS_THAN_ONE) return NextResponse.json({ meg: '잘못된 요청입니다. 문자는 최소 1자 이상 입력하여야 합니다.', success: false, status: 400 })
     try {
+        if (!replyId) return NextResponse.json({ meg: '잘못된 요청입니다.', success: false, status: 400 })
         const db = await openDB()
         const updateQuery = `
-        UPDATE replies(content)
+        UPDATE replies
         SET content = $1
         WHERE reply_id = $2
         `
         await db.query(updateQuery, [content, replyId])
-        return NextResponse.json({ meg: "성공적으로 등록처리 되었습니다.", status: 200, success: true})
-    
+        return NextResponse.json({ meg: "성공적으로 등록처리 되었습니다.", status: 200, success: true })
+
     } catch (error) {
         console.error('PATCH /api/quotes/:id/comments/reply', error)
         return NextResponse.json({ meg: '서버 측에서 문제가 발생하였습니다. 나중에 다시시도 해주세요', status: 500, success: false })
@@ -118,7 +120,7 @@ export async function DELETE(req: NextRequest) {
         `
 
         await db.query(deleteQuery, [replyId])
-        return NextResponse.json({ meg: "성공적으로 등록처리 되었습니다.", status: 200, success: true})
+        return NextResponse.json({ meg: "성공적으로 등록처리 되었습니다.", status: 200, success: true })
 
     } catch (error) {
         console.error('DELTE /api/quotes/:id/comments/reply', error)

@@ -1,7 +1,7 @@
 'use client'
 import { imagePreviewReader } from '@/utils/commonFunctions'
 import { ChangeEvent, useEffect, useState } from 'react'
-import { storage } from '@/utils/firebase'
+import { storage } from '@/configs/firebase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import MypageProfileUpdateButton from './MypageProfileUpdataButton'
 import { updateUserInfo } from '@/services/user/post'
