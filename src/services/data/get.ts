@@ -55,7 +55,7 @@ export const getBookmarkListFormDB = async (url: string, token: string) => {
     if (status === 200) return items
     if (status === 401) {
       const newToken = await requestNewAccessToken()
-      if(newToken) {
+      if (newToken) {
         sessionStorage.setItem('token', newToken)
       }
     }
@@ -124,6 +124,6 @@ export const getCommentsFormDb = async (url: string) => {
       tags: ['comment'],
     },
   })
-  const data = await response.json()
-  return data
+  const { comments, totalCount } = await response.json()
+  return { comments, totalCount }
 }

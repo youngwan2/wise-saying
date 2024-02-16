@@ -67,3 +67,6 @@ export const getCategoryUserFromDb = async (path: string) => {
   if (status === 200) return categories
   return []
 }
+
+
+

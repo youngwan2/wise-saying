@@ -1,4 +1,5 @@
 import { logoutUser } from '@/utils/commonFunctions'
+import { getAccessToken } from '@/utils/sessionStorage'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 
 /**
@@ -38,4 +39,26 @@ export async function deleteUserInfo(
       )
     }
   }
+}
+
+
+export async function deleteComment(hasToken:boolean, commentId:number) {
+  if (!hasToken) {
+    alert('로그인 해주세요.')
+  }
+
+  const isDelete = confirm('정말 삭제하시겠습니까?')
+  if (!isDelete) return alert('삭제 요청을 취소하였습니다.')
+
+  const token = getAccessToken() || '';
+  const config = {
+    method: 'DELETE',
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  }
+  const response = await fetch(`/api/quotes/${commentId}/comments`, config)
+  const { status, meg } = await response.json()
+  if (status == 200) return alert(meg)
+  alert(meg)
 }

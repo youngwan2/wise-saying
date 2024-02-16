@@ -1,15 +1,17 @@
-import { setAccessToken, setUserInfo } from '@/utils/sessionStorage'
+import { getAccessToken, setAccessToken, setUserInfo } from '@/utils/sessionStorage'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
-import toaster from 'react-hot-toast'
+import toaster, { toast } from 'react-hot-toast'
 
 /**
  * POST | 새로운 refreshToken 발급
  */
 const requestNewRefreshToken = async () => {
   const token = sessionStorage.getItem('token')
-  const config = { method: 'POST', header : {
-    authorization: 'Bearer '+ token
-  } }
+  const config = {
+    method: 'POST', header: {
+      authorization: 'Bearer ' + token
+    }
+  }
 
   try {
     const response = await fetch('/api/auth/refresh', config)
@@ -121,10 +123,10 @@ export const postUserPost = async (
   // 유효성 검증
   if (!(category && content && author)) return toaster.error('모든 빈칸을 채워주세요.')
   if (category.toString().length < 1 || category.toString().length > 3)
-    return toaster.error('주제를 최소 2자 이상~ 3자 이하로 적어 주세요.') 
+    return toaster.error('주제를 최소 2자 이상~ 3자 이하로 적어 주세요.')
 
   if (content.toString().length < 3)
-    return  toaster.error('내용을 최소 3자 이상 적어 주세요.')
+    return toaster.error('내용을 최소 3자 이상 적어 주세요.')
 
   if (author.toString().length < 2)
     return toaster.error('작성자를 최소 2자 이상 적어주세요.')
@@ -206,7 +208,7 @@ export async function updateUserInfo(
  */
 
 export const postComment = async (
-  comment: FormDataEntryValue,
+  comment: string,
   quoteId: string | string[],
 ) => {
   const token = sessionStorage.getItem('token')
@@ -232,5 +234,42 @@ export const postComment = async (
     return true
   } catch (error) {
     console.error('에러발생', error)
+  }
+}
+
+
+/**
+ * POST | 특정 댓글에 대한 대댓글 등록 요청
+ * @param commentId 
+ * @param content 대댓글
+ * @returns 
+ */
+export const postReply = async (commentId: number, content: string) => {
+
+  const url = `/api/quotes/0/comments/reply?comment-id=${commentId}`
+  const token = getAccessToken() || ''
+  const config = {
+    method: 'POST',
+    headers: {
+      authorization: `Bearer ` + token
+    },
+    body: JSON.stringify({ content })
+  }
+
+  try {
+    const response = await fetch(url, config)
+    const { meg, replies, totalCount, status } = await response.json()
+    if (status === 201) {
+      toast.success(meg)
+      return { replies, totalCount }
+    }
+    if (status !== 201) {
+      toast.error(meg)
+      return null
+    }
+  } catch (error) {
+    console.error("POST reply 에러:", error)
+    alert('네트워크 문제가 발생하였습니다. 나중에 다시시도 해주세요.')
+    return null
   }
 }

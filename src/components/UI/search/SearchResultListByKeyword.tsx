@@ -1,7 +1,7 @@
 import { HiArchiveBoxXMark } from 'react-icons/hi2'
 import ReplaceMessageCard from '../common/ReplaceMessageCard'
 import { useRouter, useSearchParams } from 'next/navigation'
-import SearchResultSwitchButton from '../button/SearchResultSwitchButtons'
+import SearchResultSwitchButton from './SearchResultSwitchButtons'
 import { useState } from 'react'
 import useSimplePagination from '@/custom/useSimplePagination'
 

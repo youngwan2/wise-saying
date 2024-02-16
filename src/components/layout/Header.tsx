@@ -7,7 +7,7 @@ import LoginButton from '../UI/auth/LoginButton'
 import LogoutButton from '../UI/auth/LogoutButton'
 import SearchForm from '../UI/search/SearchForm'
 import HeaderSearchButton from '../UI/header/HeaderSearchButton'
-import FocusModeButton from '../UI/button/FocusModeButton'
+import FocusModeButton from '../UI/header/FocusModeButton'
 
 export default function Header() {
   return (
