@@ -41,7 +41,12 @@ export async function deleteUserInfo(
   }
 }
 
-
+/**
+ * DELETE | 댓글 삭제
+ * @param hasToken 토큰 유효성 검증
+ * @param commentId 댓글 식별자
+ * @returns 
+ */
 export async function deleteComment(hasToken:boolean, commentId:number) {
   if (!hasToken) {
     alert('로그인 해주세요.')

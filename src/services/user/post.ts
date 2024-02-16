@@ -1,6 +1,7 @@
 import { getAccessToken, setAccessToken, setUserInfo } from '@/utils/sessionStorage'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 import toaster, { toast } from 'react-hot-toast'
+import { mutate } from 'swr'
 
 /**
  * POST | 새로운 refreshToken 발급
@@ -237,7 +238,6 @@ export const postComment = async (
   }
 }
 
-
 /**
  * POST | 특정 댓글에 대한 대댓글 등록 요청
  * @param commentId 
@@ -261,6 +261,7 @@ export const postReply = async (commentId: number, content: string) => {
     const { meg, replies, totalCount, status } = await response.json()
     if (status === 201) {
       toast.success(meg)
+      mutate(url) // swr 재유효화
       return { replies, totalCount }
     }
     if (status !== 201) {

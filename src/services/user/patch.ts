@@ -8,7 +8,7 @@ interface UserPostType {
 }
 
 /**
- * 유저가 작성한 포스트 수정 요청
+ * PATCH | 유저가 작성한 포스트 수정 요청
  * @param postId
  * @param hasToken
  * @param router
@@ -70,7 +70,6 @@ export const updateUserPost = async (
  */
 export async function updateUserInfoFetcher(
   password: string,
-  router: AppRouterInstance,
   userId: number,
 ) {
   try {

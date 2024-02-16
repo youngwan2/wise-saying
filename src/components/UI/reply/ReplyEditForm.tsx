@@ -29,7 +29,7 @@ export default function ReplyEditForm({ currentContent, updateReplyAction, isSho
                 <h2 className="text-[1.25em] my-[5px] font-semibold">대댓글 수정</h2>
                 <textarea
                     ref={textareaRef}
-                    name="comment"
+                    name="comment-reply"
                     className="bg-[white] w-full max-w-[600px]  max-h-[200px]  rounded-[5px] p-[10px] border-[2px] border-black"
                 />{' '}
                 <br />
