@@ -3,13 +3,13 @@
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { useUserPostIdStore } from '@/store/store'
-import useHasToken from '@/custom/useHasToken'
 import UpdatePostSubjectInput from './UpdatePostSubjectInput'
 import UpdatePostContentInput from './UpdatePostContentInput'
 import ReplaceMessageCard from '../common/ReplaceMessageCard'
 import UpdatePostAuthorInput from './UpdatePostAuthorInput'
 import useDraggable from '@/custom/useDraggable'
 import { updateUserPost } from '@/services/user/patch'
+import { mutate } from 'swr'
 
 export type PostType = {
   id: number
@@ -22,7 +22,6 @@ export type PostType = {
 export default function UpdatePostForm() {
   const router = useRouter()
   const formRef = useRef<HTMLFormElement>(null)
-  const hasToken = useHasToken()
 
   const [post, setPost] = useState<PostType | null>(null)
   const postId = useUserPostIdStore((state) => state.postId)
@@ -34,12 +33,8 @@ export default function UpdatePostForm() {
     setLoading(true)
     const response = await fetch(`/api/quotes/users/post/${postId}`)
     const { item, status, meg } = await response.json()
-    if (status === 200) {
-      setPost(item)
-    }
-    if (status !== 200) {
-      alert(meg)
-    }
+    if (status === 200) setPost(item)
+    if (status !== 200) alert(meg)
     setLoading(false)
   }
 
@@ -49,22 +44,23 @@ export default function UpdatePostForm() {
 
   useDraggable(formRef, null)
 
-  if (loading)
-    return <ReplaceMessageCard childern="데이터를 불러오는 중입니다..." />
-  if (!post)
-    return <ReplaceMessageCard childern="포스트가 존재하지 않습니다..." />
+  if (loading) return <ReplaceMessageCard childern="데이터를 불러오는 중입니다..." />
+  if (!post)  return <ReplaceMessageCard childern="포스트가 존재하지 않습니다..." />
 
   // 글 수정
   function updateFormAction(form: FormData) {
-    const content = form.get('content') || ''
-    const category = form.get('category') || ''
-    const author = form.get('author') || ''
+    const content = form.get('content')?.valueOf().toString() || ''
+    const category = form.get('category')?.valueOf().toString() || ''
+    const author = form.get('author')?.valueOf().toString() || ''
     const userPost = {
       category,
       content,
       author,
     }
-    updateUserPost(postId, hasToken, router, userPost)
+    updateUserPost(postId, userPost).then(() => {
+      router.push('/user-quotes')
+      mutate(`/api/quotes/users/post/categories/`)
+    })
   }
   return (
     <>

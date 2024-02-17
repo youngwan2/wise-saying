@@ -2,20 +2,16 @@
 import { postComment } from '@/services/user/post'
 import { useParams } from 'next/navigation'
 import { useRef } from 'react'
-import toast from 'react-hot-toast'
 
 
 export default function CommentForm() {
   const { id } = useParams()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
-  
+
   async function addComment(formData: FormData) {
     const comment = formData.get('comment')?.valueOf().toString() || ''
-    const isSuccess = await postComment(comment, id)
+    await postComment(comment, id)
     textareaRef.current && (textareaRef.current.value = '')
-    if (isSuccess) {
-      toast.success('댓글 등록이 완료 되었습니다. 잠시 후 댓글창이 갱신됩니다.')
-    }
   }
 
   return (

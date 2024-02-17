@@ -17,9 +17,9 @@ export default function AddPostForm() {
 
   // 포스트 요청
   const addPost = async (form: FormData) => {
-    const category = form.get('category') || ''
-    const content = form.get('content') || ''
-    const author = form.get('author') || ''
+    const category = form.get('category')?.valueOf().toString()||''
+    const content = form.get('content')?.valueOf().toString()||''
+    const author = form.get('author')?.valueOf().toString()||''
 
     const body = {
       category,
@@ -27,7 +27,7 @@ export default function AddPostForm() {
       author,
       isUser: true,
     }
-    postUserPost(router, hasToken, body)
+    postUserPost(hasToken, body)
   }
 
   if (!hasToken)

@@ -1,11 +1,12 @@
 import useDraggable from '@/custom/useDraggable'
 import useHasToken from '@/custom/useHasToken'
+import { updateComment } from '@/services/user/patch'
 import { MouseEventHandler, useRef } from 'react'
 
 interface PropsType {
   onClickEditCancel: MouseEventHandler<HTMLButtonElement>
   commentId: number
-  editFormDisplay : boolean
+  editFormDisplay: boolean
   setEditFormDisplay: (value: boolean) => void
 }
 export default function CommentEditForm({
@@ -21,28 +22,12 @@ export default function CommentEditForm({
   // PATCH | 유저가 작성한 댓글을 수정하는 요청
   async function commentUpdate(formData: FormData) {
     if (!hasToken) return alert('로그인 해주세요')
-    const comment = formData.get('comment')
-    const token = sessionStorage.getItem('token')
+    const comment = formData.get('comment')?.valueOf().toString() || ''
+    updateComment(commentId, comment).then(() => setEditFormDisplay(false))
 
-    const body = {
-      comment,
-    }
-    const response = await fetch(`/api/quotes/${commentId}/comments`, {
-      method: 'PATCH',
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(body),
-    })
-    const { status, meg } = await response.json()
-
-    if (status !== 201) {
-      return alert(meg)
-    }
-    alert(meg + '잠시 후 갱신됩니다.')
-    setEditFormDisplay(false)
   }
-  if(!editFormDisplay) return <></>
+
+  if (!editFormDisplay) return <></>
   return (
     <form
       ref={formRef}

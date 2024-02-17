@@ -32,7 +32,8 @@ export async function GET(req: NextRequest) {
 // POST | 대댓글 등록
 export async function POST(req: NextRequest) {
 
-    const { content } = await req.json() || { contente: '' };
+    const { '0': content } = await req.json() || { content: '' };
+    
     const commentId = req.nextUrl.searchParams.get('comment-id')
     const LENGTH_LESS_THAN_ONE = content.length < 1
 
@@ -72,7 +73,7 @@ export async function POST(req: NextRequest) {
 // PATCH | 대댓글 수정
 export async function PATCH(req: NextRequest) {
 
-    const {'0':content} = await req.json() || ''
+    const { '0': content } = await req.json() || ''
 
     const replyId = req.nextUrl.searchParams.get('reply-id') || null
     const LENGTH_LESS_THAN_ONE = content.length < 1

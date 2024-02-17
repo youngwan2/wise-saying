@@ -14,6 +14,7 @@ import { CommentType, ReplyInfoType } from '@/types/items.types'
 import { deleteComment } from '@/services/user/delete'
 import { HiChatBubbleOvalLeftEllipsis, HiPencilSquare } from 'react-icons/hi2'
 import { useSwrFetch } from '@/utils/swr'
+import { useSWRConfig } from 'swr'
 
 interface PropsType extends CommentType { }
 
@@ -25,6 +26,7 @@ export default function CommentCard({ comment }: PropsType) {
   const hasToken = useHasToken()
   const commentId = comment && comment.id || 0
   const userEmail = getUserEmail()
+  const {mutate} = useSWRConfig()
 
   function onClickReplyFormDisplay() {
     setReplyFormDisplay(!replyFormDisply)
@@ -43,7 +45,9 @@ export default function CommentCard({ comment }: PropsType) {
   async function addReplyAction(formData: FormData) {
     const content = formData.get('reply-content')?.valueOf().toString() || ''
     const commentId = comment.id
-    await postReply(commentId, content)
+     const isSuccess = await postReply(commentId, content)
+     isSuccess && mutate(`/api/quotes/0/comments/reply?comment-id=${commentId}`)
+    
   }
 
   type DataType = {
@@ -73,7 +77,7 @@ export default function CommentCard({ comment }: PropsType) {
           : isShow
             ? (
               <CommentEditDeleteMenu
-                onClickDeleteComment={() => { deleteComment(hasToken, commentId) }}
+                onClickDeleteComment={() => {deleteComment(commentId)}}
                 onClickFormDisplay={onClickFormDisplay}
               />
             ) : null}

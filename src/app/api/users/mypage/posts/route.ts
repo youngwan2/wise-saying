@@ -32,14 +32,14 @@ export async function GET(req: NextRequest) {
       pageNum * limit,
     ])
 
-    const items = itemsResults.rows
+    const quotes = itemsResults.rows
     const count = itemsResults.rowCount
 
     return NextResponse.json({
       meg: '요청을 완료하였습니다.',
       status: 200,
       success: true,
-      items,
+      quotes,
       count,
     })
   } catch (error) {

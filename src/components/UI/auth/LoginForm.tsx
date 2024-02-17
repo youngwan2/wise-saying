@@ -33,7 +33,7 @@ export default function LoginForm() {
     setIsLoading(true)
     const email = form.get('email')?.valueOf().toString() || ''
     const password = form.get('password')?.valueOf().toString() || ''
-    reqLogin(email, password).then(() => {
+    reqLogin({email, password}).then(() => {
       setIsLoading(false)
     })
   }

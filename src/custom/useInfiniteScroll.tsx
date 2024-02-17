@@ -1,4 +1,4 @@
-import { getQuotesBy } from '@/services/data/get'
+import { getInfiniteFetcher } from '@/utils/fetcher'
 import useSWRInfinite from 'swr/infinite'
 
 /**
@@ -38,7 +38,7 @@ export default function useInfiniteScroll(
     isLoading,
     size,
     setSize,
-  } = useSWRInfinite(getKey, getQuotesBy, {
+  } = useSWRInfinite(getKey, getInfiniteFetcher, {
     revalidateOnMount: true,
     revalidateOnFocus: false,
     revalidateOnReconnect: false,

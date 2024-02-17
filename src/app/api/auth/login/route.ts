@@ -5,12 +5,14 @@ import { openDB } from '@/utils/connect'
 import { createToken } from '@/utils/auth'
 import { cookies } from 'next/headers'
 
+// POST | 로그인 요청 처리
 export async function POST(req: NextRequest) {
   try {
     const db = await openDB()
 
     // 0. 이메일로 유저 정보 찾기
-    const { email, password } = await req.json()
+    const {'0':body} = await req.json()
+    const { email, password } = body
 
     const schema = Joi.object({
       email: Joi.string().email({
@@ -69,9 +71,11 @@ export async function POST(req: NextRequest) {
         status: 400,
       })
 
+    // 3. 토큰 발급
     const accessToken = createToken({ userEmail, userId }, true)
     const refreshToken = createToken({ userEmail, userId }, false)
 
+    // 4. 리프레쉬 토큰 투키 저장
     cookies().set({
       name: 'refreshToken', // 쿠키 이름
       value: 'Bearer ' + refreshToken, // 쿠키에 저장할 값

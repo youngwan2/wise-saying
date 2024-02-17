@@ -58,7 +58,6 @@ export default function MypageProfileForm({ userInfo }: PropsType) {
   function profileUpdate(form: FormData) {
     const profileUrl = imageUrl
     const nickname = form.get('nickname') || ''
-
     updateUserInfo(hasToken, nickname, profileUrl)
   }
 

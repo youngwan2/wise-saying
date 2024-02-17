@@ -23,9 +23,9 @@ export default function DetailPageControlButtons({ item }: PropsType) {
 
   const { setText } = useTTL()
   const onClickBookmarkAdd = () => {
-    if (!item) return
+    if (!item && !hasToken) return
     const { id } = item
-    addBookmarkItem(hasToken, id)
+    addBookmarkItem(id)
   }
 
   const onClickStylerPageSwitch = () => {

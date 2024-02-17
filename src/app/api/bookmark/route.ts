@@ -12,15 +12,9 @@ export async function GET(req: NextRequest) {
 
   const { status, meg, success, user } = tokenVerify(req, true)
 
-  if (status === 400) {
-    return NextResponse.json({ status, success, meg })
-  }
-
-  if (status === 401) {
-    return NextResponse.json({ status, success, meg })
-  }
+  if (status === 400) return NextResponse.json({ status, success, meg })
+  if (status === 401) return NextResponse.json({ status, success, meg })
   const userId = user.sub
-
   const db = await openDB()
 
   const query = `
@@ -43,7 +37,7 @@ export async function GET(req: NextRequest) {
     ])
     const countResults = await db.query(countSelectQuery, [userId])
 
-    const items = itemResults.rows
+    const bookmarks = itemResults.rows
     const totalCount = countResults.rows[0].count || 0
 
     // 존재하는 경우
@@ -51,8 +45,11 @@ export async function GET(req: NextRequest) {
       meg: '성공적으로 북마크 목록을 가져왔습니다.',
       success: true,
       status: 200,
-      items,
-      totalCount,
+      bookmarks: {
+        bookmarks,
+        totalCount,
+      }
+
     })
   } catch (error) {
     console.error('/api/bookmark/route.ts', error)
@@ -66,23 +63,18 @@ export async function GET(req: NextRequest) {
 
 // POST | 북마크 추가 처리
 export async function POST(req: NextRequest) {
-  const { quoteId } = await req.json()
+  const { '0': body } = await req.json()
+  const { quoteId } = body
 
   // 토큰 유효성 검증
   const { status, meg, success, user } = tokenVerify(req, true)
 
-  if (status === 400) {
-    return NextResponse.json({ status, success, meg })
-  }
-
-  if (status === 401) {
-    return NextResponse.json({ status, success, meg })
-  }
-
+  if (status === 400) return NextResponse.json({ status, success, meg })
+  if (status === 401) return NextResponse.json({ status, success, meg })
   const url = headers().get('referer')
+
   try {
     const db = await openDB()
-
     const userId = user.sub
 
     // (북마크 목록에 이미 존재하는 경우) 북마크 목록에 추가하지 않기
@@ -107,9 +99,8 @@ export async function POST(req: NextRequest) {
         INSERT INTO bookmarks(user_id, quote_id , quote_url)
         VALUES ($1, $2, $3)
         `
-
-    db.query(insertQuery, [userId, quoteId, url])
-
+    await db.query(insertQuery, [userId, quoteId, url])
+    db.end()
     return NextResponse.json({
       meg: '북마크에 추가되었습니다.',
       success: true,

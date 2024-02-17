@@ -65,15 +65,8 @@ export async function GET(req: NextRequest) {
     // 토큰 검증
     const { status, success, meg, user } = tokenVerify(req, true)
 
-    console.log(user)
-
-    if (status === 400) {
-      return NextResponse.json({ status, success, meg })
-    }
-
-    if (status === 401) {
-      return NextResponse.json({ status, success, meg })
-    }
+    if (status === 400) return NextResponse.json({ status, success, meg })
+    if (status === 401) return NextResponse.json({ status, success, meg })
 
     // 검증 후 처리
     const { sub: userId } = user
@@ -83,13 +76,13 @@ export async function GET(req: NextRequest) {
         WHERE user_id = $1
         `
     const results = await db.query(query, [userId])
-    const items = results.rows[0]
-
+    const userInfo = results.rows[0]
+    await db.end()
     return NextResponse.json({
       meg: '정상처리되었습니다.',
       success: true,
       status: 200,
-      items,
+      userInfo,
     })
   } catch (error) {
     console.error('/api/users/route.ts', error)

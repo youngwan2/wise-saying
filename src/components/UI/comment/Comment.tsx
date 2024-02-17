@@ -33,7 +33,7 @@ export default function Comment({ id }: PropsType) {
     `/api/quotes/${id}/comments?page=${page}&sort=${sort}`,
     getCommentsFormDb,
     {
-      refreshInterval: 5000,
+      refreshInterval: 10000,
     },
   )
 

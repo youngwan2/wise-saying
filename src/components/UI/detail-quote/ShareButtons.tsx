@@ -7,7 +7,7 @@ import { HiShare } from 'react-icons/hi2'
 import { useRef, useState } from 'react'
 import { SiNaver } from 'react-icons/si'
 import { HiXCircle } from 'react-icons/hi'
-import toaster, { Toaster } from 'react-hot-toast'
+import toaster from 'react-hot-toast'
 import useDraggable from '@/custom/useDraggable'
 
 export default function ShareButtons() {
@@ -49,7 +49,6 @@ export default function ShareButtons() {
 
   return (
     <>
-      <Toaster />
       <button
         onClick={() => {
           setIsDisplay(true)

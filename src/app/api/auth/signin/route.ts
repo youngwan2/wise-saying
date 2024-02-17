@@ -11,7 +11,9 @@ export async function POST(req: NextRequest) {
     const db = await openDB()
 
     // 1. 유효성 조건식 작성
-    const { email, password, reConfirmPw } = await req.json()
+    const {'0':body} = await req.json()
+    const { email, password, reConfirmPw } = body
+    
     const schema = joi.object({
       email: joi
         .string()

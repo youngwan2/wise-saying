@@ -1,5 +1,5 @@
 import { HiOutlineMail } from 'react-icons/hi'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { useState } from 'react'
 
 interface PropsType {
@@ -50,7 +50,6 @@ export default function SignInEmailInput({
 
   return (
     <article className="mt-[3.5em] mb-[1em] mx-[10px]">
-      <Toaster />
       <div className="flex">
         {/* 이메일 입력 Input */}
         <label

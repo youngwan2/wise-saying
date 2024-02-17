@@ -1,99 +1,72 @@
-import toast from "react-hot-toast"
-import { getAccessToken } from "./sessionStorage"
+import { Method, defaultConfig, getDefaultConfig } from "@/configs/config.api"
 
 
-enum Method {
-    GET = 'GET',
-    POST = 'POST',
-    PATCH = 'PATCH',
-    DELETE = 'DELETE'
-}
 
-export const getFetcher = async (url: string) => {
-    const response = await fetch(url)
-    const { success, meg, status, ...results } = await response.json()
+/**
+ * * GET | 인피니티 스크롤 SWR
+ * @param url
+ * @returns 아이템 목록 반환
+ */
+export async function getInfiniteFetcher(url: string) {
+  
+    try {
+      const response = await fetch(url)
+      const items = await response.json()
+      return items
+    } catch (error) {
+      console.error('GET 리스트 조회 실패:', error)
+    }
+  }
+
+/**
+ * GET, POST, PATCH, DETETE | 일반 SWR
+ * @param url 
+ * @returns 
+ */  
+export const getFetcher = async (url: string | null, isTokenVertify:boolean) => {
+    if(!url) return
+    const config = getDefaultConfig(Method.GET, isTokenVertify )
+    const {success, meg, results} = await defaultFetch(url, config)
     if (!success) throw new Error(meg)
-    return { ...results }
+    return results
 }
 
 export const postFetcher = async (url: string, ...data: any) => {
     const config = defaultConfig(Method.POST, ...data)
-    const isSuccess:boolean = await defaultFetch(url, config)
+    const isSuccess: boolean = await defaultFetch(url, config)
     return isSuccess
 }
 
 export const patchFetcher = async (url: string, ...data: any) => {
     const config = defaultConfig(Method.PATCH, ...data)
-    const isSuccess:boolean = await defaultFetch(url, config)
+    const isSuccess: boolean = await defaultFetch(url, config)
     return isSuccess
 }
 
 export const deleteFetcher = async (url: string, ...data: any) => {
     const config = defaultConfig(Method.DELETE, data)
-    const isSuccess:boolean = await defaultFetch(url, config)
+    const isSuccess: boolean = await defaultFetch(url, config)
     return isSuccess
 }
 
-/**
- * Config | 요청 시 추가 옵션
- * @param method 요청 메소드
- * @param data 데이터
- * @returns 
- * @example
- *  const token = getAccessToken() || ''
-    const config = {
-        method,
-        headers: {
-            authorization: 'Bearer ' + token
-        },
-        body: JSON.stringify({ ...data })
-    }
 
-    return config
- */
-const defaultConfig = (method: Method, ...data: any) => {
-    const token = getAccessToken() || ''
-    const config = {
-        method,
-        headers: {
-            authorization: 'Bearer ' + token
-        },
-        
-        body: JSON.stringify({ ...data })
-    }
-
-    return config
-}
 
 /**
- * Fetch | 가본 fetch 공통 양식
+ * Fetch | 가본 api fetch 공통 양식
  * @param url 요청 경로
  * @param config 추가 설정
  * @returns 
- * @example // 내부적으로 다음과 같이 처리 된다.
- *     try {
-        const response = await fetch(url, config)
-       
-        const { meg, success } = await response.json()
-          if (!success) return toast.error(meg)
-          if (success) {
-            toast.success(meg)
-            return success
-        }
-    } catch (error) {
-        console.error('DELETE 데이터 삭제 실패:', error)
-    }
  */
-const defaultFetch = async (url: string, config: any) => {
+export const defaultFetch = async (url: string, config: any) => {
     try {
         const response = await fetch(url, config)
-        const { meg, success } = await response.json()
-        if (!success) return toast.error(meg)
+        const { meg, success, status, ...results } = await response.json()
         if (success) {
-            toast.success(meg)
-            return success
+            return { success, meg,results, ...results }
+        } else {
+            return { success, meg}
         }
     } catch (error) {
-        console.error('DELETE 데이터 삭제 실패:', error)
+        console.error('데이터 처리 실패:', error)
     }
 }

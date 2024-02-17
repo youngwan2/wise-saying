@@ -13,7 +13,7 @@ export async function GET(
     const db = await openDB()
 
     /**
-     * * * * 저자별 명언 목록 정보를 반환
+     * * 저자별 명언 목록 정보를 반환
      */
 
     // 타입이 meta인 경우 조회된 목록의 총 갯수와 최대 페이지를 구하여 반환
@@ -79,6 +79,7 @@ export async function GET(
     `
       const results = await db.query(query, [limit, pageNum * limitNum])
       const items = results.rows
+      await db.end()
       return NextResponse.json(items)
     }
 

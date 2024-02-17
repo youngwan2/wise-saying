@@ -4,12 +4,17 @@
  * @returns 
  */
 export const getUserEmail = () => {
-    const user =
-        (sessionStorage && sessionStorage?.getItem && sessionStorage?.getItem('user')) ||
-        '{"dbEmail":""}'
-    const { dbEmail: userEmail } = JSON.parse(user)
+    try {
+        const user =
+            (sessionStorage && sessionStorage?.getItem && sessionStorage?.getItem('user')) ||
+            '{"dbEmail":""}'
+        const { dbEmail: userEmail } = JSON.parse(user)
 
-    return userEmail
+        return userEmail
+    } catch(error){
+        console.error('sessionStorage getItem 실패:', error)
+        return ''
+    }
 }
 
 
@@ -40,9 +45,9 @@ export const getAccessToken = () => {
     try {
         const token = sessionStorage.getItem('token')
         return token
-        
+
     } catch (error) {
         console.error('sessionStorage.getItem 에러:' + error)
-        return ''
+        return null
     }
 }

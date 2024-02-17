@@ -2,38 +2,31 @@
 
 import { useMypageTapsStore } from '@/store/store'
 import MypageProfileForm from './MypageProfileForm'
-import useHasToken from '@/custom/useHasToken'
-import useSWR from 'swr'
 import MypageMyQuotesList from './MypageUserQuotesList'
 import { useState } from 'react'
 import ReplaceMessageCard from '../common/ReplaceMessageCard'
-import { getUserInfoFromDb, getUserQuotesFromDb } from '@/services/user/get'
 import MypageUserInfoForm from './MypageUserInfoForm'
+import { useSwrFetchWithToken } from '@/utils/swr'
+import useHasToken from '@/custom/useHasToken'
 
 export default function MypageContainer() {
   const tapId = useMypageTapsStore((state) => state.tapId)
-  const hasToken = useHasToken()
   const [page, setPage] = useState(0)
-
-  const token = (hasToken && sessionStorage.getItem('token')) || ''
+  const hasToken = useHasToken()
 
   // 유저 정보
-  const { data: userInfo, error } = useSWR(
-    ['/api/users/', token],
-    ([url, token]) => getUserInfoFromDb(url, token),
-  )
+  const { data, error } = useSwrFetchWithToken('/api/users/', true)
+  const { userInfo } = data || {}
 
   // 유저 명언 목록
-  const { data: userQuotesInfo } = useSWR(
-    () =>
-      tapId === 1
-        ? '/api/users/mypage/posts?userId=' + userInfo.user_id + '&page=' + page
-        : null,
-    getUserQuotesFromDb,
-  )
 
-  if (!hasToken)
-    return <ReplaceMessageCard childern="로그인 후 이용해주세요."/>
+  const url = hasToken&& tapId === 1
+    ? '/api/users/mypage/posts?userId=' + userInfo.user_id + '&page=' + page
+    : null
+
+  const { data: userQuotesAndCount } = useSwrFetchWithToken(url, false )
+  const {quotes:userQuotes, count:quotesCount} = userQuotesAndCount || {}
+  if(!hasToken) return <ReplaceMessageCard childern={'로그인 후 이용해주세요.'}/>
   if (!userInfo)
     return (
       <ReplaceMessageCard
@@ -52,10 +45,10 @@ export default function MypageContainer() {
       {tapId === 0 && <MypageProfileForm userInfo={userInfo} />}
       {tapId === 1 && (
         <MypageMyQuotesList
-          userQuotes={userQuotesInfo?.userInfo}
+          userQuotes={userQuotes}
           setPage={setPage}
           page={page}
-          count={userQuotesInfo?.count}
+          count={quotesCount}
         />
       )}
       {tapId === 2 && <MypageUserInfoForm userInfo={userInfo} />}
