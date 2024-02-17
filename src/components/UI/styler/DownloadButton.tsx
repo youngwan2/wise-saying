@@ -5,7 +5,7 @@ import { HiDocumentDownload } from 'react-icons/hi'
 interface PropsType {
   onClick: MouseEventHandler<HTMLButtonElement>
 }
-export default function QuotesStylerImageDownloadButton({
+export default function DownloadButton({
   onClick,
 }: PropsType) {
   return (

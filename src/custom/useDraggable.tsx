@@ -1,3 +1,4 @@
+"use client"
 import gsap from 'gsap'
 import { Draggable } from 'gsap/Draggable'
 import { RefObject, useEffect } from 'react'
@@ -16,27 +17,25 @@ export default function useDraggable(
     let instance: Draggable[]
     let clear: NodeJS.Timeout
 
-    if (elementRef?.current) {
-      clear = setTimeout(() => {
-        if (type === 'x') {
-          instance = Draggable.create(elementRef.current, {
-            dragClickables: false,
-            type: 'x',
-            bounds: document.querySelector('body'),
-          })
-        } else if (type === 'rotation') {
-          instance = Draggable.create(elementRef.current, {
-            dragClickables: false,
-            type: 'rotation',
-            bounds: document.querySelector('body'),
-          })
-        } else {
-          instance = Draggable.create(elementRef.current, {
-            dragClickables: false,
-          })
-        }
-      }, 1000)
-    }
+    if (!elementRef?.current) return
+
+    clear = setTimeout(() => {
+      if (type === 'x' || type === 'rotation') {
+        instance = Draggable.create(elementRef.current, {
+          dragClickables: false,
+          type: type,
+          bounds: document.querySelector('body'),
+        })
+      }
+      if (type === 'free') {
+        console.log(type)
+        instance = Draggable.create(elementRef.current, {
+          dragClickables: false,
+          type: 'x,y',
+          bounds: document.querySelector('body')
+        })
+      }
+    }, 1000)
     return () => {
       clearTimeout(clear)
       if (instance) {

@@ -1,13 +1,12 @@
 'use client'
 import { HiUpload } from 'react-icons/hi'
-import { ChangeEvent } from 'react'
 import { imagePreviewReader } from '@/utils/commonFunctions'
 
 interface PropsType {
   setImages: (src: string[]) => void
   images: string[]
 }
-export default function QuoteStylerImageUploadForm({
+export default function StylerImageUploadForm({
   setImages,
   images,
 }: PropsType) {

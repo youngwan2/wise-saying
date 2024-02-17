@@ -1,7 +1,7 @@
+import { CommentType } from "@/types/items.types";
 import Image from "next/image";
-import { PropsType } from "./CommentCard";
 
-
+interface PropsType extends CommentType {}
 export default function CommentProfileImage({ comment }: PropsType) {
     return (
         <Image

@@ -49,8 +49,6 @@ export const deleteFetcher = async (url: string, ...data: any) => {
     return isSuccess
 }
 
-
-
 /**
  * Fetch | 가본 api fetch 공통 양식
  * @param url 요청 경로
@@ -61,11 +59,8 @@ export const defaultFetch = async (url: string, config: any) => {
     try {
         const response = await fetch(url, config)
         const { meg, success, status, ...results } = await response.json()
-        if (success) {
-            return { success, meg,results, ...results }
-        } else {
-            return { success, meg}
-        }
+        if (success)   return { success, meg,results, ...results }
+        else  return { success, meg}
     } catch (error) {
         console.error('데이터 처리 실패:', error)
     }

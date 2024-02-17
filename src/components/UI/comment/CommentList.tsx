@@ -5,13 +5,13 @@ interface PropsType extends CommentsInfoType {
 }
 export default function CommentList({ comments }: PropsType) {
     if (comments.length < 1) return <EmptyMessage/>
+    
     return (
         <ul className="mt-[2em] min-h-[350px]">
             {comments.map((comment) => <CommentCard comment={comment} key={comment.id} />)}
         </ul>
     )
 }
-
 
 function EmptyMessage() {
     return (

@@ -6,7 +6,7 @@ import { HiScissors, HiX } from 'react-icons/hi'
 interface PropsType {
   selectTapNum: number
 }
-export default function QuotesSizeStyler({ selectTapNum }: PropsType) {
+export default function SizeStyler({ selectTapNum }: PropsType) {
   const setSizeStore = useQuotesCardSizeStore((state) => state.setSize)
   const [size, setSize] = useState({
     width: 300,

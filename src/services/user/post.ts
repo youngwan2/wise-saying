@@ -132,17 +132,14 @@ export const postUserPost = async (
 
 /**
  * POST | 유저 프로필 추가
- * @param hasToken 토큰 존재 유무 판단
  * @param nickname 유저 닉네임
  * @param imageUrl 유저 프로필 이미지 URL
  * @returns
  */
 export async function updateUserInfo(
-  hasToken: boolean,
   nickname: FormDataEntryValue,
   imageUrl: string,
 ) {
-  if (!hasToken) return alert('접근 권한이 없습니다.')
   const userInfo = {
     nickname: nickname,
     profile_image: imageUrl,
@@ -150,7 +147,13 @@ export async function updateUserInfo(
 
   const config = defaultConfig(Method.POST, userInfo)
   const url = '/api/users/mypage/upload?tag=user'
-  defaultFetch(url, config)
+  const {success } = await defaultFetch(url, config)
+  if(success) toast.success('프로필 정보가 업데이트 되었습니다.')
+  if(!success) {
+    toast.error('프로필 정보 업데이트에 실패하였습니다.')
+    requestNewRefreshToken()
+  }
+
 }
 
 /**
@@ -190,6 +193,6 @@ export const postReply = async (commentId: number, content: string) => {
   const url = `/api/quotes/0/comments/reply?comment-id=${commentId}`
   const config = defaultConfig(Method.POST, content)
   const { success } = await defaultFetch(url, config)
-  toast.success('댓글이 등록되었습니다.')
-  return success
+  if(success) { toast.success('댓글이 등록되었습니다.'); return true  }
+  if(!success) return success
 }

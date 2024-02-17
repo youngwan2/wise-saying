@@ -6,7 +6,7 @@ import { HiPaintBrush } from 'react-icons/hi2'
 interface PropsType {
   selectTapNum: number
 }
-export default function QuotesBackgroundStyler({ selectTapNum }: PropsType) {
+export default function BackgroundStyler({ selectTapNum }: PropsType) {
   const [displayState, setDisplayState] = useState(false)
   const [previewColor, setPreviewColor] = useState<any>()
   const pickerRef = useRef<HTMLAreaElement>(null)

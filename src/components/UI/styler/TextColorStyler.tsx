@@ -2,14 +2,13 @@ import { PhotoshopPicker } from 'react-color'
 import { HiPaintBrush } from 'react-icons/hi2'
 import { useState, useEffect, useRef } from 'react'
 import { useQuotesTextStyleStore } from '@/store/store'
-import { TextStyleType } from './QuotesTextStyler'
-import useDraggable from '@/custom/useDraggable'
+import { TextStyleType } from './TextStyler'
 
 interface PropsType {
   setTextStyleState: (p: TextStyleType) => void
   textStyle: TextStyleType
 }
-export default function QuotesTextColorStyler({
+export default function TextColorStyler({
   setTextStyleState,
   textStyle,
 }: PropsType) {

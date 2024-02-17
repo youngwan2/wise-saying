@@ -9,6 +9,7 @@ import useHasToken from '@/custom/useHasToken'
 import MypageImageUploadInput from './MypageImageUploadInput'
 import MypageNicknameInput from './MypageNicknameInput'
 import MypageEmailInput from './MypageEmailInput'
+import toast from 'react-hot-toast'
 
 interface PropsType {
   userInfo: {
@@ -56,9 +57,10 @@ export default function MypageProfileForm({ userInfo }: PropsType) {
 
   // 프로필 업데이트
   function profileUpdate(form: FormData) {
+    if(!hasToken) return toast.error('접근 권한이 없습니다.')
     const profileUrl = imageUrl
     const nickname = form.get('nickname') || ''
-    updateUserInfo(hasToken, nickname, profileUrl)
+    updateUserInfo(nickname, profileUrl)
   }
 
   // 이미지 업로드

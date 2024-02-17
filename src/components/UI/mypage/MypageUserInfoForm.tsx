@@ -101,7 +101,7 @@ export default function MypageUserInfoForm({ userInfo }: PropsType) {
           onClick={() => {
             if (!hasToken || !userInfo?.user_id)
               return alert('접근 권한이 없습니다.')
-            deleteUserInfo(userInfo.user_id, router)
+            deleteUserInfo(userInfo.user_id)
           }}
           className="bg-red-500 text-white px-4 py-2 rounded-lg"
         >

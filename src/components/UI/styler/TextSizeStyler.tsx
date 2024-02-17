@@ -6,7 +6,7 @@ interface PropsType {
   setTextStyleState: (p: any) => void
   textStyle: any
 }
-export default function QuotesTextSizeStyler({
+export default function TextSizeStyler({
   sizeUnits,
   setTextStyleState,
   textStyle,

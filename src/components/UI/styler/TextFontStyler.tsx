@@ -1,12 +1,12 @@
 import { HiPaintBrush } from 'react-icons/hi2'
-import type { TextStyleType } from './QuotesTextStyler'
+import type { TextStyleType } from './TextStyler'
 
 interface PropsType {
   setTextStyleState: (p: TextStyleType) => void
   textStyle: TextStyleType
 }
 
-export default function QuotesTextFontStyler({
+export default function TextFontStyler({
   setTextStyleState,
   textStyle,
 }: PropsType) {

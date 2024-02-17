@@ -1,14 +1,16 @@
 import { useRef } from 'react'
-import { PostType } from './UpdatePostForm'
+import { PostType } from './QuoteEditForm'
 import useInitialValueSetter from '@/custom/useInitialValueSetter'
 
 interface PropsType {
-  post: PostType
+  post?: PostType
   name: string
+  placeholder?: string
 }
-export default function UpdatePostAuthorInput({ post, name }: PropsType) {
+export default function QuoteAuthorInput({ post, name, placeholder }: PropsType) {
   const inputRef = useRef<HTMLInputElement>(null)
-  useInitialValueSetter(inputRef, post.author)
+  const author = post?.author
+  useInitialValueSetter(inputRef, author)
 
   return (
     <article className="px-[2em]">
@@ -19,8 +21,10 @@ export default function UpdatePostAuthorInput({ post, name }: PropsType) {
         ref={inputRef}
         name={name}
         type="text"
+        maxLength={8}
+        minLength={2}
         className="min-w-[200px] w-[500px]  px-[10px] min-h-[40px]  rounded-[5px] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.5)]"
-        placeholder={'기존내용) ' + post.author}
+        placeholder={placeholder}
       />
     </article>
   )

@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import { useQuotesStrokeStyleStore } from '@/store/store'
 import { debounceCloser } from '@/utils/commonFunctions'
 
-export default function QuotesTextStrokeStyler() {
+export default function TextStrokeStyler() {
   const [displayState, setDisplayState] = useState(false)
   const [confirmedColor, setConfirmedColor] = useState<any>()
   const color = useQuotesStrokeStyleStore((state) => state.color)

@@ -19,7 +19,6 @@ export default function MypageContainer() {
   const { userInfo } = data || {}
 
   // 유저 명언 목록
-
   const url = hasToken&& tapId === 1
     ? '/api/users/mypage/posts?userId=' + userInfo.user_id + '&page=' + page
     : null

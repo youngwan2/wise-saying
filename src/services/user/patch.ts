@@ -29,7 +29,12 @@ export const updateUserPost = async (
   const config = defaultConfig(Method.PATCH, userPost)
   const url = `/api/quotes/users/post/${postId}`
 
-  await defaultFetch(url, config)
+  const {success} = await defaultFetch(url, config)
+  if(success) {
+    toast.success('수정하였습니다.')
+    return success
+  }
+  if(!success) return toast.error('수정 요청이 실패하였습니다.')
 }
 
 /**

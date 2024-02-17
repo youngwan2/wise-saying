@@ -57,15 +57,14 @@ export async function GET(
       if (type === 'meta') {
         const db = await openDB()
         const query = `
-                    SELECT COUNT(*) AS count
-                    FROM users A  JOIN quotes B
-                    ON A.user_id = B.user_id
-                    WHERE category = $1
-                    
-                `
+        SELECT COUNT(*) AS count
+        FROM users A JOIN quotes B 
+        ON A.user_id = B.user_id
+        WHERE category = $1
+        `
 
         const result = await db.query(query, [category])
-        const TOTAL_COUNT = result.rowCount || 0
+        const TOTAL_COUNT = result.rows[0].count || 0
         const MAX_PAGE = Math.ceil(TOTAL_COUNT / 15)
 
         db.end()
@@ -83,7 +82,7 @@ export async function GET(
             LIMIT $2 OFFSET $3
         `
       const results = await db.query(query, [category, limit, pageNum * limit])
-      const items = results.rows[0]
+      const items = results.rows
       return NextResponse.json(items)
     }
   } catch (error) {

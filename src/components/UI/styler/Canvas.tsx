@@ -9,15 +9,17 @@ import {
   useQuotesTextStyleStore,
 } from '@/store/store'
 
-import toast, {Toaster} from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import wrap from 'word-wrap'
-import QuotesStylerImageDownloadButton from './QuotesStylerImageDownloadButton'
+import DownloadButton from './DownloadButton'
 
 interface QuoteType {
   quote: string
 }
-export default function QuotesStylerCanvas() {
 
+
+// 음.. 너무 길다.
+export default function Canvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [imageEl, setImageEl] = useState<HTMLImageElement|null>(null)
 
@@ -141,7 +143,6 @@ export default function QuotesStylerCanvas() {
 
   return (
     <article className="min-h-[500px] w-[95%] bg-[#0f0f0fa4] p-[5px] relative shadow-[inset_5px_5px_5px_rgba(0,0,0,0.3)] rounded-[5px]">
-      <Toaster/>
       <span className="text-white">
         {width}X{height}
       </span>
@@ -151,7 +152,7 @@ export default function QuotesStylerCanvas() {
         height={height}
         className="border shadow-[0_0px_5px_1px_rgba(1,100,500,0.7)]  mx-auto"
       ></canvas>
-      <QuotesStylerImageDownloadButton
+      <DownloadButton
         onClick={() => {
           const imageURL = canvasRef.current?.toDataURL() || ''
           const link = document.createElement('a')
@@ -165,6 +166,7 @@ export default function QuotesStylerCanvas() {
   )
 }
 
+// store hooks
 const useTextStyle = () => {
   const color = useQuotesTextStyleStore((state) => state.color)
   const unit = useQuotesTextStyleStore((state) => state.unit)

@@ -5,10 +5,10 @@ import Autoplay from 'embla-carousel-autoplay'
 import { useState } from 'react'
 import Image from 'next/image'
 import { useImageElementStore } from '@/store/store'
-import QuoteStylerImageUploadForm from './QuoteStylerImageUploadForm'
-import StylerCarouselSwitchButtons from './QuotesStylerCarouselSwitchButtons'
+import StylerImageUploadForm from './StylerImageUploadForm'
+import CarouselControlButtons from './CarouselControlButtons'
 
-export default function QuotesStylerCarosel() {
+export default function StylerCarosel() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay()])
   const [images, setImages] = useState([
     '/images/image1.png',
@@ -45,10 +45,10 @@ export default function QuotesStylerCarosel() {
             ></Image>
           )
         })}
-        <QuoteStylerImageUploadForm setImages={setImages} images={images} />
+        <StylerImageUploadForm setImages={setImages} images={images} />
       </figure>
       {/* 캐러셀 조작 버튼 */}
-      <StylerCarouselSwitchButtons emblaApi={emblaApi} />
+      <CarouselControlButtons emblaApi={emblaApi} />
     </article>
   )
 }

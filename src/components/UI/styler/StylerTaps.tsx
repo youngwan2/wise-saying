@@ -5,7 +5,7 @@ interface PropsType {
   selectTapNum: number
 }
 
-export default function QuotesStylerTaps({
+export default function StylerTaps({
   selectTapNum,
   setSelectTapNum,
 }: PropsType) {

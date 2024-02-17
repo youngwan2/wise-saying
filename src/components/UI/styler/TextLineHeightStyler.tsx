@@ -2,7 +2,7 @@ import { useQuotesLineHeightStore } from '@/store/store'
 import { debounceCloser } from '@/utils/commonFunctions'
 import { HiPaintBrush } from 'react-icons/hi2'
 
-export default function QuotesTextLineHeightStyler() {
+export default function TextLineHeightStyler() {
   const setLineHeight = useQuotesLineHeightStore((state) => state.setLineHeight)
   return (
     <article>
@@ -17,7 +17,6 @@ export default function QuotesTextLineHeightStyler() {
         onChange={(e) => {
           const height = Number(e.currentTarget.value)
           debounceCloser(height, '', null, setLineHeight, 500)
-          // setLineHeight(height)
         }}
       />
     </article>

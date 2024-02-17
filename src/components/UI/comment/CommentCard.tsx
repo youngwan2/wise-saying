@@ -3,7 +3,6 @@ import { HiDotsVertical, HiOutlineX } from 'react-icons/hi'
 import { MouseEventHandler, useState } from 'react'
 import CommentEditDeleteMenu from './CommentEditDeleteMenu'
 import CommentEditForm from './CommentEditForm'
-import useHasToken from '@/custom/useHasToken'
 import { getUserEmail } from '@/utils/sessionStorage'
 import CommentProfileImage from './CommentProfileImage'
 import CommentContent from './CommentContent'
@@ -12,9 +11,9 @@ import ReplyList from '../reply/ReplyList'
 import ReplyForm from '../reply/ReplyForm'
 import { CommentType, ReplyInfoType } from '@/types/items.types'
 import { deleteComment } from '@/services/user/delete'
-import { HiChatBubbleOvalLeftEllipsis, HiPencilSquare } from 'react-icons/hi2'
 import { useSwrFetch } from '@/utils/swr'
 import { useSWRConfig } from 'swr'
+import ReplyButtons from '../reply/ReplyButtons'
 
 interface PropsType extends CommentType { }
 
@@ -23,31 +22,33 @@ export default function CommentCard({ comment }: PropsType) {
   const [editFormDisplay, setEditFormDisplay] = useState(false)
   const [replyFormDisply, setReplyFormDisplay] = useState(false)
 
-  const hasToken = useHasToken()
   const commentId = comment && comment.id || 0
   const userEmail = getUserEmail()
-  const {mutate} = useSWRConfig()
+  const { mutate } = useSWRConfig()
 
-  function onClickReplyFormDisplay() {
-    setReplyFormDisplay(!replyFormDisply)
-  }
 
-  // 댓글 수정 창 열기
+
+  // Click : 댓글 수정 창 열기
   function onClickFormDisplay() {
     setEditFormDisplay(true)
   }
 
-  //  댓글 수정 창 닫기
+  // Click : 댓글 수정 창 닫기
   function onClickEditCancel() {
     setEditFormDisplay(false)
   }
 
+  // Click : 대댓글 등록 창 열기
+  function onClickReplyFormDisplay() {
+    setReplyFormDisplay(!replyFormDisply)
+  }
+  // Actions : 대댓글 등록 액션
   async function addReplyAction(formData: FormData) {
     const content = formData.get('reply-content')?.valueOf().toString() || ''
     const commentId = comment.id
-     const isSuccess = await postReply(commentId, content)
-     isSuccess && mutate(`/api/quotes/0/comments/reply?comment-id=${commentId}`)
-    
+    const isSuccess = await postReply(commentId, content)
+    isSuccess && mutate(`/api/quotes/0/comments/reply?comment-id=${commentId}`)
+
   }
 
   type DataType = {
@@ -59,39 +60,32 @@ export default function CommentCard({ comment }: PropsType) {
   // SWR + GET | 대댓글 정보 요청
   const { data: replyInfo, isLoading }: DataType = useSwrFetch(`/api/quotes/0/comments/reply?comment-id=` + commentId)
 
-  if (isLoading) return <></>
-  if (!comment && !replyInfo) return <ReplaceMessageCard childern="데이터를 가져오는 중입니다." />
+  if (isLoading || !(comment && replyInfo)) return <ReplaceMessageCard childern="데이터를 가져오는 중입니다." />
+
+  const emailInfo = {
+    userEmail,
+    commentEmail: comment.email
+  }
   return (
     <>
       <li className="bg-white  min-h-[50px] rounded-[5px] first:mt-[2em] mt-[1em] flex justify-start items-center w-full mx-auto relative">
         <CommentProfileImage comment={comment} />
-
-        <div className=" ml-[4em] py-[10px] pr-[1.5em]">
-          <CommentContent comment={comment} />
-          <CommentMenuDropdownButton isShow={isShow} onClick={() => setIsShow(!isShow)} />
-        </div>
+        <CommentContent comment={comment} />
+        <CommentMenuDropdownButton isShow={isShow} onClick={() => setIsShow(!isShow)} />
 
         {/* 글쓴이라면 편집 버튼 활성화 */}
-        {userEmail !== comment.email
-          ? null
-          : isShow
-            ? (
-              <CommentEditDeleteMenu
-                onClickDeleteComment={() => {deleteComment(commentId)}}
-                onClickFormDisplay={onClickFormDisplay}
-              />
-            ) : null}
+        <CommentEditDeleteMenu
+          emailInfo={emailInfo}
+          isShow={isShow}
+          onClickDeleteComment={() => { deleteComment(commentId) }}
+          onClickFormDisplay={onClickFormDisplay}
+        />
         <CommentEditForm
           commentId={comment.id}
           editFormDisplay={editFormDisplay}
           setEditFormDisplay={setEditFormDisplay}
           onClickEditCancel={onClickEditCancel} />
-        <article className='flex items-center'>
-          <button className='flex  items-center hover:shadow-[0_2px_0_0_tomato] absolute right-[3em] bottom-[0.44em] text-[18px] hover:font-bold' onClick={onClickReplyFormDisplay} ><HiPencilSquare color='rgba(0,0,0,0.8)' />
-            <span className='text-[14px] font-sans'>답글</span></button>
-          <button className='flex items-center hover:shadow-[0_2px_0_0_tomato] absolute right-[0.5em] bottom-[0.4em] text-[1.2em] hover:font-bold'><HiChatBubbleOvalLeftEllipsis color='rgba(0,0,0,0.8)' />
-            <span className=' text-[14px] font-bold'>({replyInfo.totalCount})</span></button>
-        </article>
+        <ReplyButtons totalCount={replyInfo.totalCount || 0} onClickReplyFormDisplay={onClickReplyFormDisplay} />
       </li>
       <li>
         <ReplyList commentId={commentId} userEmail={userEmail} replyInfo={replyInfo} />

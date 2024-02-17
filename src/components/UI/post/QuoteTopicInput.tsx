@@ -1,15 +1,16 @@
 import { useRef } from 'react'
-import { PostType } from './UpdatePostForm'
+import { PostType } from './QuoteEditForm'
 import useInitialValueSetter from '@/custom/useInitialValueSetter'
 
 interface PropsType {
-  post: PostType
+  post?: PostType
   name: string
+  placeholder?:string
 }
-export default function UpdatePostSubjectInput({ post, name }: PropsType) {
+export default function QuoteTopicInput({ post, name, placeholder }: PropsType) {
   const inputRef = useRef<HTMLInputElement>(null)
-
-  useInitialValueSetter(inputRef, post.category)
+  const category = post?.category
+  useInitialValueSetter(inputRef, category)
 
   return (
     <article className="px-[2em]">
@@ -20,8 +21,10 @@ export default function UpdatePostSubjectInput({ post, name }: PropsType) {
         ref={inputRef}
         type="text"
         name={name}
+        maxLength={3}
+        minLength={0}
+        placeholder={placeholder}
         className="min-w-[200px] w-[500px] min-h-[40px] px-[10px] rounded-[5px] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.5)] "
-        placeholder={'기존내용) ' + post.category || '없음'}
       />
     </article>
   )
