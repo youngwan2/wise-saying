@@ -1,38 +1,20 @@
-import toaster from 'react-hot-toast'
+import { Method, defaultConfig } from '@/configs/config.api'
+import { defaultFetch } from '@/utils/fetcher'
+import toast from 'react-hot-toast'
+import { mutate } from 'swr'
 /**
  * POST | 북마크 아이템을 추가하는 함수
- * @param hasToken accessToken 존재 유무 판단
  * @param itemId 북마크에 추가할 아이템의 식별자(=>quote_id)
  */
-export const addBookmarkItem = (hasToken: boolean, itemId: number) => {
-  if (!hasToken) return toaster.error('접근 권한이 없네요. 로그인 후 이용해 주세요')
-
-  const token = sessionStorage.getItem('token')
+export const addBookmarkItem = async (itemId: number) => {
   const postData = {
     quoteId: itemId,
   }
 
   const url = '/api/bookmark'
-  fetch(url, {
-    method: 'POST',
-    body: JSON.stringify(postData),
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  })
-    .then(async (response) => {
-      const result = await response.json()
-      const { meg, status } = result
-
-      if (status === 201) {
-        toaster.success(meg)
-      }
-      if (status !== 201) {
-        toaster.error(meg)
-      }
-    })
-    .catch((error) => {
-      console.error(error)
-      toaster.error('북마크 추가 요청에 실패 하였습니다. 네트워크 문제가 발생하였습니다.')
-    })
+  const config = defaultConfig(Method.POST, postData)
+  const result = await defaultFetch(url, config)
+  const { meg, success } = result
+  if (success) { mutate(`/api/bookmark?page=0&limit=5`); return toast.success(meg) }
+  if (!success) return toast.error(meg)
 }

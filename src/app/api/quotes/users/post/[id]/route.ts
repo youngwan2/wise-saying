@@ -42,16 +42,12 @@ export async function PATCH(req: NextRequest, res: { params: { id: number } }) {
     //  접근 토큰 검증
     const { status, meg, success } = tokenVerify(req, true)
 
-    if (status === 400) {
-      return NextResponse.json({ status, success, meg })
-    }
-
-    if (status === 401) {
-      return NextResponse.json({ status, success, meg })
-    }
+    if (status === 400) return NextResponse.json({ status, success, meg })
+    if (status === 401) return NextResponse.json({ status, success, meg })
 
     const postId = res.params.id
-    const { content: quote, category, author } = await req.json()
+    const {'0':body}  = await req.json()
+    const { content: quote, category, author } = body
 
     const query = `
             UPDATE quotes
@@ -60,7 +56,6 @@ export async function PATCH(req: NextRequest, res: { params: { id: number } }) {
         `
 
     await db.query(query, [quote, category, author, postId])
-
     await db.end()
     return NextResponse.json({
       status: 201,
@@ -91,13 +86,8 @@ export async function DELETE(
     // 토큰 검증 및 에러 처리
     const { status, meg, success, user } = tokenVerify(req, true)
 
-    if (status === 400) {
-      return NextResponse.json({ status, success, meg })
-    }
-
-    if (status === 401) {
-      return NextResponse.json({ status, success, meg })
-    }
+    if (status === 400) return NextResponse.json({ status, success, meg })
+    if (status === 401) return NextResponse.json({ status, success, meg })
 
     // 토큰 검증 성공 후 처리
     const { sub: userId } = user

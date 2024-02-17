@@ -7,19 +7,16 @@ export async function POST(req: NextRequest) {
   // 토큰 유효성 검증
   const { status, meg, success, user } = tokenVerify(req, true)
 
-  if (status === 400) {
-    return NextResponse.json({ status, success, meg })
-  }
-
-  if (status === 401) {
-    return NextResponse.json({ status, success, meg })
-  }
+  if (status === 400) return NextResponse.json({ status, success, meg })
+  if (status === 401) return NextResponse.json({ status, success, meg })
 
   const { sub: userId } = user
 
   try {
     const db = await openDB()
-    const { category, content: quote, author } = await req.json()
+    const {'0':body} = await req.json()
+    
+    const {category, content:quote, author} = body
 
     const insertQuery = `
               INSERT INTO quotes(quote, category, author,job, user_id)

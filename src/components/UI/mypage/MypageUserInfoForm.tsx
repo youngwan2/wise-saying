@@ -2,7 +2,7 @@
 
 import useHasToken from '@/custom/useHasToken'
 import { deleteUserInfo } from '@/services/user/delete'
-import { updateUserInfoFetcher } from '@/services/user/patch'
+import { updateUserPassword } from '@/services/user/patch'
 import { useRouter } from 'next/navigation'
 import { useId } from 'react'
 
@@ -32,7 +32,7 @@ export default function MypageUserInfoForm({ userInfo }: PropsType) {
 
     const { user_id: userId } = userInfo || { user_id: 0 }
 
-    updateUserInfoFetcher(password, router, userId)
+    updateUserPassword(password, userId)
   }
 
   return (

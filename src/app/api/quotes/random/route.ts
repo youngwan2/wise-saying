@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
     const results = await db.query(query, randomNumbers)
     await db.end()
     const items = results.rows
-    return NextResponse.json(items)
+    return NextResponse.json({meg:"성공적으로 처리되었습니다.",status:200, success:true, items})
   } catch (error) {
     console.error('/api/quotes/random/routs.ts', error)
     return NextResponse.json({

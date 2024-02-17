@@ -59,16 +59,10 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
 
   // 토큰 유효성 검증
   const { status, meg, success, user } = tokenVerify(req, true)
-  if (status === 400) {
-    return NextResponse.json({ status, success, meg })
-  }
+  if (status === 400)  return NextResponse.json({ status, success, meg })
+  if (status === 401)  return NextResponse.json({ status, success, meg })
 
-  if (status === 401) {
-    return NextResponse.json({ status, success, meg })
-  }
-
-  const { comment } = (await req.json()) || { comment: '' }
-
+  const {'0':comment} = await req.json();
   // 댓글 유효성 검사
   if (comment.length < 2)
     return NextResponse.json({
@@ -83,9 +77,10 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
     const quoteId = res.params.id
 
     const query = `
-            INSERT INTO usercomments(comment, user_id, quote_id)
-            VALUES ($1,$2,$3)
-            `
+    INSERT INTO usercomments(comment, user_id, quote_id)
+    VALUES ($1,$2,$3)
+    `
+
     db.query(query, [comment, userId, quoteId])
     db.end()
     return NextResponse.json({
@@ -106,7 +101,7 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
 // PATCH | 특정 포스트 댓글 수정
 export async function PATCH(req: NextRequest, res: { params: { id: string } }) {
   const commentId = res.params.id
-  const { comment } = (await req.json()) || { comment: '' }
+  const {'0':comment} = await req.json();
   const { status, meg, success, user } = tokenVerify(req, true)
 
   if (status === 400) {

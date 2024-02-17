@@ -1,6 +1,8 @@
+import { Method, getDefaultConfig } from '@/configs/config.api'
 import { ItemsType } from '@/types/items.types'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 import { ChangeEvent, FormEvent } from 'react'
+import toast from 'react-hot-toast'
 
 /**
  * 페이지 이동 함수
@@ -22,22 +24,24 @@ export function quotesSelector(item: ItemsType) {
 }
 
 /**
- * * 로그아웃 함수
+ * * 로그아웃 
  */
 export const logoutUser = async () => {
 
+  const url = '/api/auth/clear-token'
+  const config = getDefaultConfig(Method.GET, false)
   try {
-    const { status, meg } = await (await fetch('/api/auth/clear-token')).json()
-
-    if (status === 200) alert(meg)
-    sessionStorage.clear()
-    window.location.reload()
-
+    const respone = await fetch(url, config)
+    const { success, meg } = await respone.json()
+    if (!success) {
+      toast.success(meg)
+      sessionStorage.clear()
+      setTimeout(() => { window.location.reload()}, 1000)
+    }
+    if (success) toast.error(meg)
   } catch (error) {
-    console.error(error)
-    alert('로그아웃에 실패하였습니다. 나중에 다시시도 해주세요.')
+    console.error('로그아웃 요청 실패:', error)
   }
-
 }
 
 /**

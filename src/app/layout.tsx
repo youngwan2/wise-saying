@@ -3,6 +3,7 @@ import { Gowun_Dodum } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/layout/Header'
 import ScrollAndNavButtons from '@/components/UI/common/ScrollAndNavButtons'
+import { Toaster } from 'react-hot-toast'
 
 const gowunDodum = Gowun_Dodum({ weight: '400', subsets: ['latin'] })
 
@@ -36,6 +37,7 @@ export default function RootLayout({
       <body className={`${gowunDodum.className}`}>
         <Header />
         <main className="min-h-[100vh] w-full mx-auto max-w-[1700px] relative">
+          <Toaster/>
           {children}
           <ScrollAndNavButtons />
         </main>

@@ -1,20 +1,9 @@
-import { config } from '@/configs/config'
+import { config } from '@/configs/config.url'
 import { requestNewAccessToken } from '../user/post'
+import { getAccessToken } from '@/utils/sessionStorage'
+import {defaultFetch } from '@/utils/fetcher'
+import { Method, getDefaultConfig } from '@/configs/config.api'
 
-/**
- * * GET | 서버로부터 특정 경로에 대한 명언 리스트 불러오기
- * @param url
- * @returns 아이템 목록 반환
- */
-export async function getQuotesBy(url: string) {
-  try {
-    const response = await fetch(url)
-    const items = await response.json()
-    return items
-  } catch (error) {
-    console.error('에러 발생:', error)
-  }
-}
 
 /**
  * * GET | 명언  카테고리 목록 갯수 불러오기
@@ -38,50 +27,31 @@ export async function getCategoryCountFromDb(url: string) {
 /**
  * * GET | 북마크 리스트 불러오기
  * @param url
- * @param token accessToken
  */
-export const getBookmarkListFormDB = async (url: string, token: string) => {
+export const getBookmarkListFetcher = async (url: string) => {
+  const token = getAccessToken() || ''
+
   if (token.length < 2) return
-  try {
-    const response = await fetch(url, {
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    })
 
-    const items = await response.json()
-    const { status } = await items
+  const config = getDefaultConfig(Method.GET, true)
+  const response = await fetch(url, config)
+  const results = await response.json()
+  const { status, bookmarks } = results 
 
-    if (status === 200) return items
-    if (status === 401) {
-      const newToken = await requestNewAccessToken()
-      if (newToken) {
-        sessionStorage.setItem('token', newToken)
-      }
-    }
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-
-async function fetchModule(url: string) {
-  const response = await fetch(url)
-  if (!response.ok)
-    throw new Error('명언 카테고리 목록를 가져오지 못 했습니다.')
-
-  const result = await response.json()
-  return result
+  if (status === 200) return bookmarks
+  if (status === 401) await requestNewAccessToken() // 토큰 재발급
 }
 
 /**
  * * GET | 각 페이지의 카테고리별 메타데이터 불러오기
- * @param mainCategory 중분류(ex. authors, days, etc, users, weathers)
- * @param subCategory 소분류(ex. 소크라테스, 랑, 인생)
+ * @param mainCategory 중분류(ex. authors | topicks )
+ * @param subCategory 소분류(ex. authors → 소크라테스, 공자 ,... | topicks → 사랑, 인생 , ...)
  * @returns
- * @example `http://localhost:3000/api/quotes/${mainCategory}/${subCategory}}`
+ * @example 
+ *    `http://localhost:3000/api/quotes/${mainCategory}/${subCategory}}`
  * → ` http://localhost:3000/api/quotes/authors/소크라테스`
  */
+
 export const getApiMetaDataFromServer = async (
   mainCategory: string,
   subCategory: string,
@@ -102,15 +72,11 @@ export const getApiMetaDataFromServer = async (
 /**
  * GET | 랜덤으로 명언 정보 불러오기
  */
-export const todayQuoteFetch = async () => {
-  try {
-    const url = config.apiPrefix + config.apiHost + '/api/quotes/random'
-    const response = await fetch(url)
-    const items = await response.json()
-    return items
-  } catch (error) {
-    console.error('에러 발생:', error)
-  }
+export const getTodayQuotesFromDb = async () => {
+  const url = config.apiPrefix + config.apiHost + '/api/quotes/random'
+  const configs = getDefaultConfig(Method.GET, false)
+  const { items } = await defaultFetch(url, configs)
+  return items
 }
 
 /**
@@ -119,11 +85,19 @@ export const todayQuoteFetch = async () => {
  * @returns
  */
 export const getCommentsFormDb = async (url: string) => {
-  const response = await fetch(url, {
-    next: {
-      tags: ['comment'],
-    },
-  })
+  const response = await fetch(url)
   const { comments, totalCount } = await response.json()
   return { comments, totalCount }
+}
+
+
+
+//  fetch module
+async function fetchModule(url: string) {
+  const response = await fetch(url)
+  if (!response.ok)
+    throw new Error('명언 카테고리 목록를 가져오지 못 했습니다.')
+
+  const result = await response.json()
+  return result
 }

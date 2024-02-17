@@ -1,7 +1,8 @@
+import { Method, defaultConfig } from '@/configs/config.api'
+import { defaultFetch } from '@/utils/fetcher'
 import { getAccessToken, setAccessToken, setUserInfo } from '@/utils/sessionStorage'
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
+import { redirect } from 'next/navigation'
 import toaster, { toast } from 'react-hot-toast'
-import { mutate } from 'swr'
 
 /**
  * POST | 새로운 refreshToken 발급
@@ -29,7 +30,7 @@ const requestNewRefreshToken = async () => {
 }
 
 /**
- * POST | 새로운 accessToken 발급
+ * POST | 새로운 accessToken 발급 및 저장
  * @returns
  */
 export const requestNewAccessToken = async () => {
@@ -37,14 +38,12 @@ export const requestNewAccessToken = async () => {
 
   try {
     const respone = await fetch('/api/auth/access', config)
-
-    // if (!respone.ok) throw new Error('토큰 발급 요청이 실패하였습니다.')
     const { status, accessToken } = await respone.json()
 
-    if (status === 201) return accessToken
+    if (status === 201) setAccessToken(accessToken)
 
   } catch (error) {
-    console.error('에러 발생: ', error)
+    console.error('accessToken 발급 실패: ', error)
   }
 }
 
@@ -53,114 +52,86 @@ export const requestNewAccessToken = async () => {
  * @param email
  * @param password
  */
-export const reqLogin = async (
+interface UserType {
+  email: string
+  password: string
+}
+export const reqLogin = async ({ ...userInfo }: UserType) => {
+  const { email: reqEmail, password: reqPassword } = userInfo
+  if (!(reqEmail && reqPassword)) return
+
+  const user = userInfo
+
+  const url = '/api/auth/login'
+  const config = defaultConfig(Method.POST, user)
+  const { meg, success, accessToken, email, profile } = await defaultFetch(url, config)
+
+  if (success) {
+    setUserInfo({ profile, dbEmail: email })
+    setAccessToken(accessToken)
+    toast.success(`${email}님 환영합니다!. 잠시 후 Home 화면으로 이동합니다.`)
+    setTimeout(() => { window.location.reload() }, 1000)
+  }
+  if (!success)  toast.error(meg) 
+}
+
+/**
+ * POST | 회원가입 요청
+ * @param email 
+ * @param password 
+ * @param reConfirmPw 
+ * @returns 
+ */
+
+interface SignInUserType {
   email: string,
   password: string,
-) => {
-  if (!(email && password)) return
+  reConfirmPw: string,
 
-  const user = {
-    email,
-    password,
-  }
-
-  const config = {
-    method: 'POST',
-    body: JSON.stringify(user),
-  }
-  try {
-    const response = await fetch('/api/auth/login', config)
-    const {
-      accessToken,
-      email: dbEmail,
-      status,
-      meg,
-      profile,
-    } = await response.json()
-
-    if (status === 201) {
-      const user = {
-        dbEmail,
-        profile,
-      }
-
-      setUserInfo(user)
-      setAccessToken(accessToken)
-      alert(`${dbEmail}님 환영합니다!. 잠시 후 Home 화면으로 이동합니다.`)
-      location.reload()
-    }
-
-    if (status !== 201) {
-      toaster.error(meg)
-    }
-  } catch (error) {
-    toaster.error('네트워크 통신에 문제가 발생하였습니다. 나중에 다시시도 해주세요.')
-  }
+}
+export async function reqSingIn({ ...userInfo }: SignInUserType) {
+  const body = userInfo
+  const config = defaultConfig(Method.POST, body)
+  const url = '/api/auth/signin'
+  const { success: isSuccess } = await defaultFetch(url, config)
+  if (isSuccess) return isSuccess
+  else return false
 }
 
 /**
  * POST | 유저가 작성한 포스트를 등록 요청하는 메소드
  * @param hasToken accessToken
  * @param userPost
- * @param router
  */
 export const postUserPost = async (
-  router: AppRouterInstance,
   hasToken: boolean,
   userPost: {
-    category: FormDataEntryValue
-    content: FormDataEntryValue
-    author: FormDataEntryValue
+    category: string
+    content: string
+    author: string
     isUser: boolean
   },
 ) => {
   if (!hasToken) {
     toaster.error('로그인 후 이용해주세요.')
-    return router.push('/login')
+    return redirect('/login')
   }
 
   const { category, content, author } = userPost
 
   // 유효성 검증
   if (!(category && content && author)) return toaster.error('모든 빈칸을 채워주세요.')
-  if (category.toString().length < 1 || category.toString().length > 3)
-    return toaster.error('주제를 최소 2자 이상~ 3자 이하로 적어 주세요.')
+  if (category.toString().length < 1 || category.toString().length > 3) return toaster.error('주제를 최소 2자 이상~ 3자 이하로 적어 주세요.')
+  if (content.toString().length < 3) return toaster.error('내용을 최소 3자 이상 적어 주세요.')
+  if (author.toString().length < 2) return toaster.error('작성자를 최소 2자 이상 적어주세요.')
 
-  if (content.toString().length < 3)
-    return toaster.error('내용을 최소 3자 이상 적어 주세요.')
-
-  if (author.toString().length < 2)
-    return toaster.error('작성자를 최소 2자 이상 적어주세요.')
-
-  // 포스트 요청
-  try {
-    const accessToken = sessionStorage.getItem('token') || ''
-    const headers = {
-      authorization: `Bearer ${accessToken}`,
-    }
-    const response = await fetch('/api/quotes/users/post', {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(userPost),
-    })
-    const { status, success, meg } = await response.json()
-
-    // 응답 처리
-    if (status === 201) {
-      router.push('/user-quotes')
-      router.refresh()
-    }
-    if (success !== 201) {
-      alert(meg)
-    }
-  } catch (error) {
-    console.error(error)
-    toaster.error('네트워크 에러가 발생하였습니다. 나중에 다시시도 해주세요.')
-  }
+  const url = '/api/quotes/users/post'
+  const config = defaultConfig(Method.POST, userPost)
+  defaultFetch(url, config)
 }
 
 /**
- * POST | 유저 닉네임과 프로필 이미지 URL 을 저장
+ * POST | 유저 프로필 추가
  * @param hasToken 토큰 존재 유무 판단
  * @param nickname 유저 닉네임
  * @param imageUrl 유저 프로필 이미지 URL
@@ -172,34 +143,14 @@ export async function updateUserInfo(
   imageUrl: string,
 ) {
   if (!hasToken) return alert('접근 권한이 없습니다.')
-  const token = sessionStorage.getItem('token')
   const userInfo = {
     nickname: nickname,
     profile_image: imageUrl,
   }
 
-  try {
-    const response = await fetch('/api/users/mypage/upload?tag=user', {
-      method: 'POST',
-      body: JSON.stringify(userInfo),
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    })
-
-    const { status, meg } = await response.json()
-    if (status === 201) {
-      alert(meg)
-    }
-    if (status !== 201) {
-      alert(meg)
-    }
-  } catch (error) {
-    console.error('전송 실패:', error)
-    alert(
-      '전송 중 예기치 못한 문제가 발생하였습니다. 나중에 다시시도 해주세요.',
-    )
-  }
+  const config = defaultConfig(Method.POST, userInfo)
+  const url = '/api/users/mypage/upload?tag=user'
+  defaultFetch(url, config)
 }
 
 /**
@@ -212,30 +163,21 @@ export const postComment = async (
   comment: string,
   quoteId: string | string[],
 ) => {
-  const token = sessionStorage.getItem('token')
-  if (!token) return alert('로그인 후 이용 부탁 드립니다.')
+  const token = getAccessToken() || ''
+  if (!token) return toast.error('로그인 후 이용 부탁 드립니다.')
 
-  const body = {
-    comment,
-  }
+  const url = `/api/quotes/${quoteId}/comments`
+  const config = defaultConfig(Method.POST, comment)
 
-  const url = `/api/quotes/${quoteId}/comments?tag=comment`
-  try {
-    const resposne = await fetch(url, {
-      method: 'POST',
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(body),
-      next: {
-        tags: ['comment'],
-      },
-    })
-    await resposne.json()
+  const { success } = await defaultFetch(url, config)
+
+  if (success) {
+    toast.success("댓글이 등록 되었습니다.")
     return true
-  } catch (error) {
-    console.error('에러발생', error)
   }
+  else { return false }
+
+
 }
 
 /**
@@ -245,32 +187,9 @@ export const postComment = async (
  * @returns 
  */
 export const postReply = async (commentId: number, content: string) => {
-
   const url = `/api/quotes/0/comments/reply?comment-id=${commentId}`
-  const token = getAccessToken() || ''
-  const config = {
-    method: 'POST',
-    headers: {
-      authorization: `Bearer ` + token
-    },
-    body: JSON.stringify({ content })
-  }
-
-  try {
-    const response = await fetch(url, config)
-    const { meg, replies, totalCount, status } = await response.json()
-    if (status === 201) {
-      toast.success(meg)
-      mutate(url) // swr 재유효화
-      return { replies, totalCount }
-    }
-    if (status !== 201) {
-      toast.error(meg)
-      return null
-    }
-  } catch (error) {
-    console.error("POST reply 에러:", error)
-    alert('네트워크 문제가 발생하였습니다. 나중에 다시시도 해주세요.')
-    return null
-  }
+  const config = defaultConfig(Method.POST, content)
+  const { success } = await defaultFetch(url, config)
+  toast.success('댓글이 등록되었습니다.')
+  return success
 }

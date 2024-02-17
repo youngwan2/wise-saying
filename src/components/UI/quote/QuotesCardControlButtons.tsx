@@ -9,7 +9,6 @@ import { useCardZoomInOutStore } from '@/store/store'
 import { addBookmarkItem } from '@/services/data/post'
 import { useState } from 'react'
 import type { ItemsType } from '@/types/items.types'
-import {Toaster} from 'react-hot-toast'
 
 interface PropsType {
   item: ItemsType
@@ -24,9 +23,9 @@ export default function QuotesCardControlButtons({ item, index }: PropsType) {
   const [isDisplay, setIsDisplay] = useState(false)
 
   const onClickBookmarkAdd = () => {
-    if (!item) return
+    if (!item && !hasToken) return
     const { id } = item
-    addBookmarkItem(hasToken, id)
+    addBookmarkItem(id)
   }
 
   const onClickStylerPageSwitch = () => {
@@ -77,7 +76,6 @@ export default function QuotesCardControlButtons({ item, index }: PropsType) {
           className="flex items-center hover:bg-[tomato] text-[0.95em] hover:text-[white] rounded-[0.3em] p-[5px]  w-full "
           aria-label="명언 북마크 버튼"
         >
-          <Toaster/>
           <HiOutlineBookmark />
           북마크
         </button>

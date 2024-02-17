@@ -1,11 +1,9 @@
 'use client'
 import useSWR from 'swr'
-import useHasToken from '@/custom/useHasToken'
-import { getBookmarkListFormDB } from '@/services/data/get'
+import { getBookmarkListFetcher } from '@/services/data/get'
 import { useBookmarkStore } from '@/store/store'
 
 import { useCallback, useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { HiBookmarkSquare } from 'react-icons/hi2'
 
 import BookmarkCloseButton from './BookmarkCloseButton'
@@ -21,71 +19,57 @@ interface BookmarkListType {
 }
 
 const MIN_BOOKLIST_COUNT = 1
+
 export default function BookmarkModal() {
 
-  const {toggleState, bookmarkList, setBookmarkList, setListCount} = useBookmark()
-
+  const { toggleState, bookmarkList, setBookmarkList, setListCount } = useBookmark()
   const [page, setPage] = useState(0)
-  const hasToken = useHasToken()
-  const token = hasToken ? sessionStorage.getItem('token')! : ''
 
-  const router = useRouter()
 
   // SWR | 북마크 리스트 불러온다.
-  const { data, isLoading } = useSWR(
-    [`/api/bookmark?page=${page}&limit=5`, token],
-    ([url, token]) => getBookmarkListFormDB(url, token),
+  const { data: bookmarkInfo, isLoading } = useSWR(
+    [`/api/bookmark?page=${page}&limit=5`], getBookmarkListFetcher,
     {
-      refreshInterval:4000,
-      revalidateOnMount:false,
-      revalidateIfStale:false,
+      refreshInterval: 5000,
+      revalidateOnMount: true,
+      revalidateIfStale: false,
       revalidateOnFocus: false,
-      revalidateOnReconnect: false,
       onErrorRetry: ({ retryCount }) => {
-        if(retryCount >=5) return
+        if (retryCount >= 5) return
       }
     },
   )
-
-  const hasData = !!data
-  const total = data?.totalCount || 0
-  const currentTotal = data?.items?.length || 0
+  const hasData = !!bookmarkInfo
+  const total = bookmarkInfo?.totalCount || 0
+  const currentTotal = bookmarkInfo?.bookmarks.length || 0
   const maxPage = Math.ceil(total / 5) || 1
+
 
   // 북마크 리스트를 갱신하는 함수
   const bookmarkListUpdate = useCallback(
     (
-      data: { totalCount: number; items: BookmarkListType[] },
+      bookmarkInfo: { totalCount: number; bookmarks: BookmarkListType[] },
       hasData: boolean,
     ) => {
-      if (hasData) {
-        const { totalCount: count, items } = data
-        setBookmarkList(items)
-        setListCount(count)
-      }
+      if (!hasData) return
+        const { totalCount, bookmarks } = bookmarkInfo
+        setBookmarkList(bookmarks)
+        setListCount(totalCount)
     },
     [setListCount, setBookmarkList],
   )
 
   useEffect(() => {
-    if (data && data.status === 401) {
-      router.push('/login')
-    }
-  }, [router, data])
+    bookmarkListUpdate(bookmarkInfo, hasData)
+  }, [bookmarkListUpdate, bookmarkInfo, hasData])
 
-  useEffect(() => {
-    bookmarkListUpdate(data, hasData)
-  }, [bookmarkListUpdate, data, hasData])
 
+
+  if (!toggleState) return <></>
   return (
-    <>
     <article
       aria-hidden={!toggleState}
-      className={`${
-        toggleState
-          ? 'z-40 fixed left-0 right-0 top-0 bottom-0 bg-[#000000a4] block'
-          : ' z-40 fixed left-0 right-0 top-0 bottom-0 bg-[#000000a4] hidden'
-      }`}
+      className={'z-40 fixed left-0 right-0 top-0 bottom-0 bg-[#000000a4] block'}
     >
       <h2 className="text-white text-[2em] mb-[1em] pl-[10px] flex items-center justify-center mt-[2em]">
         <HiBookmarkSquare className="pr-[5px]" />
@@ -117,18 +101,17 @@ export default function BookmarkModal() {
         onClickNextSwitch={() => setPage(Math.min(maxPage, page + 1))}
       />
     </article>
-    </>
   )
 }
 
 /**
  * HOOK | bookmark 관련 전역 상태를 반환하는 훅
  */
-const useBookmark=()=>{
+const useBookmark = () => {
   const toggleState = useBookmarkStore((state) => state.toggleState)
   const setBookmarkList = useBookmarkStore((state) => state.setBookmarkList)
   const bookmarkList = useBookmarkStore((state) => state.bookmarkList)
   const setListCount = useBookmarkStore((state) => state.setListCount)
 
-  return {toggleState, bookmarkList, setBookmarkList, setListCount}
+  return { toggleState, bookmarkList, setBookmarkList, setListCount }
 }

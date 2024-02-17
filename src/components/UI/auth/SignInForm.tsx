@@ -9,12 +9,13 @@ import SignInPasswordReConfirmInput from './SignInPwReConfirmInput'
 import SignInSubmitButton from './SignInSubmitButton'
 import { onSubmit } from '@/utils/commonFunctions'
 import useDraggable from '@/custom/useDraggable'
+import { reqSingIn } from '@/services/user/post'
 
 export default function SignInForm() {
   const [isEmail, setIsEmail] = useState(false)
   const [isPassword, setIsPassword] = useState(false)
   const [isReconfirmPassword, setIsReconfirmPassword] = useState(false)
-  const [isSuccess, setisSuccessState] = useState(false)
+  const [isSuccess, setisSuccess] = useState(false)
   const [existsEmail, setExistsEmail] = useState(false)
 
   const [email, setEmail] = useState('')
@@ -30,39 +31,21 @@ export default function SignInForm() {
   useDraggable(formRef, null)
 
   useEffect(() => {
-    if (isSuccess) return router.push('/')
+    if (isSuccess) return router.push('/login')
   }, [isSuccess, router])
 
-  /** 회원가입 요청 */
-  function onClickRequestSingIn(
-    email: string,
-    password: string,
-    reConfirmPw: string,
-  ) {
-    const body = {
-      email,
-      password,
-      reConfirmPw,
+  // onClick | 로그인 요청
+  async function onClickReqSingin(){
+    router.prefetch('/')
+    const isSuccess = await reqSingIn({email, password, reConfirmPw}) || null
+    if(isSuccess) {
+      setExistsEmail(false)
+      setisSuccess(true)
+      router.push('/')
+      
     }
-    fetch('/api/auth/signin', {
-      method: 'POST',
-      body: JSON.stringify(body),
-    })
-      .then(async (response) => {
-        const { success: isSuccess, status } = await response.json()
-        if (status === 201) {
-          setisSuccessState(isSuccess)
-          setExistsEmail(false)
-          alert('회원가입이 완료 되었습니다. 가입해주셔서 감사합니다.')
-        }
-        if (status !== 201) {
-        }
-      })
-      .catch(() => {
-        alert('요청에 실패하였습니다. 나중에 다시 시도해주세요.')
-      })
   }
-
+  
   return (
     <>
       <div className=" hover:cursor-pointer fixed left-0 right-0 bottom-0 top-0 bg-[#0000009c] rounded-[10px]"></div>
@@ -144,11 +127,10 @@ export default function SignInForm() {
 
         {/* 전송버튼 */}
         <SignInSubmitButton
+          isDisabled={isSuccess}
           existsEmail={existsEmail}
           isVaildForm={isVaildForm}
-          onClick={() => {
-            onClickRequestSingIn(email, password, reConfirmPw)
-          }}
+          onClick={onClickReqSingin}
         />
       </form>
     </>
