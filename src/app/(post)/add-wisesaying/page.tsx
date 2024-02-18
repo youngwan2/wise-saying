@@ -1,4 +1,4 @@
-import QuoteWriteForm from '@/components/UI/post/QuoteWriteForm'
+import QuoteWriteForm from '@/components/UI/quote-editor/QuoteWriteForm'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
