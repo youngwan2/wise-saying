@@ -6,12 +6,17 @@ import { useSWRConfig } from "swr"
 import { deleteFetcher, patchFetcher } from "@/utils/fetcher"
 import ReplyContent from "./ReplyContent"
 import { ReplyType } from "@/types/items.types"
+import toast from "react-hot-toast"
 
 
 interface PropsType extends ReplyType {
     commentId: number
     userEmail: string
+}
 
+interface MenuButtonPropsType {
+    isShow: boolean
+    onClick: MouseEventHandler<HTMLButtonElement>
 }
 
 export default function ReplyCard({ commentId, userEmail, reply }: PropsType) {
@@ -38,14 +43,18 @@ export default function ReplyCard({ commentId, userEmail, reply }: PropsType) {
     async function deleteReply() {
         const url = `/api/quotes/0/comments/reply?comment-id=${commentId}&reply-id=${reply.id}`
         const isSuccess: boolean = await deleteFetcher(url)
-        if (isSuccess) mutate(`/api/quotes/0/comments/reply?comment-id=${commentId}`)
+        if (isSuccess) { 
+            toast.success('삭제 되었습니다.')
+            mutate(`/api/quotes/0/comments/reply?comment-id=${commentId}`)}
     }
 
     // PATCH |  대댓글 수정
     async function updateReply(replyId: number, content: string) {
         const url = `/api/quotes/0/comments/reply?reply-id=${replyId}`
-        const isSuccss: boolean = await patchFetcher(url, content)
-        if (isSuccss) mutate(`/api/quotes/0/comments/reply?comment-id=${commentId}`)
+        const isSucecss: boolean = await patchFetcher(url, content)
+        if (isSucecss) { 
+            toast.success('수정 되었습니다.')
+            mutate(`/api/quotes/0/comments/reply?comment-id=${commentId}`)}
     }
 
     async function updateReplyAtion(formData: FormData) {
@@ -67,11 +76,7 @@ export default function ReplyCard({ commentId, userEmail, reply }: PropsType) {
     )
 }
 
-interface MenuButtonPropsType {
-    isShow: boolean
-    onClick: MouseEventHandler<HTMLButtonElement>
-}
-
+// 드롭다운 버튼
 function ReplyMenuDropdownButton({ isShow, onClick }: MenuButtonPropsType) {
     return (
         <button

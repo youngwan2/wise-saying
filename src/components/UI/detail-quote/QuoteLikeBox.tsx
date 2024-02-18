@@ -1,63 +1,46 @@
 'use client'
 
+import { Method, defaultConfig, getDefaultConfig } from "@/configs/config.api";
+import { postLike } from "@/services/user/post";
+import { defaultFetch } from "@/utils/fetcher";
 import { getAccessToken } from "@/utils/sessionStorage";
 import { useCallback, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { HiHeart } from "react-icons/hi2";
 
 interface PropsType {
     id: string
 }
 
-
+const TOKEN = getAccessToken() || ''
 export default function QuoteLikeBox({ id }: PropsType) {
     const [likeCount, setLikeCount] = useState(0)
     const [quoteId, setQuoteId] = useState(0)
-    const onClickHandleLikeClick = () => {
-        const token = getAccessToken() || ''
-        if (token.length < 2) return
-        const url = '/api/quotes/' + id + '/like'
-        const config = {
-            method: 'POST',
-            headers: {
-                authorization: `Bearer ${token}`
-            }
-        }
-        fetch(url, config).then((response) => {
-            return response.json()
-        }).then((result) => {
-            const { meg, status, likeCount, quoteId } = result
-            if (status === 201) {
-                setLikeCount(likeCount)
-                setQuoteId(quoteId)
-            }
-            else alert(meg)
 
-        }).catch(error => {
-            console.error('좋아요 클릭 에러:', error)
-        })
+    const onClickHandleLikeClick = async () => {
+        if (TOKEN.length < 2) return toast.error('로그인 후 이용해주세요.')
+        const isSuccess = await postLike(Number(id))
+
+        if (isSuccess) {
+            setLikeCount(likeCount)
+            setQuoteId(quoteId)
+        }
     }
 
-    const getLikeCountFormDB = useCallback(() => {
+    const getLikeCountFormDB = useCallback(async () => {
         const url = '/api/quotes/' + id + '/like'
-        fetch(url)
-            .then((response) => { return response.json() })
-            .then((result) => {
-                const { likeCount, quoteId } = result
-                setLikeCount(likeCount)
-                setQuoteId(quoteId)
-            })
-            .catch((error) => {
-                console.error('좋아요 갯수 조회 에러:', error)
-            })
+        const config = getDefaultConfig(Method.GET, false)
+        const { results } = await defaultFetch(url, config)
+        const { likeCount, quoteId } = results || { likeCount: 0, quoteId: 0 }
+        setLikeCount(likeCount)
+        setQuoteId(quoteId)
     }, [id])
-
 
     const showLikeCountQuoteIdMatch = Number(quoteId) === Number(id)
 
     useEffect(() => {
         getLikeCountFormDB()
     }, [getLikeCountFormDB])
-
 
 
     return (

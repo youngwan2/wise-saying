@@ -59,7 +59,7 @@ export const defaultFetch = async (url: string, config: any) => {
     try {
         const response = await fetch(url, config)
         const { meg, success, status, ...results } = await response.json()
-        if (success)   return { success, meg,results, ...results }
+        if (success)   return { success, meg, results, ...results }
         else  return { success, meg}
     } catch (error) {
         console.error('데이터 처리 실패:', error)
