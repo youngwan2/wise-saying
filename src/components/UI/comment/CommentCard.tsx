@@ -1,6 +1,6 @@
 import ReplaceMessageCard from '../common/ReplaceMessageCard'
 import { HiDotsVertical, HiOutlineX } from 'react-icons/hi'
-import { MouseEventHandler, useState } from 'react'
+import { MouseEventHandler, useRef, useState } from 'react'
 import CommentEditDeleteMenu from './CommentEditDeleteMenu'
 import CommentEditForm from './CommentEditForm'
 import { getUserEmail } from '@/utils/sessionStorage'
@@ -21,35 +21,45 @@ export default function CommentCard({ comment }: PropsType) {
   const [isShow, setIsShow] = useState(false)
   const [editFormDisplay, setEditFormDisplay] = useState(false)
   const [replyFormDisply, setReplyFormDisplay] = useState(false)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const commentId = comment && comment.id || 0
   const userEmail = getUserEmail()
   const { mutate } = useSWRConfig()
 
 
-
-  // Click : 댓글 수정 창 열기
+  // 댓글 수정 창 열기
   function onClickFormDisplay() {
     setEditFormDisplay(true)
   }
 
-  // Click : 댓글 수정 창 닫기
+  // 댓글 수정 창 닫기
   function onClickEditCancel() {
     setEditFormDisplay(false)
   }
 
-  // Click : 대댓글 등록 창 열기
+  // 대댓글 등록 창 열기
   function onClickReplyFormDisplay() {
     setReplyFormDisplay(!replyFormDisply)
   }
   // Actions : 대댓글 등록 액션
   async function addReplyAction(formData: FormData) {
-    const content = formData.get('reply-content')?.valueOf().toString() || ''
-    const commentId = comment.id
-    const isSuccess = await postReply(commentId, content)
-    isSuccess && mutate(`/api/quotes/0/comments/reply?comment-id=${commentId}`)
+    const content = formData.get('reply-content')?.valueOf().toString() || '';
+    const commentId = comment.id;
+    const isSuccess = await postReply(commentId, content);
+    
+    if (isSuccess) {
+        mutate(`/api/quotes/0/comments/reply?comment-id=${commentId}`);
+        clearTextarea();
+    }
+}
 
-  }
+function clearTextarea() {
+    if (textareaRef.current) {
+        textareaRef.current.value = '';
+    }
+}
+
 
   type DataType = {
     data: ReplyInfoType,
@@ -89,7 +99,7 @@ export default function CommentCard({ comment }: PropsType) {
       </li>
       <li>
         <ReplyList commentId={commentId} userEmail={userEmail} replyInfo={replyInfo} />
-        <ReplyForm isShow={replyFormDisply} action={addReplyAction} onClickShowReplyForm={onClickReplyFormDisplay} />
+        <ReplyForm isShow={replyFormDisply} action={addReplyAction} onClickShowReplyForm={onClickReplyFormDisplay} ref={textareaRef} />
       </li>
     </>
   )

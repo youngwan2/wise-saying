@@ -5,17 +5,8 @@ import ReplyEditForm from "./ReplyEditForm"
 import { useSWRConfig } from "swr"
 import { deleteFetcher, patchFetcher } from "@/utils/fetcher"
 import ReplyContent from "./ReplyContent"
+import { ReplyType } from "@/types/items.types"
 
-
-export interface ReplyType {
-    reply: {
-        id: number,
-        content: string,
-        nickname: string,
-        email: string,
-        created_at: string
-    }
-}
 
 interface PropsType extends ReplyType {
     commentId: number
@@ -37,10 +28,10 @@ export default function ReplyCard({ commentId, userEmail, reply }: PropsType) {
     }
 
 
-    // Cilck | 드롭다운 컨트롤
+    // 드롭다운 컨트롤
     function onClickShowMenu() { setIsShowMenu(!isShowMenu) }
 
-    // Click | 편집 창 컨트롤
+    // 편집 창 컨트롤
     function onClickShowEditForm() { setIsShowEditForm(!isShowEditForm); setIsShowMenu(false) }
 
     // DELETE | 대댓글 삭제
