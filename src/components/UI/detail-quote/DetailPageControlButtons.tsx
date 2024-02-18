@@ -7,7 +7,7 @@ import { pageSwitch, quotesSelector } from '@/utils/commonFunctions'
 import { HiOutlineBookmark, HiScissors } from 'react-icons/hi2'
 import { useRouter } from 'next/navigation'
 import { addBookmarkItem } from '@/services/data/post'
-import useTTL from '@/custom/useTTS'
+import useTTS from '@/custom/useTTS'
 
 interface PropsType {
   item: {
@@ -21,7 +21,7 @@ export default function DetailPageControlButtons({ item }: PropsType) {
   const hasToken = useHasToken()
   const router = useRouter()
 
-  const { setText } = useTTL()
+  const { setText } = useTTS()
   const onClickBookmarkAdd = () => {
     if (!item && !hasToken) return
     const { id } = item

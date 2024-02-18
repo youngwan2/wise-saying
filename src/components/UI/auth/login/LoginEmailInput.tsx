@@ -1,6 +1,6 @@
 import useFocus from '@/custom/useFocus'
 import { useRef } from 'react'
-import { HiOutlineMail } from 'react-icons/hi'
+import EmailLabel from '../common/EmailLabel'
 
 export default function LoginEmailInput() {
   const emailInputRef = useRef<HTMLInputElement>(null)
@@ -9,14 +9,7 @@ export default function LoginEmailInput() {
 
   return (
     <article className="flex mt-[3.5em] mb-[1em] mx-[10px]">
-      <label
-        className="rounded-s-lg bg-[#3F3F3F] text-[white] text-center p-[0.8em] inline-block min-w-[50px]"
-        htmlFor="user-email"
-      >
-        <span className=" inline-block">
-          <HiOutlineMail />
-        </span>
-      </label>
+      <EmailLabel />
       <input
         aria-label="이메일 입력창"
         ref={emailInputRef}
