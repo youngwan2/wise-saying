@@ -1,11 +1,15 @@
 import EmailInput from "./EmailInput";
 import SubmitButton from "./SubmitButton";
 
-export default function ForgotEmail() {
+interface PropsType {
+    uId:string
+    action:(formData:FormData)=>void
+}
+export default function ForgotEmail({uId, action}:PropsType) {
 
     return (
-        <form className="mt-[2em] w-full">
-            <EmailInput/>
+        <form action={action} className="mt-[2em] w-full">
+            <EmailInput uId={uId}/>
             <SubmitButton>이메일 찾기</SubmitButton>
         </form>
     );
