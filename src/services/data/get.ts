@@ -90,8 +90,6 @@ export const getCommentsFormDb = async (url: string) => {
   return { comments, totalCount }
 }
 
-
-
 //  fetch module
 async function fetchModule(url: string) {
   const response = await fetch(url)

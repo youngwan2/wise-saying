@@ -14,6 +14,7 @@ export async function POST(req: NextRequest) {
     const {'0':body} = await req.json()
     const { email, password } = body
 
+
     const schema = Joi.object({
       email: Joi.string().email({
         maxDomainSegments: 2,

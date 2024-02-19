@@ -35,6 +35,7 @@ export const createToken = (
   return token
 }
 
+
 /**
  * * accessToken 유효성 검증
  * @param req NextRequest
@@ -47,7 +48,7 @@ export const tokenVerify = (req: NextRequest, isAccessToken: boolean) => {
 
   if (!rawToken)
     return {
-      meg: '정상적인 token 요청 형식이 아닙니다. 접두사를 확인해주세요.',
+      meg: '정상적인 token 요청 형식이 아닙니다. 로그인 상태가 맞는지 확인해 주세요.',
       status: 400,
       success: false,
     }
@@ -64,13 +65,14 @@ export const tokenVerify = (req: NextRequest, isAccessToken: boolean) => {
         success: false,
       }
     }
-    const decode = jwt.verify(token, scrept) as JwtPayload
+    const decode = jwt.verify(token, scrept) as JwtPayload || ''
     const user = decode.data
+
     return { user }
   } catch (error) {
     console.error('/utis/validation.ts')
     return {
-      meg: '토큰이 만료되었습니다. 다시 로그인을 시도해주세요.',
+      meg: '토큰이 만료되어 접근이 거절되었습니다. 인증(ex. 로그인/재발급 요청 등) 후 재요청 해주세요.',
       status: 401,
       success: false,
     }

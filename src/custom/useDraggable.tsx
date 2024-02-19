@@ -6,7 +6,7 @@ import { RefObject, useEffect } from 'react'
 /**
  * GSAP | 드래그어블 효과를 적용하는 커스텀 훅
  * @param elementRef
- * @param type 특정 타입에 따라 다른 타입의 드래그어블 애니메이션을 적용(x | rotation | null)
+ * @param type 특정 타입에 따라 다른 타입의 드래그어블 애니메이션을 적용(x | rotation | free)
  */
 export default function useDraggable(
   elementRef: RefObject<HTMLElement> | null,

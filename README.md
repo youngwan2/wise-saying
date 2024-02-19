@@ -141,25 +141,37 @@
 
 ```
 
-## ✏ 할일목록(참고용)
+---
+## 현재 적용중인 커밋 메시지 양식(참고용)
+``` 
+부끄럽지만 부족한 제 저장소 코드를 참고하시거나 클론해 가시는 방문자분들이 생각 보다 많이 있으셔서 이에 대해 참고 하셨으면 해서 남깁니다. 현재 프로젝트 파일의 커밋 규칙은 일관성이 없고, 스스로 판단하기에도 너무 지저분한 상태 입니다. 심지어 타입과는 연관성이 없음에도 사용된 경우도 있습니다. 다양한 기능 수정을 포괄하고자 update 라는 추상적인 타입을 만들어 사용하기도 하였습니다(많은 기능을 포괄하다 보니 차라리 없는게 나을 정도로 혼란을 일으킴). 그리고 어느 커밋 타입은 단축을 사용하고, 또 어떤 것은 그렇지 않는 등의 문제가 있습니다. 따라서, 이에 대한 참고용도로 남깁니다. 
 
-<details>
-<summary>참고 리스트</summary>
+스스로도 혼란이 생길 만큼 문제를 인식하고 이를 개선하고자 하였으나, 커밋 히스토리가 너무 깊어져서 수정이 어려운 상황에 직면하였습니다(히스토리를 건드리는 것이라 충돌이 어마어마 합니다). 커밋 기록이 쌓일 때 마다 팀 프로젝트를 떠나서 왜 일관된 커벤션이 중요한지 절실히 느끼고 있습니다. 다음 프로젝트에서는 커밋 메시지 컨벤션을 일관성 있게 작성할 예정입니다.
 
-- [x] 인물별 명언 추가 | 유저는 인물(위인)의 이름 카드를 클릭하면 해당 인물의 명언 목록을 조회할 수 있어야 한다.
-- [x] 날씨/계절 명언 추가 | 유저는 날씨 카테고리를 클릭하면 날씨와 계절에 관한 명언 목록을 조회할 수 있어야 한다.
-- [x] 요일별 명언 추가 | 유저는 요일 카테고리를 클릭하면 해당 요일 이름 카드를 조회하고, 각 카드를 클릭하면 해당 요일의 명언 목록을 조회할 수 있어야 한다.
-- [x] 명언 북마크 기능 | 유저는 선택한 명언 카드를 북마크 리스트에 추가할 수 있다.
-- [x] 유저 명언 등록 기능 추가 | 유저가 추가한 명언 목록이 유저명언 페이지에 추가되어 조회할 수 있어야 한다.
-- [x] 나만의 명언 꾸미기 기능 추가 | 유저는 자신이 추가한 명언 카드를 수정하여 커스텀 명언 카드를 생성할 수 있어야 한다.
-- [x] 명언 이미지 추가 기능 | 유저는 자신이 추가한 이미지를 명언 카드의 배경으로 활용할 수 있어야 한다.
-- [ ] 명언 공유 기능 추가 | 유저는 자신이 생성하고 꾸민 명언 카드를 이미지로 저장하고, SNS 에 공유할 수 있어야 한다.
-- [x] 명언 담기 기능 | 유저가 명언 카드를 북마크 리스트에 담으면, 마이페이지에서 해당 명언 목록을 개별적으로 확인할 수 있어야 한다.
-- [x] 명언 북마크 미리보기 | 유저가 명언 카드를 담으면, 우측 상단에 담은 명언 목록을 미리 확인할 수 있어야 한다.
-- [x] 인생/사랑/성공/사람/슬픔 등 세부 카테고리별 명언 검색 기능 추가(-> 23.12.17 | 기존 감성 명언 카테고리와 전체 병합)
-- [ ] 명언 추천 기능 | 유저가 검색한 키워드, 생성한 명언의 키워드를 바탕으로 관련 명언을 추가적으로 조회할 수 있어야 한다.
-- [ ] 이미지 생성 AI 추가 | 유저가 명언을 입력하면, 해당 명언에 대한 이미지를 생성할 수 있어야 한다.
-- [x] 회원가입 기능 추가 | 유저는 이메일, 닉네임, 패스워드, 패스워드 재확인을 입력 후 회원가입 버튼을 클릭하면 회원가입 할 수 있어야 한다.
-- [x] 로그인 기능 추가1(NextAuth) | 기존 로그인 기능과 충돌로 보류
-- [x] 로그인 기능 추가2(JWT) | 이메일 및 패스워드를 입력하면, API 서버에서 검증 후 accessToken 발급 처리
-</details>
+I'm leaving this note as there seem to be more visitors cloning my repository than I expected, and I hope they find it helpful. Currently, the commit rules for the project files lack consistency and are too messy for even me to judge. There are cases where types are used without relevance, and an abstract type like 'update' is employed to encompass various feature modifications (to the extent that it would be better off nonexistent due to the confusion it causes). Additionally, there are inconsistencies in the use of abbreviated and full types for commits. Therefore, I'm leaving this note as a reference. 
+
+I've realized the issues to the point of confusion myself and aimed to improve, but I faced difficulty in altering the commit history as it has become too deep (attempting to modify it results in overwhelming conflicts). Each time the commit history builds up, I keenly feel the importance of consistent conventions even in personal projects. I'm determined to adhere to a consistent commit message convention in the next project.
+```
+|타입|설명|비고|
+|---|---|---| 
+|feature/|기능 추가 시 사용 ||
+|update/|기능, 문서 등의 수정이 발생했을 때 사용(수정,삭제 등)| |
+|retactor/|코드 구조 개선 시 사용||
+|fix/|오류나 기타 문제 수정 시 사용||
+|docs/|문서(Readme.md에 한정) 수정 시 사용|update/ 와 혼용되어 사용된 부분이 있음|
+|remove/|단일 컴포넌트 및 파일이 삭제된 경우에만 사용||
+|update/fix/|문제 수정과 혼합적인 기능 수정이 같이 이루어진 경우 사용||
+|chore/|빌드 프로세스 등의 설정 변경 시 사용|chore 가 아닌 경우임에도 사용된 문제가 있음|
+
+
+|Type|	Description|	Notes|
+|---|---|---| 
+|feature/|	Used when adding a new feature.	||
+|update/|	Used for modifications to features, documents, etc.	Includes modifications, deletions, etc.|
+|refactor/|	Used when improving code structure.	||
+|fix/|	Used for fixing errors or other issues.	||
+|docs/|	Used for documentation changes (limited to Readme.md).|	Occasionally used interchangeably with "update/".|
+|remove/|	Used only when a single component or file is deleted.|	|
+|update/fix/|	Used when a problem fix and feature modification are combined.|
+|chore/|	Used for changes in build processes or other settings.|	Sometimes misused instead of being a specific chore.|
+

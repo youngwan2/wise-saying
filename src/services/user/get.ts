@@ -1,6 +1,5 @@
 import { config } from '@/configs/config.url'
 
-
 /**
  * GET | 유저가 작성한 게시글의 카테고리 목록을 반환
  * @param path 경로
@@ -15,6 +14,3 @@ export const getCategoryUserFromDb = async (path: string) => {
   if (status === 200) return categories
   return []
 }
-
-
-

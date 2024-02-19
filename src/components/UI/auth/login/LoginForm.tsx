@@ -12,6 +12,7 @@ import BackButton from '../common/BackButton'
 import Overlay from '../../common/Overlay'
 import ReqLoginInput from '../signin/ReqLoginInput'
 import SignInGuideLink from '../signin/SignInGuideLink'
+import ForgotLink from '../forgot/ForgotLink'
 
 
 export default function LoginForm() {
@@ -49,35 +50,19 @@ export default function LoginForm() {
       <form
         ref={loginFormRef}
         action={login}
-        className="shadow-2xl  rounded-[10px] flex flex-col fixed max-w-[400px] min-h-[350px] left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-[100%] bg-[#f6795a]"
+        className="shadow-[inset_-3px_-3px_5px_0_rgba(0,0,0,0.5)]  rounded-[10px] flex flex-col fixed max-w-[400px] min-h-[350px] left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-[100%] bg-[#f6795a]"
       >
         <FormTitle>로그인</FormTitle>
         <BackButton onClickBack={onClickBackMove} />
         <LoginEmailInput />
         <LoginPasswordInput />
+        <ForgotLink/>
         <ReqLoginInput isLoading={isLoading} />
         <SignInGuideLink />
+
       </form >
       <Overlay />
     </>
   )
 }
 
-/**
- * 임서저장
- */
-{
-  /* 소셜 로그인 */
-}
-{
-  /* <button
-          className="hover:bg-[white] hover:text-[tomato] font-bold p-[5px] border w-[50%] mx-auto mb-[10px] flex items-center justify-center"
-          onClick={() => {
-            alert('향후 추가 예정입니다.')
-            // signIn()
-          }}
-        >
-          <BsGithub />
-          <span className="pl-[5px]">GitHub</span>
-        </button> */
-}
