@@ -144,13 +144,23 @@
 ---
 ## 현재 적용중인 커밋 메시지 양식(참고용)
 ``` 
-부끄럽지만 부족한 제 저장소 코드를 참고하시거나 클론해 가시는 방문자분들이 생각 보다 많이 있으셔서 이에 대해 참고 하셨으면 해서 남깁니다. 현재 프로젝트 파일의 커밋 규칙은 일관성이 없고, 스스로 판단하기에도 너무 지저분한 상태 입니다. 심지어 타입과는 연관성이 없음에도 사용된 경우도 있습니다. 다양한 기능 수정을 포괄하고자 update 라는 추상적인 타입을 만들어 사용하기도 하였습니다(많은 기능을 포괄하다 보니 차라리 없는게 나을 정도로 혼란을 일으킴). 그리고 어느 커밋 타입은 단축을 사용하고, 또 어떤 것은 그렇지 않는 등의 문제가 있습니다. 따라서, 이에 대한 참고용도로 남깁니다. 
+부끄럽지만 부족한 제 저장소 코드를 참고하시거나 클론해 가시는 방문자분들이 생각 보다 많이 있으셔서 이에 대해 참고 하셨으면 해서 남깁니다.
 
-스스로도 혼란이 생길 만큼 문제를 인식하고 이를 개선하고자 하였으나, 커밋 히스토리가 너무 깊어져서 수정이 어려운 상황에 직면하였습니다(히스토리를 건드리는 것이라 충돌이 어마어마 합니다). 커밋 기록이 쌓일 때 마다 팀 프로젝트를 떠나서 왜 일관된 커벤션이 중요한지 절실히 느끼고 있습니다. 다음 프로젝트에서는 커밋 메시지 컨벤션을 일관성 있게 작성할 예정입니다.
+현재 프로젝트 파일의 커밋 규칙은 일관성이 없고, 스스로 판단하기에도 너무 지저분한 상태 입니다.
+심지어 타입과는 연관성이 없음에도 사용된 경우도 있습니다. 다양한 기능 수정을 포괄하고자 update 라는 추상적인 타입을 만들어 사용하기도 하였습니다.
+그리고 어느 커밋 타입은 단축을 사용하고, 또 어떤 것은 그렇지 않는 등의 문제가 있습니다.
 
-I'm leaving this note as there seem to be more visitors cloning my repository than I expected, and I hope they find it helpful. Currently, the commit rules for the project files lack consistency and are too messy for even me to judge. There are cases where types are used without relevance, and an abstract type like 'update' is employed to encompass various feature modifications (to the extent that it would be better off nonexistent due to the confusion it causes). Additionally, there are inconsistencies in the use of abbreviated and full types for commits. Therefore, I'm leaving this note as a reference. 
+따라서, 이에 대한 참고용도로 남깁니다. 
 
-I've realized the issues to the point of confusion myself and aimed to improve, but I faced difficulty in altering the commit history as it has become too deep (attempting to modify it results in overwhelming conflicts). Each time the commit history builds up, I keenly feel the importance of consistent conventions even in personal projects. I'm determined to adhere to a consistent commit message convention in the next project.
+I'm leaving this note as there seem to be more visitors cloning my repository than I expected, and I hope they find it helpful.
+
+Currently, the commit rules for the project files lack consistency and are too messy for even me to judge.
+There are cases where types are used without relevance, and an abstract type like 'update' is employed to encompass various feature modifications
+(to the extent that it would be better off nonexistent due to the confusion it causes).
+Additionally, there are inconsistencies in the use of abbreviated and full types for commits.
+
+Therefore, I'm leaving this note as a reference. 
+
 ```
 |타입|설명|비고|
 |---|---|---| 
