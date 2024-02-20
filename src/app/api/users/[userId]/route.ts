@@ -7,7 +7,7 @@ import joi from 'joi'
 // PATCH | 비밀번호 변경
 const SALT = 10
 export async function PATCH(req: NextRequest) {
-  const {'0':password} = (await req.json()) || ''
+  const { '0': password } = (await req.json()) || ''
 
   // 유효성 검증
   const schema = joi.object({

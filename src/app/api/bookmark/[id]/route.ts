@@ -14,7 +14,7 @@ export async function DELETE(
   // 토큰 유효성 검증
   const { status, meg, success, user } = tokenVerify(req, true)
 
-  if (status === 400)  return NextResponse.json({ status, success, meg })
+  if (status === 400) return NextResponse.json({ status, success, meg })
   if (status === 401) return NextResponse.json({ status, success, meg })
 
   // 검증 통과 후 처리

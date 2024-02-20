@@ -8,7 +8,6 @@ import CommentLoadMoreButtons from './CommentSwitchButtons'
 import CommentSortSelect from './CommentSortSelect'
 import CommentList from './CommentList'
 
-
 export interface CommentsInfoType {
   comments: {
     id: number
@@ -18,7 +17,7 @@ export interface CommentsInfoType {
     comment: string
     created_at: string
   }[]
-  totalCount?: number 
+  totalCount?: number
 }
 
 interface PropsType {
@@ -48,7 +47,7 @@ export default function Comment({ id }: PropsType) {
       </h2>
       <CommentForm />
       <CommentSortSelect setSort={setSort} />
-      <CommentList comments={comments}/>
+      <CommentList comments={comments} />
       <CommentLoadMoreButtons
         page={page}
         minPage={MIN_PAGE}

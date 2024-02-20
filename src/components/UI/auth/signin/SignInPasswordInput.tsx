@@ -13,7 +13,10 @@ export default function SignInPasswordInput({
   /** 패스워드 체크 */
   function passwordChecker(password: string) {
     // 8자 이상 (a-z, 0-9 무조건 1개 이상 포함, 특수문자 1개 이상 포함)
-    const test = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&+=])[a-zA-Z0-9!@#$%^&+=]{8,}$/g.test(password)
+    const test =
+      /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&+=])[a-zA-Z0-9!@#$%^&+=]{8,}$/g.test(
+        password,
+      )
     if (test) return setIsPassword(true)
     return setIsPassword(false)
   }

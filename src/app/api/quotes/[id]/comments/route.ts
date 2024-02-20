@@ -56,13 +56,12 @@ export async function GET(req: NextRequest, res: { params: { id: string } }) {
 
 // POST | 댓글 등록
 export async function POST(req: NextRequest, res: { params: { id: string } }) {
-
   // 토큰 유효성 검증
   const { status, meg, success, user } = tokenVerify(req, true)
-  if (status === 400)  return NextResponse.json({ status, success, meg })
-  if (status === 401)  return NextResponse.json({ status, success, meg })
+  if (status === 400) return NextResponse.json({ status, success, meg })
+  if (status === 401) return NextResponse.json({ status, success, meg })
 
-  const {'0':comment} = await req.json();
+  const { '0': comment } = await req.json()
   // 댓글 유효성 검사
   if (comment.length < 2)
     return NextResponse.json({
@@ -101,7 +100,7 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
 // PATCH | 특정 포스트 댓글 수정
 export async function PATCH(req: NextRequest, res: { params: { id: string } }) {
   const commentId = res.params.id
-  const {'0':comment} = await req.json();
+  const { '0': comment } = await req.json()
   const { status, meg, success, user } = tokenVerify(req, true)
 
   if (status === 400) {

@@ -4,6 +4,20 @@ import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.share
 import { ChangeEvent, FormEvent } from 'react'
 import toast from 'react-hot-toast'
 
+interface MapType {
+  [topick: string]: string
+}
+export function categoryClassifier(category: string): string {
+  const categoryMap: MapType = {
+    authors: '인물별',
+    topicks: '주제별',
+    job: '직업별',
+  }
+
+  const target = categoryMap[category]
+  return target
+}
+
 /**
  * 페이지 이동 함수
  * @param router next/navigation의 useRouter()
@@ -24,10 +38,9 @@ export function quotesSelector(item: ItemsType) {
 }
 
 /**
- * * 로그아웃 
+ * * 로그아웃
  */
 export const logoutUser = async () => {
-
   const url = '/api/auth/clear-token'
   const config = getDefaultConfig(Method.GET, false)
   try {
@@ -36,7 +49,9 @@ export const logoutUser = async () => {
     if (!success) {
       toast.success(meg)
       sessionStorage.clear()
-      setTimeout(() => { window.location.reload()}, 1000)
+      setTimeout(() => {
+        window.location.reload()
+      }, 1000)
     }
     if (success) toast.error(meg)
   } catch (error) {

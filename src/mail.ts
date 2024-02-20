@@ -1,12 +1,12 @@
-import { headers } from "next/headers";
+import { headers } from 'next/headers'
 
-const nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer')
 const { MAIL_SERVICE, USER, PASS } = process.env
 
 // 메일 본문 HTML
 function setHtml(path: string) {
-    console.log(path)
-    const html = `
+  console.log(path)
+  const html = `
     <html>
     <head>
         <style>
@@ -44,46 +44,44 @@ function setHtml(path: string) {
         </div>
     </body>
     </html>
-`;
+`
 
-    return html
+  return html
 }
 
 export const mailOptions = {
-    from: USER,
-    to: '',
-    subject: '[Wise Sayings] 임시 패스워드 입니다.',
-    html: ''
+  from: USER,
+  to: '',
+  subject: '[Wise Sayings] 임시 패스워드 입니다.',
+  html: '',
 }
 
 // 메일 옵션 지정
 export function setMailOptions(userEmail: string, tempToken: string) {
-    const referer = headers().get('referer')
-    const redirectPath = referer?.replace('/forgot', '/reset-pass') || ''
-    
-    const html = setHtml(redirectPath + '?temp-token=' + tempToken);
+  const referer = headers().get('referer')
+  const redirectPath = referer?.replace('/forgot', '/reset-pass') || ''
 
-    mailOptions.to = userEmail;
-    mailOptions.html = html
+  const html = setHtml(redirectPath + '?temp-token=' + tempToken)
+
+  mailOptions.to = userEmail
+  mailOptions.html = html
 }
-
 
 // 메일 전송
 export function sendMail() {
-    transporter.sendMail(mailOptions, (error: Error, info: any) => {
-        if (error) {
-            console.error('이메일 전송 실패:', error)
-            throw new Error('이메일 전송 실패')
-        }
-        console.log('이메일 전송 성공:', info.response)
-    })
+  transporter.sendMail(mailOptions, (error: Error, info: any) => {
+    if (error) {
+      console.error('이메일 전송 실패:', error)
+      throw new Error('이메일 전송 실패')
+    }
+    console.log('이메일 전송 성공:', info.response)
+  })
 }
 
-
 export const transporter = nodemailer.createTransport({
-    service: MAIL_SERVICE,
-    auth: {
-        user: USER,
-        pass: PASS
-    }
-});
+  service: MAIL_SERVICE,
+  auth: {
+    user: USER,
+    pass: PASS,
+  },
+})

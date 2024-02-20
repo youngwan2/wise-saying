@@ -27,8 +27,8 @@ export default function SearchForm() {
   }
 
   const onClickDisplay = () => {
-    setIsDisplay(false); // 검색창을 닫는 로직
-  };
+    setIsDisplay(false) // 검색창을 닫는 로직
+  }
   return (
     // 검색창
     <form
@@ -38,14 +38,14 @@ export default function SearchForm() {
       rounded-[10px] my-[2em] max-w-[450px] min-w-[150px] w-full bg-[transparent]  z-[1000]
       left-[50%] -translate-x-[-50%]  fixed p-[15px] shadow-[0_0_20px_5px_rgba(0,0,0,0.4)] backdrop-blur-[10px] 
       transition-all duration-75
-      ${isDisplay
+      ${
+        isDisplay
           ? 'visible opacity-100 top-[3em]  '
           : 'invisible opacity-0 top-0'
-        }`}
+      }`}
     >
-      <SearchHeader onClickDisplay={onClickDisplay}/>
+      <SearchHeader onClickDisplay={onClickDisplay} />
       <SearchInput />
-
     </form>
   )
 }

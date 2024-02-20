@@ -7,7 +7,11 @@ interface PropsType {
   name: string
   placeholder?: string
 }
-export default function QuoteAuthorInput({ post, name, placeholder }: PropsType) {
+export default function QuoteAuthorInput({
+  post,
+  name,
+  placeholder,
+}: PropsType) {
   const inputRef = useRef<HTMLInputElement>(null)
   const author = post?.author
   useInitialValueSetter(inputRef, author)

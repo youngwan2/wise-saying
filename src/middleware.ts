@@ -4,17 +4,15 @@ import jwt from 'jsonwebtoken'
 import { cookies } from 'next/headers'
 import { createToken, tokenVerify } from './utils/auth'
 export async function middleware(req: NextRequest) {
-
   const refreshToken = cookies().get('refreshToken')?.value
 
   if (!refreshToken) {
     return NextResponse.redirect(new URL('/', req.url))
   }
 
-
   if (refreshToken) {
     const decode = jwt.decode(refreshToken) as jwt.JwtPayload
-    if(!decode) return
+    if (!decode) return
     const exp = decode.exp
     if (!exp) return
 
@@ -37,12 +35,11 @@ export async function middleware(req: NextRequest) {
           path: '/', // 쿠키에 접근할 수 있는 사이트 경로
         })
       }
-
     }
   }
 }
 
 // 일치하는 경로만 미들웨어가 실행된다.
 export const config = {
-  matcher: ['/add-wisesaying', '/update-wisesaying','/logout'],
+  matcher: ['/add-wisesaying', '/update-wisesaying', '/logout'],
 }

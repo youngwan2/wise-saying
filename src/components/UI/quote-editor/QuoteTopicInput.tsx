@@ -5,9 +5,13 @@ import useInitialValueSetter from '@/custom/useInitialValueSetter'
 interface PropsType {
   post?: PostType
   name: string
-  placeholder?:string
+  placeholder?: string
 }
-export default function QuoteTopicInput({ post, name, placeholder }: PropsType) {
+export default function QuoteTopicInput({
+  post,
+  name,
+  placeholder,
+}: PropsType) {
   const inputRef = useRef<HTMLInputElement>(null)
   const category = post?.category
   useInitialValueSetter(inputRef, category)

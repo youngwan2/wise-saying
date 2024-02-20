@@ -11,7 +11,7 @@ export default function useTTS() {
   const [text, setText] = useState('')
 
   const speakText = useCallback((text: string) => {
-    const synth = window.speechSynthesis 
+    const synth = window.speechSynthesis
     if (synth !== null && text.length > 1) {
       const utterance = new SpeechSynthesisUtterance(text)
       synth.speak(utterance)
@@ -19,9 +19,9 @@ export default function useTTS() {
   }, [])
 
   useEffect(() => {
-    if(window['speechSynthesis'] === undefined) return
+    if (window['speechSynthesis'] === undefined) return
     speakText(text)
   }, [text, speakText])
 
-  return {text, setText}
+  return { text, setText }
 }

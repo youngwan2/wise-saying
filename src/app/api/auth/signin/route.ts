@@ -15,7 +15,11 @@ export async function POST(req: NextRequest) {
     const { email, password, reConfirmPw } = body
 
     // 2. 유효성 검증
-    const { error, value } = userSchema.validate({ email, password, reConfirmPw })
+    const { error, value } = userSchema.validate({
+      email,
+      password,
+      reConfirmPw,
+    })
 
     // 3. 검증 실패 시 처리
     if (error) {

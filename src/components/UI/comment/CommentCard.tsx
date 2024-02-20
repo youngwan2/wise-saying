@@ -15,7 +15,7 @@ import { useSwrFetch } from '@/utils/swr'
 import { useSWRConfig } from 'swr'
 import ReplyButtons from '../reply/ReplyButtons'
 
-interface PropsType extends CommentType { }
+interface PropsType extends CommentType {}
 
 export default function CommentCard({ comment }: PropsType) {
   const [isShow, setIsShow] = useState(false)
@@ -23,10 +23,9 @@ export default function CommentCard({ comment }: PropsType) {
   const [replyFormDisply, setReplyFormDisplay] = useState(false)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
-  const commentId = comment && comment.id || 0
+  const commentId = (comment && comment.id) || 0
   const userEmail = getUserEmail()
   const { mutate } = useSWRConfig()
-
 
   // 댓글 수정 창 열기
   function onClickFormDisplay() {
@@ -44,62 +43,82 @@ export default function CommentCard({ comment }: PropsType) {
   }
   // Actions : 대댓글 등록 액션
   async function addReplyAction(formData: FormData) {
-    const content = formData.get('reply-content')?.valueOf().toString() || '';
-    const commentId = comment.id;
-    const isSuccess = await postReply(commentId, content);
-    
+    const content = formData.get('reply-content')?.valueOf().toString() || ''
+    const commentId = comment.id
+    const isSuccess = await postReply(commentId, content)
+
     if (isSuccess) {
-        mutate(`/api/quotes/0/comments/reply?comment-id=${commentId}`);
-        clearTextarea();
+      mutate(`/api/quotes/0/comments/reply?comment-id=${commentId}`)
+      clearTextarea()
     }
-}
+  }
 
-function clearTextarea() {
+  function clearTextarea() {
     if (textareaRef.current) {
-        textareaRef.current.value = '';
+      textareaRef.current.value = ''
     }
-}
-
+  }
 
   type DataType = {
-    data: ReplyInfoType,
+    data: ReplyInfoType
     isLoading: boolean
     error: Error
   }
 
   // SWR + GET | 대댓글 정보 요청
-  const { data: replyInfo, isLoading }: DataType = useSwrFetch(`/api/quotes/0/comments/reply?comment-id=` + commentId)
+  const { data: replyInfo, isLoading }: DataType = useSwrFetch(
+    `/api/quotes/0/comments/reply?comment-id=` + commentId,
+  )
 
-  if (isLoading || !(comment && replyInfo)) return <ReplaceMessageCard childern="데이터를 가져오는 중입니다." />
+  if (isLoading || !(comment && replyInfo))
+    return <ReplaceMessageCard childern="데이터를 가져오는 중입니다." />
 
   const emailInfo = {
     userEmail,
-    commentEmail: comment.email
+    commentEmail: comment.email,
   }
   return (
     <>
       <li className="bg-white  min-h-[50px] rounded-[5px] first:mt-[2em] mt-[1em] flex justify-start items-center w-full mx-auto relative">
         <CommentProfileImage comment={comment} />
         <CommentContent comment={comment} />
-        <CommentMenuDropdownButton isShow={isShow} onClick={() => setIsShow(!isShow)} />
+        <CommentMenuDropdownButton
+          isShow={isShow}
+          onClick={() => setIsShow(!isShow)}
+        />
 
         {/* 글쓴이라면 편집 버튼 활성화 */}
         <CommentEditDeleteMenu
           emailInfo={emailInfo}
           isShow={isShow}
-          onClickDeleteComment={() => { deleteComment(commentId) }}
+          onClickDeleteComment={() => {
+            deleteComment(commentId)
+          }}
           onClickFormDisplay={onClickFormDisplay}
         />
         <CommentEditForm
           commentId={comment.id}
           editFormDisplay={editFormDisplay}
           setEditFormDisplay={setEditFormDisplay}
-          onClickEditCancel={onClickEditCancel} />
-        <ReplyButtons totalCount={replyInfo.totalCount || 0} onClickReplyFormDisplay={onClickReplyFormDisplay} />
+          onClickEditCancel={onClickEditCancel}
+        />
+        <ReplyButtons
+          totalCount={replyInfo.totalCount || 0}
+          onClickReplyFormDisplay={onClickReplyFormDisplay}
+        />
       </li>
       <li>
-        <ReplyList commentId={commentId} userEmail={userEmail} replyInfo={replyInfo} />
-        <ReplyForm isShow={replyFormDisply} action={addReplyAction} onClickShowReplyForm={onClickReplyFormDisplay} ref={textareaRef} />
+        <ReplyList
+          commentId={commentId}
+          userEmail={userEmail}
+          replyInfo={replyInfo}
+        />
+        <ReplyForm
+          isShow={replyFormDisply}
+          action={addReplyAction}
+          onClickShowReplyForm={onClickReplyFormDisplay}
+          ref={textareaRef}
+        />
       </li>
     </>
   )
@@ -119,5 +138,4 @@ function CommentMenuDropdownButton({ isShow, onClick }: MenuButtonPropsType) {
       {isShow ? <HiOutlineX /> : <HiDotsVertical />}
     </button>
   )
-
 }

@@ -4,9 +4,7 @@ import { EmblaCarouselType } from 'embla-carousel'
 interface PropsType {
   emblaApi?: EmblaCarouselType
 }
-export default function CarouselControlButtons({
-  emblaApi,
-}: PropsType) {
+export default function CarouselControlButtons({ emblaApi }: PropsType) {
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev()
   }, [emblaApi])

@@ -11,9 +11,8 @@ export async function POST(req: NextRequest) {
     const db = await openDB()
 
     // 0. 이메일로 유저 정보 찾기
-    const {'0':body} = await req.json()
+    const { '0': body } = await req.json()
     const { email, password } = body
-
 
     const schema = Joi.object({
       email: Joi.string().email({

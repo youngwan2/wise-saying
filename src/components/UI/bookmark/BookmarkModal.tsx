@@ -21,14 +21,14 @@ interface BookmarkListType {
 const MIN_BOOKLIST_COUNT = 1
 
 export default function BookmarkModal() {
-
-  const { toggleState, bookmarkList, setBookmarkList, setListCount } = useBookmark()
+  const { toggleState, bookmarkList, setBookmarkList, setListCount } =
+    useBookmark()
   const [page, setPage] = useState(0)
-
 
   // SWR | 북마크 리스트 불러온다.
   const { data: bookmarkInfo, isLoading } = useSWR(
-    [`/api/bookmark?page=${page}&limit=5`], getBookmarkListFetcher,
+    [`/api/bookmark?page=${page}&limit=5`],
+    getBookmarkListFetcher,
     {
       refreshInterval: 5000,
       revalidateOnMount: true,
@@ -36,14 +36,13 @@ export default function BookmarkModal() {
       revalidateOnFocus: false,
       onErrorRetry: ({ retryCount }) => {
         if (retryCount >= 5) return
-      }
+      },
     },
   )
   const hasData = !!bookmarkInfo
   const total = bookmarkInfo?.totalCount || 0
   const currentTotal = bookmarkInfo?.bookmarks.length || 0
   const maxPage = Math.ceil(total / 5) || 1
-
 
   // 북마크 리스트를 갱신하는 함수
   const bookmarkListUpdate = useCallback(
@@ -52,9 +51,9 @@ export default function BookmarkModal() {
       hasData: boolean,
     ) => {
       if (!hasData) return
-        const { totalCount, bookmarks } = bookmarkInfo
-        setBookmarkList(bookmarks)
-        setListCount(totalCount)
+      const { totalCount, bookmarks } = bookmarkInfo
+      setBookmarkList(bookmarks)
+      setListCount(totalCount)
     },
     [setListCount, setBookmarkList],
   )
@@ -63,13 +62,13 @@ export default function BookmarkModal() {
     bookmarkListUpdate(bookmarkInfo, hasData)
   }, [bookmarkListUpdate, bookmarkInfo, hasData])
 
-
-
   if (!toggleState) return <></>
   return (
     <article
       aria-hidden={!toggleState}
-      className={'z-40 fixed left-0 right-0 top-0 bottom-0 bg-[#000000a4] block'}
+      className={
+        'z-40 fixed left-0 right-0 top-0 bottom-0 bg-[#000000a4] block'
+      }
     >
       <h2 className="text-white text-[2em] mb-[1em] pl-[10px] flex items-center justify-center mt-[2em]">
         <HiBookmarkSquare className="pr-[5px]" />

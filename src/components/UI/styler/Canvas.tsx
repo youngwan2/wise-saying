@@ -17,16 +17,14 @@ interface QuoteType {
   quote: string
 }
 
-
 // 음.. 너무 길다.
 export default function Canvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const [imageEl, setImageEl] = useState<HTMLImageElement|null>(null)
+  const [imageEl, setImageEl] = useState<HTMLImageElement | null>(null)
 
   const { color, font, fontStyle, size, unit, lineHeight } = useTextStyle()
   const { color: strokeColor, thickness: strokeThickness } = useStrokeStyle()
   const { width, height, bgColor } = useCanvasStyle()
-
 
   // 명언(텍스트)
   const [quote, setQuote] = useState('')
@@ -49,7 +47,11 @@ export default function Canvas() {
 
   // 텍스트 그리기
   const draw = useCallback(
-    (ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement, imageEl:HTMLImageElement) => {
+    (
+      ctx: CanvasRenderingContext2D,
+      canvas: HTMLCanvasElement,
+      imageEl: HTMLImageElement,
+    ) => {
       ctx.textAlign = 'center'
       ctx.textBaseline = 'middle'
       ctx.lineWidth = strokeThickness
@@ -86,7 +88,6 @@ export default function Canvas() {
       imageEl.src = bgImageSrc
 
       return handleImageLoad
-
     },
     [
       color,
@@ -112,21 +113,20 @@ export default function Canvas() {
     return { canvas, ctx }
   }
 
-
-  useEffect(()=>{
-    const imageEl = new Image();
+  useEffect(() => {
+    const imageEl = new Image()
     setImageEl(imageEl)
-  },[])
+  }, [])
 
   useEffect(() => {
     const { canvas, ctx } = createCanvas()
-  
+
     if (!imageEl) return
     if (canvas && ctx) {
       const handleImageLoad = draw(ctx, canvas, imageEl)
- 
+
       return () => {
-        if(!handleImageLoad) return
+        if (!handleImageLoad) return
         imageEl.removeEventListener('load', handleImageLoad)
       }
     }

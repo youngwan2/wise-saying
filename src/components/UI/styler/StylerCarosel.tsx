@@ -25,7 +25,7 @@ export default function StylerCarosel() {
     '/images/image12.png',
   ])
   const setImageSrc = useImageElementStore((state) => state.setImageSrc)
-  
+
   return (
     <article className="overflow-hidden" ref={emblaRef}>
       <figure className="flex  max-w-[1000px] px-[3em] pb-[5em] mt-[5em]">

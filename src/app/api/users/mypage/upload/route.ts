@@ -7,14 +7,14 @@ export async function POST(req: NextRequest) {
   const tag = req.nextUrl.searchParams.get('tag')
   try {
     const db = await openDB()
-    const {'0':body} = await req.json()
+    const { '0': body } = await req.json()
     const { nickname, profile_image } = body
 
     // 토큰 유효성 검증
     const { status, meg, success, user } = tokenVerify(req, true)
 
-    if (status === 400)  return NextResponse.json({ status, success, meg })
-    if (status === 401)  return NextResponse.json({ status, success, meg })
+    if (status === 400) return NextResponse.json({ status, success, meg })
+    if (status === 401) return NextResponse.json({ status, success, meg })
 
     // 검증 통과 후 유저 프로필 업로드 처리
     const { email: dbEmail, sub: userId } = user

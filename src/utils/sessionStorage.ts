@@ -1,36 +1,36 @@
-
 /**
  * SessionStorage | 유저 이메일 정보를 로컬의 세션 스토로지에서 가져온다.
- * @returns 
+ * @returns
  */
 export const getUserEmail = () => {
-    try {
-        const user =
-            (sessionStorage && sessionStorage?.getItem && sessionStorage?.getItem('user')) ||
-            '{"dbEmail":""}'
-        const { dbEmail: userEmail } = JSON.parse(user)
+  try {
+    const user =
+      (sessionStorage &&
+        sessionStorage?.getItem &&
+        sessionStorage?.getItem('user')) ||
+      '{"dbEmail":""}'
+    const { dbEmail: userEmail } = JSON.parse(user)
 
-        return userEmail
-    } catch(error){
-        console.error('sessionStorage getItem 실패:', error)
-        return ''
-    }
+    return userEmail
+  } catch (error) {
+    console.error('sessionStorage getItem 실패:', error)
+    return ''
+  }
 }
 
-
 interface UserInfoType {
-    dbEmail: string,
-    profile: {
-        nickname: string | null,
-        image: string | null
-    }
+  dbEmail: string
+  profile: {
+    nickname: string | null
+    image: string | null
+  }
 }
 /**
  * SessionStorage | 유저 정보를 로컬의 세션 스토로지에 저장한다.
- * @param user 
+ * @param user
  */
 export const setUserInfo = (user: UserInfoType) => {
-    sessionStorage.setItem('user', JSON.stringify(user))
+  sessionStorage.setItem('user', JSON.stringify(user))
 }
 
 /**
@@ -38,16 +38,15 @@ export const setUserInfo = (user: UserInfoType) => {
  * @param token accessToken
  */
 export const setAccessToken = (token: string) => {
-    sessionStorage.setItem('token', token)
+  sessionStorage.setItem('token', token)
 }
 
 export const getAccessToken = () => {
-    try {
-        const token = sessionStorage.getItem('token')
-        return token
-
-    } catch (error) {
-        console.error('sessionStorage.getItem 에러:' + error)
-        return null
-    }
+  try {
+    const token = sessionStorage.getItem('token')
+    return token
+  } catch (error) {
+    console.error('sessionStorage.getItem 에러:' + error)
+    return null
+  }
 }

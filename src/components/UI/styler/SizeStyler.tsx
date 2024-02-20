@@ -24,7 +24,7 @@ export default function SizeStyler({ selectTapNum }: PropsType) {
     return function (newValue: number, targetName: string, delayTime: number) {
       clearTimeout(timerId)
       timerId = setTimeout(() => {
-        console.count("함수 호출 횟수:")       
+        console.count('함수 호출 횟수:')
         setSize({ ...size, [targetName]: newValue })
       }, delayTime)
     }

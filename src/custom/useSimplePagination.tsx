@@ -12,7 +12,7 @@ export default function useSimplePagination(page: number, quotes: QuoteType[]) {
 
   useEffect(() => {
     if (!Array.isArray(quotes)) return
-    const copyQuotes = [...quotes?.slice(page*5, page*5+5)]
+    const copyQuotes = [...quotes?.slice(page * 5, page * 5 + 5)]
     if (copyQuotes[0] === undefined) return
     setSplitQuotes(copyQuotes)
   }, [page, quotes])

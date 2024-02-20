@@ -3,12 +3,12 @@ import useSWRInfinite from 'swr/infinite'
 
 /**
  * SWR | 버튼형 무한 스크롤 커스텀 훅
- * @param mainCategory 첫 번째 분기 처리 경로로 사용( authors | 기타 추가되는 로직 있을 시 활용)
+ * @param mainCategory 첫 번째 분기 처리 경로로 사용( authors | topicks )
  * @param subCategory  두 번째 분기처리 경로로 사용( usePathname 등을 사용하여 얻은 params 값 )
  * @returns
  * @example
  * // 사용 예시
- * const { items, size, isLastPage, setSize, isLoadingMore, itemCount } = useInfiniteScroll('authors', '소크라테스);
+ * const { items, size, setSize, isLoadingMore, itemCount } = useInfiniteScroll('authors', '소크라테스);
  */
 export default function useInfiniteScroll(
   mainCategory: string,
@@ -20,6 +20,7 @@ export default function useInfiniteScroll(
 
     let url = ''
     switch (mainCategory) {
+      case 'topics':
       case 'authors': {
         url = `/api/quotes/${mainCategory}/${subCategory}?page=${pageIndex}&limit=15`
         break
@@ -32,7 +33,7 @@ export default function useInfiniteScroll(
     return url
   }
 
-  // SWR 인피니티 훅
+  // SWR | 인피니티 훅
   const {
     data: itemInfo = [],
     isLoading,

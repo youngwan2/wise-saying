@@ -5,16 +5,21 @@ import CategoryList from '@/components/UI/quote/QuotesCategoryList'
 import BackMoveButton from '@/components/UI/common/BackMoveButton'
 
 export const metadata: Metadata = {
-  title: '인물별 명언',
-  description:
-    '유명 위인이나 유명 속담 등의 명언 페이지에 접근하기 전의 카테고리 페이지 입니다.',
+  title: '카테고리',
+  description: '명언 페이지에 접근하기 전의 카테고리 페이지 입니다.',
 }
 
-export default async function CategoryPage() {
+export default async function CategoryPage({
+  params,
+}: {
+  params: { category: string }
+}) {
+  const { category } = params
+
   return (
     <>
       <BackMoveButton />
-      <CategoryList />
+      <CategoryList category={category} />
     </>
   )
 }

@@ -27,14 +27,13 @@ export const createToken = (
     {
       exp: isAccessToken
         ? Math.floor(Date.now() / 1000) + 60 * 7
-        : Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 30), // 1달 = 30일
+        : Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30, // 1달 = 30일
       data: payload,
     },
     scrept,
   )
   return token
 }
-
 
 /**
  * * accessToken 유효성 검증
@@ -65,7 +64,7 @@ export const tokenVerify = (req: NextRequest, isAccessToken: boolean) => {
         success: false,
       }
     }
-    const decode = jwt.verify(token, scrept) as JwtPayload || ''
+    const decode = (jwt.verify(token, scrept) as JwtPayload) || ''
     const user = decode.data
 
     return { user }

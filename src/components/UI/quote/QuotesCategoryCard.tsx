@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useRef } from 'react'
 
 interface PropsType {
+  category: string
   item: {
     category: string
     job: string
@@ -11,7 +12,7 @@ interface PropsType {
   i: number
 }
 
-export default function QuotesCategoryCard({ item, i }: PropsType) {
+export default function QuotesCategoryCard({ category, item, i }: PropsType) {
   const router = useRouter()
   const liRefs = useRef<HTMLLIElement[]>([])
 
@@ -27,11 +28,11 @@ export default function QuotesCategoryCard({ item, i }: PropsType) {
         const key = e.key
         if (key !== 'Enter') return
         item.category.replace(' ', '')
-        router.push(`/quotes/authors/${item.category}`)
+        router.push(`/quotes/${category}/${item.category}`)
       }}
       onClick={() => {
         item.category.replace(' ', '')
-        router.push(`/quotes/authors/${item.category}`)
+        router.push(`/quotes/${category}/${item.category}`)
       }}
       className="
           p-[1em]
@@ -64,7 +65,7 @@ export default function QuotesCategoryCard({ item, i }: PropsType) {
       key={i}
     >
       {item.category} <br />
-      <span>[{item.job}]</span>
+      {item.job ? <span>[{item.job}]</span> : null}
     </li>
   )
 }

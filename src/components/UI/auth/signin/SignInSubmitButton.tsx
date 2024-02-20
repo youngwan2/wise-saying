@@ -1,7 +1,7 @@
 import { MouseEventHandler } from 'react'
 
 interface PropsType {
-  isDisabled:boolean
+  isDisabled: boolean
   isVaildForm: boolean
   existsEmail: boolean
   onClick: MouseEventHandler<HTMLButtonElement>
@@ -23,7 +23,7 @@ export default function SignInSubmitButton({
           }`}
           type="submit"
         >
-          {!isDisabled? '가입' : '전송중...'}
+          {!isDisabled ? '가입' : '전송중...'}
         </button>
       ) : (
         <span className="p-[30px] text-center text-white">

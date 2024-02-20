@@ -48,8 +48,7 @@ export async function GET(req: NextRequest) {
       bookmarks: {
         bookmarks,
         totalCount,
-      }
-
+      },
     })
   } catch (error) {
     console.error('/api/bookmark/route.ts', error)

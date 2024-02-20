@@ -10,8 +10,6 @@ export default function StylerImageUploadForm({
   setImages,
   images,
 }: PropsType) {
-
-
   return (
     <form
       className="hover:cursor-pointer group min-w-[230px] h-[230px] bg-[white] rounded-[1em]"
@@ -27,9 +25,9 @@ export default function StylerImageUploadForm({
         <p className="font-bold">업로드</p>
       </label>
       <input
-        onChange={(e)=>{
+        onChange={(e) => {
           const src = imagePreviewReader(e)
-          images && src ?  setImages([...images, src]) : null
+          images && src ? setImages([...images, src]) : null
         }}
         id="image_upload"
         type="file"

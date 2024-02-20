@@ -29,9 +29,15 @@ export default function ShareButtons() {
 
     const index = Object.values(ShareType).indexOf(type)
 
-    index === 0 && (urlConcat = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeUrl)
-    index === 1 && (urlConcat = 'https://twitter.com/intent/tweet?url=' + encodeUrl)
-    index === 2 && (urlConcat = 'https://share.naver.com/web/shareView?url=' + encodeUrl + '&title=[공유] Wise Sayings')
+    index === 0 &&
+      (urlConcat = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeUrl)
+    index === 1 &&
+      (urlConcat = 'https://twitter.com/intent/tweet?url=' + encodeUrl)
+    index === 2 &&
+      (urlConcat =
+        'https://share.naver.com/web/shareView?url=' +
+        encodeUrl +
+        '&title=[공유] Wise Sayings')
 
     window.open(urlConcat, '_blank')
   }
@@ -61,12 +67,13 @@ export default function ShareButtons() {
       <article
         ref={articleRef}
         aria-hidden={!isDisplay}
-        className={` ${isDisplay
-          ? 'fixed left-[50%] top-[30%]  translate-x-[-50%] translate-y-[-50%] '
-          : 'hidden'
-          }  rounded-[10px] items-center justify-center my-[1.5em] py-[0.5em] max-w-[300px] mx-auto w-full px-[1em] bg-[white] min-h-[250px] shadow-[0_0_0_1000px_rgba(0,0,0,0.5)] `}
+        className={` ${
+          isDisplay
+            ? 'fixed left-[50%] top-[30%]  translate-x-[-50%] translate-y-[-50%] '
+            : 'hidden'
+        }  rounded-[10px] items-center justify-center my-[1.5em] py-[0.5em] max-w-[300px] mx-auto w-full px-[1em] bg-[white] min-h-[250px] shadow-[0_0_0_1000px_rgba(0,0,0,0.5)] `}
       >
-        <div className='mb-[3em] flex justify-between w-full items-center'>
+        <div className="mb-[3em] flex justify-between w-full items-center">
           <h3 className="font-bold text-[1.25em]">공유하기</h3>
           <button
             onClick={() => setIsDisplay(false)}
@@ -76,8 +83,7 @@ export default function ShareButtons() {
             <HiXCircle className="text-[1.8em]" />
           </button>
         </div>
-        <div className='flex '>
-
+        <div className="flex ">
           {/* 페이스북 */}
           <button
             aria-label="페이스북 공유"
