@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import { openDB } from '@/utils/connect'
 import { tokenVerify } from '@/utils/auth'
 
-
 // GET | 유저 프로필 정보 요청
 export async function GET(req: NextRequest) {
   try {

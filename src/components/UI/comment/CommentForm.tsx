@@ -3,7 +3,6 @@ import { postComment } from '@/services/user/post'
 import { useParams } from 'next/navigation'
 import { useRef } from 'react'
 
-
 export default function CommentForm() {
   const { id } = useParams()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -43,6 +42,5 @@ export default function CommentForm() {
         </button>
       </div>
     </form>
-
   )
 }

@@ -55,7 +55,7 @@ export default async function DetailPage({
         <p className="text-[1.25em]">{item.quote}</p>
         <QuoteLikeBox id={id} />
       </blockquote>
-  
+
       <div className="flex">
         {/* 컨트롤 버튼 */}
         <DetailPageControlButtons item={item} />

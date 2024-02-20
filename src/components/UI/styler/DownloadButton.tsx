@@ -1,13 +1,10 @@
 import { MouseEventHandler } from 'react'
 import { HiDocumentDownload } from 'react-icons/hi'
 
-
 interface PropsType {
   onClick: MouseEventHandler<HTMLButtonElement>
 }
-export default function DownloadButton({
-  onClick,
-}: PropsType) {
+export default function DownloadButton({ onClick }: PropsType) {
   return (
     <button
       onClick={onClick}

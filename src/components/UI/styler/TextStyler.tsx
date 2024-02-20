@@ -37,12 +37,20 @@ export default function TextStyler({ selectTapNum }: PropsType) {
 
   if (selectTapNum !== 0) return <></>
   return (
-    <article
-      className=' lg:max-w-[90%] flex flex-col'
-    >
-      <TextColorStyler setTextStyleState={setTextStyleState} textStyle={textStyle} />
-      <TextSizeStyler sizeUnits={sizeUnits} setTextStyleState={setTextStyleState} textStyle={textStyle} />
-      <TextFontStyler setTextStyleState={setTextStyleState} textStyle={textStyle} />
+    <article className=" lg:max-w-[90%] flex flex-col">
+      <TextColorStyler
+        setTextStyleState={setTextStyleState}
+        textStyle={textStyle}
+      />
+      <TextSizeStyler
+        sizeUnits={sizeUnits}
+        setTextStyleState={setTextStyleState}
+        textStyle={textStyle}
+      />
+      <TextFontStyler
+        setTextStyleState={setTextStyleState}
+        textStyle={textStyle}
+      />
       <TextLineHeightStyler />
       <TextStrokeStyler />
     </article>

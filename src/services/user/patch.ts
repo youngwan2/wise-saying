@@ -22,33 +22,37 @@ export const updateUserPost = async (
   userPost: UserPostType,
 ) => {
   const { category, content, author } = userPost
-  if (category.toString().length < 1) return alert(`주제를 최소 2자 이상 적어 주세요.`)
-  if (content.toString().length < 3) return alert(`내용을 최소 3자 이상 적어 주세요.`)
-  if (author.toString().length <= 2) return alert('작성자를 최소 2자 이상 적어주세요.')
+  if (category.toString().length < 1)
+    return alert(`주제를 최소 2자 이상 적어 주세요.`)
+  if (content.toString().length < 3)
+    return alert(`내용을 최소 3자 이상 적어 주세요.`)
+  if (author.toString().length <= 2)
+    return alert('작성자를 최소 2자 이상 적어주세요.')
 
   const config = defaultConfig(Method.PATCH, userPost)
   const url = `/api/quotes/users/post/${postId}`
 
-  const {success} = await defaultFetch(url, config)
-  if(success) {
+  const { success } = await defaultFetch(url, config)
+  if (success) {
     toast.success('수정하였습니다.')
     return success
   }
-  if(!success) return toast.error('수정 요청이 실패하였습니다.')
+  if (!success) return toast.error('수정 요청이 실패하였습니다.')
 }
 
 /**
  * PATCH | 유저 댓글 수정
  * @param commentId 댓글 식별자
  * @param comment 댓글
- * @returns 
+ * @returns
  */
 export async function updateComment(commentId: number, comment: string) {
   const config = defaultConfig(Method.PATCH, comment)
   const url = `/api/quotes/${commentId}/comments`
   const { success } = await defaultFetch(url, config)
-  if (success) { return true }
-  else false
+  if (success) {
+    return true
+  } else false
 }
 
 /**
@@ -57,17 +61,14 @@ export async function updateComment(commentId: number, comment: string) {
  * @param userId
  * @returns
  */
-export async function updateUserPassword(
-  password: string,
-  userId: number,
-) {
+export async function updateUserPassword(password: string, userId: number) {
   const url = `/api/users/${userId}`
   const config = defaultConfig(Method.PATCH, password)
   const { success, meg } = await defaultFetch(url, config)
 
   if (success) {
-    toast.success("변경되었습니다. 보안을 위해 다시 로그인 해주세요")
-    logoutUser();
+    toast.success('변경되었습니다. 보안을 위해 다시 로그인 해주세요')
+    logoutUser()
   }
   if (!success) toast.error(meg)
 }

@@ -57,7 +57,7 @@ export default function MypageProfileForm({ userInfo }: PropsType) {
 
   // 프로필 업데이트
   function profileUpdate(form: FormData) {
-    if(!hasToken) return toast.error('접근 권한이 없습니다.')
+    if (!hasToken) return toast.error('접근 권한이 없습니다.')
     const profileUrl = imageUrl
     const nickname = form.get('nickname') || ''
     updateUserInfo(nickname, profileUrl)

@@ -9,28 +9,26 @@ import toast from 'react-hot-toast'
  * @param router
  * @returns
  */
-export async function deleteUserInfo(
-  userId: number
-) {
+export async function deleteUserInfo(userId: number) {
   if (!userId) return alert('접근 권한이 없습니다.')
   const isDelete = prompt(
     '정말로 회원탈퇴를 시도하시려면, "회원탈퇴" 라고 입력해주세요. ',
   )
 
-  if (isDelete !== '회원탈퇴') return toast.error('틀렸습니다. 정확하게 입력해주세요.')
+  if (isDelete !== '회원탈퇴')
+    return toast.error('틀렸습니다. 정확하게 입력해주세요.')
 
   const url = `/api/users/${userId}`
   const config = defaultConfig(Method.DELETE)
-  const {success, meg} = await defaultFetch(url, config)
-  if (success) return  logoutUser()
-  if(!success) return toast.error(meg)
-
+  const { success, meg } = await defaultFetch(url, config)
+  if (success) return logoutUser()
+  if (!success) return toast.error(meg)
 }
 
 /**
  * DELETE | 댓글 삭제
  * @param commentId 댓글 식별자
- * @returns 
+ * @returns
  */
 export async function deleteComment(commentId: number) {
   const isDelete = confirm('정말 삭제하시겠습니까?')
@@ -45,8 +43,8 @@ export async function deleteComment(commentId: number) {
 
 /**
  * DELETE | 북마크 아이템 삭제
- * @param bookmarkId 
- * @returns 
+ * @param bookmarkId
+ * @returns
  */
 export async function deleteBookmark(bookmarkId: number) {
   const url = `/api/bookmark/${bookmarkId}`

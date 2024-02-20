@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import gsap from 'gsap'
 import { Draggable } from 'gsap/Draggable'
 import { RefObject, useEffect } from 'react'
@@ -32,7 +32,7 @@ export default function useDraggable(
         instance = Draggable.create(elementRef.current, {
           dragClickables: false,
           type: 'x,y',
-          bounds: document.querySelector('body')
+          bounds: document.querySelector('body'),
         })
       }
     }, 1000)

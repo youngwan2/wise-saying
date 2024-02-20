@@ -5,9 +5,13 @@ import useInitialValueSetter from '@/custom/useInitialValueSetter'
 interface PropsType {
   post?: PostType
   name: string
-  placeholder?:string
+  placeholder?: string
 }
-export default function QuoteContentInput({ post, name, placeholder }: PropsType) {
+export default function QuoteContentInput({
+  post,
+  name,
+  placeholder,
+}: PropsType) {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const quote = post?.quote
   useInitialValueSetter(textareaRef, quote)

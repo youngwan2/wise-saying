@@ -17,7 +17,6 @@ export default function useInitialValueSetter(
   ref: RefObject<HTMLInputElement | HTMLTextAreaElement>,
   initialValue?: string,
 ) {
-
   useEffect(() => {
     if (!(ref && initialValue)) return
     if (ref.current) {

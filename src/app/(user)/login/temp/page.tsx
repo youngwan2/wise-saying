@@ -1,9 +1,3 @@
-export default function TempLoginPage(){
-
-    return (
-        <form action="">
-                
-        
-        </form>
-    )
+export default function TempLoginPage() {
+  return <form action=""></form>
 }

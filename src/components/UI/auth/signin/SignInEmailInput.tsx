@@ -23,7 +23,6 @@ export default function SignInEmailInput({
   setEmail,
   setExistsEmail,
 }: PropsType) {
-
   const [isLoading, setIsLoading] = useState(false)
 
   // 이메일 유효성 체크
@@ -73,12 +72,12 @@ export default function SignInEmailInput({
           name="user-email"
           placeholder="이메일"
         />
-        <DupEmailCheckButton isLoading={isLoading} onClickCheck={onClickCheck} />
+        <DupEmailCheckButton
+          isLoading={isLoading}
+          onClickCheck={onClickCheck}
+        />
       </div>
       <EmailValidityMessage isEmail={isEmail} />
     </article>
   )
 }
-
-
-

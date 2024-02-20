@@ -14,9 +14,9 @@ export async function POST(req: NextRequest) {
 
   try {
     const db = await openDB()
-    const {'0':body} = await req.json()
-    
-    const {category, content:quote, author} = body
+    const { '0': body } = await req.json()
+
+    const { category, content: quote, author } = body
 
     const insertQuery = `
               INSERT INTO quotes(quote, category, author,job, user_id)

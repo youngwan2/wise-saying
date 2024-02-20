@@ -47,7 +47,12 @@ export default function QuoteCard({ item, items, index }: PropsType) {
 
       // 줌 아웃(축소) 시 해당 li 가 다시 나타난다.
       if (!isZoomIn) {
-        gsap.to(target, { visibility: 'visible', opacity: 1, translateY: 0, translateZ: 'none' })
+        gsap.to(target, {
+          visibility: 'visible',
+          opacity: 1,
+          translateY: 0,
+          translateZ: 'none',
+        })
       }
     },
     [isZoomIn],
@@ -59,12 +64,12 @@ export default function QuoteCard({ item, items, index }: PropsType) {
     const tl = gsap.timeline()
     tl.to(e.currentTarget.parentElement, {
       rotateY: -20,
-      translateZ:-100,
-      scale:0.1,
-      background:'tomato',
-      ease:'bounce.inOut',
+      translateZ: -100,
+      scale: 0.1,
+      background: 'tomato',
+      ease: 'bounce.inOut',
       opacity: 0,
-      duration:1,
+      duration: 1,
     })
     tl.to(e.currentTarget.parentElement, {
       onComplete() {

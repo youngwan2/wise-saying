@@ -19,13 +19,15 @@ export default function MypageContainer() {
   const { userInfo } = data || {}
 
   // 유저 명언 목록
-  const url = hasToken&& tapId === 1
-    ? '/api/users/mypage/posts?userId=' + userInfo.user_id + '&page=' + page
-    : null
+  const url =
+    hasToken && tapId === 1
+      ? '/api/users/mypage/posts?userId=' + userInfo.user_id + '&page=' + page
+      : null
 
-  const { data: userQuotesAndCount } = useSwrFetchWithToken(url, false )
-  const {quotes:userQuotes, count:quotesCount} = userQuotesAndCount || {}
-  if(!hasToken) return <ReplaceMessageCard childern={'로그인 후 이용해주세요.'}/>
+  const { data: userQuotesAndCount } = useSwrFetchWithToken(url, false)
+  const { quotes: userQuotes, count: quotesCount } = userQuotesAndCount || {}
+  if (!hasToken)
+    return <ReplaceMessageCard childern={'로그인 후 이용해주세요.'} />
   if (!userInfo)
     return (
       <ReplaceMessageCard

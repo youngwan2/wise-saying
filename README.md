@@ -142,15 +142,17 @@
 ```
 
 ---
+
 ## 현재 적용중인 커밋 메시지 양식(참고용)
-``` 
+
+```
 부끄럽지만 부족한 제 저장소 코드를 참고하시거나 클론해 가시는 방문자분들이 생각 보다 많이 있으셔서 이에 대해 참고 하셨으면 해서 남깁니다.
 
 현재 프로젝트 파일의 커밋 규칙은 일관성이 없고, 스스로 판단하기에도 너무 지저분한 상태 입니다.
 심지어 타입과는 연관성이 없음에도 사용된 경우도 있습니다. 다양한 기능 수정을 포괄하고자 update 라는 추상적인 타입을 만들어 사용하기도 하였습니다.
 그리고 어느 커밋 타입은 단축을 사용하고, 또 어떤 것은 그렇지 않는 등의 문제가 있습니다.
 
-따라서, 이에 대한 참고용도로 남깁니다. 
+따라서, 이에 대한 참고용도로 남깁니다.
 
 I'm leaving this note as there seem to be more visitors cloning my repository than I expected, and I hope they find it helpful.
 
@@ -159,29 +161,28 @@ There are cases where types are used without relevance, and an abstract type lik
 (to the extent that it would be better off nonexistent due to the confusion it causes).
 Additionally, there are inconsistencies in the use of abbreviated and full types for commits.
 
-Therefore, I'm leaving this note as a reference. 
+Therefore, I'm leaving this note as a reference.
 
 ```
-|타입|설명|비고|
-|---|---|---| 
-|feature/|기능 추가 시 사용 ||
-|update/|기능, 문서 등의 수정이 발생했을 때 사용(수정,삭제 등)| |
-|retactor/|코드 구조 개선 시 사용||
-|fix/|오류나 기타 문제 수정 시 사용||
-|docs/|문서(Readme.md에 한정) 수정 시 사용|update/ 와 혼용되어 사용된 부분이 있음|
-|remove/|단일 컴포넌트 및 파일이 삭제된 경우에만 사용||
-|update/fix/|문제 수정과 혼합적인 기능 수정이 같이 이루어진 경우 사용||
-|chore/|빌드 프로세스 등의 설정 변경 시 사용|chore 가 아닌 경우임에도 사용된 문제가 있음|
 
+| 타입        | 설명                                                     | 비고                                        |
+| ----------- | -------------------------------------------------------- | ------------------------------------------- |
+| feature/    | 기능 추가 시 사용                                        |                                             |
+| update/     | 기능, 문서 등의 수정이 발생했을 때 사용(수정,삭제 등)    |                                             |
+| retactor/   | 코드 구조 개선 시 사용                                   |                                             |
+| fix/        | 오류나 기타 문제 수정 시 사용                            |                                             |
+| docs/       | 문서(Readme.md에 한정) 수정 시 사용                      | update/ 와 혼용되어 사용된 부분이 있음      |
+| remove/     | 단일 컴포넌트 및 파일이 삭제된 경우에만 사용             |                                             |
+| update/fix/ | 문제 수정과 혼합적인 기능 수정이 같이 이루어진 경우 사용 |                                             |
+| chore/      | 빌드 프로세스 등의 설정 변경 시 사용                     | chore 가 아닌 경우임에도 사용된 문제가 있음 |
 
-|Type|	Description|	Notes|
-|---|---|---| 
-|feature/|	Used when adding a new feature.	||
-|update/|	Used for modifications to features, documents, etc.	Includes modifications, deletions, etc.|
-|refactor/|	Used when improving code structure.	||
-|fix/|	Used for fixing errors or other issues.	||
-|docs/|	Used for documentation changes (limited to Readme.md).|	Occasionally used interchangeably with "update/".|
-|remove/|	Used only when a single component or file is deleted.|	|
-|update/fix/|	Used when a problem fix and feature modification are combined.|
-|chore/|	Used for changes in build processes or other settings.|	Sometimes misused instead of being a specific chore.|
-
+| Type        | Description                                                                                 | Notes                                                |
+| ----------- | ------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| feature/    | Used when adding a new feature.                                                             |                                                      |
+| update/     | Used for modifications to features, documents, etc. Includes modifications, deletions, etc. |
+| refactor/   | Used when improving code structure.                                                         |                                                      |
+| fix/        | Used for fixing errors or other issues.                                                     |                                                      |
+| docs/       | Used for documentation changes (limited to Readme.md).                                      | Occasionally used interchangeably with "update/".    |
+| remove/     | Used only when a single component or file is deleted.                                       |                                                      |
+| update/fix/ | Used when a problem fix and feature modification are combined.                              |
+| chore/      | Used for changes in build processes or other settings.                                      | Sometimes misused instead of being a specific chore. |

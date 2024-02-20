@@ -24,7 +24,6 @@ export default function CommentEditForm({
     if (!hasToken) return alert('로그인 해주세요')
     const comment = formData.get('comment')?.valueOf().toString() || ''
     updateComment(commentId, comment).then(() => setEditFormDisplay(false))
-
   }
 
   if (!editFormDisplay) return <></>

@@ -46,8 +46,10 @@ export default function QuoteEditForm() {
 
   useDraggable(formRef, 'free')
 
-  if (loading) return <ReplaceMessageCard childern="데이터를 불러오는 중입니다..." />
-  if (!post) return <ReplaceMessageCard childern="포스트가 존재하지 않습니다..." />
+  if (loading)
+    return <ReplaceMessageCard childern="데이터를 불러오는 중입니다..." />
+  if (!post)
+    return <ReplaceMessageCard childern="포스트가 존재하지 않습니다..." />
 
   // 글 수정
   function updateFormAction(form: FormData) {

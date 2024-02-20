@@ -1,6 +1,6 @@
-import { Method, defaultConfig } from "@/configs/config.api"
-import {  defaultFetch } from "@/utils/fetcher"
-import { mutate } from "swr"
+import { Method, defaultConfig } from '@/configs/config.api'
+import { defaultFetch } from '@/utils/fetcher'
+import { mutate } from 'swr'
 
 /**
  * DELETE | 유저가 선택한 명언 아이템 삭제
@@ -12,7 +12,7 @@ export const deleteUserQuote = async (id: number) => {
 
   const config = defaultConfig(Method.DELETE)
   const url = `/api/quotes/users/post/${id}`
-  defaultFetch(url, config).then(()=>{
+  defaultFetch(url, config).then(() => {
     mutate(`/api/quotes/users/post/categories/0`)
   })
 }

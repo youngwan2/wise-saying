@@ -1,9 +1,8 @@
 import { config } from '@/configs/config.url'
 import { requestNewAccessToken } from '../user/post'
 import { getAccessToken } from '@/utils/sessionStorage'
-import {defaultFetch } from '@/utils/fetcher'
+import { defaultFetch } from '@/utils/fetcher'
 import { Method, getDefaultConfig } from '@/configs/config.api'
-
 
 /**
  * * GET | 명언  카테고리 목록 갯수 불러오기
@@ -12,8 +11,7 @@ import { Method, getDefaultConfig } from '@/configs/config.api'
  */
 export async function getCategoryCountFromDb(url: string) {
   try {
-    const transformURL = config.apiPrefix + config.apiHost + url
-    const response = await fetch(transformURL)
+    const response = await fetch(url)
     if (!response.ok)
       throw new Error('명언 카테고리 목록를 가져오지 못 했습니다.')
 
@@ -36,7 +34,7 @@ export const getBookmarkListFetcher = async (url: string) => {
   const config = getDefaultConfig(Method.GET, true)
   const response = await fetch(url, config)
   const results = await response.json()
-  const { status, bookmarks } = results 
+  const { status, bookmarks } = results
 
   if (status === 200) return bookmarks
   if (status === 401) await requestNewAccessToken() // 토큰 재발급
@@ -47,7 +45,7 @@ export const getBookmarkListFetcher = async (url: string) => {
  * @param mainCategory 중분류(ex. authors | topicks )
  * @param subCategory 소분류(ex. authors → 소크라테스, 공자 ,... | topicks → 사랑, 인생 , ...)
  * @returns
- * @example 
+ * @example
  *    `http://localhost:3000/api/quotes/${mainCategory}/${subCategory}}`
  * → ` http://localhost:3000/api/quotes/authors/소크라테스`
  */

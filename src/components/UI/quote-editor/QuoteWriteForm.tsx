@@ -37,7 +37,8 @@ export default function QuoteWriteForm() {
     router.push('/user-quotes')
   }
 
-  if (!hasToken) return <ReplaceMessageCard childern="로그인 후 이용해주세요." />
+  if (!hasToken)
+    return <ReplaceMessageCard childern="로그인 후 이용해주세요." />
   return (
     <form
       ref={formRef}
@@ -47,9 +48,18 @@ export default function QuoteWriteForm() {
       <h2 className="text-[1.5em] mt-[-4px] mb-[1em] font-bold bg-[#333232] text-[white] p-[8px]  rounded-t-lg shadow-[inset_-2px_0px_5px_rgba(0,0,0,0.5)] ">
         명언 등록
       </h2>
-      <QuoteTopicInput name='category' placeholder='2자 이상 3자 이하의 명언의 주제 ex) 사랑' />
-      <QuoteContentInput name='content' placeholder='최소 3자 이상 ex) 해내지 못할 것을 걱정할게 아니라 시도조차 하지 않으려는 자신을 걱정해라.' />
-      <QuoteAuthorInput name='author' placeholder='최소 2자 이상 8자 이하 ex) 지나가는 고양이' />
+      <QuoteTopicInput
+        name="category"
+        placeholder="2자 이상 3자 이하의 명언의 주제 ex) 사랑"
+      />
+      <QuoteContentInput
+        name="content"
+        placeholder="최소 3자 이상 ex) 해내지 못할 것을 걱정할게 아니라 시도조차 하지 않으려는 자신을 걱정해라."
+      />
+      <QuoteAuthorInput
+        name="author"
+        placeholder="최소 2자 이상 8자 이하 ex) 지나가는 고양이"
+      />
       <QuoteFormButtons onClickCancel={onClickCancel} />
     </form>
   )

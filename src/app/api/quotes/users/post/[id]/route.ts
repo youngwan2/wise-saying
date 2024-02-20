@@ -46,7 +46,7 @@ export async function PATCH(req: NextRequest, res: { params: { id: number } }) {
     if (status === 401) return NextResponse.json({ status, success, meg })
 
     const postId = res.params.id
-    const {'0':body}  = await req.json()
+    const { '0': body } = await req.json()
     const { content: quote, category, author } = body
 
     const query = `

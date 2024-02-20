@@ -15,6 +15,9 @@ export const addBookmarkItem = async (itemId: number) => {
   const config = defaultConfig(Method.POST, postData)
   const result = await defaultFetch(url, config)
   const { meg, success } = result
-  if (success) { mutate(`/api/bookmark?page=0&limit=5`); return toast.success(meg) }
+  if (success) {
+    mutate(`/api/bookmark?page=0&limit=5`)
+    return toast.success(meg)
+  }
   if (!success) return toast.error(meg)
 }

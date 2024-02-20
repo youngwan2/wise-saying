@@ -39,7 +39,8 @@ export default function SignInForm() {
   // onClick | 로그인 요청
   async function onClickReqSingin() {
     router.prefetch('/')
-    const isSuccess = await reqSingIn({ email, password, reConfirmPw }) || null
+    const isSuccess =
+      (await reqSingIn({ email, password, reConfirmPw })) || null
     if (isSuccess) {
       setExistsEmail(false)
       setisSuccess(true)
@@ -57,7 +58,7 @@ export default function SignInForm() {
 
   return (
     <>
-      <Overlay/>
+      <Overlay />
       <form
         ref={formRef}
         className="shadow-2xl  rounded-[10px] flex flex-col fixed max-w-[430px] min-h-[350px] left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-[100%] bg-[#E76F51]"
@@ -66,7 +67,10 @@ export default function SignInForm() {
         <FormTitle> 회원가입</FormTitle>
         <BackButton onClickBack={onClickBack} />
         {/* 임시 메시지 */}
-        <SignInWarnModal isShow={isShowModal} onClickModalClose={onClickModalClose} />
+        <SignInWarnModal
+          isShow={isShowModal}
+          onClickModalClose={onClickModalClose}
+        />
 
         {/* 이메일 */}
         <SignInEmailInput
@@ -103,6 +107,3 @@ export default function SignInForm() {
     </>
   )
 }
-
-
-

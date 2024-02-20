@@ -14,7 +14,6 @@ import ReqLoginInput from '../signin/ReqLoginInput'
 import SignInGuideLink from '../signin/SignInGuideLink'
 import ForgotLink from '../forgot/ForgotLink'
 
-
 export default function LoginForm() {
   const loginFormRef = useRef<HTMLFormElement>(null)
 
@@ -38,7 +37,7 @@ export default function LoginForm() {
     const email = form.get('email')?.valueOf().toString() || ''
     const password = form.get('password')?.valueOf().toString() || ''
 
-    reqLogin({ email, password }).then(() =>  setIsLoading(false) )
+    reqLogin({ email, password }).then(() => setIsLoading(false))
   }
 
   function onClickBackMove() {
@@ -56,13 +55,11 @@ export default function LoginForm() {
         <BackButton onClickBack={onClickBackMove} />
         <LoginEmailInput />
         <LoginPasswordInput />
-        <ForgotLink/>
+        <ForgotLink />
         <ReqLoginInput isLoading={isLoading} />
         <SignInGuideLink />
-
-      </form >
+      </form>
       <Overlay />
     </>
   )
 }
-
