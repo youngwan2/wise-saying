@@ -7,7 +7,6 @@ interface PropsType {
 }
 export default function MyQuoteCard({ item }: PropsType) {
   return (
-    <>
       <ul
         key={item.id}
         className="border shadow-[inset_-3px_-3px_5px_0_rgba(0,0,0,0.5)] p-[10px] rounded-[10px] my-[5px] max-w-[700px] mx-auto bg-[white]"
@@ -31,6 +30,5 @@ export default function MyQuoteCard({ item }: PropsType) {
           {item.category}
         </li>
       </ul>
-    </>
   )
 }

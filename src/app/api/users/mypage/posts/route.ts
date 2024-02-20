@@ -8,6 +8,8 @@ export async function GET(req: NextRequest) {
   const limit = 5
   const pageNum = Number(page)
 
+  console.log(pageNum)
+
   try {
     if (!userId)
       return NextResponse.json({
@@ -19,21 +21,28 @@ export async function GET(req: NextRequest) {
     const db = await openDB()
 
     const joinQuery = `
-        SELECT quote_id AS id, author, quote, category, created_at AS create_date 
+        SELECT quote_id AS id, author, quote, category, created_at
         FROM quotes
         WHERE user_id = $1
         ORDER BY id DESC
         LIMIT $2 OFFSET $3 * 5
     `
-
+    const countSelectQuery=`
+      SELECT COUNT(*) AS count
+      FROM quotes
+      WHERE user_id = $1
+    `
     const itemsResults = await db.query(joinQuery, [
       userId,
       limit,
-      pageNum * limit,
+      pageNum,
     ])
+ 
+    const countResults = await db.query(countSelectQuery, [userId])
 
     const quotes = itemsResults.rows
-    const count = itemsResults.rowCount
+    const count = countResults.rows[0].count
+    db.end()
 
     return NextResponse.json({
       meg: '요청을 완료하였습니다.',

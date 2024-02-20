@@ -61,19 +61,16 @@ export default function MypageMyQuotesList({
   // 명언 카테고리를 필터해서 카테고리 목록을 상태에 저장
   const categoryCreator = useCallback(() => {
     const tempCategories: string[] = []
-
     userQuotes?.forEach((item) => tempCategories.push(item.category))
     const dedupeCategories = [...new Set(tempCategories)]
     setCategories(dedupeCategories)
   }, [userQuotes])
 
-  // 명언 필터기
+  // 명언 필터
   const onClickQuotesFilter = (category: string = 'all') => {
     const result = userQuotes.filter((userQuote) => {
-      if (category === 'all') {
-        return userQuote
-      }
-      return userQuote.category === category
+      if (category === 'all') return userQuote
+     return userQuote.category === category
     })
     setSelectedUserQuotes(result)
   }
@@ -99,7 +96,6 @@ export default function MypageMyQuotesList({
           }}
           className="hover:cursor-pointer hover:bg-[white] hover:text-black inline-block border rounded-[2em] py-[3px] px-[10px] bg-[tomato] text-white m-[3px]"
         >
-          {' '}
           전체{' '}
         </li>
         {categories.map((category) => {
@@ -113,6 +109,7 @@ export default function MypageMyQuotesList({
             />
           )
         })}
+
         {(selectedUserQuotes.length > 0 ? selectedUserQuotes : userQuotes).map(
           (item) => {
             return <MypageUserQuoteCard key={item.id} item={item} />
