@@ -30,7 +30,8 @@ export default function QuoteWriteForm() {
       author,
       isUser: true,
     }
-    postUserPost(hasToken, body)
+    const isSuccess = await postUserPost(hasToken, body)
+    if(isSuccess) router.push('/user-quotes')
   }
 
   function onClickCancel() {

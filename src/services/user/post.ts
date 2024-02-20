@@ -138,7 +138,9 @@ export const postUserPost = async (
 
   const url = '/api/quotes/users/post'
   const config = defaultConfig(Method.POST, userPost)
-  defaultFetch(url, config)
+  const { success, meg } = await defaultFetch(url, config)
+  if (success) { toast.success(meg); return true}
+  if (!success) { toast.error(meg); return false}
 }
 
 /**
