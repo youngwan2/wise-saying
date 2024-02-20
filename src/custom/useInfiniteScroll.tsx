@@ -46,7 +46,7 @@ export default function useInfiniteScroll(
   })
 
   // 데이터 후 처리 함수
-  const items = itemInfo ? [].concat(...itemInfo) : []
+  const items = itemInfo ? [].concat(...itemInfo) : null
   const itemCount = items?.length || 0 // 현재 로드 중인 아이템 갯수
   const isLoadingMore =
     isLoading ||
@@ -54,5 +54,5 @@ export default function useInfiniteScroll(
 
   // 중첩 배열의 마지막 배열 요소의 길이가 최대 아이템 갯수 보다 작다면 해당 지점을 마지막 페이지로 판단한다.
 
-  return { items, size, setSize, isLoadingMore, itemCount }
+  return { items, isLoading, size, setSize, isLoadingMore, itemCount }
 }
