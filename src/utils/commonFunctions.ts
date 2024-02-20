@@ -10,7 +10,7 @@ interface MapType {
 export function categoryClassifier(category: string): string {
   const categoryMap: MapType = {
     authors: '인물별',
-    topicks: '주제별',
+    topics: '주제별',
     job: '직업별',
   }
 
