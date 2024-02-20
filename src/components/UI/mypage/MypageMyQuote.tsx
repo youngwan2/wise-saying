@@ -22,7 +22,7 @@ interface UserQuotesType {
     category: string
 }
 
-const MAX_RENDER_PAGE = 5
+const MAX_SIZE = 5
 
 export default function MypageMyQuote({ userQuotes,
     setPage,
@@ -53,7 +53,7 @@ export default function MypageMyQuote({ userQuotes,
     const [limit, setLimit] = useState(0)
     const [firstPage, setFirstPage] = useState(1)
     const [lastPage, setLastPage] = useState(0)
-    const [pageGroup, setPageGroup] = useState(1)
+    const [_, setPageGroup] = useState(1)
 
     const [pageList, setPageList] = useState<number[]>([])
 
@@ -66,14 +66,39 @@ export default function MypageMyQuote({ userQuotes,
         setPageList(pageList)
     }, [firstPage, lastPage])
 
+
+    // 상태 업데이트 함수
+    const updateState = (pageInfo: { [key: string]: number }) => {
+        const { pageGroup, limit, firstPage, lastPage } = pageInfo
+        setPageGroup(pageGroup);
+        setLimit(limit);
+        setFirstPage(firstPage);
+        setLastPage(lastPage);
+    };
+
+
     // 페이지 네이션 상태 초기 셋팅
     useEffect(() => {
-        setPageGroup(Math.ceil((page + 1) / MAX_RENDER_PAGE)) // 1. 페이지 그룹 구하기
-        setLimit(Math.ceil(count / MAX_RENDER_PAGE)) // 2. 페이지 렌더링 제한 값 구하기
-        setFirstPage(lastPage - (MAX_RENDER_PAGE - 1)) // 3. 첫 페이지 구하기
-        setLastPage(pageGroup * MAX_RENDER_PAGE) // 4. 마지막 페이지 구하기
-        render() // 5. 페이지네이션 그려주기
-    }, [page, count, lastPage, firstPage, pageGroup, render])
+        // 페이지 그룹 구하기
+        const pageGroup = Math.ceil((page + 1) / MAX_SIZE);
+        // 페이지 렌더링 제한 값 구하기
+        const limit = Math.ceil(count / MAX_SIZE);
+        // 마지막 페이지 구하기
+        const lastPage = pageGroup * MAX_SIZE;
+        // 첫 페이지 구하기
+        const firstPage = lastPage - (MAX_SIZE - 1);
+
+        // 필요한 경우에만 렌더링 함수 호출
+        if (page !== lastPage
+            || count !== limit
+            || firstPage !== lastPage - (MAX_SIZE - 1)
+            || pageGroup !== Math.ceil((page + 1) / MAX_SIZE)) {
+
+            updateState({ pageGroup, limit, lastPage, firstPage });
+            render()
+
+        }
+    }, [page, count, lastPage, render]);
 
 
     useEffect(() => {

@@ -2,7 +2,6 @@
 
 import { useMypageTapsStore } from '@/store/store'
 import MypageProfileForm from './MypageProfileForm'
-import MypageMyQuotesList from './MypageMyQuotesList'
 import { useState } from 'react'
 import ReplaceMessageCard from '../common/ReplaceMessageCard'
 import MypageUserInfoForm from './MypageUserInfoForm'
@@ -35,14 +34,7 @@ export default function MypageContainer() {
   return (
     <>
       {tapId === 0 && <MypageProfileForm userInfo={userInfo} />}
-      {tapId === 1 && (
-        <MypageMyQuote userQuotes={userQuotes}
-          setPage={setPage}
-          page={page}
-          count={quotesCount} />
-
-
-      )}
+      {tapId === 1 && (<MypageMyQuote userQuotes={userQuotes} setPage={setPage} page={page} count={quotesCount} />)}
       {tapId === 2 && <MypageUserInfoForm userInfo={userInfo} />}
     </>
   )

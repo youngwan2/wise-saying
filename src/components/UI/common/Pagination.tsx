@@ -18,7 +18,7 @@ export default function Pagination({
         onClick={() => {
           setPage(Math.max(--page, 0))
         }}
-        className={`mx-[8px] ${page <= 0 ? 'invisible opacity-0' : 'visible opacity-100'
+        className={`hover:text-[tomato] text-white mx-[5px] ${page <= 0 ? 'invisible opacity-0' : 'visible opacity-100'
           }`}
       >
         prev
@@ -29,8 +29,8 @@ export default function Pagination({
         return (
           <button
             key={i}
-            className={`border-dashed border-[3px] hover:underline px-[10px] text-white mx-[5px] 
-            ${page === i ? 'font-bold border-[tomato] rounded-full ' : ''}
+            className={`bg-[tomato] hover:underline px-[10px] text-white mx-[5px] my-[1.5em] 
+            ${page === i ? 'font-bold border-[tomato] rounded-full ' : 'bg-transparent'}
             ${limit >= pageNum ? 'inline-block' : 'hidden'}`}
            
             onClick={() => { setPage(pageNum - 1) }}
@@ -42,7 +42,7 @@ export default function Pagination({
       {/* 앞으로 가기 */}
       <button
         onClick={() => { setPage(Math.min(++page, limit)) }}
-        className={`mx-[8px ${page === limit - 1 ? 'invisible opacity-0' : 'visible opacity-100'
+        className={`hover:text-[tomato] text-white mx-[5px] ${page === limit - 1 ? 'invisible opacity-0' : 'visible opacity-100'
           }`}
       >
         next
