@@ -2,12 +2,13 @@
 
 import { useMypageTapsStore } from '@/store/store'
 import MypageProfileForm from './MypageProfileForm'
-import MypageMyQuotesList from './MypageUserQuotesList'
+import MypageMyQuotesList from './MypageMyQuotesList'
 import { useState } from 'react'
 import ReplaceMessageCard from '../common/ReplaceMessageCard'
 import MypageUserInfoForm from './MypageUserInfoForm'
 import { useSwrFetchWithToken } from '@/utils/swr'
 import useHasToken from '@/custom/useHasToken'
+import MypageMyQuote from './MypageMyQuote'
 
 export default function MypageContainer() {
   const tapId = useMypageTapsStore((state) => state.tapId)
@@ -28,19 +29,19 @@ export default function MypageContainer() {
   const { quotes: userQuotes, count: quotesCount } = userQuotesAndCount || {}
 
   if (!hasToken) return <ReplaceMessageCard childern={'로그인 후 이용해주세요.'} />
-  if (!userInfo) return <ReplaceMessageCard childern={'게시글을 불러오는 중입니다. 잠시만 기다려주세요.'}  />
-  if (error) return <ReplaceMessageCard childern={'게시글 조회에 실패하였습니다. 나중에 다시 시도 해주세요.'}/>
+  if (!userInfo) return <ReplaceMessageCard childern={'게시글을 불러오는 중입니다. 잠시만 기다려주세요.'} />
+  if (error) return <ReplaceMessageCard childern={'게시글 조회에 실패하였습니다. 나중에 다시 시도 해주세요.'} />
 
   return (
     <>
       {tapId === 0 && <MypageProfileForm userInfo={userInfo} />}
       {tapId === 1 && (
-        <MypageMyQuotesList
-          userQuotes={userQuotes}
+        <MypageMyQuote userQuotes={userQuotes}
           setPage={setPage}
           page={page}
-          count={quotesCount}
-        />
+          count={quotesCount} />
+
+
       )}
       {tapId === 2 && <MypageUserInfoForm userInfo={userInfo} />}
     </>

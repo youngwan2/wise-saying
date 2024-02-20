@@ -8,7 +8,7 @@ export default function MypageMyQuotesCategoryList({ categories, onClickCategory
 
 
     return (
-        <>
+        <ul className="text-center mt-[2em]">
             <li
                 tabIndex={0}
                 aria-label="전체 명언 보기"
@@ -28,6 +28,6 @@ export default function MypageMyQuotesCategoryList({ categories, onClickCategory
                     />
                 )
             })}
-        </>
+        </ul>
     )
 }
