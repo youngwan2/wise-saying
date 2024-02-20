@@ -22,22 +22,22 @@ export const updateUserPost = async (
   userPost: UserPostType,
 ) => {
   const { category, content, author } = userPost
-  if (category.toString().length < 1)
-    return alert(`주제를 최소 2자 이상 적어 주세요.`)
-  if (content.toString().length < 3)
-    return alert(`내용을 최소 3자 이상 적어 주세요.`)
-  if (author.toString().length <= 2)
-    return alert('작성자를 최소 2자 이상 적어주세요.')
+  if (category.toString().length <= 1) return toast.error(`주제를 최소 2자 이상 적어 주세요.`);
+  if (content.toString().length < 3) return toast.error(`내용을 최소 3자 이상 적어 주세요.`);
+  if (author.toString().length <= 1) return toast.error('작성자를 최소 2자 이상 적어주세요.');
 
   const config = defaultConfig(Method.PATCH, userPost)
   const url = `/api/quotes/users/post/${postId}`
-
   const { success } = await defaultFetch(url, config)
   if (success) {
     toast.success('수정하였습니다.')
-    return success
+    return true
   }
-  if (!success) return toast.error('수정 요청이 실패하였습니다.')
+  if (!success) {
+    toast.error('수정 요청이 실패하였습니다.')
+    return false
+
+  }
 }
 
 /**

@@ -52,7 +52,7 @@ export default function QuoteEditForm() {
     return <ReplaceMessageCard childern="포스트가 존재하지 않습니다..." />
 
   // 글 수정
-  function updateFormAction(form: FormData) {
+  async function updateFormAction(form: FormData) {
     const content = form.get('content')?.valueOf().toString() || ''
     const category = form.get('category')?.valueOf().toString() || ''
     const author = form.get('author')?.valueOf().toString() || ''
@@ -61,10 +61,11 @@ export default function QuoteEditForm() {
       content,
       author,
     }
-    updateUserPost(postId, userPost).then(() => {
+    const isSuccess = await updateUserPost(postId, userPost)
+    if (isSuccess) {
       router.push('/user-quotes')
       mutate(`/api/quotes/users/post/categories/`)
-    })
+    }
   }
 
   function onClickCancel() {
