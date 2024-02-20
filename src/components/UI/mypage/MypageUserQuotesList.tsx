@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
 import MypageUserQuoteCard from './MypageMyQuoteCard'
 import Pagination from '../common/Pagination'
-import MypageQuotesCategoryCard from './MypageMyQuotesCategoryCard'
+import MypageNotFoundMessage from './MypageNotFoundMessage'
+import MypageMyQuotesCategoryList from './MypageMyQuotesCategoryList'
 
 interface PropsType {
   page: number
@@ -58,6 +59,7 @@ export default function MypageMyQuotesList({
     render() // 5. 페이지네이션 그려주기
   }, [page, count, lastPage, firstPage, pageGroup, render])
 
+
   // 명언 카테고리를 필터해서 카테고리 목록을 상태에 저장
   const categoryCreator = useCallback(() => {
     const tempCategories: string[] = []
@@ -70,45 +72,21 @@ export default function MypageMyQuotesList({
   const onClickQuotesFilter = (category: string = 'all') => {
     const result = userQuotes.filter((userQuote) => {
       if (category === 'all') return userQuote
-     return userQuote.category === category
+      return userQuote.category === category
     })
     setSelectedUserQuotes(result)
   }
+
 
   useEffect(() => {
     categoryCreator()
   }, [categoryCreator])
 
-  if (!userQuotes || userQuotes.length < 1)
-    return (
-      <h2 className="border inline-block p-[2em] relative left-[50%] translate-x-[-50%] mt-[8em] text-[1.25em] rounded-[10px] shadow-[5px_10px_10px_0_rgba(0,0,0,0.5)] bg-gradient-to-tr from-orange-50 to-white">
-        추가된 게시글이 없습니다.
-      </h2>
-    )
+  if (!userQuotes || userQuotes.length < 1) return <MypageNotFoundMessage />
   return (
     <>
       <ul className="mt-[3em] text-center min-h-[630px]">
-        <li
-          tabIndex={0}
-          aria-label="전체 명언 보기"
-          onClick={() => {
-            onClickQuotesFilter('all')
-          }}
-          className="hover:cursor-pointer hover:bg-[white] hover:text-black inline-block border rounded-[2em] py-[3px] px-[10px] bg-[tomato] text-white m-[3px]"
-        >
-          전체{' '}
-        </li>
-        {categories.map((category) => {
-          return (
-            <MypageQuotesCategoryCard
-              key={category}
-              category={category}
-              onClickQuotesFilter={() => {
-                onClickQuotesFilter(category)
-              }}
-            />
-          )
-        })}
+        <MypageMyQuotesCategoryList categories={categories} onClickCategoryFilter={onClickQuotesFilter} />
 
         {(selectedUserQuotes.length > 0 ? selectedUserQuotes : userQuotes).map(
           (item) => {
