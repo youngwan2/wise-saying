@@ -7,7 +7,7 @@ interface PropsType {
   onClickPrevSwitch: MouseEventHandler<HTMLButtonElement>
   onClickNextSwitch: MouseEventHandler<HTMLButtonElement>
 }
-export default function BookmarkSwitchButtons({
+export default function BookmarkPagination({
   page,
   maxPageSize,
   currentTotal,

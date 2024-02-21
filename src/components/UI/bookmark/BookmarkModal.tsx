@@ -7,16 +7,17 @@ import { useCallback, useEffect, useState } from 'react'
 import { HiBookmarkSquare } from 'react-icons/hi2'
 
 import BookmarkCloseButton from './BookmarkCloseButton'
-import BookmarkCard from './BookmarkCard'
-import ReplaceMessageCard from '../common/ReplaceMessageCard'
-import BookmarkSwitchButtons from './BookmarkSwitchButtons'
+import BookmarkPagination from './BookmarkPagination'
+import BookmarkList from './BookmarkList'
 
-interface BookmarkListType {
+export interface BookmarkListType {
   id: number
   author: string
   quote: string
   url: string
 }
+
+interface BookmarkInfoType { totalCount: number; bookmarks: BookmarkListType[] }
 
 const MIN_BOOKLIST_COUNT = 1
 
@@ -25,12 +26,14 @@ export default function BookmarkModal() {
     useBookmark()
   const [page, setPage] = useState(0)
 
+  const bookmarkListLength = bookmarkList?.length || 0
+
   // SWR | 북마크 리스트 불러온다.
-  const { data: bookmarkInfo, isLoading } = useSWR(
+  const { data: bookmarkInfo, isLoading, mutate } = useSWR(
     [`/api/bookmark?page=${page}&limit=5`],
     getBookmarkListFetcher,
     {
-      refreshInterval: 5000,
+      refreshInterval: 10000,
       revalidateOnMount: true,
       revalidateIfStale: false,
       revalidateOnFocus: false,
@@ -47,10 +50,8 @@ export default function BookmarkModal() {
   // 북마크 리스트를 갱신하는 함수
   const bookmarkListUpdate = useCallback(
     (
-      bookmarkInfo: { totalCount: number; bookmarks: BookmarkListType[] },
-      hasData: boolean,
+      bookmarkInfo: BookmarkInfoType,
     ) => {
-      if (!hasData) return
       const { totalCount, bookmarks } = bookmarkInfo
       setBookmarkList(bookmarks)
       setListCount(totalCount)
@@ -59,7 +60,9 @@ export default function BookmarkModal() {
   )
 
   useEffect(() => {
-    bookmarkListUpdate(bookmarkInfo, hasData)
+    if (!hasData) return
+    
+    bookmarkListUpdate(bookmarkInfo)
   }, [bookmarkListUpdate, bookmarkInfo, hasData])
 
   if (!toggleState) return <></>
@@ -70,29 +73,12 @@ export default function BookmarkModal() {
         'z-40 fixed left-0 right-0 top-0 bottom-0 bg-[#000000a4] block'
       }
     >
-      <h2 className="text-white text-[2em] mb-[1em] pl-[10px] flex items-center justify-center mt-[2em]">
-        <HiBookmarkSquare className="pr-[5px]" />
-        북마크 리스트({total})
-      </h2>
+
+      <ModalTitle total={total} />
       <BookmarkCloseButton />
-
-      {bookmarkList.length < MIN_BOOKLIST_COUNT ? (
-        <ReplaceMessageCard childern={<p>조회 결과가 존재하지 않습니다.</p>} />
-      ) : null}
-
-      {/* 북마크 목록  */}
-      <div className="px-[1em] mt-[2em] overflow-y-auto overflow-x-hidden min-h-[400px]  p-[1em] w-[90%] mx-auto flex flex-col justify-center items-center">
-        {!isLoading ? (
-          bookmarkList?.map((bookmark: BookmarkListType) => {
-            return <BookmarkCard bookmark={bookmark} key={bookmark.id} />
-          })
-        ) : (
-          <span>데이터를 가져오는 중입니다.</span>
-        )}
-      </div>
-
-      {/* 버튼 컨테이너 */}
-      <BookmarkSwitchButtons
+      <AlertMessage bookmarkListLength={bookmarkListLength} />
+      <BookmarkList bookmarkList={bookmarkList} isLoading={isLoading} page={page} mutate={mutate} />
+      <BookmarkPagination
         maxPageSize={maxPage}
         page={page}
         currentTotal={currentTotal}
@@ -103,11 +89,37 @@ export default function BookmarkModal() {
   )
 }
 
+
+// Child : 모달 제목
+function ModalTitle({ total }: { total: number }) {
+  return (
+    <h2 className="text-white text-[2em] mb-[1em] pl-[10px] flex items-center justify-center mt-[2em]">
+      <HiBookmarkSquare className="pr-[5px]" /> 북마크 리스트({total})
+    </h2>
+  )
+}
+
+
+// Child : 알림창
+function AlertMessage({ bookmarkListLength }: { bookmarkListLength: number }) {
+  return (
+    <>
+      {
+        bookmarkListLength < MIN_BOOKLIST_COUNT
+          ? (
+            <p className='text-white text-[1.3em] text-center mt-[2em]'> 조회 결과가 존재하지 않습니다.</p>)
+          : null
+      }
+    </>
+  )
+}
+
+
 /**
  * HOOK | bookmark 관련 전역 상태를 반환하는 훅
  */
 const useBookmark = () => {
-  const toggleState = useBookmarkStore((state) => state.toggleState)
+  const toggleState = useBookmarkStore((state) => state.toggleState) // 모달창 온오프 여부
   const setBookmarkList = useBookmarkStore((state) => state.setBookmarkList)
   const bookmarkList = useBookmarkStore((state) => state.bookmarkList)
   const setListCount = useBookmarkStore((state) => state.setListCount)

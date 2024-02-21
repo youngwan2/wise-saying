@@ -2,20 +2,30 @@ import { HiTrash } from 'react-icons/hi2'
 import useHasToken from '@/custom/useHasToken'
 import { useState } from 'react'
 import { deleteBookmark } from '@/services/user/delete'
+import toast from 'react-hot-toast'
+import { KeyedMutator, useSWRConfig } from 'swr'
 
 interface PropsType {
   id: number
+  page: number
+  mutate:KeyedMutator<any>
 }
-export default function BookmarkDeleteButton({ id }: PropsType) {
+export default function BookmarkDeleteButton({ id, page, mutate }: PropsType) {
   const hasToken = useHasToken()
 
   const [isLoading, setIsLoading] = useState(false)
   const onClickDeleteBookmark = async () => {
-    if (!hasToken) return alert('로그인 해주세요.')
+    if (!hasToken) return toast.error('로그인 후 이용해주세요.')
 
     setIsLoading(true)
     const success = await deleteBookmark(id)
-    success && setIsLoading(false)
+    if (success) {
+      setIsLoading(false)
+      mutate()
+      
+
+    }
+
   }
 
   return (

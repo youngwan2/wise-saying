@@ -41,6 +41,7 @@ export async function GET(req: NextRequest) {
     const totalCount = countResults.rows[0].count || 0
 
     // 존재하는 경우
+
     return NextResponse.json({
       meg: '성공적으로 북마크 목록을 가져왔습니다.',
       success: true,
@@ -57,6 +58,8 @@ export async function GET(req: NextRequest) {
       success: false,
       status: 500,
     })
+  } finally {
+    db.end()
   }
 }
 

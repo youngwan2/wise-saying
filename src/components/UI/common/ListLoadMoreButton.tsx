@@ -24,10 +24,9 @@ export default function ListLoadMoreButton({
         isLastPage
           ? 'bg-[#00000042] hover:cursor-not-allowed'
           : 'hover:cursor-pointer'
-      }   left-[50%] translate-x-[-50%] mt-[3em] mb-[2em] shadow-[inset_-2px_-2px_5px_0_rgba(0,0,0,0.5)] 
+      }   left-[50%] translate-x-[-50%] relative my-[3em] mb-[3em] shadow-[inset_-2px_-2px_5px_0_rgba(0,0,0,0.5)] 
          rounded-[5px] border-[3px]  bg-white to-slate-400 w-[150px] h-[50px]
-        hover:bg-[tomato] hover:text-white font-semibold text-[1.15em] z-[-1] 
-         absolute
+        hover:bg-[tomato] hover:text-white font-semibold text-[1.15em] z-[1] 
         `}
       onClick={onClick}
     >

@@ -4,11 +4,11 @@ import { NextRequest, NextResponse } from 'next/server'
 // GET | 특정 유저가 작성한 포스트(명언) 목록을 가져온다.
 export async function GET(req: NextRequest) {
   const userId = req.nextUrl.searchParams.get('userId')
+
   const page = req.nextUrl.searchParams.get('page')
+
   const limit = 5
   const pageNum = Number(page)
-
-  console.log(pageNum)
 
   try {
     if (!userId)
@@ -20,25 +20,25 @@ export async function GET(req: NextRequest) {
 
     const db = await openDB()
 
-    const joinQuery = `
-        SELECT quote_id AS id, author, quote, category, created_at
-        FROM quotes
-        WHERE user_id = $1
-        ORDER BY id DESC
-        LIMIT $2 OFFSET $3 * 5
+    const query = `
+     SELECT quote_id AS id, author, quote, category, created_at
+     FROM quotes
+     WHERE user_id = $1
+     ORDER BY id DESC
+     LIMIT $2 OFFSET $3 * 5
     `
-    const countSelectQuery=`
-      SELECT COUNT(*) AS count
-      FROM quotes
-      WHERE user_id = $1
+    const countSelectQuery = `
+    SELECT COUNT(*) AS count
+    FROM quotes
+    WHERE user_id = $1
     `
-    const itemsResults = await db.query(joinQuery, [
+
+    const countResults = await db.query(countSelectQuery, [userId])
+    const itemsResults = await db.query(query, [
       userId,
       limit,
       pageNum,
     ])
- 
-    const countResults = await db.query(countSelectQuery, [userId])
 
     const quotes = itemsResults.rows
     const count = countResults.rows[0].count
