@@ -38,7 +38,7 @@ export default function BookmarkModal() {
     [`/api/bookmark?page=${page}&limit=5`], getBookmarkListFetcher,
     {
       // refreshInterval: 1000 * 300, // 5분
-      revalidateOnMount: false,
+      revalidateOnMount: true,
       revalidateIfStale: false,
       revalidateOnFocus: false,
       onErrorRetry: ({ retryCount }) => {

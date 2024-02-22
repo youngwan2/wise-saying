@@ -8,6 +8,7 @@ import { HiOutlineBookmark, HiScissors } from 'react-icons/hi2'
 import { useRouter } from 'next/navigation'
 import { addBookmarkItem } from '@/services/data/post'
 import useTTS from '@/custom/useTTS'
+import { useBookmarkUpdate } from '@/store/store'
 
 interface PropsType {
   item: {
@@ -20,12 +21,15 @@ interface PropsType {
 export default function DetailPageControlButtons({ item }: PropsType) {
   const hasToken = useHasToken()
   const router = useRouter()
+  const setIsUpdate = useBookmarkUpdate((state=> state.setIsUpdate))
 
   const { setText } = useTTS()
-  const onClickBookmarkAdd = () => {
+
+  const onClickBookmarkAdd = async () => {
     if (!item && !hasToken) return
     const { id } = item
-    addBookmarkItem(id)
+    const isSuccess =await addBookmarkItem(id)
+    isSuccess && setIsUpdate(true)
   }
 
   const onClickStylerPageSwitch = () => {
