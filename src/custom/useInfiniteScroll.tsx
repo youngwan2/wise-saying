@@ -39,8 +39,6 @@ export default function useInfiniteScroll(
     revalidateOnReconnect: false,
   })
 
-  console.log(itemInfo)
-
   // 데이터 후 처리 함수
   // const items = itemInfo ? itemInfo.flatMap((old)=> { return old} ) : null
   const items = itemInfo ? [].concat(...itemInfo) : null

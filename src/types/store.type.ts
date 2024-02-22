@@ -107,3 +107,8 @@ export interface BodyOverflowState {
   isHidden: boolean
   setIsHidden: (isHidden: boolean) => void
 }
+
+export interface BookmarkUpdateState {
+  isUpdate: boolean
+  setIsUpdate: (isUpdate : boolean) => void
+}

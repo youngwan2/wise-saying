@@ -5,9 +5,9 @@ import useHasToken from '@/custom/useHasToken'
 import { pageSwitch, quotesSelector } from '@/utils/commonFunctions'
 import { HiOutlineBookmark, HiScissors, HiXMark } from 'react-icons/hi2'
 import { useRouter } from 'next/navigation'
-import { useCardZoomInOutStore } from '@/store/store'
+import { useBookmarkUpdate, useCardZoomInOutStore } from '@/store/store'
 import { addBookmarkItem } from '@/services/data/post'
-import { useState } from 'react'
+import { MouseEventHandler, useState } from 'react'
 import type { ItemsType } from '@/types/items.types'
 
 interface PropsType {
@@ -15,17 +15,20 @@ interface PropsType {
   index: number | 0
 }
 export default function QuotesCardControlButtons({ item, index }: PropsType) {
+  
   const setIsZoomIn = useCardZoomInOutStore((state) => state.setIsZoomIn)
   const setCardIndex = useCardZoomInOutStore((state) => state.setCardIndex)
+  const setIsUpdate = useBookmarkUpdate((state=> state.setIsUpdate))
 
   const hasToken = useHasToken()
   const router = useRouter()
   const [isDisplay, setIsDisplay] = useState(false)
 
-  const onClickBookmarkAdd = () => {
+  const onClickBookmarkAdd = async () => {
     if (!item && !hasToken) return
     const { id } = item
-    addBookmarkItem(id)
+    const isSuccess =await addBookmarkItem(id)
+    isSuccess && setIsUpdate(true)
   }
 
   const onClickStylerPageSwitch = () => {
@@ -40,25 +43,19 @@ export default function QuotesCardControlButtons({ item, index }: PropsType) {
     setCardIndex(index)
   }
 
+  const onClickToggleMenu = () => {
+    setIsDisplay(!isDisplay)
+  }
+
   return (
     <>
-      <button
-        onClick={() => {
-          setIsDisplay(!isDisplay)
-        }}
-        className="text-white hover:border-[tomato] border border-[transparent] absolute top-[0.5em] right-[0.55em]  p-[4px] text-[1.05em]"
-      >
-        {' '}
-        {isDisplay ? <HiXMark /> : <HiDotsVertical />}{' '}
-      </button>
-
+      <ButtonMenuIcon isDisplay={isDisplay} onClickToggleMenu={onClickToggleMenu} />
       <article
         onMouseLeave={() => {
           setIsDisplay(false)
         }}
-        className={` ${
-          isDisplay ? 'visible opacity-100 top-2 z-50' : 'invisible opacity-0'
-        } transition-all absolute top-0 right-[2.6em] bg-white shadow-[inset_0_0_5px_0_rgba(0,0,0,0.5)] rounded-[5px] `}
+        className={` ${isDisplay ? 'visible opacity-100 top-2 z-50' : 'invisible opacity-0'
+          } transition-all absolute top-0 right-[2.6em] bg-white shadow-[inset_0_0_5px_0_rgba(0,0,0,0.5)] rounded-[5px] `}
       >
         {/* 카드 만들기 버튼 */}
         <button
@@ -91,5 +88,22 @@ export default function QuotesCardControlButtons({ item, index }: PropsType) {
         </button>
       </article>
     </>
+  )
+}
+
+
+// Child : 버튼 메뉴
+interface MenuIconPropsType {
+  isDisplay: boolean
+  onClickToggleMenu: MouseEventHandler<HTMLButtonElement>
+}
+function ButtonMenuIcon({ isDisplay, onClickToggleMenu }: MenuIconPropsType) {
+  return (
+    <button
+      onClick={onClickToggleMenu}
+      className="text-white hover:border-[tomato] border border-[transparent] absolute top-[0.5em] right-[0.55em]  p-[4px] text-[1.05em]"
+    >
+      {isDisplay ? <HiXMark /> : <HiDotsVertical />}
+    </button>
   )
 }

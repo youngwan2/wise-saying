@@ -93,9 +93,7 @@ export default function CommentCard({ comment }: PropsType) {
         <CommentEditDeleteMenu
           emailInfo={emailInfo}
           isShow={isShow}
-          onClickDeleteComment={() => {
-            deleteComment(commentId)
-          }}
+          onClickDeleteComment={() => deleteComment(commentId)}
           onClickFormDisplay={onClickFormDisplay}
         />
         <CommentEditForm

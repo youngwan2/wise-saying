@@ -1,7 +1,7 @@
 'use client'
 import useSWR from 'swr'
 import { getBookmarkListFetcher } from '@/services/data/get'
-import { useBookmarkStore } from '@/store/store'
+import { useBookmarkStore, useBookmarkUpdate } from '@/store/store'
 
 import { useCallback, useEffect, useState } from 'react'
 import { HiBookmarkSquare } from 'react-icons/hi2'
@@ -9,6 +9,9 @@ import { HiBookmarkSquare } from 'react-icons/hi2'
 import BookmarkCloseButton from './BookmarkCloseButton'
 import BookmarkPagination from './BookmarkPagination'
 import BookmarkList from './BookmarkList'
+import { deleteBookmark } from '@/services/user/delete'
+import toast from 'react-hot-toast'
+import useHasToken from '@/custom/useHasToken'
 
 export interface BookmarkListType {
   id: number
@@ -17,24 +20,25 @@ export interface BookmarkListType {
   url: string
 }
 
-interface BookmarkInfoType { totalCount: number; bookmarks: BookmarkListType[] }
-
 const MIN_BOOKLIST_COUNT = 1
-
 export default function BookmarkModal() {
-  const { toggleState, bookmarkList, setBookmarkList, setListCount } =
-    useBookmark()
+
   const [page, setPage] = useState(0)
+  const isUpdate = useBookmarkUpdate((state) => state.isUpdate)
+  const setIsUpdate = useBookmarkUpdate((state) => state.setIsUpdate)
+  const [isDeleting, setIsDeleting] = useState(false)
 
-  const bookmarkListLength = bookmarkList?.length || 0
+  const { toggleState, setListCount } = useBookmark()
 
-  // SWR | 북마크 리스트 불러온다.
+  const hasToken = useHasToken()
+
+
+  // SWR | 북마크 리스트 조회
   const { data: bookmarkInfo, isLoading, mutate } = useSWR(
-    [`/api/bookmark?page=${page}&limit=5`],
-    getBookmarkListFetcher,
+    [`/api/bookmark?page=${page}&limit=5`], getBookmarkListFetcher,
     {
-      refreshInterval: 10000,
-      revalidateOnMount: true,
+      // refreshInterval: 1000 * 300, // 5분
+      revalidateOnMount: false,
       revalidateIfStale: false,
       revalidateOnFocus: false,
       onErrorRetry: ({ retryCount }) => {
@@ -42,46 +46,62 @@ export default function BookmarkModal() {
       },
     },
   )
+
+
   const hasData = !!bookmarkInfo
   const total = bookmarkInfo?.totalCount || 0
-  const currentTotal = bookmarkInfo?.bookmarks.length || 0
+  const bookmarkList = bookmarkInfo?.bookmarks
+  const currentListCount = bookmarkInfo?.bookmarks.length || 0
   const maxPage = Math.ceil(total / 5) || 1
 
-  // 북마크 리스트를 갱신하는 함수
-  const bookmarkListUpdate = useCallback(
-    (
-      bookmarkInfo: BookmarkInfoType,
-    ) => {
-      const { totalCount, bookmarks } = bookmarkInfo
-      setBookmarkList(bookmarks)
-      setListCount(totalCount)
-    },
-    [setListCount, setBookmarkList],
-  )
+
+  // DELETE | 북마크 삭제
+  const onClickDeleteBookmark = async (bookmarkId: number) => {
+    if (!hasToken) return toast.error('로그인 후 이용해주세요.')
+    setIsDeleting(true)
+    const success = await deleteBookmark(bookmarkId)
+    if (success) {
+      setIsDeleting(false)
+      mutate()
+    }
+  }
+
+
+  // MEMO : 북마크 갯수를 전역으로 관리하여 아이콘 상단에 표기
+  const setBookmarkListCount = useCallback((total: number) => {
+    setListCount(total)
+  }, [setListCount])
+
 
   useEffect(() => {
     if (!hasData) return
-    
-    bookmarkListUpdate(bookmarkInfo)
-  }, [bookmarkListUpdate, bookmarkInfo, hasData])
+    setBookmarkListCount(total)
+
+  }, [setBookmarkListCount, total, hasData])
+
+
+  
+  useEffect(() => {
+    if (isUpdate) { mutate().then(() => setIsUpdate(false)) }
+  }, [isUpdate, setIsUpdate, mutate])
+
+
+
 
   if (!toggleState) return <></>
   return (
     <article
       aria-hidden={!toggleState}
-      className={
-        'z-40 fixed left-0 right-0 top-0 bottom-0 bg-[#000000a4] block'
-      }
+      className={'z-40 fixed left-0 right-0 top-0 bottom-0 bg-[#000000a4] block'}
     >
-
       <ModalTitle total={total} />
       <BookmarkCloseButton />
-      <AlertMessage bookmarkListLength={bookmarkListLength} />
-      <BookmarkList bookmarkList={bookmarkList} isLoading={isLoading} page={page} mutate={mutate} />
+      <AlertMessage currentListCount={currentListCount} />
+      <BookmarkList bookmarkList={bookmarkList} page={page} isLoading={isLoading} isDeleting={isDeleting} onClickDelete={onClickDeleteBookmark} />
       <BookmarkPagination
         maxPageSize={maxPage}
         page={page}
-        currentTotal={currentTotal}
+        currentTotal={currentListCount}
         onClickPrevSwitch={() => setPage(Math.max(0, page - 1))}
         onClickNextSwitch={() => setPage(Math.min(maxPage, page + 1))}
       />
@@ -101,11 +121,11 @@ function ModalTitle({ total }: { total: number }) {
 
 
 // Child : 알림창
-function AlertMessage({ bookmarkListLength }: { bookmarkListLength: number }) {
+function AlertMessage({ currentListCount }: { currentListCount: number }) {
   return (
     <>
       {
-        bookmarkListLength < MIN_BOOKLIST_COUNT
+        currentListCount < MIN_BOOKLIST_COUNT
           ? (
             <p className='text-white text-[1.3em] text-center mt-[2em]'> 조회 결과가 존재하지 않습니다.</p>)
           : null
@@ -120,9 +140,7 @@ function AlertMessage({ bookmarkListLength }: { bookmarkListLength: number }) {
  */
 const useBookmark = () => {
   const toggleState = useBookmarkStore((state) => state.toggleState) // 모달창 온오프 여부
-  const setBookmarkList = useBookmarkStore((state) => state.setBookmarkList)
-  const bookmarkList = useBookmarkStore((state) => state.bookmarkList)
   const setListCount = useBookmarkStore((state) => state.setListCount)
 
-  return { toggleState, bookmarkList, setBookmarkList, setListCount }
+  return { toggleState, setListCount }
 }
