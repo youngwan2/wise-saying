@@ -10,7 +10,7 @@ class User {
 const scrept = process.env.JWT_SCREPT || ''
 
 /**
- * 토큰 생성 후 반환
+ * 토큰 생성 후 반환(TODO : 북마크 기능 개선 후 accessToken 만료 기간을 7분으로 지정)
  * @returns 토큰 반환
  */
 export const createToken = (
@@ -23,10 +23,11 @@ export const createToken = (
     type: isAccessToken ? 'access' : 'refresh',
   }
 
+  
   const token = jwt.sign(
     {
       exp: isAccessToken
-        ? Math.floor(Date.now() / 1000) + 60 * 7
+        ? Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30
         : Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30, // 1달 = 30일
       data: payload,
     },

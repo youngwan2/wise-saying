@@ -27,25 +27,20 @@ export default function useInfiniteScroll(
       }
       case 'users': {
         url = `/api/quotes/${mainCategory}/post/categories/${subCategory}?page=${pageIndex}&limit=15`
-        break
       }
     }
     return url
   }
 
   // SWR | 인피니티 훅
-  const {
-    data: itemInfo = [],
-    isLoading,
-    size,
-    setSize,
-  } = useSWRInfinite(getKey, getInfiniteFetcher, {
+  const { data: itemInfo = [], isLoading, size, setSize } = useSWRInfinite(getKey, getInfiniteFetcher, {
     revalidateOnMount: true,
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
   })
 
   // 데이터 후 처리 함수
+  // const items = itemInfo ? itemInfo.flatMap((old)=> { return old} ) : null
   const items = itemInfo ? [].concat(...itemInfo) : null
   const itemCount = items?.length || 0 // 현재 로드 중인 아이템 갯수
   const isLoadingMore =

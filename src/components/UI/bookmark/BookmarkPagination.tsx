@@ -7,13 +7,14 @@ interface PropsType {
   onClickPrevSwitch: MouseEventHandler<HTMLButtonElement>
   onClickNextSwitch: MouseEventHandler<HTMLButtonElement>
 }
-export default function BookmarkSwitchButtons({
+export default function BookmarkPagination({
   page,
   maxPageSize,
   currentTotal,
   onClickPrevSwitch,
   onClickNextSwitch,
 }: PropsType) {
+
   return (
     <article className="flex justify-center ">
       {/* 이전 */}

@@ -41,7 +41,8 @@ export default function CommentCard({ comment }: PropsType) {
   function onClickReplyFormDisplay() {
     setReplyFormDisplay(!replyFormDisply)
   }
-  // Actions : 대댓글 등록 액션
+
+  // Action : 대댓글 등록 액션
   async function addReplyAction(formData: FormData) {
     const content = formData.get('reply-content')?.valueOf().toString() || ''
     const commentId = comment.id
@@ -65,6 +66,7 @@ export default function CommentCard({ comment }: PropsType) {
     error: Error
   }
 
+  // MEMO : 대댓글 수정 및 삭제는 ReplyCard 컴포넌트에 위치.
   // SWR + GET | 대댓글 정보 요청
   const { data: replyInfo, isLoading }: DataType = useSwrFetch(
     `/api/quotes/0/comments/reply?comment-id=` + commentId,
@@ -91,9 +93,7 @@ export default function CommentCard({ comment }: PropsType) {
         <CommentEditDeleteMenu
           emailInfo={emailInfo}
           isShow={isShow}
-          onClickDeleteComment={() => {
-            deleteComment(commentId)
-          }}
+          onClickDeleteComment={() => deleteComment(commentId)}
           onClickFormDisplay={onClickFormDisplay}
         />
         <CommentEditForm
