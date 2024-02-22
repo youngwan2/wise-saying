@@ -1,5 +1,6 @@
 import { Method, defaultConfig } from '@/configs/config.api'
 import { defaultFetch } from '@/utils/fetcher'
+import toast from 'react-hot-toast'
 import { mutate } from 'swr'
 
 /**
@@ -12,7 +13,13 @@ export const deleteUserQuote = async (id: number) => {
 
   const config = defaultConfig(Method.DELETE)
   const url = `/api/quotes/users/post/${id}`
-  defaultFetch(url, config).then(() => {
+  const { success, meg } = await defaultFetch(url, config)
+  if (success) {
+    toast.success(meg)
     mutate(`/api/quotes/users/post/categories/0`)
-  })
+    return true
+  } else {
+    return false
+  }
+
 }
