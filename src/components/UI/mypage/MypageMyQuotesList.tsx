@@ -18,7 +18,7 @@ export default function MypageMyQuotesList({
   selectedMyQuotes,
 }: PropsType) {
 
-  if (!userQuotes || userQuotes.length < 1) return <MypageNotFoundMessage />
+  // if (!userQuotes || userQuotes.length < 1) return <MypageNotFoundMessage />
   return (
       <ul className="mt-[3em] text-center min-h-[630px]">
 

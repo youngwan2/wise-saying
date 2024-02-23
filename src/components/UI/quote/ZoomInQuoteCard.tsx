@@ -77,7 +77,7 @@ export default function ZommInQuoteCard({ item }: PropsType) {
     }
   }, [isZoomIn, position])
 
-  if (!item) return <span className="hidden"></span>
+  if (!item) return <></>
   return (
     <article
       ref={wrapperRef}

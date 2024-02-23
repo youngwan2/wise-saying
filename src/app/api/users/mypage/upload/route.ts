@@ -4,7 +4,6 @@ import { tokenVerify } from '@/utils/auth'
 
 // POST | 유저 프로필 정보 업데이트
 export async function POST(req: NextRequest) {
-  const tag = req.nextUrl.searchParams.get('tag')
   try {
     const db = await openDB()
     const { '0': body } = await req.json()

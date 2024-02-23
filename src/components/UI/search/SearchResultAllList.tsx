@@ -22,8 +22,7 @@ export default function SearchResultAllList({ items }: PropsType) {
   const searchText = useSearchParams().get('searchText')
   const router = useRouter()
 
-  if (!items)
-    return <ReplaceMessageCard childern="데이터를 가져오는 중입니다." />
+  if (!items)  return <ReplaceMessageCard childern="데이터를 가져오는 중입니다." />
 
   const byAuthorItems = items.byAuthor ?? []
   const byKeywordItems = items.byKeyword ?? []
