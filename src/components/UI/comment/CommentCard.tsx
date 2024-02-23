@@ -16,7 +16,7 @@ import { useSWRConfig } from 'swr'
 import ReplyButtons from '../reply/ReplyButtons'
 import { clearTextarea } from '@/utils/textarea'
 
-interface PropsType extends CommentType { }
+interface PropsType extends CommentType {}
 
 export default function CommentCard({ comment }: PropsType) {
   const [isShow, setIsShow] = useState(false)
@@ -88,7 +88,9 @@ export default function CommentCard({ comment }: PropsType) {
         <CommentEditDeleteMenu
           emailInfo={emailInfo}
           isShow={isShow}
-          onLeaveMenuHide={()=>{setIsShow(false)}}
+          onLeaveMenuHide={() => {
+            setIsShow(false)
+          }}
           onClickDeleteComment={() => deleteComment(commentId)}
           onClickFormDisplay={onClickFormDisplay}
         />
@@ -126,7 +128,7 @@ interface MenuButtonPropsType {
   onClick: MouseEventHandler<HTMLButtonElement>
 }
 
-function CommentMenuDropdownButton({ isShow, onClick}: MenuButtonPropsType) {
+function CommentMenuDropdownButton({ isShow, onClick }: MenuButtonPropsType) {
   return (
     <button
       onClick={onClick}

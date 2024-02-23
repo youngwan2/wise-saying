@@ -36,7 +36,7 @@ export default function CommentEditForm({
       >
         <textarea
           rows={1}
-          placeholder='댓글 수정'
+          placeholder="댓글 수정"
           name="comment"
           className="h-auto w-full bg-transparent resize-none  p-[10px] border-none shadow-[inset_0_-1px_0_0_gray] focus:shadow-[inset_0_-2px_0_0_gray] focus:outline-none placeholder:text-[gray]"
         />{' '}

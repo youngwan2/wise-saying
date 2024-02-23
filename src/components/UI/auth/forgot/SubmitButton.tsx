@@ -8,7 +8,7 @@ export default function SubmitButton({
   return (
     <button
       type="submit"
-      className="w-full bg-[tomato] text-white font-bold p-[0.7em] mt-[1em] rounded-[5px] focus:outline-none focus:bg-blue-700 hover:bg-gradient-to-br from-[tomato] to-[#f54d2f]  transition-all"
+      className="w-full bg-white text-black font-bold p-[0.7em] mt-[1em] rounded-[5px] focus:outline-none focus:bg-blue-700 hover:bg-gradient-to-br from-[white] to-[#acaaaa]  transition-all"
     >
       {children}
     </button>

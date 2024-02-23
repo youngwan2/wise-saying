@@ -128,7 +128,9 @@ export default function QuoteCard({ item, items, index }: PropsType) {
       <button
         aria-label="명언 듣기 버튼"
         className="absolute right-[3.3em] top-[0.429em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-white "
-        onClick={() => { setText(item.quote) }}
+        onClick={() => {
+          setText(item.quote)
+        }}
       >
         <SlEarphones className="pr-[2px]" />
       </button>

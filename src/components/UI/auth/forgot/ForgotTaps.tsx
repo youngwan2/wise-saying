@@ -7,7 +7,7 @@ export default function ForgotTaps({ tapNum, onClickSetTap }: PropsType) {
     <article className="flex">
       {['이메일 찾기', '비밀번호 찾기'].map((tap, i) => (
         <button
-          className={`${tapNum === i ? 'text-white border-[tomato] border-b-[2px]' : 'text-[gray]'} hover:text-[tomato] p-[5px] mx-[5px]  transition-all w-full  `}
+          className={`${tapNum === i ? 'text-white border-[white] border-b-[2px]' : 'text-[gray]'} hover:text-[#d7d4d4] p-[5px] mx-[5px]  transition-all w-full mb-[1.2em]  `}
           key={tap}
           onClick={() => onClickSetTap(i)}
         >

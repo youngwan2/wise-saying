@@ -24,7 +24,9 @@ export default function UserQuotesCardControlButtons({
   // 삭제버튼
   const onClickDelete = async () => {
     const isSuccess = await deleteUserQuote(item.id)
-    if (isSuccess) { router.push('/user-quotes') }
+    if (isSuccess) {
+      router.push('/user-quotes')
+    }
   }
 
   // 수정버튼
@@ -36,10 +38,11 @@ export default function UserQuotesCardControlButtons({
   return (
     <article aria-label="수정 및 삭제, 꾸미기,담기, 확대, 듣기 버튼의 컨테이너">
       <article
-        className={`${userEmail === item.email
-          ? 'flex justify-center top-[0.55em] right-[5.3em] items-start'
-          : 'hidden'
-          } min-h-[40px] min-w-[50px] absolute top-0 text-white `}
+        className={`${
+          userEmail === item.email
+            ? 'flex justify-center top-[0.55em] right-[5.3em] items-start'
+            : 'hidden'
+        } min-h-[40px] min-w-[50px] absolute top-0 text-white `}
       >
         {/* 수정 */}
         <button

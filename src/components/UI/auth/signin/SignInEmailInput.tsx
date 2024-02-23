@@ -66,7 +66,7 @@ export default function SignInEmailInput({
         <EmailLabel />
         <input
           onInput={onInputEmail}
-          className="pl-[8px]  min-w-[230px] w-[100%] bg-[#ffffffce]"
+          className="text-white pl-[8px]  min-w-[230px] w-[100%] shadow-[inset_0_0_0_2px_white] bg-transparent focus:bg-white focus:outline-none focus:text-black focus:font-bold"
           type="email"
           id="user-email"
           name="user-email"

@@ -1,3 +1,4 @@
+import BackMoveButton from '@/components/UI/common/BackMoveButton'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -6,5 +7,5 @@ export const metadata: Metadata = {
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <section className="w-full">{children}</section>
+  return <section className="w-full">{children}  <BackMoveButton/></section>
 }

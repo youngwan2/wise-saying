@@ -139,8 +139,14 @@ export const postUserPost = async (
   const url = '/api/quotes/users/post'
   const config = defaultConfig(Method.POST, userPost)
   const { success, meg } = await defaultFetch(url, config)
-  if (success) { toast.success(meg); return true}
-  if (!success) { toast.error(meg); return false}
+  if (success) {
+    toast.success(meg)
+    return true
+  }
+  if (!success) {
+    toast.error(meg)
+    return false
+  }
 }
 
 /**
@@ -180,7 +186,7 @@ export const postComment = async (
 ) => {
   const token = getAccessToken() || ''
   if (!token) return toast.error('로그인 후 이용 부탁 드립니다.')
-  if(comment.length<2) return toast.error('2자 이상 입력해주세요.')
+  if (comment.length < 2) return toast.error('2자 이상 입력해주세요.')
 
   const url = `/api/quotes/${quoteId}/comments`
   const config = defaultConfig(Method.POST, comment)

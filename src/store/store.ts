@@ -98,8 +98,6 @@ export const useImageElementStore = create<ImageElState>((set) => ({
   setImageReset: (state) => set(() => ({ isClear: state })),
 }))
 
-
-
 /**
  * *  Zustand | 마이페이지 메뉴 탭의 id 저장
  */
@@ -162,7 +160,6 @@ export const useBodyOverflowStore = create<BodyOverflowState>((set) => ({
   setIsHidden: (isHidden) => set(() => ({ isHidden })),
 }))
 
-
 /**
  * * Zustand | 북마크 활성화 상태 및 리스트 저장
  */
@@ -180,6 +177,5 @@ export const useBookmarkStore = create<BookmarkToggleState>((set) => ({
  */
 export const useBookmarkUpdate = create<BookmarkUpdateState>((set) => ({
   isUpdate: false,
-  setIsUpdate: (isUpdate) => set(() => ({ isUpdate }))
+  setIsUpdate: (isUpdate) => set(() => ({ isUpdate })),
 }))
-

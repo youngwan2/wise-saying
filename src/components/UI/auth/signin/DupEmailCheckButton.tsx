@@ -11,7 +11,7 @@ export default function DupEmailCheckButton({
   return (
     <button
       onClick={onClickCheck}
-      className="bg-[white] min-w-[50px] rounded-r-[5px] hover:shadow-[0px_0px_0px_2px_black] "
+      className="bg-[white] min-w-[50px] rounded-r-[5px] hover:bg-[tomato] hover:shadow-[inset_0_0_0_2px_white] hover:text-white hover:font-bold"
     >
       {isLoading ? '대기' : '확인'}
     </button>

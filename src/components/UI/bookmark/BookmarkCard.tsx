@@ -2,13 +2,26 @@ import Link from 'next/link'
 import BookmarkDeleteButton from './BookmarkDeleteButton'
 import { HiLink } from 'react-icons/hi2'
 
+interface ContentPropsType {
+  bookmark: BookmarkType
+}
+interface BookmarkType {
+  id: number
+  quote: string
+  author: string
+  url: string
+}
+interface PropsType {
+  bookmark: BookmarkType
+  isDeleting: boolean
+  onClickDelete: (bookmarkId: number) => void
+}
 
-interface ContentPropsType { bookmark: BookmarkType }
-interface BookmarkType { id: number; quote: string; author: string; url: string }
-interface PropsType { bookmark: BookmarkType; isDeleting: boolean; onClickDelete: (bookmarkId: number) => void }
-
-export default function BookmarkCard({ bookmark, isDeleting, onClickDelete }: PropsType) {
-
+export default function BookmarkCard({
+  bookmark,
+  isDeleting,
+  onClickDelete,
+}: PropsType) {
   const { id, url } = bookmark
   return (
     <ul
@@ -17,25 +30,24 @@ export default function BookmarkCard({ bookmark, isDeleting, onClickDelete }: Pr
     >
       <BookmarkContent bookmark={bookmark} />
       <BookmarkLink url={url} />
-      <BookmarkDeleteButton id={id} isDeleting={isDeleting} onClickDelete={onClickDelete} />
+      <BookmarkDeleteButton
+        id={id}
+        isDeleting={isDeleting}
+        onClickDelete={onClickDelete}
+      />
     </ul>
   )
 }
 
-
-
 function BookmarkContent({ bookmark }: ContentPropsType) {
-
   const { id, author, quote } = bookmark
 
   return (
     <li className="mx-[5px] font-bold p-[7px] border border-[#454444a0] ">
       {id} / {author}/{quote.slice(0, 25)}...
     </li>
-
   )
 }
-
 
 function BookmarkLink({ url }: { url: string }) {
   return (
@@ -44,6 +56,5 @@ function BookmarkLink({ url }: { url: string }) {
         <HiLink />
       </Link>
     </li>
-
   )
 }

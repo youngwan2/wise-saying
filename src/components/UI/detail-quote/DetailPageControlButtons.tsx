@@ -22,14 +22,14 @@ interface PropsType {
 export default function DetailPageControlButtons({ item }: PropsType) {
   const hasToken = useHasToken()
   const router = useRouter()
-  const setIsUpdate = useBookmarkUpdate((state=> state.setIsUpdate))
+  const setIsUpdate = useBookmarkUpdate((state) => state.setIsUpdate)
 
   const { setText } = useTTS()
 
   const onClickBookmarkAdd = async () => {
     if (!item && !hasToken) return
     const { id } = item
-    const isSuccess =await addBookmarkItem(id)
+    const isSuccess = await addBookmarkItem(id)
     isSuccess && setIsUpdate(true)
   }
 

@@ -17,7 +17,6 @@ export default function ZommInQuoteCard({ item }: PropsType) {
   const cardRef = useRef<HTMLDivElement>(null)
   const wrapperRef = useRef<HTMLElement>(null)
 
-
   function onClickSetIsZoomIn() {
     setIsZoomIn(false)
   }
@@ -44,18 +43,18 @@ export default function ZommInQuoteCard({ item }: PropsType) {
         const { x, y, xy } = position
         gsap.to(card, {
           opacity: 1,
-          lineHeight:2,
+          lineHeight: 2,
           transformOrigin: '50% 50%',
           visibility: 'visible',
           scale: 1.15,
           translate: '-50%, -50%',
           top: '50%',
           rotateY: () => {
-            return -y*15
+            return -y * 15
           },
           rotateZ: () => {
             console.log(xy)
-            return -x* y * 5
+            return -x * y * 5
           },
           background: `linear-gradient(${-x * 360}deg, white, rgba(555,555,555,0.7) 80%)`,
           boxShadow: `${-x * 100}px ${-y * 100}px 10px 0 rgba(0,0,0,0.5)`,
@@ -81,10 +80,11 @@ export default function ZommInQuoteCard({ item }: PropsType) {
   return (
     <article
       ref={wrapperRef}
-      className={` ${isZoomIn
-        ? 'fixed left-0 top-0 bottom-0 right-0 visible opacity-100 '
-        : 'fixed left-0 top-0 bottom-0 right-0 invisible opacity-0'
-        } transition-all duration-1000`}
+      className={` ${
+        isZoomIn
+          ? 'fixed left-0 top-0 bottom-0 right-0 visible opacity-100 '
+          : 'fixed left-0 top-0 bottom-0 right-0 invisible opacity-0'
+      } transition-all duration-1000`}
     >
       <Overlay isZoomIn={isZoomIn} onClickSetIsZoomIn={onClickSetIsZoomIn} />
       {/* 카드 */}

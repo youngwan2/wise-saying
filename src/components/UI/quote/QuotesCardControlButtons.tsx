@@ -15,10 +15,9 @@ interface PropsType {
   index: number | 0
 }
 export default function QuotesCardControlButtons({ item, index }: PropsType) {
-  
   const setIsZoomIn = useCardZoomInOutStore((state) => state.setIsZoomIn)
   const setCardIndex = useCardZoomInOutStore((state) => state.setCardIndex)
-  const setIsUpdate = useBookmarkUpdate((state=> state.setIsUpdate))
+  const setIsUpdate = useBookmarkUpdate((state) => state.setIsUpdate)
 
   const hasToken = useHasToken()
   const router = useRouter()
@@ -27,7 +26,7 @@ export default function QuotesCardControlButtons({ item, index }: PropsType) {
   const onClickBookmarkAdd = async () => {
     if (!item && !hasToken) return
     const { id } = item
-    const isSuccess =await addBookmarkItem(id)
+    const isSuccess = await addBookmarkItem(id)
     isSuccess && setIsUpdate(true)
   }
 
@@ -49,13 +48,17 @@ export default function QuotesCardControlButtons({ item, index }: PropsType) {
 
   return (
     <>
-      <ButtonMenuIcon isDisplay={isDisplay} onClickToggleMenu={onClickToggleMenu} />
+      <ButtonMenuIcon
+        isDisplay={isDisplay}
+        onClickToggleMenu={onClickToggleMenu}
+      />
       <article
         onMouseLeave={() => {
           setIsDisplay(false)
         }}
-        className={` ${isDisplay ? 'visible opacity-100 top-2 z-50' : 'invisible opacity-0'
-          } transition-all absolute top-0 right-[2.6em] bg-white shadow-[inset_0_0_5px_0_rgba(0,0,0,0.5)] rounded-[5px] `}
+        className={` ${
+          isDisplay ? 'visible opacity-100 top-2 z-50' : 'invisible opacity-0'
+        } transition-all absolute top-0 right-[2.6em] bg-white shadow-[inset_0_0_5px_0_rgba(0,0,0,0.5)] rounded-[5px] `}
       >
         {/* 카드 만들기 버튼 */}
         <button
@@ -90,7 +93,6 @@ export default function QuotesCardControlButtons({ item, index }: PropsType) {
     </>
   )
 }
-
 
 // Child : 버튼 메뉴
 interface MenuIconPropsType {

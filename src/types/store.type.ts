@@ -110,5 +110,5 @@ export interface BodyOverflowState {
 
 export interface BookmarkUpdateState {
   isUpdate: boolean
-  setIsUpdate: (isUpdate : boolean) => void
+  setIsUpdate: (isUpdate: boolean) => void
 }

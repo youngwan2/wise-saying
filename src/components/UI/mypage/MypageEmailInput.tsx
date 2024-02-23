@@ -11,7 +11,7 @@ export default function MypageEmailInput({ email }: PropsType) {
         이메일
       </label>
       <input
-        aria-readonly='true'
+        aria-readonly="true"
         aria-label="유저 이메일 정보 표시창"
         readOnly
         value={email}

@@ -21,14 +21,14 @@ export default function QuotesCategoryCard({ category, item, i }: PropsType) {
   function onTrimAndPush() {
     item.category.replace(' ', '')
     router.push(`/quotes/${category}/${item.category}`)
-
   }
-
 
   return (
     <li
       tabIndex={0}
-      ref={(elemnt) => { elemnt && (liRefs.current[liRefs.current.length] = elemnt) }}
+      ref={(elemnt) => {
+        elemnt && (liRefs.current[liRefs.current.length] = elemnt)
+      }}
       onKeyUp={(e) => {
         const key = e.key
         if (key !== 'Enter') return

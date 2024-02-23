@@ -12,13 +12,10 @@ export default function useDraggable(
   elementRef: RefObject<any> | null,
   type: string | null,
 ) {
-
-
   gsap.registerPlugin(Draggable)
 
   useEffect(() => {
     if (!elementRef?.current || document.querySelector('body') === null) return
-
 
     let instance: Draggable[]
     const hasTypeRotationOrX = type === 'x' || type === 'rotation'
@@ -26,20 +23,17 @@ export default function useDraggable(
 
     const ctx = gsap.context(() => {
       if (hasTypeRotationOrX) {
-        instance = Draggable.create(el,
-          {
-            dragClickables: false,
-            bounds: document.querySelector('body') as HTMLBodyElement,
-            type: type
-          })
-      }
-      else instance = Draggable.create(el,
-        {
+        instance = Draggable.create(el, {
+          dragClickables: false,
+          bounds: document.querySelector('body') as HTMLBodyElement,
+          type: type,
+        })
+      } else
+        instance = Draggable.create(el, {
           dragClickables: false,
           bounds: document.querySelector('body') as HTMLBodyElement,
         })
-    }
-    )
+    })
     return () => {
       ctx.revert()
       instance && instance[0].kill()

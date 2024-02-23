@@ -23,7 +23,6 @@ export const createToken = (
     type: isAccessToken ? 'access' : 'refresh',
   }
 
-  
   const token = jwt.sign(
     {
       exp: isAccessToken

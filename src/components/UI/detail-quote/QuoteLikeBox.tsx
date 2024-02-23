@@ -6,7 +6,7 @@ import { defaultFetch } from '@/utils/fetcher'
 import { getAccessToken } from '@/utils/session-storage'
 import { useCallback, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { HiHandThumbUp, } from 'react-icons/hi2'
+import { HiHandThumbUp } from 'react-icons/hi2'
 
 interface PropsType {
   id: string
@@ -44,11 +44,11 @@ export default function QuoteLikeBox({ id }: PropsType) {
 
   return (
     <button
-      aria-label='해당 명언에 대한 좋아요 클릭'
+      aria-label="해당 명언에 대한 좋아요 클릭"
       onClick={onClickHandleLikeClick}
       className={` bg-[#bfbdbd] bottom-3 left-[43%] transform-x-[-50%]  transition-shadow  text-[1.2em] flex items-center px-[15px] rounded-[10px] absolute `}
     >
-      <HiHandThumbUp color='black' />
+      <HiHandThumbUp color="black" />
       <span className="mx-[2px]">
         {showLikeCountQuoteIdMatch ? likeCount : 0}
       </span>

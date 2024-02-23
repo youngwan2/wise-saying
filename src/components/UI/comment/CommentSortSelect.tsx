@@ -17,7 +17,10 @@ export default function CommentSortSelect({ setSort }: PropsType) {
   }, [])
 
   return (
-    <form className="sm:text-[15px] text-[14.5px]  flex mt-[2em] justify-end" onSubmit={onSubmit}>
+    <form
+      className="sm:text-[15px] text-[14.5px]  flex mt-[2em] justify-end"
+      onSubmit={onSubmit}
+    >
       <div className="mx-[5px]">
         <input
           id="recent"

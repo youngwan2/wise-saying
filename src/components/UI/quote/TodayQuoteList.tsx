@@ -75,8 +75,7 @@ export default function TodayQuotelist({ quotes }: PropsType) {
               <p
                 ref={(ref) => ref && (textRefs.current[i] = ref)}
                 className="sm:text-[1.25em] text-[1.1em] mt-[0.5em] text-white"
-              >
-              </p>
+              ></p>
               {/* 저자 */}
               <strong
                 onMouseEnter={() => {

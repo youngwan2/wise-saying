@@ -20,7 +20,6 @@ interface PropsType {
   label: string
 }
 
-
 export default function HeaderNavModal() {
   const isDisplay = useNavDisplayStateStore((state) => state.isDisplay)
   const router = useRouter()
@@ -62,7 +61,7 @@ export default function HeaderNavModal() {
 }
 
 // Child : 네비게이션
-function NavLinkButton({ onClick, icon, label }: PropsType){
+function NavLinkButton({ onClick, icon, label }: PropsType) {
   return (
     <button
       aria-label={label}

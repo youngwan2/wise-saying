@@ -17,7 +17,7 @@ export default function QuoteContentInput({
   useInitialValueSetter(textareaRef, quote)
   return (
     <article className="px-[2em] my-[1.25em]">
-      <label htmlFor="content"  className="block pb-[7px] pl-[2px]">
+      <label htmlFor="content" className="block pb-[7px] pl-[2px]">
         내용
       </label>
       <textarea

@@ -34,7 +34,7 @@ export const getBookmarkListFetcher = async (url: string) => {
   const config = getDefaultConfig(Method.GET, true)
   const response = await fetch(url, config)
   const results = await response.json()
-  
+
   const { status, bookmarks } = results
 
   if (status === 200) return bookmarks

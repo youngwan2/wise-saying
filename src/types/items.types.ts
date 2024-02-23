@@ -7,10 +7,9 @@ export interface ItemsType {
 }
 
 export interface QuoteType {
-  id:number
-  author:string
-  quote:string
-
+  id: number
+  author: string
+  quote: string
 }
 
 export interface WeekDayCategoryType {

@@ -33,7 +33,12 @@ export default function useInfiniteScroll(
   }
 
   // SWR | 인피니티 훅
-  const { data: itemInfo = [], isLoading, size, setSize } = useSWRInfinite(getKey, getInfiniteFetcher, {
+  const {
+    data: itemInfo = [],
+    isLoading,
+    size,
+    setSize,
+  } = useSWRInfinite(getKey, getInfiniteFetcher, {
     revalidateOnMount: true,
     revalidateOnFocus: false,
     revalidateOnReconnect: false,

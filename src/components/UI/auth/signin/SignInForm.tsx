@@ -10,7 +10,6 @@ import useDraggable from '@/custom/useDraggable'
 import { reqSingIn } from '@/services/user/post'
 import BackButton from '../common/BackButton'
 import SignInWarnModal from './SignInWarnModal'
-import Overlay from '../../common/Overlay'
 import FormTitle from '../common/FormTitle'
 
 export default function SignInForm() {
@@ -56,54 +55,53 @@ export default function SignInForm() {
     setIsShowModal(false)
   }
 
+  useDraggable(formRef,'free')
+
   return (
-    <>
-      <Overlay />
-      <form
-        ref={formRef}
-        className="shadow-2xl  rounded-[10px] flex flex-col fixed max-w-[430px] min-h-[350px] left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-[100%] bg-[#E76F51]"
-        onSubmit={onSubmit}
-      >
-        <FormTitle> 회원가입</FormTitle>
-        <BackButton onClickBack={onClickBack} />
-        {/* 임시 메시지 */}
-        <SignInWarnModal
-          isShow={isShowModal}
-          onClickModalClose={onClickModalClose}
-        />
+    <form
+      ref={formRef}
+      className="rounded-[10px] flex flex-col fixed max-w-[480px] px-[5px] min-h-[350px] left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-[100%] shadow-[inset_0_0_0_2px_white] "
+      onSubmit={onSubmit}
+    >
+      <FormTitle> 회원가입</FormTitle>
+      <BackButton onClickBack={onClickBack} />
+      {/* 임시 메시지 */}
+      <SignInWarnModal
+        isShow={isShowModal}
+        onClickModalClose={onClickModalClose}
+      />
 
-        {/* 이메일 */}
-        <SignInEmailInput
-          email={email}
-          isEmail={isEmail}
-          setEmail={setEmail}
-          setIsEmail={setIsEmail}
-          setExistsEmail={setExistsEmail}
-        />
+      {/* 이메일 */}
+      <SignInEmailInput
+        email={email}
+        isEmail={isEmail}
+        setEmail={setEmail}
+        setIsEmail={setIsEmail}
+        setExistsEmail={setExistsEmail}
+      />
 
-        {/* 패스워드 */}
-        <SignInPasswordInput
-          isPassword={isPassword}
-          setPassword={setPassword}
-          setIsPassword={setIsPassword}
-        />
+      {/* 패스워드 */}
+      <SignInPasswordInput
+        isPassword={isPassword}
+        setPassword={setPassword}
+        setIsPassword={setIsPassword}
+      />
 
-        {/* 패스워드 재검증 */}
-        <SignInPasswordReConfirmInput
-          isReconfirmPassword={isReconfirmPassword}
-          password={password}
-          setIsReconfirmPassword={setIsReconfirmPassword}
-          setReConfirmPw={setReConfirmPw}
-        />
+      {/* 패스워드 재검증 */}
+      <SignInPasswordReConfirmInput
+        isReconfirmPassword={isReconfirmPassword}
+        password={password}
+        setIsReconfirmPassword={setIsReconfirmPassword}
+        setReConfirmPw={setReConfirmPw}
+      />
 
-        {/* 전송버튼 */}
-        <SignInSubmitButton
-          isDisabled={isSuccess}
-          existsEmail={existsEmail}
-          isVaildForm={isVaildForm}
-          onClick={onClickReqSingin}
-        />
-      </form>
-    </>
+      {/* 전송버튼 */}
+      <SignInSubmitButton
+        isDisabled={isSuccess}
+        existsEmail={existsEmail}
+        isVaildForm={isVaildForm}
+        onClick={onClickReqSingin}
+      />
+    </form>
   )
 }

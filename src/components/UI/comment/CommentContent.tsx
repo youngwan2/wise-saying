@@ -9,7 +9,9 @@ export default function CommentContent({ comment }: PropsType) {
         {comment.email.replace(comment.email.slice(2, 5), '***')}){' '}
         {comment.created_at.substring(0, 10)}
       </p>
-      <p className="sm:text-[14px] sm:pt-[5px] text-[12.5px] pt-[3px]  font-sans ">{comment.comment}</p>
+      <p className="sm:text-[14px] sm:pt-[5px] text-[12.5px] pt-[3px]  font-sans ">
+        {comment.comment}
+      </p>
       <span className="inline-block mt-[4px] text-[14px]"></span>
     </div>
   )

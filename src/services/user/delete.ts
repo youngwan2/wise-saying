@@ -9,9 +9,12 @@ import toast from 'react-hot-toast'
  */
 export async function deleteUserInfo(userId: number) {
   if (!userId) return alert('접근 권한이 없습니다.')
-  const isDelete = prompt('정말로 회원탈퇴를 시도하시려면, "회원탈퇴" 라고 입력해주세요. ' )
-  if(isDelete === null) return toast('👏 취소 되었습니다.')
-  if (isDelete !== '회원탈퇴') return toast.error('틀렸습니다. 정확하게 입력해주세요.')
+  const isDelete = prompt(
+    '정말로 회원탈퇴를 시도하시려면, "회원탈퇴" 라고 입력해주세요. ',
+  )
+  if (isDelete === null) return toast('👏 취소 되었습니다.')
+  if (isDelete !== '회원탈퇴')
+    return toast.error('틀렸습니다. 정확하게 입력해주세요.')
 
   const url = `/api/users/${userId}`
   const config = defaultConfig(Method.DELETE)

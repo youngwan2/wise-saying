@@ -9,7 +9,6 @@ import LoginEmailInput from './LoginEmailInput'
 import LoginPasswordInput from './LoginPasswordInput'
 import FormTitle from '../common/FormTitle'
 import BackButton from '../common/BackButton'
-import Overlay from '../../common/Overlay'
 import ReqLoginInput from '../signin/ReqLoginInput'
 import SignInGuideLink from '../signin/SignInGuideLink'
 import ForgotLink from '../forgot/ForgotLink'
@@ -49,7 +48,7 @@ export default function LoginForm() {
       <form
         ref={loginFormRef}
         action={login}
-        className="shadow-[inset_-3px_-3px_5px_0_rgba(0,0,0,0.5)]  rounded-[10px] flex flex-col fixed max-w-[400px] min-h-[350px] left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-[100%] bg-[#f6795a]"
+        className="shadow-[inset_0_0_0_2px_white]  rounded-[5px] flex flex-col fixed max-w-[470px] min-h-[350px] left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-[100%] bg-transparent p-[5px]" 
       >
         <FormTitle>로그인</FormTitle>
         <BackButton onClickBack={onClickBackMove} />
@@ -59,7 +58,6 @@ export default function LoginForm() {
         <ReqLoginInput isLoading={isLoading} />
         <SignInGuideLink />
       </form>
-      <Overlay />
     </>
   )
 }

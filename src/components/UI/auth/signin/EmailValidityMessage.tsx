@@ -5,14 +5,14 @@ export default function EmailValidityMessage({
 }) {
   if (isEmail)
     return (
-      <span className="block px-[5px] text-[#292997] ml-[0.5em]">
+      <span className="font-sans block px-[5px] text-[#56e146] text-[14.3px] ml-[0.5em]">
         - 이메일 형식과 일치합니다.{' '}
       </span>
     )
 
   if (!isEmail)
     return (
-      <span className="text-[red] block  ml-[0.5em]">
+      <span className=" font-sans text-[red] block  ml-[0.5em] text-[14.3px]">
         - 이메일 형식과 일치시키세요{' '}
       </span>
     )

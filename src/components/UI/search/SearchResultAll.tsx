@@ -25,7 +25,8 @@ export default function SearchResultAll({ items }: PropsType) {
   const searchText = useSearchParams().get('searchText')
   const router = useRouter()
 
-  if (!items) return <ReplaceMessageCard childern="데이터를 가져오는 중입니다." />
+  if (!items)
+    return <ReplaceMessageCard childern="데이터를 가져오는 중입니다." />
 
   const ItemsbyAuthorName = items.byAuthor ?? []
   const ItemsbyKeyword = items.byKeyword ?? []
@@ -39,7 +40,6 @@ export default function SearchResultAll({ items }: PropsType) {
   const hasItemsByAuthorName = !!ResultCountByAuthor
   const hasItemsByKeyword = !!ResultCountByKeyword
 
-
   function onClickPageSwitch(author: string, id: number) {
     router.push(`/quotes/authors/${author}/${id}`)
   }
@@ -51,10 +51,18 @@ export default function SearchResultAll({ items }: PropsType) {
         <article className="max-w-[680px] mx-auto my-[2em]">
           <article className="border-b-[2px] border-[white] flex items-center justify-between text-white">
             <SearchTapTitle title={'인물별'} />
-            <SearchResultMeg searchText={searchText} resultTotal={authorResultTotal} resultCount={ResultCountByAuthor} />
+            <SearchResultMeg
+              searchText={searchText}
+              resultTotal={authorResultTotal}
+              resultCount={ResultCountByAuthor}
+            />
           </article>
-          
-          <SearchQuoteList splitQuotes={ItemsbyAuthorName} currentQuoteCount={ResultCountByAuthor} onClickPageSwitch={onClickPageSwitch}>
+
+          <SearchQuoteList
+            splitQuotes={ItemsbyAuthorName}
+            currentQuoteCount={ResultCountByAuthor}
+            onClickPageSwitch={onClickPageSwitch}
+          >
             <SearchNotFoundMessage hasItem={hasItemsByAuthorName} />
           </SearchQuoteList>
         </article>
@@ -63,9 +71,17 @@ export default function SearchResultAll({ items }: PropsType) {
         <article className="max-w-[680px] mx-auto my-[2em]">
           <article className="border-b-[2px] border-[white] flex items-center justify-between text-white">
             <SearchTapTitle title={'키워드'} />
-            <SearchResultMeg searchText={searchText} resultTotal={keywordResultTotal} resultCount={ResultCountByKeyword} />
+            <SearchResultMeg
+              searchText={searchText}
+              resultTotal={keywordResultTotal}
+              resultCount={ResultCountByKeyword}
+            />
           </article>
-          <SearchQuoteList splitQuotes={ItemsbyKeyword} currentQuoteCount={ResultCountByKeyword} onClickPageSwitch={onClickPageSwitch}>
+          <SearchQuoteList
+            splitQuotes={ItemsbyKeyword}
+            currentQuoteCount={ResultCountByKeyword}
+            onClickPageSwitch={onClickPageSwitch}
+          >
             <SearchNotFoundMessage hasItem={hasItemsByKeyword} />
           </SearchQuoteList>
         </article>

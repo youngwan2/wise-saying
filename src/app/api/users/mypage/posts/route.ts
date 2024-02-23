@@ -34,11 +34,7 @@ export async function GET(req: NextRequest) {
     `
 
     const countResults = await db.query(countSelectQuery, [userId])
-    const itemsResults = await db.query(query, [
-      userId,
-      limit,
-      pageNum,
-    ])
+    const itemsResults = await db.query(query, [userId, limit, pageNum])
 
     const quotes = itemsResults.rows
     const count = countResults.rows[0].count

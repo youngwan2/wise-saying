@@ -14,7 +14,6 @@ export default function BookmarkPagination({
   onClickPrevSwitch,
   onClickNextSwitch,
 }: PropsType) {
-
   return (
     <article className="flex justify-center ">
       {/* 이전 */}

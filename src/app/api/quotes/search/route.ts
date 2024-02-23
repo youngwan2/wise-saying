@@ -10,13 +10,12 @@ export async function GET(req: NextRequest) {
     switch (type) {
       // 전체 검색
       case 'all': {
-
-        const authorCountQuery =`
+        const authorCountQuery = `
         SELECT COUNT(*) as count
         FROM quotes
         WHERE author LIKE $1
         `
-        const keywordCountQuery=`
+        const keywordCountQuery = `
         SELECT COUNT(*) as count
         FROM quotes
         WHERE quote LIKE $1
@@ -38,8 +37,12 @@ export async function GET(req: NextRequest) {
           `%${searchText}%`,
         ])
         const resultByAuthor = await db.query(authorQuery, [`%${searchText}%`])
-        const keywordCountResult = await db.query(keywordCountQuery, [`%${searchText}%`])
-        const authorCountResult = await db.query(authorCountQuery, [`%${searchText}%`])
+        const keywordCountResult = await db.query(keywordCountQuery, [
+          `%${searchText}%`,
+        ])
+        const authorCountResult = await db.query(authorCountQuery, [
+          `%${searchText}%`,
+        ])
         const byAuthor = resultByAuthor.rows
         const byKeyword = resultByKeyword.rows
         const byAuthorCount = authorCountResult.rows[0].count

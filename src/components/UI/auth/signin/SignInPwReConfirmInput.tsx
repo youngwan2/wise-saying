@@ -15,6 +15,7 @@ export default function SignInPasswordReConfirmInput({
   /** 패스워드 재확인 */
   function passwordReConfirmChecker(confirmPw: string) {
     // 8자 이상 (a-z, 0-9 무조건 1개 이상 포함, 특수문자 1개 이상 포함)
+    if(password.length<5) return 
     const test = confirmPw.includes(password)
     if (test) return setIsReconfirmPassword(true)
     return setIsReconfirmPassword(false)
@@ -24,7 +25,7 @@ export default function SignInPasswordReConfirmInput({
     <article className="mx-[10px]">
       <div className="flex">
         <label
-          className="rounded-s-lg bg-[#3F3F3F] text-[white] p-[0.8em] text-center inline-block min-w-[50px]"
+          className="rounded-s-lg  text-[white] p-[0.8em] text-center inline-block min-w-[50px]"
           htmlFor="user-repassword"
         >
           <span className="inline-block">
@@ -37,7 +38,7 @@ export default function SignInPasswordReConfirmInput({
             passwordReConfirmChecker(password)
             setReConfirmPw(password)
           }}
-          className="pl-[8px] rounded-e-lg min-w-[230px]  w-[100%] bg-[#ffffffce]"
+          className="pl-[8px] text-white  min-w-[230px] w-[100%] shadow-[inset_0_0_0_2px_white] bg-transparent focus:bg-white focus:outline-none focus:text-black focus:font-bold "
           type="password"
           id="user-repassword"
           name="user-repassword"
@@ -45,12 +46,12 @@ export default function SignInPasswordReConfirmInput({
         />
       </div>
       {isReconfirmPassword ? (
-        <span className="block px-[5px] text-[#292997] ml-[0.5em]">
+        <span className="block px-[5px] text-[#56e146] ml-[0.5em]  font-sans text-[14.3px]">
           - 패스워드 형식과 일치합니다.
         </span>
       ) : (
         <>
-          <span className="text-[red] block  ml-[0.5em]">
+          <span className="text-[red] block  ml-[0.5em] font-sans text-[14.3px]">
             - 앞서 작성한 패스워드와 일치시키세요
           </span>
         </>

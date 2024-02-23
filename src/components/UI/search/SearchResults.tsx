@@ -33,7 +33,6 @@ export default function SearchResults({ items }: PropsType) {
   const [splitQuotes] = useSimplePagination(page, quotes)
   const MAX_PAGE = Math.ceil(totalCount / 5) || 1
 
-
   const currentQuoteCount = quotes?.length ?? 0
   const hasItem = currentQuoteCount < 1 ? false : true
 
@@ -41,11 +40,12 @@ export default function SearchResults({ items }: PropsType) {
     router.push(`/quotes/authors/${author}/${id}`)
   }
 
-  if (!(items && quotes)) return <ReplaceMessageCard childern="데이터를 가져오는 중입니다." />
+  if (!(items && quotes))
+    return <ReplaceMessageCard childern="데이터를 가져오는 중입니다." />
   return (
     <article className="bg-[#e3dddd12] max-w-[730px] mx-auto rounded-[10px] shadow-[inset_-2px_-2px_5px_0_rgba(0,0,0,0.5)] mt-[1.5em] p-[20px] hover:cursor-pointer">
       <div className="border-b-[2px] border-[white] flex items-center justify-between text-white">
-        <SearchTapTitle title='인물별' />
+        <SearchTapTitle title="인물별" />
         <span className="text-[14px]">
           <strong className="border-b-[1px] border-[tomato]">
             {searchText}
@@ -55,13 +55,19 @@ export default function SearchResults({ items }: PropsType) {
         </span>
       </div>
       <ul>
-
-        <SearchQuoteList splitQuotes={splitQuotes} currentQuoteCount={currentQuoteCount} onClickPageSwitch={onClickPageSwitch}>
+        <SearchQuoteList
+          splitQuotes={splitQuotes}
+          currentQuoteCount={currentQuoteCount}
+          onClickPageSwitch={onClickPageSwitch}
+        >
           <SearchNotFoundMessage hasItem={hasItem} />
         </SearchQuoteList>
       </ul>
       {/* 버튼 컨테이너 */}
-      <SearchResultSwitchButton page={page} setPage={setPage} MAX_PAGE={MAX_PAGE}
+      <SearchResultSwitchButton
+        page={page}
+        setPage={setPage}
+        MAX_PAGE={MAX_PAGE}
       />
     </article>
   )

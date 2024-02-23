@@ -21,5 +21,4 @@ export const deleteUserQuote = async (id: number) => {
   } else {
     return false
   }
-
 }
