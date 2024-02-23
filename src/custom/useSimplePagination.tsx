@@ -1,4 +1,4 @@
-import { QuoteType } from '@/components/UI/search/SearchResultListByAuthor'
+import { QuoteType } from '@/components/UI/search/SearchResultByAuthor'
 import { useEffect, useState } from 'react'
 
 /**

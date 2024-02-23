@@ -6,6 +6,13 @@ export interface ItemsType {
   email?: string
 }
 
+export interface QuoteType {
+  id:number
+  author:string
+  quote:string
+
+}
+
 export interface WeekDayCategoryType {
   category_id: number
   category: string

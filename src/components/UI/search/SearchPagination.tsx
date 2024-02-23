@@ -5,7 +5,7 @@ interface PropsType {
   setPage: (p: number) => void
   MAX_PAGE: number
 }
-export default function SearchResultSwitchButtons({
+export default function SearchPagination({
   page,
   setPage,
   MAX_PAGE,

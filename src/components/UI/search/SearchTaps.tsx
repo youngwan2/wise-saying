@@ -6,7 +6,7 @@ interface PropsType {
 }
 export default function SearchTaps({ onClick }: PropsType) {
   const paramType = useSearchParams().get('type')
-  const tapList = ['전체 검색', '저자별 검색', '키워드 검색']
+  const tapList = ['전체 검색', '인물별 검색', '키워드 검색']
   const type = ['all', 'author', 'keyword']
   return (
     <div
