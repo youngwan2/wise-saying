@@ -3,7 +3,6 @@
 import useHasToken from '@/custom/useHasToken'
 import { deleteUserInfo } from '@/services/user/delete'
 import { updateUserPassword } from '@/services/user/patch'
-import { useRouter } from 'next/navigation'
 import { useId } from 'react'
 
 interface PropsType {
@@ -18,7 +17,6 @@ interface PropsType {
 export default function MypageUserInfoForm({ userInfo }: PropsType) {
   const uId = useId()
   const hasToken = useHasToken()
-  const router = useRouter()
 
   // Actions | 유저 비밀번호 재설정
   async function updateUserInfo(data: FormData) {
@@ -47,6 +45,7 @@ export default function MypageUserInfoForm({ userInfo }: PropsType) {
           이메일(Email)
         </label>
         <input
+          aria-readonly="true"
           type="text"
           readOnly
           id={uId + 'email'}
@@ -63,7 +62,6 @@ export default function MypageUserInfoForm({ userInfo }: PropsType) {
           비밀번호(Password)
         </label>
         <input
-          aria-label="알파벳(a 부터 z), 0에서 9까지 중 각각 1개 이상을 포함하고, 특수문자를 1개 이상 포함하여 8자 이상 작성"
           pattern="^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&+=])[a-zA-Z0-9!@#$%^&+=]{8,}$"
           type="password"
           name="password"

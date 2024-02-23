@@ -25,7 +25,7 @@ export default function MypageNicknameInput({ nickname }: PropsType) {
         placeholder="최소 2~6 이하 영문/한글"
         id="nickname"
         name="nickname"
-        className="bg-[transparent] shadow-[inset_0_-2px_0_0_black] min-w-[200px] p-[6px]"
+        className="bg-[transparent] border rounded-[5px] border-gray min-w-[200px] p-[6px] placeholder:text-[gray] focus:bg-[#e2dfdf] focus:outline-none "
         ref={nicknameRef}
         type="text"
         maxLength={6}

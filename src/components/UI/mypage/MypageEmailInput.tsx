@@ -11,11 +11,12 @@ export default function MypageEmailInput({ email }: PropsType) {
         이메일
       </label>
       <input
-        aria-label="읽기 전용. 유저 이메일 정보 표시창"
+        aria-readonly='true'
+        aria-label="유저 이메일 정보 표시창"
         readOnly
         value={email}
         id="email"
-        className="text-black bg-[#979797] shadow-[inset_0_-2px_0_0_black]  min-w-[200px]  p-[6px]"
+        className="text-black bg-[#b6b3b3] rounded-[5px]  min-w-[200px]  p-[6px]"
       ></input>
     </div>
   )
