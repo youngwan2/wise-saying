@@ -1,6 +1,6 @@
 import { config } from '@/configs/config.url'
 import { requestNewAccessToken } from '../user/post'
-import { getAccessToken } from '@/utils/sessionStorage'
+import { getAccessToken } from '@/utils/session-storage'
 import { defaultFetch } from '@/utils/fetcher'
 import { Method, getDefaultConfig } from '@/configs/config.api'
 

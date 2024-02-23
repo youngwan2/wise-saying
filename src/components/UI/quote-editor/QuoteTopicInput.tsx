@@ -18,7 +18,7 @@ export default function QuoteTopicInput({
 
   return (
     <article className="px-[2em]">
-      <label htmlFor="subject" className="block font-bold">
+      <label htmlFor="subject" className="block pb-[7px] pl-[2px]">
         주제
       </label>
       <input
@@ -28,7 +28,7 @@ export default function QuoteTopicInput({
         maxLength={3}
         minLength={0}
         placeholder={placeholder}
-        className="min-w-[200px] w-[500px] min-h-[40px] px-[10px] rounded-[5px] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.5)] "
+        className="placeholder:text-[#a1a1a1] bg-transparent min-w-[200px] max-w-[500px] w-full min-h-[40px] px-[10px] rounded-[5px] shadow-[inset_0_0_0_1px_white]  outline-none focus:shadow-[inset_0_0_0_2px_tomato] "
       />
     </article>
   )

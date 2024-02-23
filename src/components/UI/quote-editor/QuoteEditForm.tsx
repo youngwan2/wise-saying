@@ -11,7 +11,7 @@ import QuoteTopicInput from './QuoteTopicInput'
 import QuoteContentInput from './QuoteContentInput'
 import QuoteAuthorInput from './QuoteAuthorInput'
 import QuoteFormButtons from './QuoteFormButtons'
-import FormOverlay from './FormOverlay'
+import Overlay from '../common/Overlay'
 
 export type PostType = {
   id: number
@@ -73,12 +73,13 @@ export default function QuoteEditForm() {
   }
   return (
     <>
+      <Overlay />
       <form
         action={updateFormAction}
         ref={formRef}
-        className="z-[1000] w-full  max-w-[560px]  bg-[#fc7e54]  rounded-[10px] shadow-[inset_-2px_-2px_5px_0_rgba(0,0,0,0.5)] fixed left-[50%] top-[45%] translate-x-[-50%] translate-y-[-50%] "
+        className="text-white z-[1000] w-full  max-w-[560px]  rounded-[10px] shadow-[inset_0_0_0_2px_white] fixed left-[50%] top-[45%] translate-x-[-50%] translate-y-[-50%] "
       >
-        <h2 className="text-[1.5em] mb-[1em] font-bold bg-[#333232] text-[white] p-[8px]  rounded-t-lg">
+        <h2 className="text-[1.25em] mb-[1em] shadow-[inset_0_0_0_2px_white] p-[8px]  rounded-t-lg">
           명언 수정
         </h2>
         <QuoteTopicInput post={post} name="category" />

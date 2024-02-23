@@ -1,6 +1,6 @@
 'use client'
 import { HiUpload } from 'react-icons/hi'
-import { imagePreviewReader } from '@/utils/commonFunctions'
+import { imagePreviewReader } from '@/utils/common-func'
 
 interface PropsType {
   setImages: (src: string[]) => void

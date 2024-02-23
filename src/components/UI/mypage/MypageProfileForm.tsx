@@ -1,5 +1,5 @@
 'use client'
-import { imagePreviewReader } from '@/utils/commonFunctions'
+import { imagePreviewReader } from '@/utils/common-func'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { storage } from '@/configs/firebase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'

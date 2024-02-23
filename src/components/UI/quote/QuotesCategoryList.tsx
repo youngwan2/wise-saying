@@ -6,7 +6,7 @@ import LoadMoreButton from '../common/ListLoadMoreButton'
 import { getCategoryCountFromDb } from '@/services/data/get'
 import { useCallback, useEffect, useState } from 'react'
 import ReplaceMessageCard from '../common/ReplaceMessageCard'
-import { categoryClassifier } from '@/utils/commonFunctions'
+import { categoryClassifier } from '@/utils/common-func'
 
 interface PropsType {
   category: string

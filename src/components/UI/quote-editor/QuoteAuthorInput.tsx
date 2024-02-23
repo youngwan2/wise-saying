@@ -18,7 +18,7 @@ export default function QuoteAuthorInput({
 
   return (
     <article className="px-[2em]">
-      <label htmlFor="content" className="block font-bold">
+      <label htmlFor="content" className="block pb-[7px] pl-[2px]">
         작성자
       </label>
       <input
@@ -27,7 +27,7 @@ export default function QuoteAuthorInput({
         type="text"
         maxLength={8}
         minLength={2}
-        className="min-w-[200px] w-[500px]  px-[10px] min-h-[40px]  rounded-[5px] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.5)]"
+        className="min-w-[200px] bg-transparent max-w-[500px] w-full px-[10px] min-h-[40px] rounded-[5px] shadow-[inset_0_0_0_1px_white] outline-none focus:shadow-[inset_0_0_0_2px_tomato]"
         placeholder={placeholder}
       />
     </article>

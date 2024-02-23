@@ -1,5 +1,5 @@
 import { useQuotesLineHeightStore } from '@/store/store'
-import { debounceCloser } from '@/utils/commonFunctions'
+import { debounceCloser } from '@/utils/common-func'
 import { HiPaintBrush } from 'react-icons/hi2'
 
 export default function TextLineHeightStyler() {

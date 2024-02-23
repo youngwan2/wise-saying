@@ -31,9 +31,8 @@ export default function FocusModeButton() {
         onClick={() => {
           setIsDisplay(!isDisplay)
           if (!isDisplay) return (document.body.style.overflow = 'hidden')
-          document.body.style.overflow = 'auto'
         }}
-        className="text-[1.5em] p-[0.4em] mt-[0.25em] hover:shadow-[0_0_0_1px_rgba(888,888,888,0.3)]"
+        className="sm:text-[1.5em] text-[1.25em] p-[0.4em] mt-[0.25em] hover:shadow-[0_0_0_1px_rgba(888,888,888,0.3)]"
       >
         <HiDocumentSearch />
       </button>

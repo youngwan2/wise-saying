@@ -4,7 +4,7 @@ import {
   getAccessToken,
   setAccessToken,
   setUserInfo,
-} from '@/utils/sessionStorage'
+} from '@/utils/session-storage'
 import { redirect } from 'next/navigation'
 import toaster, { toast } from 'react-hot-toast'
 
@@ -180,6 +180,7 @@ export const postComment = async (
 ) => {
   const token = getAccessToken() || ''
   if (!token) return toast.error('로그인 후 이용 부탁 드립니다.')
+  if(comment.length<2) return toast.error('2자 이상 입력해주세요.')
 
   const url = `/api/quotes/${quoteId}/comments`
   const config = defaultConfig(Method.POST, comment)

@@ -36,7 +36,7 @@ export default function MypageUserInfoForm({ userInfo }: PropsType) {
   return (
     <form
       action={updateUserInfo}
-      className="max-w-lg mx-auto mt-[3em] p-6 bg-white rounded-lg shadow-[10px_10px_5px_0_rgba(0,0,0,0.5)]"
+      className="max-w-lg mx-auto m-2 mt-[3em] p-6 bg-white rounded-lg shadow-[10px_10px_5px_0_rgba(0,0,0,0.5)]"
     >
       <h1 className="text-2xl font-bold mb-4">수정 및 탈퇴</h1>
       {/* 이메일(읽기 전용) */}

@@ -10,6 +10,8 @@ export default function Pagination({
   limit,
   pageList,
 }: PropsType) {
+
+  if(limit === 0) return <></>
   return (
     <article className="flex  max-w-[600px] justify-center mx-auto items-center mt-[1.5em] rounded-[1em] p-[5px] text-[1.1em]">
       {/* 뒤로 가기 */}
@@ -41,7 +43,7 @@ export default function Pagination({
       {/* 앞으로 가기 */}
       <button
         onClick={() => { setPage(Math.min(++page, limit)) }}
-        className={`hover:text-[tomato] text-white mx-[5px] ${page === limit - 1 || limit===0 ? 'invisible opacity-0' : 'visible opacity-100'
+        className={`hover:text-[tomato] text-white mx-[5px] ${page === limit - 1? 'invisible opacity-0' : 'visible opacity-100'
           }`}
       >
         next

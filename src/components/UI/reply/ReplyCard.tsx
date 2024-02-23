@@ -80,6 +80,7 @@ export default function ReplyCard({ commentId, userEmail, reply }: PropsType) {
         <ReplyEditDeleteMenu
           emailInfo={emailInfo}
           isShow={isShowMenu}
+          onLeaveMenuHide={()=>setIsShowMenu(false)}
           onClickDeleteReply={deleteReply}
           onClickShowEditForm={onClickShowEditForm}
         />

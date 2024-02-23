@@ -14,7 +14,7 @@ export default function HeaderNavButton() {
       aria-label="상단 메뉴 아이콘"
       ref={navButtonRef}
       className={
-        'text-[1.7em] hover:shadow-[0_0_0_1px_rgba(888,888,888,0.3)] p-[10px] mt-[0.25em]'
+        'sm:text-[1.5em] text-[1.25em] hover:shadow-[0_0_0_1px_rgba(888,888,888,0.3)] p-[10px] mt-[0.25em]'
       }
       onClick={() => {
         setDisplay(!isDisplay)

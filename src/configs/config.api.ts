@@ -1,4 +1,4 @@
-import { getAccessToken } from '@/utils/sessionStorage'
+import { getAccessToken } from '@/utils/session-storage'
 
 export enum Method {
   GET = 'GET',

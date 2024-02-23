@@ -3,7 +3,7 @@ import { HiDotsVertical, HiOutlineX } from 'react-icons/hi'
 import { MouseEventHandler, useRef, useState } from 'react'
 import CommentEditDeleteMenu from './CommentEditDeleteMenu'
 import CommentEditForm from './CommentEditForm'
-import { getUserEmail } from '@/utils/sessionStorage'
+import { getUserEmail } from '@/utils/session-storage'
 import CommentProfileImage from './CommentProfileImage'
 import CommentContent from './CommentContent'
 import { postReply } from '@/services/user/post'
@@ -14,8 +14,9 @@ import { deleteComment } from '@/services/user/delete'
 import { useSwrFetch } from '@/utils/swr'
 import { useSWRConfig } from 'swr'
 import ReplyButtons from '../reply/ReplyButtons'
+import { clearTextarea } from '@/utils/textarea'
 
-interface PropsType extends CommentType {}
+interface PropsType extends CommentType { }
 
 export default function CommentCard({ comment }: PropsType) {
   const [isShow, setIsShow] = useState(false)
@@ -50,13 +51,7 @@ export default function CommentCard({ comment }: PropsType) {
 
     if (isSuccess) {
       mutate(`/api/quotes/0/comments/reply?comment-id=${commentId}`)
-      clearTextarea()
-    }
-  }
-
-  function clearTextarea() {
-    if (textareaRef.current) {
-      textareaRef.current.value = ''
+      clearTextarea(textareaRef)
     }
   }
 
@@ -93,20 +88,22 @@ export default function CommentCard({ comment }: PropsType) {
         <CommentEditDeleteMenu
           emailInfo={emailInfo}
           isShow={isShow}
+          onLeaveMenuHide={()=>{setIsShow(false)}}
           onClickDeleteComment={() => deleteComment(commentId)}
           onClickFormDisplay={onClickFormDisplay}
         />
-        <CommentEditForm
-          commentId={comment.id}
-          editFormDisplay={editFormDisplay}
-          setEditFormDisplay={setEditFormDisplay}
-          onClickEditCancel={onClickEditCancel}
-        />
+
         <ReplyButtons
           totalCount={replyInfo.totalCount || 0}
           onClickReplyFormDisplay={onClickReplyFormDisplay}
         />
       </li>
+      <CommentEditForm
+        commentId={comment.id}
+        editFormDisplay={editFormDisplay}
+        setEditFormDisplay={setEditFormDisplay}
+        onClickEditCancel={onClickEditCancel}
+      />
       <li>
         <ReplyList
           commentId={commentId}
@@ -129,11 +126,11 @@ interface MenuButtonPropsType {
   onClick: MouseEventHandler<HTMLButtonElement>
 }
 
-function CommentMenuDropdownButton({ isShow, onClick }: MenuButtonPropsType) {
+function CommentMenuDropdownButton({ isShow, onClick}: MenuButtonPropsType) {
   return (
     <button
       onClick={onClick}
-      className="absolute right-[5px] top-[0.5em]  hover:shadow-[0_0_0_1px_tomato] rounded-[50%] p-[5px]"
+      className="sm:top-[0.5em] sm:right-[5px] top-[0.2em] right-0 absolute    hover:shadow-[0_0_0_1px_tomato] rounded-[50%] p-[5px]"
     >
       {isShow ? <HiOutlineX /> : <HiDotsVertical />}
     </button>

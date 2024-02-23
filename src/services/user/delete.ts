@@ -1,5 +1,5 @@
 import { Method, defaultConfig } from '@/configs/config.api'
-import { logoutUser } from '@/utils/commonFunctions'
+import { logoutUser } from '@/utils/common-func'
 import { defaultFetch } from '@/utils/fetcher'
 import toast from 'react-hot-toast'
 /**

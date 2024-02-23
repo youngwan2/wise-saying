@@ -28,19 +28,20 @@ export default function CommentEditForm({
 
   if (!editFormDisplay) return <></>
   return (
-    <form
-      ref={formRef}
-      action={commentUpdate}
-      className="flex flex-col w-[500px] mt-[1em] left-[50%] fixed min-h-[200px] bg-[#fdfdfd] z-30 top-[50%] translate-y-[-50%] translate-x-[-50%] backdrop-blur-[4px] rounded-[5px] shadow-[0_0_20px_5px_rgba(0,0,0,0.5)]"
-    >
-      <div className="absolute w-[90%] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] flex flex-col  ">
-        <h2 className="text-[1.25em] my-[5px] font-semibold">댓글 수정</h2>
+    <li>
+      <form
+        ref={formRef}
+        action={commentUpdate}
+        className="sm:text-[15px] text-[14.5px] text-white flex flex-col w-full mt-[1em] h-auto backdrop-blur-[4px] rounded-[5px]   p-[10px]"
+      >
         <textarea
+          rows={1}
+          placeholder='댓글 수정'
           name="comment"
-          className="bg-[white] w-full max-w-[600px]  max-h-[200px]  rounded-[5px] p-[10px] border-[2px] border-black"
+          className="h-auto w-full bg-transparent resize-none  p-[10px] border-none shadow-[inset_0_-1px_0_0_gray] focus:shadow-[inset_0_-2px_0_0_gray] focus:outline-none placeholder:text-[gray]"
         />{' '}
         <br />
-        <div className="flex mt-[10px] justify-end">
+        <div className="flex  justify-end">
           <button className="mr-[5px] bg-[tomato] min-w-[60px] text-white rounded-[10px] ">
             수정
           </button>
@@ -52,7 +53,7 @@ export default function CommentEditForm({
             취소
           </button>
         </div>
-      </div>
-    </form>
+      </form>
+    </li>
   )
 }

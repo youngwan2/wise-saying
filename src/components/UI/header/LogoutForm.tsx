@@ -1,6 +1,6 @@
 'use client'
 import useHasToken from '@/custom/useHasToken'
-import { logoutUser } from '@/utils/commonFunctions'
+import { logoutUser } from '@/utils/common-func'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Overlay from '../common/Overlay'
@@ -23,7 +23,7 @@ export default function Logout() {
     return (
       <>
         <Overlay />
-        <section className="bg-[#ffffff] fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-center rounded-[10px]">
+        <section className="bg-[#ffffff] fixed top-[40%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-center rounded-[10px]">
           <p className="p-[20px] rounded-[5px]">
             <strong>{nickname}</strong> 님! <br />
             좋은 시간 되셨나요?! 로그아웃 하시려면 아래 버튼을 클릭해주세요.

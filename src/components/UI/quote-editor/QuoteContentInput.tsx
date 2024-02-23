@@ -17,7 +17,7 @@ export default function QuoteContentInput({
   useInitialValueSetter(textareaRef, quote)
   return (
     <article className="px-[2em] my-[1.25em]">
-      <label htmlFor="content" className="block font-bold">
+      <label htmlFor="content"  className="block pb-[7px] pl-[2px]">
         내용
       </label>
       <textarea
@@ -25,7 +25,7 @@ export default function QuoteContentInput({
         name={name}
         id="content"
         placeholder={placeholder}
-        className="min-w-[200px] w-[500px] p-[10px] min-h-[150px]  rounded-[5px] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.5)]"
+        className="bg-transparent min-w-[200px] max-w-[500px] w-full p-[10px] min-h-[150px]  rounded-[5px] shadow-[inset_0_0_0_1px_white] outline-none focus:shadow-[inset_0_0_0_2px_tomato]"
       ></textarea>
     </article>
   )

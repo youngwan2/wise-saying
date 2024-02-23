@@ -19,17 +19,21 @@ export default function UserQuotesCategoryCard({ category }: PropsType) {
         router.push(`/user-quotes/${category}`)
       }}
       className="
-          p-[4em]
-          pt-[3em]
+          sm:text-[1.4em]
+          sm:py-[4em]
+          sm:min-h-[230px]  
+          sm:rounded-[20%]
+          text-[1.3em]
+          py-[3em]
+          p-[1em]
+          min-h-[120px]
+          rounded-[5%]
           odd:-rotate-2 
           even:rotate-2 
           font-bold
           bg-gradient-to-bl from-white to-[#e0dddd2f]
-          text-[1.4em]
-          min-h-[230px]  
           opacity-80
           border-[8px]
-          rounded-[20%]
           max-h-[280px]  
           bg-[white] 
           m-[1em] max-w-[300px] min-w-[200px] 

@@ -59,7 +59,7 @@ export default function ShareButtons() {
         onClick={() => {
           setIsDisplay(true)
         }}
-        className="hover:bg-[tomato] min-w-[85px] my-[4px] py-[5px] mx-auto rounded-[5px]  flex items-center text-white justify-center"
+        className="sm:text-[14.5px] text-[13px] hover:bg-[tomato] min-w-[60px] my-[2px] py-[5px] mx-auto rounded-[5px]  flex items-center text-white justify-center"
       >
         <HiShare className="mr-[0.5em]" />
         공유
@@ -69,7 +69,7 @@ export default function ShareButtons() {
         aria-hidden={!isDisplay}
         className={` ${
           isDisplay
-            ? 'fixed left-[50%] top-[30%]  translate-x-[-50%] translate-y-[-50%] '
+            ? 'z-50 fixed left-[50%] top-[30%]  translate-x-[-50%] translate-y-[-50%] '
             : 'hidden'
         }  rounded-[10px] items-center justify-center my-[1.5em] py-[0.5em] max-w-[300px] mx-auto w-full px-[1em] bg-[white] min-h-[250px] shadow-[0_0_0_1000px_rgba(0,0,0,0.5)] `}
       >

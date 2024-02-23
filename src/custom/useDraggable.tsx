@@ -6,41 +6,43 @@ import { RefObject, useEffect } from 'react'
 /**
  * GSAP | 드래그어블 효과를 적용하는 커스텀 훅
  * @param elementRef
- * @param type 특정 타입에 따라 다른 타입의 드래그어블 애니메이션을 적용(x | rotation | free)
+ * @param type 특정 타입에 따라 다른 타입의 드래그어블 애니메이션을 적용(x | rotation | null)
  */
 export default function useDraggable(
-  elementRef: RefObject<HTMLElement> | null,
+  elementRef: RefObject<any> | null,
   type: string | null,
 ) {
+
+
+  gsap.registerPlugin(Draggable)
+
   useEffect(() => {
-    gsap.registerPlugin(Draggable)
+    if (!elementRef?.current || document.querySelector('body') === null) return
+
+
     let instance: Draggable[]
-    let clear: NodeJS.Timeout
+    const hasTypeRotationOrX = type === 'x' || type === 'rotation'
+    const el = elementRef.current
 
-    if (!elementRef?.current) return
-
-    clear = setTimeout(() => {
-      if (type === 'x' || type === 'rotation') {
-        instance = Draggable.create(elementRef.current, {
-          dragClickables: false,
-          type: type,
-          bounds: document.querySelector('body'),
-        })
+    const ctx = gsap.context(() => {
+      if (hasTypeRotationOrX) {
+        instance = Draggable.create(el,
+          {
+            dragClickables: false,
+            bounds: document.querySelector('body') as HTMLBodyElement,
+            type: type
+          })
       }
-      if (type === 'free') {
-        console.log(type)
-        instance = Draggable.create(elementRef.current, {
+      else instance = Draggable.create(el,
+        {
           dragClickables: false,
-          type: 'x,y',
-          bounds: document.querySelector('body'),
+          bounds: document.querySelector('body') as HTMLBodyElement,
         })
-      }
-    }, 1000)
+    }
+    )
     return () => {
-      clearTimeout(clear)
-      if (instance) {
-        instance[0].kill()
-      }
+      ctx.revert()
+      instance && instance[0].kill()
     }
   }, [elementRef, type])
 }

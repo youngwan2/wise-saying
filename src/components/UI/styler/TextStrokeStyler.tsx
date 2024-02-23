@@ -2,7 +2,7 @@ import { HiPaintBrush } from 'react-icons/hi2'
 import { PhotoshopPicker } from 'react-color'
 import { useState, useRef, useEffect } from 'react'
 import { useQuotesStrokeStyleStore } from '@/store/store'
-import { debounceCloser } from '@/utils/commonFunctions'
+import { debounceCloser } from '@/utils/common-func'
 
 export default function TextStrokeStyler() {
   const [displayState, setDisplayState] = useState(false)

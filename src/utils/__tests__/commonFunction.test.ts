@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { debounceCloser, pageSwitch } from '../commonFunctions'
+import { debounceCloser, pageSwitch } from '../common-func'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 import { afterEach } from 'node:test'
 

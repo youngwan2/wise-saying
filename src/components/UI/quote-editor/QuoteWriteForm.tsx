@@ -2,7 +2,6 @@
 import { useRouter } from 'next/navigation'
 import useHasToken from '@/custom/useHasToken'
 import { postUserPost } from '@/services/user/post'
-import useDraggable from '@/custom/useDraggable'
 import { useRef } from 'react'
 import ReplaceMessageCard from '../common/ReplaceMessageCard'
 import QuoteFormButtons from './QuoteFormButtons'
@@ -15,8 +14,6 @@ export default function QuoteWriteForm() {
   const hasToken = useHasToken()
 
   const router = useRouter()
-
-  useDraggable(formRef, 'free')
 
   // 포스트 요청
   const postQuoteAction = async (form: FormData) => {
@@ -31,7 +28,7 @@ export default function QuoteWriteForm() {
       isUser: true,
     }
     const isSuccess = await postUserPost(hasToken, body)
-    if(isSuccess) router.push('/user-quotes')
+    if (isSuccess) router.push('/user-quotes')
   }
 
   function onClickCancel() {
@@ -44,9 +41,9 @@ export default function QuoteWriteForm() {
     <form
       ref={formRef}
       action={postQuoteAction}
-      className="max-w-[560px] mx-auto bg-[#ff8957]  mt-[2em] rounded-[10px] shadow-[inset_-2px_-2px_5px_rgba(0,0,0,0.5)]"
+      className="sm:mx-auto mx-[10px] text-white max-w-[560px] mt-[5em] rounded-[10px] shadow-[inset_0_0_0_2px_white] "
     >
-      <h2 className="text-[1.5em] mt-[-4px] mb-[1em] font-bold bg-[#333232] text-[white] p-[8px]  rounded-t-lg shadow-[inset_-2px_0px_5px_rgba(0,0,0,0.5)] ">
+      <h2 className="text-[1.25em] mt-[-4px] mb-[1em] bg-transparent text-[white] p-[8px]  rounded-t-lg shadow-[inset_0_0_0_2px_white] ">
         명언 등록
       </h2>
       <QuoteTopicInput
@@ -65,3 +62,4 @@ export default function QuoteWriteForm() {
     </form>
   )
 }
+

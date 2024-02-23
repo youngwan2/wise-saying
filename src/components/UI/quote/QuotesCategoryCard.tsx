@@ -18,34 +18,42 @@ export default function QuotesCategoryCard({ category, item, i }: PropsType) {
 
   useIntersectionObserver(liRefs)
 
+  function onTrimAndPush() {
+    item.category.replace(' ', '')
+    router.push(`/quotes/${category}/${item.category}`)
+
+  }
+
+
   return (
     <li
-      ref={(elemnt) => {
-        elemnt && (liRefs.current[liRefs.current.length] = elemnt)
-      }}
       tabIndex={0}
+      ref={(elemnt) => { elemnt && (liRefs.current[liRefs.current.length] = elemnt) }}
       onKeyUp={(e) => {
         const key = e.key
         if (key !== 'Enter') return
-        item.category.replace(' ', '')
-        router.push(`/quotes/${category}/${item.category}`)
+        onTrimAndPush()
       }}
-      onClick={() => {
-        item.category.replace(' ', '')
-        router.push(`/quotes/${category}/${item.category}`)
-      }}
+      onClick={onTrimAndPush}
       className="
+          sm:text-[1.4em]
+          sm:py-[4em]
+          sm:min-h-[230px]  
+          sm:rounded-[20%]
+          text-[1.3em]
+          py-[3em]
           p-[1em]
-          py-[4em]
+          min-h-[120px]
+          rounded-[5%]
+
           odd:-rotate-2 
           even:rotate-2 
           font-bold
           bg-gradient-to-bl from-white to-[#e0dddd2f]
-          text-[1.4em]
-          min-h-[230px]  
+          
           opacity-80
           border-[8px]
-          rounded-[20%]
+          
           max-h-[280px]  
           bg-[white] 
           m-[1em] max-w-[300px] min-w-[200px] 

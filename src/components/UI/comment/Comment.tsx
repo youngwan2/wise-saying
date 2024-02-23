@@ -42,9 +42,9 @@ export default function Comment({ id }: PropsType) {
 
   return (
     <section className="py-[1em] ">
-      <h2 className="text-white text-[1.5em] mt-[2em]">
+      <h3 className="text-white sm:text-[1.5em] text-[1.25em] mt-[2em]">
         댓글({!isLoading ? comments.length : 0})
-      </h2>
+      </h3>
       <CommentForm />
       <CommentSortSelect setSort={setSort} />
       <CommentList comments={comments} />

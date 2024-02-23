@@ -5,7 +5,7 @@ import { useUserPostIdStore } from '@/store/store'
 import { ItemsType } from '@/types/items.types'
 import QuotesCardControlButtons from './QuotesCardControlButtons'
 import { deleteUserQuote } from '@/services/data/delete'
-import { getUserEmail } from '@/utils/sessionStorage'
+import { getUserEmail } from '@/utils/session-storage'
 
 interface PropsType {
   item: ItemsType

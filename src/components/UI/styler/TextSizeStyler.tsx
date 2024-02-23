@@ -1,4 +1,4 @@
-import { debounceCloser } from '@/utils/commonFunctions'
+import { debounceCloser } from '@/utils/common-func'
 import { HiPaintBrush } from 'react-icons/hi2'
 
 interface PropsType {

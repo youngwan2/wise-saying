@@ -23,6 +23,7 @@ export default function TodayQuotelist({ quotes }: PropsType) {
   const { setText } = useTTS()
   const textRefs = useRef<HTMLParagraphElement[]>([])
   const router = useRouter()
+
   useLayoutEffect(() => {
     if (!textRefs.current) return
 
@@ -60,6 +61,7 @@ export default function TodayQuotelist({ quotes }: PropsType) {
               className="shadow-[inset_0_0_0_3px_white] rounded-[10px]  my-[1em] max-w-[600px] bg-transparent  px-[15px] py-[35px] mx-auto relative hover:bg-[#d5d5d533] "
               key={quote.id}
             >
+              {/* 명언 듣기 버튼 */}
               <button
                 aria-label="명언 듣기"
                 onClick={() => {
@@ -67,17 +69,20 @@ export default function TodayQuotelist({ quotes }: PropsType) {
                 }}
                 className="absolute top-2 right-2 hover:border hover:border-[tomato] text-white p-[5px]"
               >
-                <SlEarphones />{' '}
+                <SlEarphones />
               </button>
+              {/* 명언 */}
               <p
                 ref={(ref) => ref && (textRefs.current[i] = ref)}
-                className="text-[1.25em] text-white"
+                className="sm:text-[1.25em] text-[1.1em] mt-[0.5em] text-white"
               >
-                {''}
               </p>
+              {/* 저자 */}
               <strong
-                onClick={() => {
+                onMouseEnter={() => {
                   router.prefetch(`/quotes/authors/${quote.author}`)
+                }}
+                onClick={() => {
                   router.push(`/quotes/authors/${quote.author}`)
                 }}
                 className="inline-block mt-[2em] mr-[1em] text-white text-right w-full hover:text-[tomato] hover:cursor-pointer"

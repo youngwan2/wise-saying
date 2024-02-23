@@ -2,7 +2,7 @@
 
 import { HiDotsVertical, HiOutlineZoomIn } from 'react-icons/hi'
 import useHasToken from '@/custom/useHasToken'
-import { pageSwitch, quotesSelector } from '@/utils/commonFunctions'
+import { pageSwitch, quotesSelector } from '@/utils/common-func'
 import { HiOutlineBookmark, HiScissors, HiXMark } from 'react-icons/hi2'
 import { useRouter } from 'next/navigation'
 import { useBookmarkUpdate, useCardZoomInOutStore } from '@/store/store'

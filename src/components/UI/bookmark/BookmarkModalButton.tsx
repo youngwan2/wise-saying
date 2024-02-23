@@ -17,11 +17,11 @@ export default function BookmarkModalButton() {
       onClick={() => {
         setToggleState(!toggleState)
       }}
-      className="text-[0.82em] hover:shadow-[0_0_0_1px_rgba(888,888,888,0.3)] p-[10px] mt-[0.25em]"
+      className="sm:p-[10px] p-[5px] text-[0.82em] hover:shadow-[0_0_0_1px_rgba(888,888,888,0.3)]  mt-[0.25em]"
     >
       <span
         aria-label="북마크 아이콘"
-        className=" rounded-[1em] flex flex-col items-center "
+        className="rounded-[1em] flex flex-col items-center "
       >
         <span
           aria-label="북마크 아이콘"

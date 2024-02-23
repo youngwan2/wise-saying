@@ -1,5 +1,5 @@
 import { Method, defaultConfig } from '@/configs/config.api'
-import { logoutUser } from '@/utils/commonFunctions'
+import { logoutUser } from '@/utils/common-func'
 import { defaultFetch } from '@/utils/fetcher'
 import toast from 'react-hot-toast'
 
@@ -47,12 +47,19 @@ export const updateUserPost = async (
  * @returns
  */
 export async function updateComment(commentId: number, comment: string) {
+
+  if (comment.length < 2) return toast.error('2자 이상 입력해주세요.')
+
   const config = defaultConfig(Method.PATCH, comment)
   const url = `/api/quotes/${commentId}/comments`
-  const { success } = await defaultFetch(url, config)
+  const { success, meg } = await defaultFetch(url, config)
   if (success) {
+    toast.success('댓글이 등록되었습니다.')
     return true
-  } else false
+  } else {
+    toast.error(meg)
+    return false
+  }
 }
 
 /**
