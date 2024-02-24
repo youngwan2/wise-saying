@@ -4,10 +4,13 @@ import toast from 'react-hot-toast'
 /**
  * POST | 북마크 아이템을 추가하는 함수
  * @param itemId 북마크에 추가할 아이템의 식별자(=>quote_id)
+ * @param pathName '/quotes/authors/${path}
  */
-export const addBookmarkItem = async (itemId: number) => {
+export const addBookmarkItem = async (itemId: number, path: string) => {
+  const quoteUrl = location.origin + `/quotes/authors/${path}`
   const postData = {
     quoteId: itemId,
+    url: quoteUrl
   }
 
   const url = '/api/bookmark'
@@ -23,3 +26,6 @@ export const addBookmarkItem = async (itemId: number) => {
     return false
   }
 }
+
+
+

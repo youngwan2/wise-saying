@@ -1,12 +1,12 @@
 import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
-import { headers } from 'next/headers'
 import { tokenVerify } from '@/utils/auth'
 
 //  GET | 북마크 조회 처리
 export async function GET(req: NextRequest) {
   const page = req.nextUrl.searchParams.get('page') || 0
   const limit = req.nextUrl.searchParams.get('limit') || 5
+
   const pageNum = Number(page)
   const limitNum = Number(limit)
 
@@ -14,7 +14,9 @@ export async function GET(req: NextRequest) {
 
   if (status === 400) return NextResponse.json({ status, success, meg })
   if (status === 401) return NextResponse.json({ status, success, meg })
+
   const userId = user.sub
+
   const db = await openDB()
 
   const query = `
@@ -65,15 +67,15 @@ export async function GET(req: NextRequest) {
 
 // POST | 북마크 추가 처리
 export async function POST(req: NextRequest) {
+  
   const { '0': body } = await req.json()
-  const { quoteId } = body
+  const { quoteId, url } = body
 
   // 토큰 유효성 검증
   const { status, meg, success, user } = tokenVerify(req, true)
 
   if (status === 400) return NextResponse.json({ status, success, meg })
   if (status === 401) return NextResponse.json({ status, success, meg })
-  const url = headers().get('referer')
 
   try {
     const db = await openDB()

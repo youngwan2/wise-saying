@@ -37,10 +37,10 @@ export default function BookmarkModal() {
     isLoading,
     mutate,
   } = useSWR([`/api/bookmark?page=${page}&limit=5`], getBookmarkListFetcher, {
-    // refreshInterval: 1000 * 300, // 5분
+    refreshInterval: 300000,
     revalidateOnMount: true,
     revalidateIfStale: false,
-    revalidateOnFocus: false,
+    revalidateOnFocus: true,
     onErrorRetry: ({ retryCount }) => {
       if (retryCount >= 5) return
     },
@@ -104,8 +104,8 @@ export default function BookmarkModal() {
         maxPageSize={maxPage}
         page={page}
         currentTotal={currentListCount}
-        onClickPrevSwitch={() => setPage(Math.max(0, page - 1))}
-        onClickNextSwitch={() => setPage(Math.min(maxPage, page + 1))}
+        onClickPrevSwitch={() => { setPage(Math.max(0, page - 1)); mutate() }}
+        onClickNextSwitch={() => { setPage(Math.min(maxPage, page + 1)); mutate() }}
       />
     </article>
   )

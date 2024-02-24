@@ -26,7 +26,7 @@ export default function QuotesCardControlButtons({ item, index }: PropsType) {
   const onClickBookmarkAdd = async () => {
     if (!item && !hasToken) return
     const { id } = item
-    const isSuccess = await addBookmarkItem(id)
+    const isSuccess = await addBookmarkItem(id, `${item.author}/${id}`)
     isSuccess && setIsUpdate(true)
   }
 

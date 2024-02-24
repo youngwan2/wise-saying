@@ -65,3 +65,4 @@ export const defaultFetch = async (url: string, config: any) => {
     console.error('데이터 처리 실패:', error)
   }
 }
+

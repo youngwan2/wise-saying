@@ -26,7 +26,7 @@ export const createToken = (
   const token = jwt.sign(
     {
       exp: isAccessToken
-        ? Math.floor(Date.now() / 1000) + 60 * 0.5
+        ? Math.floor(Date.now() / 1000) + 60 * 5
         : Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30, // 1달 = 30일
       data: payload,
     },
