@@ -3,6 +3,7 @@ import { defaultFetch } from '@/utils/fetcher'
 import {
   getAccessToken,
   setAccessToken,
+  setLoginExp,
   setUserInfo,
 } from '@/utils/session-storage'
 import { redirect } from 'next/navigation'
@@ -42,11 +43,17 @@ export const requestNewAccessToken = async () => {
 
   try {
     const respone = await fetch('/api/auth/access', config)
-    const { status, accessToken } = await respone.json()
+    const { status, accessToken,exp, success } = await respone.json()
 
-    if (status === 201) setAccessToken(accessToken)
+    if (status === 201) {
+      
+      setAccessToken(accessToken); setLoginExp(exp)
+      return success
+    
+    }
   } catch (error) {
     console.error('accessToken 발급 실패: ', error)
+    return false
   }
 }
 
@@ -67,7 +74,7 @@ export const reqLogin = async ({ ...userInfo }: UserType) => {
 
   const url = '/api/auth/login'
   const config = defaultConfig(Method.POST, user)
-  const { meg, success, accessToken, email, profile } = await defaultFetch(
+  const { meg, success, accessToken,exp, email, profile } = await defaultFetch(
     url,
     config,
   )
@@ -75,6 +82,11 @@ export const reqLogin = async ({ ...userInfo }: UserType) => {
   if (success) {
     setUserInfo({ profile, dbEmail: email })
     setAccessToken(accessToken)
+    setLoginExp(exp)
+
+
+
+    
     toast.success(`${email}님 환영합니다!. 잠시 후 Home 화면으로 이동합니다.`)
     setTimeout(() => {
       window.location.reload()

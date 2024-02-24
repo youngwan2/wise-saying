@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import Joi from 'joi'
 import bycrypt from 'bcrypt'
 import { openDB } from '@/utils/connect'
-import { createToken } from '@/utils/auth'
+import { createToken, tokenExpCalculator } from '@/utils/auth'
 import { cookies } from 'next/headers'
 
 // POST | 로그인 요청 처리
@@ -75,7 +75,10 @@ export async function POST(req: NextRequest) {
     const accessToken = createToken({ userEmail, userId }, true)
     const refreshToken = createToken({ userEmail, userId }, false)
 
-    // 4. 리프레쉬 토큰 투키 저장
+
+     const exp = tokenExpCalculator(accessToken, true)
+
+    // 4. 리프레쉬 토큰 쿠키 저장
     cookies().set({
       name: 'refreshToken', // 쿠키 이름
       value: 'Bearer ' + refreshToken, // 쿠키에 저장할 값
@@ -84,12 +87,15 @@ export async function POST(req: NextRequest) {
       path: '/', // 쿠키에 접근할 수 있는 사이트 경로
     })
 
+    
+
     return NextResponse.json({
       success: true,
       meg: '정상적으로 처리 되었습니다..',
       status: 201,
       email: userEmail,
       profile: { image: profile_image, nickname: nickname || '익명의 명인' },
+      exp,
       accessToken,
     })
 

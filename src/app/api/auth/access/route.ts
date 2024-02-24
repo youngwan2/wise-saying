@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createToken, tokenVerify } from '@/utils/auth'
+import { createToken, tokenExpCalculator, tokenVerify } from '@/utils/auth'
 
 export async function POST(req: NextRequest) {
   try {
@@ -18,8 +18,12 @@ export async function POST(req: NextRequest) {
 
     // 새 토큰 생성(refreshToken 검증 후 디코딩된 jwt 에서 반환받은 유저 정보를 바탕으로 accessToken을 생성한다.)
     const newAccessToken = createToken({ userEmail, userId }, true)
+
+    const exp = tokenExpCalculator(newAccessToken, true)
+
     return NextResponse.json({
       meg: '새로운 토큰이 발급되었습니다.',
+      exp,
       accessToken: newAccessToken,
       status: 201,
       success: true,

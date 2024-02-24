@@ -26,7 +26,7 @@ interface UserInfoType {
   }
 }
 /**
- * SessionStorage | 유저 정보를 로컬의 세션 스토로지에 저장한다.
+ * SET SessionStorage | 유저 정보 저장
  * @param user
  */
 export const setUserInfo = (user: UserInfoType) => {
@@ -34,19 +34,56 @@ export const setUserInfo = (user: UserInfoType) => {
 }
 
 /**
- * SessionStorage | 접근 토큰을 로컬의 세션 스토로지에 저장한다.
+ * GET SessionStorage | 유저 정보 가져오기
+ */
+export const getUserInfo = () => {
+  try {
+    sessionStorage.getItem('user')
+  } catch (error) {
+    console.error('user 정보 가져오기 실패:', error)
+  }
+}
+
+/**
+ * SET SessionStorage | 유저의 로그인 만료 시간 저장
+ * @param exp 
+ */
+export const setLoginExp = (exp: number) => {
+  sessionStorage.setItem('exp', JSON.stringify(exp))
+}
+
+/**
+ * GET essionStorage | 로그인 만료시간 가져오기
+ */
+export const getLoginExp = () => {
+  try {
+    const exp = sessionStorage.getItem('exp')
+    if(exp) {return Number(exp)}
+  } catch (error) {
+    console.error('exp 가져오기 실패:', error)
+    return false
+  }
+}
+
+/**
+ * SET SessionStorage | accessToken 저장
  * @param token accessToken
  */
+
 export const setAccessToken = (token: string) => {
   sessionStorage.setItem('token', token)
 }
 
+/**
+ * GET  SessionStorage | accessToken 가져오기
+ * @returns 
+ */
 export const getAccessToken = () => {
   try {
     const token = sessionStorage.getItem('token')
     return token
   } catch (error) {
-    console.error('sessionStorage.getItem 에러:' + error)
+    console.error('accessToken 가져오기 실패:' + error)
     return null
   }
 }

@@ -26,7 +26,7 @@ export const createToken = (
   const token = jwt.sign(
     {
       exp: isAccessToken
-        ? Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30
+        ? Math.floor(Date.now() / 1000) + 60 * 15
         : Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30, // 1달 = 30일
       data: payload,
     },
@@ -77,3 +77,20 @@ export const tokenVerify = (req: NextRequest, isAccessToken: boolean) => {
     }
   }
 }
+
+/**
+ * 토큰의 만료시간(exp) 추출
+ * @param token 토큰
+ * @param isAccessToken accessToken 여부(false 인 경우 refreshToken)
+ * @returns 
+ */
+export function tokenExpCalculator(token: string, isAccessToken: boolean) {
+
+  const decode = jwt.decode(token) as JwtPayload
+  if (!decode) return
+  const  exp  = decode.exp || 0
+
+  return exp
+}
+
+
