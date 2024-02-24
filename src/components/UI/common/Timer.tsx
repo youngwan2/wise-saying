@@ -11,14 +11,14 @@ export default function Timer() {
 
     const [timeScale, setTimeScale] = useState(100)
     const checkTokenExp = useCallback(async () => {
-        
+
         const exp = getLoginExp()
 
         if (typeof exp !== 'number') return
         const currentTime = Math.floor(Date.now() / 1000)
-        const timeScale = Math.floor((exp - currentTime) / 900 * 100).toFixed(0)
-
-        setTimeScale(Number(timeScale))
+        const expired60SecondsAgo = currentTime - MINUTE_TO_SEC
+        const scale = ((exp - (expired60SecondsAgo))/90*100).toFixed(0)
+        setTimeScale(Number(scale))
 
         if (exp <= currentTime - MINUTE_TO_SEC) {
             const isSuccess = await requestNewAccessToken();
@@ -37,7 +37,7 @@ export default function Timer() {
     return (
 
         <article className="fixed right-[2em] top-[3em] text-white bg-[#00000039] rounded-[10px] p-[8px] font-sans text-[0.95em] ">
-            <p>자동 로그인 간격</p>
+            <p>재 로그인 까지</p>
 
             <h2 className="flex items-center justify-center"><HiClock /> <span className="mx-[5px]">{timeScale}</span></h2>
         </article>
