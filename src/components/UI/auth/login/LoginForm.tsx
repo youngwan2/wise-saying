@@ -23,15 +23,13 @@ export default function LoginForm() {
 
   // 토큰 존재 시 리디렉트
   useEffect(() => {
-    if (hasToken) {
-      redirect('/')
-    }
+    if (hasToken) { redirect('/') }
   }, [router, hasToken])
 
   // 드래그어블 적용
   useDraggable(loginFormRef, 'free')
 
-  async function login(form: FormData) {
+  async function loginAction(form: FormData) {
     setIsLoading(true)
     const email = form.get('email')?.valueOf().toString() || ''
     const password = form.get('password')?.valueOf().toString() || ''
@@ -39,25 +37,21 @@ export default function LoginForm() {
     reqLogin({ email, password }).then(() => setIsLoading(false))
   }
 
-  function onClickBackMove() {
-    router.back()
-  }
+  function onClickBackMove() { router.back() }
 
   return (
-    <>
-      <form
-        ref={loginFormRef}
-        action={login}
-        className="shadow-[inset_0_0_0_2px_white]  rounded-[5px] flex flex-col fixed max-w-[470px] min-h-[350px] left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-[100%] bg-transparent p-[5px]" 
-      >
-        <FormTitle>로그인</FormTitle>
-        <BackButton onClickBack={onClickBackMove} />
-        <LoginEmailInput />
-        <LoginPasswordInput />
-        <ForgotLink />
-        <ReqLoginInput isLoading={isLoading} />
-        <SignInGuideLink />
-      </form>
-    </>
+    <form
+      ref={loginFormRef}
+      action={loginAction}
+      className="shadow-[inset_0_0_0_2px_white]  rounded-[5px] flex flex-col fixed max-w-[470px] min-h-[350px] left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-[100%] bg-transparent p-[5px]"
+    >
+      <FormTitle>로그인</FormTitle>
+      <BackButton onClickBack={onClickBackMove} />
+      <LoginEmailInput />
+      <LoginPasswordInput />
+      <ForgotLink />
+      <ReqLoginInput isLoading={isLoading} />
+      <SignInGuideLink />
+    </form>
   )
 }
