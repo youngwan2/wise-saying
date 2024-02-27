@@ -12,7 +12,7 @@ import toaster, { toast } from 'react-hot-toast'
 /**
  * POST | 새로운 refreshToken 발급
  */
-const requestNewRefreshToken = async () => {
+export const requestNewRefreshToken = async () => {
   const token = sessionStorage.getItem('token')
   const config = {
     method: 'POST',
@@ -161,30 +161,7 @@ export const postUserPost = async (
   }
 }
 
-/**
- * POST | 유저 프로필 추가
- * @param nickname 유저 닉네임
- * @param imageUrl 유저 프로필 이미지 URL
- * @returns
- */
-export async function updateUserInfo(
-  nickname: FormDataEntryValue,
-  imageUrl: string,
-) {
-  const userInfo = {
-    nickname: nickname,
-    profile_image: imageUrl,
-  }
 
-  const config = defaultConfig(Method.POST, userInfo)
-  const url = '/api/users/mypage/upload?tag=user'
-  const { success } = await defaultFetch(url, config)
-  if (success) toast.success('프로필 정보가 업데이트 되었습니다.')
-  if (!success) {
-    toast.error('프로필 정보 업데이트에 실패하였습니다.')
-    requestNewRefreshToken()
-  }
-}
 
 /**
  * POST | 유저가 작성한 댓글을 등록

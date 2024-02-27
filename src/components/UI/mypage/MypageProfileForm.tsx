@@ -1,15 +1,16 @@
 'use client'
-import { imagePreviewReader } from '@/utils/common-func'
+import { imagePreviewReader } from '@/utils/imageloader'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { storage } from '@/configs/firebase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import MypageProfileUpdateButton from './MypageProfileUpdataButton'
-import { updateUserInfo } from '@/services/user/post'
+import { updateUserInfo } from '@/services/user/patch'
 import useHasToken from '@/custom/useHasToken'
 import MypageImageUploadInput from './MypageImageUploadInput'
 import MypageNicknameInput from './MypageNicknameInput'
 import MypageEmailInput from './MypageEmailInput'
 import toast from 'react-hot-toast'
+import {v4 as uuidv4} from 'uuid'
 
 interface PropsType {
   userInfo: {
@@ -24,6 +25,7 @@ export default function MypageProfileForm({ userInfo }: PropsType) {
   const hasToken = useHasToken()
   const [src, setSrc] = useState('')
   const [imageUrl, setImageUrl] = useState('')
+  const [imgIsLoading, setImgIsLoading] = useState(false)
 
   /**
    *  @var src : 미리보기 이미지
@@ -33,18 +35,17 @@ export default function MypageProfileForm({ userInfo }: PropsType) {
 
   // 파이어베이스 이미지 업로드 처리
   function imageUploader(e: ChangeEvent<HTMLInputElement>) {
+    setImgIsLoading(true)
     if (e.target && e.target.files) {
       const profileImageObject = e.target.files[0]
-      const fileName = profileImageObject.name
-
-      if (!fileName) return alert('파일 정보가 없습니다. 업로드를 취소합니다.')
-
-      const profileRef = ref(storage, fileName)
+      const { name: fileName } = profileImageObject || { name: null }
+      const profileRef = ref(storage, 'profile-images/' + uuidv4() + fileName)
 
       uploadBytes(profileRef, profileImageObject).then((snapshot) => {
         e.target.value = ''
         getDownloadURL(snapshot.ref).then((url) => {
           setImageUrl(url)
+          setImgIsLoading(false)
         })
       })
     }
@@ -63,10 +64,12 @@ export default function MypageProfileForm({ userInfo }: PropsType) {
     updateUserInfo(nickname, profileUrl)
   }
 
+
   // 이미지 업로드
-  const onChangeImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
-    const src = imagePreviewReader(e)
-    src && setSrc(src)
+  const onChangeImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
+    const src = await imagePreviewReader(e) || ''
+    if (src?.length < 2) return
+    setSrc(src)
     imageUploader(e)
   }
 
@@ -74,7 +77,7 @@ export default function MypageProfileForm({ userInfo }: PropsType) {
     <>
       {userInfo !== undefined ? (
         <form
-          className="border-[3px] p-[2em] rounded-[10px] max-w-[600px] flex flex-col mx-auto mt-[3em] items-center shadow-[5px_10px_10px_0_rgba(0,0,0,0.5)] bg-gradient-to-tr from-orange-50 to-white transition-all "
+          className="border-[3px] p-[2em] rounded-[10px] max-w-[600px] flex flex-col mx-auto mt-[3em] items-center  transition-all "
           action={profileUpdate}
         >
           {/* 이미지 업로드 */}
@@ -88,7 +91,7 @@ export default function MypageProfileForm({ userInfo }: PropsType) {
             <MypageNicknameInput nickname={userInfo.nickname} />
             <MypageEmailInput email={userInfo.email} />
           </article>
-          <MypageProfileUpdateButton />
+          <MypageProfileUpdateButton imgIsLoading={imgIsLoading} />
         </form>
       ) : null}
     </>

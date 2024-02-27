@@ -19,7 +19,7 @@ export default function MypageMyQuotesList({
 }: PropsType) {
   if (!userQuotes || userQuotes.length < 1) return <MypageNotFoundMessage />
   return (
-    <ul className="mt-[3em] text-center min-h-[630px]">
+    <ul className="mt-[3em] text-center min-h-[200px]">
       {(selectedMyQuotes.length > 0 ? selectedMyQuotes : userQuotes).map(
         (item) => {
           return <MypageUserQuoteCard key={item.id} item={item} />

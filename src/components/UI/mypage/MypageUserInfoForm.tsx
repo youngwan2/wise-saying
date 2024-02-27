@@ -36,12 +36,12 @@ export default function MypageUserInfoForm({ userInfo }: PropsType) {
   return (
     <form
       action={updateUserInfo}
-      className="max-w-lg mx-auto m-2 mt-[3em] p-6 bg-white rounded-lg shadow-[10px_10px_5px_0_rgba(0,0,0,0.5)]"
+      className=" mx-auto m-2 mt-[3em] p-6  shadow-[inset_0_0_0_2.5px_white] rounded-[10px] max-w-[600px] text-white "
     >
-      <h1 className="text-2xl font-bold mb-4">수정 및 탈퇴</h1>
+      <h1 className="text-[1.25em] font-bold mb-[1.5em]">비밀번호 변경/ 회원 탈퇴</h1>
       {/* 이메일(읽기 전용) */}
       <div className="mb-4">
-        <label className="text-lg font-semibold mb-2" htmlFor={uId + 'email'}>
+        <label className="text-lg  mb-2" htmlFor={uId + 'email'}>
           이메일(Email)
         </label>
         <input
@@ -49,14 +49,14 @@ export default function MypageUserInfoForm({ userInfo }: PropsType) {
           type="text"
           readOnly
           id={uId + 'email'}
-          className="w-full px-3 py-2 border rounded-lg focus:outline-none bg-[#c8c6c6] "
+          className="mt-[0.25em]  w-full px-3 py-2 rounded-[5px] outline-none bg-[#c8c6c6] text-black font-bold focus:cursor-not-allowed "
           value={userInfo.email}
         ></input>
       </div>
       {/* 비밀번호 */}
       <div className="mb-4">
         <label
-          className="text-lg font-semibold mb-2"
+          className="text-lg  mb-2"
           htmlFor={uId + 'password'}
         >
           비밀번호(Password)
@@ -66,13 +66,13 @@ export default function MypageUserInfoForm({ userInfo }: PropsType) {
           type="password"
           name="password"
           autoComplete="off"
-          className="w-full px-3 py-2 border rounded-lg invalid:border-[red]"
+          className="focus:bg-white focus:text-black outline-none  font-bold mt-[0.25em]  w-full px-3 py-2 s rounded-[5px] shadow-[inset_0_0_0_2px_white]  invalid:border-[red] bg-transparent "
           placeholder="8자 이상 (a-z, 0-9 무조건 1개 이상 포함, 특수문자 1개 이상 포함)"
         />
       </div>
       {/* 비밀번호 재확인 */}
       <div className="mb-4">
-        <label className="text-lg font-semibold mb-2" htmlFor={uId + 'confirm'}>
+        <label className="text-lg  mb-2" htmlFor={uId + 'confirm'}>
           비밀번호 재확인(Confirm)
         </label>
         <input
@@ -81,7 +81,7 @@ export default function MypageUserInfoForm({ userInfo }: PropsType) {
           type="password"
           name="confirm"
           autoComplete="off"
-          className="w-full px-3 py-2 border rounded-lg invalid:border-[red] "
+          className="focus:bg-white focus:text-black  outline-none font-bold mt-[0.25em] w-full px-3 py-2  rounded-[5px] shadow-[inset_0_0_0_2px_white] invalid:border-[red] bg-transparent "
           placeholder="비밀번호 재확인"
         />
       </div>
@@ -89,7 +89,7 @@ export default function MypageUserInfoForm({ userInfo }: PropsType) {
       <article className="mt-[2em]">
         <button
           aria-label="수정하기 버튼으로, 클릭 시 입력된 정보로 패스워드(비밀번호)가 변경"
-          className="bg-blue-500 text-white px-4 py-2 rounded-lg mr-2"
+          className="bg-blue-500 text-white px-4 py-2 rounded-[5px] mr-2"
         >
           수정하기
         </button>
@@ -101,7 +101,7 @@ export default function MypageUserInfoForm({ userInfo }: PropsType) {
               return alert('접근 권한이 없습니다.')
             deleteUserInfo(userInfo.user_id)
           }}
-          className="bg-red-500 text-white px-4 py-2 rounded-lg"
+          className="bg-red-500 text-white px-4 py-2 rounded-[5px]"
         >
           탈퇴하기
         </button>

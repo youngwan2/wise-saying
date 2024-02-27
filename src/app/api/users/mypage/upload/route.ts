@@ -2,13 +2,14 @@ import { NextRequest, NextResponse } from 'next/server'
 import { openDB } from '@/utils/connect'
 import { tokenVerify } from '@/utils/auth'
 
-// POST | 유저 프로필 정보 업데이트
-export async function POST(req: NextRequest) {
+// PATCH | 유저 프로필 정보 업데이트
+export async function PATCH(req: NextRequest) {
   try {
     const db = await openDB()
     const { '0': body } = await req.json()
     const { nickname, profile_image } = body
 
+  
     // 토큰 유효성 검증
     const { status, meg, success, user } = tokenVerify(req, true)
 

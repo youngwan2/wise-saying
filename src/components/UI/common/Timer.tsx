@@ -11,15 +11,16 @@ export default function Timer() {
 
     const [timeScale, setTimeScale] = useState(100)
 
+    // 토큰 만료 시간 측정
     const checkTokenExp = useCallback(async () => {
 
         const exp = getLoginExp()
 
         if (typeof exp !== 'number') return
+
         const currentTime = Math.floor(Date.now() / 1000)
-        const expired60SecondsAgo = currentTime - MINUTE_TO_SEC
-        const scale = ((exp - (expired60SecondsAgo)) / 90 * 100).toFixed(0) // 백분률 변환
-        setTimeScale(Number(scale))
+        const expired60SecondsAgo = exp - (currentTime - MINUTE_TO_SEC) //  현재(sec) - 60(sec) = 1분 전 토큰 만료
+        setTimeScale(Number(expired60SecondsAgo))
 
         if (exp <= currentTime - MINUTE_TO_SEC) {
             const isSuccess = await requestNewAccessToken();
@@ -39,7 +40,6 @@ export default function Timer() {
         return function(func:Function,delay:number){
             clearTimeout(timeId)
             timeId = setTimeout(()=>{
-                console.count()
                 func()
             }, delay)
         }
@@ -49,7 +49,7 @@ export default function Timer() {
     const windowBlur = useCallback(() => {
         const  debounceCloser = debounce()
         window.addEventListener('focus', () => {
-          debounceCloser(requestNewAccessToken, 5000)
+          debounceCloser(requestNewAccessToken, 1000 * 40)
         })
     }, [])
 
