@@ -9,7 +9,7 @@ export default function MyQuoteCard({ item }: PropsType) {
   return (
     <ul
       key={item.id}
-      className="border shadow-[inset_-3px_-3px_5px_0_rgba(0,0,0,0.5)] p-[10px] rounded-[10px] my-[5px] max-w-[700px] mx-auto bg-[white]"
+      className="shadow-[inset_0_0_0_2px_white] p-[10px] rounded-[10px] my-[5px] max-w-[700px] mx-auto text-white hover:shadow-[inset_0_0_0_3px_tomato] transition-all"
     >
       <li className="flex">
         <span className="rounded-[5px] mr-[10px] min-w-50px max-w-[50px] inline-block w-full px-[3px] m-[3px] font-semibold">

@@ -59,22 +59,7 @@ export const logoutUser = async () => {
   }
 }
 
-/**
- * * 이미지 미리보기 주소(src)를 반환하는 함수
- * @param e ChangeEvent
- * @returns 이미지 주소를 반환(src)
- */
-export const imagePreviewReader = (e: ChangeEvent<HTMLInputElement>) => {
-  if (e.target && e.target.files) {
-    try {
-      const file = e.target.files[0]
-      const src = URL.createObjectURL(file)
-      return src
-    } catch (error) {
-      return false
-    }
-  }
-}
+
 
 // submit 브라우저 이벤트 방지
 export const onSubmit = (e: FormEvent) => {

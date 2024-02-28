@@ -1,10 +1,17 @@
-export default function MypageProfileUpdateButton() {
+
+interface PropsType {
+  imgIsLoading:boolean
+}
+export default function MypageProfileUpdateButton({imgIsLoading}:PropsType) {
+
   return (
     <button
+      disabled={imgIsLoading}
       aria-label="프로필 정보를 수정"
-      className="shadow-[inset_-2px_-3px_3px_0_black] hover:bg-gradient-to-br hover:from-black  hover:to-slate-600  w-[230px] rounded-[5px] mt-[2em] bg-[#343333] text-white p-[10px]"
-    >
-      변경하기
+      className={`
+      ${imgIsLoading? 'bg-[#aaa8a8] cursor-wait':'bg-[#e2dfdf]'}
+      shadow-[0_0_0_2px_white] bg-[transparent]  rounded-[2px] border-gray min-w-[200px] mt-[1em] p-[6px] placeholder:text-[gray] bg-[#e2dfdf] focus:outline-none text-black font-bold hover:bg-[#c2c0c0]`}    >
+      {imgIsLoading?"이미지 업로드 중...":"변경하기"}
     </button>
   )
 }
