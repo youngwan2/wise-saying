@@ -68,6 +68,7 @@ export const getApiMetaDataFromServer = async (
   }
 }
 
+
 /**
  * GET | 랜덤으로 명언 정보 불러오기
  */
@@ -97,4 +98,22 @@ async function fetchModule(url: string) {
 
   const result = await response.json()
   return result
+}
+
+
+/**
+ * 사이트 맵 | 카테고리 목록
+ * @param mainCategory 주요 분기 카테고리 (authors | topics)
+ * @returns 카테고리 목록 반환
+ */
+export async function getQuoteCategoryFromDb(mainCategory: string) {
+  const url = config.apiPrefix + config.apiHost + `/api/sitemap/${mainCategory}`
+
+  try {
+    const res = await fetch(url)
+    const categories = await res.json();
+    return categories
+  } catch (error) {
+    console.error("사이트맵 전용 카테고리 목록 불러오기 실패:", error)
+  }
 }
