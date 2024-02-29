@@ -24,7 +24,7 @@ export default function SearchPage() {
 
   const onClick = (e: MouseEvent<HTMLButtonElement>) => {
     const type = e.currentTarget.dataset.type
-    router.push(`/quotes/search?type=${type}&searchText=${searchText}`)
+    router.push(`/search?type=${type}&searchText=${searchText}`)
   }
 
   /**

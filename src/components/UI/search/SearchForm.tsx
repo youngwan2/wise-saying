@@ -22,7 +22,7 @@ export default function SearchForm() {
 
   const searchAction = async (formData: FormData) => {
     const value = formData.get('search') || ''
-    router.push(`/quotes/search?type=all&searchText=${value}`)
+    router.push(`/search?type=all&searchText=${value}`)
     setText('검색된 키워드는, ' + value + ' 입니다.')
   }
 
