@@ -8,6 +8,7 @@ import { SlEarphones } from 'react-icons/sl'
 import useTTS from '@/custom/useTTS'
 import ReplaceMessageCard from '../common/ReplaceMessageCard'
 import { useRouter } from 'next/navigation'
+import { HiCalendarDays } from 'react-icons/hi2'
 gsap.registerPlugin(ScrollTrigger)
 gsap.registerPlugin(TextPlugin)
 
@@ -50,12 +51,9 @@ export default function TodayQuotelist({ quotes }: PropsType) {
     return <ReplaceMessageCard childern="데이터를 불러오는 중입니다.." />
   return (
     <>
-      <h2 className="flex justify-center items-center text-[1.5em] p-[10px]  text-center text-white max-w-[250px] mx-auto bg-gradient-to-b from-[transparent] to-[#00000033]  shadow-[0_9px_2px_0_rgba(0,0,0,0.5)] rounded-[5px] mt-[2em] mb-[1em] ">
-        오늘의 명언
-      </h2>
-
-      <ul className=" mt-[4em] t overflow-hidden mx-[10px]">
-        {quotes.map((quote, i) => {
+      <h2 className="sm:text-[1.5em] text-[1.35em] pl-[8px] flex items-center text-white max-w-[600px] mx-auto  mt-[5em] "><HiCalendarDays className='mr-[5px]'/> 오늘의 명언</h2>
+      <ul className="overflow-hidden mx-[10px]">
+        {quotes.slice(0,1).map((quote, i) => {
           return (
             <li
               className="shadow-[inset_0_0_0_3px_white] rounded-[10px]  my-[1em] max-w-[600px] bg-transparent  px-[15px] py-[35px] mx-auto relative hover:bg-[#d5d5d533] "
@@ -93,6 +91,6 @@ export default function TodayQuotelist({ quotes }: PropsType) {
           )
         })}
       </ul>
-    </>
+      </>
   )
 }

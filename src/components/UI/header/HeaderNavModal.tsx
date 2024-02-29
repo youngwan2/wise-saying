@@ -1,18 +1,12 @@
 'use client'
 
-import {
-  HiNewspaper,
-  HiOutlineHandThumbUp,
-  HiOutlineHomeModern,
-  HiOutlinePencil,
-  HiOutlineUserGroup,
-} from 'react-icons/hi2'
 
+import navList from '@/router'
 import { useNavDisplayStateStore } from '@/store/store'
 import { useRouter } from 'next/navigation'
-import { HiPhotograph } from 'react-icons/hi'
+
 import React, { MouseEventHandler } from 'react'
-import { IconType } from 'react-icons'
+import type { IconType } from 'react-icons'
 
 interface PropsType {
   onClick: MouseEventHandler<HTMLButtonElement>
@@ -24,14 +18,6 @@ export default function HeaderNavModal() {
   const isDisplay = useNavDisplayStateStore((state) => state.isDisplay)
   const router = useRouter()
 
-  const navList = [
-    { path: '/quotes/topics', label: '주제별 명언', icon: HiNewspaper },
-    { path: '/quotes/authors', label: '인물별 명언', icon: HiOutlineUserGroup },
-    { path: '/user-quotes', label: '유저 명언', icon: HiOutlineHandThumbUp },
-    { path: '/add-wisesaying', label: '명언 쓰기', icon: HiOutlinePencil },
-    { path: '/mypage', label: '마이페이지', icon: HiPhotograph },
-    { path: '/', label: '홈', icon: HiOutlineHomeModern },
-  ]
 
   return (
     <article
