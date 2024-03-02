@@ -8,7 +8,7 @@ export default function LoginEmailInput() {
   useFocus(emailInputRef)
 
   return (
-    <article className=" flex mt-[3.5em] mb-[1em] mx-[10px]">
+    <article className=" flex mb-[1em] mx-[10px]">
       <EmailLabel />
       <input
         aria-label="이메일 입력창"

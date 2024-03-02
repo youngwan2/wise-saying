@@ -1,6 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { openDB } from '@/utils/connect'
-import { tokenVerify } from '@/utils/auth'
+import { oauth2UserInfoExtractor, tokenVerify } from '@/utils/auth'
+
+
+const query = `
+UPDATE users
+SET nickname = $1, profile_img_url = $2, updated_at = CURRENT_TIMESTAMP
+WHERE email = $3 AND user_id = $4
+`
 
 // PATCH | 유저 프로필 정보 업데이트
 export async function PATCH(req: NextRequest) {
@@ -9,7 +16,19 @@ export async function PATCH(req: NextRequest) {
     const { '0': body } = await req.json()
     const { nickname, profile_image } = body
 
-  
+    const { userId: socialUserId, email } = await oauth2UserInfoExtractor() || { userId: '', email: '' }
+
+    if (socialUserId) {
+      db.query(query, [nickname, profile_image, email, socialUserId])
+      db.end()
+
+      return NextResponse.json({
+        meg: '성공적으로 처리되었습니다.',
+        status: 201,
+        success: true,
+      })
+    }
+
     // 토큰 유효성 검증
     const { status, meg, success, user } = tokenVerify(req, true)
 
@@ -19,11 +38,7 @@ export async function PATCH(req: NextRequest) {
     // 검증 통과 후 유저 프로필 업로드 처리
     const { email: dbEmail, sub: userId } = user
 
-    const query = `
-            UPDATE users
-            SET nickname = $1, profile_img_url = $2, updated_at = CURRENT_TIMESTAMP
-            WHERE email = $3 AND user_id = $4
-            `
+
     await db.query(query, [nickname, profile_image, dbEmail, userId])
     db.end()
 

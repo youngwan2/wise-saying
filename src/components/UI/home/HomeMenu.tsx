@@ -4,7 +4,6 @@ import useHasToken from "@/custom/useHasToken";
 import navList from "@/router";
 import { useRouter } from "next/navigation";
 import React from "react";
-import toast from "react-hot-toast";
 import { HiMenuAlt3 } from "react-icons/hi";
 
 export default function HomeMenu() {
@@ -24,11 +23,6 @@ export default function HomeMenu() {
                                 prefetch(navItem.path)
                             }}
                             onClick={() => {
-                                if (navItem.path.startsWith('/add-wisesaying')
-                                    || navItem.path.startsWith('/mypage')
-                                ) {
-                                  return  hasToken ? push(navItem.path) : toast.error('로그인 후 이용가능 합니다.')
-                                }
                                 push(navItem.path)
                             }} key={navItem.label} >
                             {React.createElement(navItem.icon, {

@@ -27,9 +27,6 @@ export async function getCategoryCountFromDb(url: string) {
  * @param url
  */
 export const getBookmarkListFetcher = async (url: string) => {
-  const token = getAccessToken() || ''
-
-  if (token.length < 2) return
 
   const config = getDefaultConfig(Method.GET, true)
   const response = await fetch(url, config)
@@ -117,3 +114,4 @@ export async function getQuoteCategoryFromDb(mainCategory: string) {
     console.error("사이트맵 전용 카테고리 목록 불러오기 실패:", error)
   }
 }
+

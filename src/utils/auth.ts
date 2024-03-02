@@ -1,6 +1,10 @@
 import jwt, { JwtPayload } from 'jsonwebtoken'
 import { cookies } from 'next/headers'
 import { NextRequest } from 'next/server'
+import { auth } from '@/configs/config.auth'
+import { openDB } from './connect'
+
+
 
 class User {
   userId!: number
@@ -88,9 +92,37 @@ export function tokenExpCalculator(token: string, isAccessToken: boolean) {
 
   const decode = jwt.decode(token) as JwtPayload
   if (!decode) return
-  const  exp  = decode.exp || 0
+  const exp = decode.exp || 0
 
   return exp
 }
 
 
+export async function oauth2UserInfoExtractor() {
+
+  try {
+    const session = await auth()
+
+    if (!session) return 
+
+    const { email } = session.user || { user: { email: '' } }
+
+    const db = await openDB()
+    const selectQuery = `
+    SELECT user_id FROM users
+    WHERE email = $1 AND provider = $2
+    `
+
+    const results = await db.query(selectQuery, [email, 'social'])
+    const count = results.rowCount || 0
+    const userId = results.rows[0].user_id
+    
+    if (count < 1) return 
+
+    return {userId, email}
+
+  } catch (error) {
+    console.error('소셜 로그인 유저정보 추출 실패:', error)
+    return
+  }
+}

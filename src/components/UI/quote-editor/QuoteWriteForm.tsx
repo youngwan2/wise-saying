@@ -8,40 +8,51 @@ import QuoteFormButtons from './QuoteFormButtons'
 import QuoteTopicInput from './QuoteTopicInput'
 import QuoteContentInput from './QuoteContentInput'
 import QuoteAuthorInput from './QuoteAuthorInput'
+import { useSession } from 'next-auth/react'
+import toast from 'react-hot-toast'
+import useDraggable from '@/custom/useDraggable'
 
 export default function QuoteWriteForm() {
   const formRef = useRef<HTMLFormElement>(null)
   const hasToken = useHasToken()
 
+  useDraggable(formRef, 'free')
+
   const router = useRouter()
+
+  const { data: session } = useSession()
 
   // 포스트 요청
   const postQuoteAction = async (form: FormData) => {
-    const category = form.get('category')?.valueOf().toString() || ''
-    const content = form.get('content')?.valueOf().toString() || ''
-    const author = form.get('author')?.valueOf().toString() || ''
+    if (hasToken || session) {
+      const category = form.get('category')?.valueOf().toString() || ''
+      const content = form.get('content')?.valueOf().toString() || ''
+      const author = form.get('author')?.valueOf().toString() || ''
 
-    const body = {
-      category,
-      content,
-      author,
-      isUser: true,
+      const body = {
+        category,
+        content,
+        author,
+        isUser: true,
+      }
+      const isSuccess = await postUserPost(body)
+      if (isSuccess) router.push('/user-quotes')
+    } else {
+      toast.error('로그인 후 이용가능 합니다.')
     }
-    const isSuccess = await postUserPost(hasToken, body)
-    if (isSuccess) router.push('/user-quotes')
   }
 
   function onClickCancel() {
     router.push('/user-quotes')
   }
 
-  if (!hasToken)
+  if (!hasToken && !session)
     return <ReplaceMessageCard childern="로그인 후 이용해주세요." />
   return (
     <form
       ref={formRef}
       action={postQuoteAction}
-      className="sm:mx-auto mx-[10px] text-white max-w-[560px] mt-[5em] rounded-[10px] shadow-[inset_0_0_0_2px_white] "
+      className="sm:mx-auto mx-[10px] text-white max-w-[560px] mt-[7em] rounded-[10px] shadow-[inset_0_0_0_2px_white] backdrop-blur-[3px] "
     >
       <h2 className="text-[1.25em] mt-[-4px] mb-[1em] bg-transparent text-[white] p-[8px]  rounded-t-lg shadow-[inset_0_0_0_2px_white] ">
         명언 등록

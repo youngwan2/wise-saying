@@ -41,7 +41,7 @@ export function quotesSelector(item: ItemsType) {
  * * 로그아웃
  */
 export const logoutUser = async () => {
-  const url = '/api/auth/clear-token'
+  const url = '/api/auth/general-auth/clear-token'
   const config = getDefaultConfig(Method.GET, false)
   try {
     const respone = await fetch(url, config)

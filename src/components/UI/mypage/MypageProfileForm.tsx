@@ -11,6 +11,7 @@ import MypageNicknameInput from './MypageNicknameInput'
 import MypageEmailInput from './MypageEmailInput'
 import toast from 'react-hot-toast'
 import {v4 as uuidv4} from 'uuid'
+import { Session } from 'next-auth'
 
 interface PropsType {
   userInfo: {
@@ -18,10 +19,11 @@ interface PropsType {
     email: string
     profile_image: string
     user_id: number
-  }
+  },
+  session: Session | null
 }
 
-export default function MypageProfileForm({ userInfo }: PropsType) {
+export default function MypageProfileForm({ userInfo, session }: PropsType) {
   const hasToken = useHasToken()
   const [src, setSrc] = useState('')
   const [imageUrl, setImageUrl] = useState('')
@@ -58,7 +60,7 @@ export default function MypageProfileForm({ userInfo }: PropsType) {
 
   // 프로필 업데이트
   function profileUpdate(form: FormData) {
-    if (!hasToken) return toast.error('접근 권한이 없습니다.')
+    if (!hasToken && !session) return toast.error('접근 권한이 없습니다.')
     const profileUrl = imageUrl
     const nickname = form.get('nickname') || ''
     updateUserInfo(nickname, profileUrl)
@@ -87,7 +89,7 @@ export default function MypageProfileForm({ userInfo }: PropsType) {
           />
 
           {/* 닉네임 수정 */}
-          <article className="mt-[2em] text-center">
+          <article className="mt-[2em]">
             <MypageNicknameInput nickname={userInfo.nickname} />
             <MypageEmailInput email={userInfo.email} />
           </article>

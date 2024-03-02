@@ -25,7 +25,7 @@ export default function QuoteContentInput({
         name={name}
         id="content"
         placeholder={placeholder}
-        className="bg-transparent min-w-[200px] max-w-[500px] w-full p-[10px] min-h-[150px]  rounded-[5px] shadow-[inset_0_0_0_1px_white] outline-none focus:shadow-[inset_0_0_0_2px_tomato]"
+        className="bg-transparent min-w-[200px] max-w-[500px] w-full p-[10px] min-h-[150px]  rounded-[5px] shadow-[inset_0_0_0_1px_white] outline-none focus:bg-[#ffffff26] "
       ></textarea>
     </article>
   )

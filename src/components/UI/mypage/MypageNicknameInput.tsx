@@ -16,7 +16,7 @@ export default function MypageNicknameInput({ nickname }: PropsType) {
     <div className="mx-auto my-[5px]">
       <label
         htmlFor="nickname"
-        className=" mr-[5px] rounded-[5px]  text-center min-w-[70px] inline-block text-white"
+        className=" mb-[8px] rounded-[5px] min-w-[70px] inline-block text-white"
       >
         닉네임
       </label>
@@ -25,7 +25,7 @@ export default function MypageNicknameInput({ nickname }: PropsType) {
         placeholder="최소 2~6 이하 영문/한글"
         id="nickname"
         name="nickname"
-        className="shadow-[0_0_0_2px_white] text-white bg-[transparent]  rounded-[2px] border-gray min-w-[200px] p-[6px] placeholder:text-[gray] focus:bg-[#e2dfdf] focus:outline-none focus:text-black focus:font-bold "
+        className="shadow-[0_0_0_2px_white] bg-[transparent]  rounded-[2px] border-gray min-w-[200px] max-w-[250px] w-full p-[6px] placeholder:text-[gray] bg-[#e2dfdf] focus:outline-none text-white "
         ref={nicknameRef}
         type="text"
         maxLength={6}

@@ -27,7 +27,7 @@ export default function QuoteAuthorInput({
         type="text"
         maxLength={8}
         minLength={2}
-        className="min-w-[200px] bg-transparent max-w-[500px] w-full px-[10px] min-h-[40px] rounded-[5px] shadow-[inset_0_0_0_1px_white] outline-none focus:shadow-[inset_0_0_0_2px_tomato]"
+        className="min-w-[200px] bg-transparent max-w-[500px] w-full px-[10px] min-h-[40px] rounded-[5px] shadow-[inset_0_0_0_1px_white] outline-none focus:bg-[#ffffff26] "
         placeholder={placeholder}
       />
     </article>

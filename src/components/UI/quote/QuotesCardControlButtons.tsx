@@ -9,27 +9,30 @@ import { useBookmarkUpdate, useCardZoomInOutStore } from '@/store/store'
 import { addBookmarkItem } from '@/services/data/post'
 import { MouseEventHandler, useState } from 'react'
 import type { ItemsType } from '@/types/items.types'
+import { useSession } from 'next-auth/react'
 
 interface PropsType {
   item: ItemsType
   index: number | 0
 }
 export default function QuotesCardControlButtons({ item, index }: PropsType) {
-  const setIsZoomIn = useCardZoomInOutStore((state) => state.setIsZoomIn)
-  const setCardIndex = useCardZoomInOutStore((state) => state.setCardIndex)
+  const { data: session } = useSession()
+  const { setIsZoomIn, setCardIndex } = useCardStore()
   const setIsUpdate = useBookmarkUpdate((state) => state.setIsUpdate)
 
   const hasToken = useHasToken()
   const router = useRouter()
   const [isDisplay, setIsDisplay] = useState(false)
 
+  // 북마크 추가
   const onClickBookmarkAdd = async () => {
-    if (!item && !hasToken) return
+    if (!item && !hasToken && !session) return
     const { id } = item
-    const isSuccess = await addBookmarkItem(id, `${item.author}/${id}`)
+    const isSuccess = await addBookmarkItem(id, `/quotes/authors/${item.author}/${id}`)
     isSuccess && setIsUpdate(true)
   }
 
+  // 카드 꾸미기 페이지로 이동
   const onClickStylerPageSwitch = () => {
     if (!item) return
     const { id } = item
@@ -37,11 +40,13 @@ export default function QuotesCardControlButtons({ item, index }: PropsType) {
     quotesSelector(item)
   }
 
+  // 명언 카드 확대
   const onClickCardZoomInOut = () => {
     setIsZoomIn(true)
     setCardIndex(index)
   }
 
+  // ' : ' 메뉴 드롭다운
   const onClickToggleMenu = () => {
     setIsDisplay(!isDisplay)
   }
@@ -56,9 +61,8 @@ export default function QuotesCardControlButtons({ item, index }: PropsType) {
         onMouseLeave={() => {
           setIsDisplay(false)
         }}
-        className={` ${
-          isDisplay ? 'visible opacity-100 top-2 z-50' : 'invisible opacity-0'
-        } transition-all absolute top-0 right-[2.6em] bg-white shadow-[inset_0_0_5px_0_rgba(0,0,0,0.5)] rounded-[5px] `}
+        className={` ${isDisplay ? 'visible opacity-100 top-2 z-50' : 'invisible opacity-0'
+          } transition-all absolute top-0 right-[2.6em] bg-white shadow-[inset_0_0_5px_0_rgba(0,0,0,0.5)] rounded-[5px] `}
       >
         {/* 카드 만들기 버튼 */}
         <button
@@ -108,4 +112,14 @@ function ButtonMenuIcon({ isDisplay, onClickToggleMenu }: MenuIconPropsType) {
       {isDisplay ? <HiXMark /> : <HiDotsVertical />}
     </button>
   )
+}
+
+
+
+
+const useCardStore = () => {
+  const setIsZoomIn = useCardZoomInOutStore((state) => state.setIsZoomIn)
+  const setCardIndex = useCardZoomInOutStore((state) => state.setCardIndex)
+
+  return { setIsZoomIn, setCardIndex }
 }

@@ -104,6 +104,7 @@ export default function QuoteCard({ item, items, index }: PropsType) {
       key={item.id}
       className="invisible shadow-[inset_0_0_0_3px_white] rounded-[10px] w-[95%] my-[1em] max-w-[500px] bg-transparent  px-[15px] py-[35px] mx-auto relative hover:bg-[#d5d5d533] "
     >
+
       {/* 명언 정보 */}
       <blockquote className="mt-[1em] text-white ">
         <p className=" p-[1em] text-[1.15em]">{item.quote}</p>
@@ -117,20 +118,21 @@ export default function QuoteCard({ item, items, index }: PropsType) {
       ) : (
         <QuotesCardControlButtons index={index} item={item} />
       )}
+
       {/* 상세 페이지 이동 버튼 */}
       <button
+        aria-label='상세 페이지 이동'
         onClick={onClickPushAnimation}
         className="absolute right-[1.8em] top-[0.45em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-white  "
       >
         <HiDocumentMagnifyingGlass />
       </button>
+
       {/* 듣기 버튼 */}
       <button
         aria-label="명언 듣기 버튼"
         className="absolute right-[3.3em] top-[0.429em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-white "
-        onClick={() => {
-          setText(item.quote)
-        }}
+        onClick={() => {setText(item.quote)}}
       >
         <SlEarphones className="pr-[2px]" />
       </button>

@@ -9,7 +9,7 @@ import { HiClock } from "react-icons/hi2"
 const MINUTE_TO_SEC = 60
 export default function Timer() {
 
-    const [timeScale, setTimeScale] = useState(100)
+    const [timeScale, setTimeScale] = useState(0)
 
     // 토큰 만료 시간 측정
     const checkTokenExp = useCallback(async () => {
@@ -60,7 +60,7 @@ export default function Timer() {
     return (
 
         <article className="fixed right-[2em] top-[3em] text-white bg-[#00000039] rounded-[10px] p-[8px] font-sans text-[0.95em] ">
-            <p>재 로그인 까지</p>
+            <p>재로그인</p>
 
             <h2 className="flex items-center justify-center"><HiClock /> <span className="mx-[5px]">{timeScale}</span></h2>
         </article>

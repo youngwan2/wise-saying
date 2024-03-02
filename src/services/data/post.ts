@@ -7,7 +7,7 @@ import toast from 'react-hot-toast'
  * @param pathName '/quotes/authors/${path}
  */
 export const addBookmarkItem = async (itemId: number, path: string) => {
-  const quoteUrl = location.origin + `/quotes/authors/${path}`
+  const quoteUrl = location.origin + `${path}`
   const postData = {
     quoteId: itemId,
     url: quoteUrl

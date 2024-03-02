@@ -29,7 +29,7 @@ interface UserInfoType {
  * SET SessionStorage | 유저 정보 저장
  * @param user
  */
-export const setUserInfo = (user: UserInfoType) => {
+export const setUserInfo = (user: UserInfoType| any) => {
   sessionStorage.setItem('user', JSON.stringify(user))
 }
 

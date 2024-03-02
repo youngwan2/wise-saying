@@ -14,12 +14,10 @@ export default async function Home() {
     return <ReplaceMessageCard childern="데이터를 불러오는 중입니다.." />
   return (
 
-<>
+    <>
+      <TodayQuotelist quotes={items} />
+      <HomeMenu />
+    </>
 
-
-<TodayQuotelist quotes={items} />
-<HomeMenu/>
-</>
-
-  ) 
+  )
 }

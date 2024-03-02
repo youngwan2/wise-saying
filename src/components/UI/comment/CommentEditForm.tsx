@@ -1,7 +1,9 @@
 import useDraggable from '@/custom/useDraggable'
 import useHasToken from '@/custom/useHasToken'
 import { updateComment } from '@/services/user/patch'
+import { useSession } from 'next-auth/react'
 import { MouseEventHandler, useRef } from 'react'
+import toast from 'react-hot-toast'
 
 interface PropsType {
   onClickEditCancel: MouseEventHandler<HTMLButtonElement>
@@ -16,12 +18,14 @@ export default function CommentEditForm({
   setEditFormDisplay,
 }: PropsType) {
   const hasToken = useHasToken()
+  const {data:session} = useSession()
+
   const formRef = useRef<HTMLFormElement>(null)
-  useDraggable(formRef, null)
+  
 
   // PATCH | 유저가 작성한 댓글을 수정하는 요청
   async function commentUpdate(formData: FormData) {
-    if (!hasToken) return alert('로그인 해주세요')
+    if (!hasToken && !session ) return toast.error('로그인 후 이용 가능합니다.')
     const comment = formData.get('comment')?.valueOf().toString() || ''
     updateComment(commentId, comment).then(() => setEditFormDisplay(false))
   }

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function AddWisesayingPage() {
   return (
-    <section className="z-[1000] fixed left-0 right-0 top-0 bottom-0 bg-[#0000004d]">
+    <section className="z-[1000] fixed left-0 right-0 top-0 bottom-0 ">
       <QuoteWriteForm />
       <BackMoveButton/>
     </section>

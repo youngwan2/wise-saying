@@ -1,9 +1,10 @@
 'use client'
 
 import { Method, getDefaultConfig } from '@/configs/config.api'
+import useHasToken from '@/custom/useHasToken'
 import { postLike } from '@/services/user/post'
 import { defaultFetch } from '@/utils/fetcher'
-import { getAccessToken } from '@/utils/session-storage'
+import { useSession } from 'next-auth/react'
 import { useCallback, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { HiHandThumbUp } from 'react-icons/hi2'
@@ -12,14 +13,18 @@ interface PropsType {
   id: string
 }
 
-const TOKEN = getAccessToken() || ''
+
 export default function QuoteLikeBox({ id }: PropsType) {
   const [likeCount, setLikeCount] = useState(0)
   const [quoteId, setQuoteId] = useState(0)
 
+  const hasToken = useHasToken()
+  const {data:session} = useSession()
+
   const onClickHandleLikeClick = async () => {
-    if (TOKEN.length < 2) return toast.error('로그인 후 이용해주세요.')
-    const isSuccess = await postLike(Number(id))
+     if(!hasToken &&  !session ) return toast.error('로그인 후 이용 가능 합니다.')
+    const {isSuccess, likeCount} = await postLike(Number(id)) || {isSuccess:false, count:0}
+  console.log(likeCount)
 
     if (isSuccess) {
       setLikeCount(likeCount)

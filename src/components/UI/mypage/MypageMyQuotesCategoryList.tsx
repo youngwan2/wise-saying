@@ -8,7 +8,6 @@ export default function MypageMyQuotesCategoryList({
   categories,
   onClickCategoryFilter,
 }: PropsType) {
-  if (categories.length < 1) return <></>
   return (
     <ul className="text-center mt-[2em]">
       <li

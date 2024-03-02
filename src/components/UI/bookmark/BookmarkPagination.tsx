@@ -3,19 +3,16 @@ import { MouseEventHandler } from 'react'
 interface PropsType {
   page: number
   maxPageSize: number
-  currentTotal: number
   onClickPrevSwitch: MouseEventHandler<HTMLButtonElement>
   onClickNextSwitch: MouseEventHandler<HTMLButtonElement>
 }
 export default function BookmarkPagination({
   page,
   maxPageSize,
-  currentTotal,
   onClickPrevSwitch,
   onClickNextSwitch,
 }: PropsType) {
 
-  console.log(currentTotal)
   return (
     <article className="flex justify-center ">
       {/* 이전 */}

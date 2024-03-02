@@ -38,8 +38,8 @@ export async function POST(req: NextRequest) {
     }
 
     const query = `
-        SELECT user_id, email, password,profile_img_url, nickname FROM users
-        WHERE email = $1
+        SELECT user_id, email, password,profile_img_url, nickname, provider FROM users
+        WHERE email = $1 AND provider IS NULL
     `
     const user = await db.query(query, [email])
     await db.end()
@@ -53,6 +53,7 @@ export async function POST(req: NextRequest) {
       })
 
     // 1-2. 데이터베이스에서 가져온 데이터 저장
+
     const {
       email: userEmail,
       password: userPassword,
@@ -75,8 +76,7 @@ export async function POST(req: NextRequest) {
     const accessToken = createToken({ userEmail, userId }, true)
     const refreshToken = createToken({ userEmail, userId }, false)
 
-
-     const exp = tokenExpCalculator(accessToken, true)
+    const exp = tokenExpCalculator(accessToken, true)
 
     // 4. 리프레쉬 토큰 쿠키 저장
     cookies().set({
@@ -87,7 +87,7 @@ export async function POST(req: NextRequest) {
       path: '/', // 쿠키에 접근할 수 있는 사이트 경로
     })
 
-    
+
 
     return NextResponse.json({
       success: true,

@@ -3,11 +3,13 @@
 import useHasToken from '@/custom/useHasToken'
 import { HiUser } from 'react-icons/hi2'
 import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 
 export default function LoginButton() {
   const router = useRouter()
   const hasToken = useHasToken()
-  if (hasToken) return <></>
+  const { data: session } = useSession()
+  if (hasToken || session) return <></>
   return (
     <button
       aria-label="로그인 아이콘"

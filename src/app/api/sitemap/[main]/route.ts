@@ -20,10 +20,12 @@ export async function GET(req: NextRequest, res: { params: { main: string } }) {
 
         if (main !== 'authors') {
         const query = `
-        SELECT DISTINCT category, quote_id AS id FROM quotes 
+        SELECT DISTINCT ON(category) category, quote_id AS id FROM quotes 
         `
         const results = await db.query(query)
         const items = results.rows
+
+        console.log(items)
  
         return NextResponse.json(items)
         }

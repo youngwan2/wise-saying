@@ -6,6 +6,8 @@ import { ItemsType } from '@/types/items.types'
 import QuotesCardControlButtons from './QuotesCardControlButtons'
 import { deleteUserQuote } from '@/services/data/delete'
 import { getUserEmail } from '@/utils/session-storage'
+import { useSession } from 'next-auth/react'
+import useHasToken from '@/custom/useHasToken'
 
 interface PropsType {
   item: ItemsType
@@ -18,6 +20,9 @@ export default function UserQuotesCardControlButtons({
 }: PropsType) {
   const userEmail = getUserEmail()
   const router = useRouter()
+
+  const {data:session} = useSession();
+  const hasToken = useHasToken()
 
   const setPostId = useUserPostIdStore((state) => state.setPostId)
 

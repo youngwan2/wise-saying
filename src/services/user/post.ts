@@ -22,7 +22,7 @@ export const requestNewRefreshToken = async () => {
   }
 
   try {
-    const response = await fetch('/api/auth/refresh', config)
+    const response = await fetch('/api/auth/general-auth/refresh', config)
     if (!response.ok) throw new Error('토큰 발급 요청이 실패하였습니다.')
 
     const { status } = await response.json()
@@ -42,14 +42,14 @@ export const requestNewAccessToken = async () => {
   const config = { method: 'POST' }
 
   try {
-    const respone = await fetch('/api/auth/access', config)
-    const { status, accessToken,exp, success } = await respone.json()
+    const respone = await fetch('/api/auth/general-auth/access', config)
+    const { status, accessToken, exp, success } = await respone.json()
 
     if (status === 201) {
-      
+
       setAccessToken(accessToken); setLoginExp(exp)
       return success
-    
+
     }
   } catch (error) {
     console.error('accessToken 발급 실패: ', error)
@@ -72,9 +72,9 @@ export const reqLogin = async ({ ...userInfo }: UserType) => {
 
   const user = userInfo
 
-  const url = '/api/auth/login'
+  const url = '/api/auth/general-auth/login'
   const config = defaultConfig(Method.POST, user)
-  const { meg, success, accessToken,exp, email, profile } = await defaultFetch(
+  const { meg, success, accessToken, exp, email, profile } = await defaultFetch(
     url,
     config,
   )
@@ -86,7 +86,7 @@ export const reqLogin = async ({ ...userInfo }: UserType) => {
 
 
 
-    
+
     toast.success(`${email}님 환영합니다!. 잠시 후 Home 화면으로 이동합니다.`)
     setTimeout(() => {
       window.location.reload()
@@ -111,7 +111,7 @@ interface SignInUserType {
 export async function reqSingIn({ ...userInfo }: SignInUserType) {
   const body = userInfo
   const config = defaultConfig(Method.POST, body)
-  const url = '/api/auth/signin'
+  const url = '/api/auth/general-auth/signin'
   const { success: isSuccess } = await defaultFetch(url, config)
   if (isSuccess) return isSuccess
   else return false
@@ -119,11 +119,9 @@ export async function reqSingIn({ ...userInfo }: SignInUserType) {
 
 /**
  * POST | 유저가 작성한 포스트를 등록 요청하는 메소드
- * @param hasToken accessToken
  * @param userPost
  */
 export const postUserPost = async (
-  hasToken: boolean,
   userPost: {
     category: string
     content: string
@@ -131,10 +129,6 @@ export const postUserPost = async (
     isUser: boolean
   },
 ) => {
-  if (!hasToken) {
-    toaster.error('로그인 후 이용해주세요.')
-    return redirect('/login')
-  }
 
   const { category, content, author } = userPost
 
@@ -173,8 +167,6 @@ export const postComment = async (
   comment: string,
   quoteId: string | string[],
 ) => {
-  const token = getAccessToken() || ''
-  if (!token) return toast.error('로그인 후 이용 부탁 드립니다.')
   if (comment.length < 2) return toast.error('2자 이상 입력해주세요.')
 
   const url = `/api/quotes/${quoteId}/comments`
@@ -215,13 +207,13 @@ export const postReply = async (commentId: number, content: string) => {
 export const postLike = async (id: number) => {
   const url = '/api/quotes/' + id + '/like'
   const config = defaultConfig(Method.POST)
-  const { success } = await defaultFetch(url, config)
+  const { success, ...results } = await defaultFetch(url, config)
+  console.log(results)
   if (success) {
     toast.success('반영되었습니다. 평가해주셔서 감사합니다.')
-    return true
+    return {isSuccess:true, likeCount: results.likeCount||0 }
   }
   if (!success) {
-    toast.error('평가는 계정 당 한 번만 가능합니다.')
     return false
   }
 }

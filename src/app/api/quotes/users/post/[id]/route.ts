@@ -1,6 +1,6 @@
 import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
-import { tokenVerify } from '@/utils/auth'
+import { oauth2UserInfoExtractor, tokenVerify } from '@/utils/auth'
 
 // GET | 단일 포스트 조회
 export async function GET(req: NextRequest, res: { params: { id: number } }) {
@@ -34,28 +34,41 @@ export async function GET(req: NextRequest, res: { params: { id: number } }) {
   }
 }
 
+
+const updateQuery = `
+UPDATE quotes
+SET quote = $1, category = $2, author = $3
+WHERE quote_id = $4
+`
+
 // PATCH | 단일 포스트 수정
 export async function PATCH(req: NextRequest, res: { params: { id: number } }) {
+
+  const db = await openDB()
+  const postId = res.params.id
+  const { '0': body } = await req.json()
+  const { content: quote, category, author } = body
+
+  const { userId: socialUserId } = await oauth2UserInfoExtractor() || { userId: '', email: '' }
+
   try {
-    const db = await openDB()
+    // 소셜 로그인 ⭕
+    if (socialUserId) {
+      await db.query(updateQuery, [quote, category, author, postId])
+      await db.end()
+      return NextResponse.json({
+        status: 201,
+        success: true,
+        meg: '요청을 성공적으로 처리하였습니다.',
+      })
+    }
 
     //  접근 토큰 검증
     const { status, meg, success } = tokenVerify(req, true)
-
     if (status === 400) return NextResponse.json({ status, success, meg })
     if (status === 401) return NextResponse.json({ status, success, meg })
 
-    const postId = res.params.id
-    const { '0': body } = await req.json()
-    const { content: quote, category, author } = body
-
-    const query = `
-            UPDATE quotes
-            SET quote = $1, category = $2, author = $3
-            WHERE quote_id = $4
-        `
-
-    await db.query(query, [quote, category, author, postId])
+    await db.query(updateQuery, [quote, category, author, postId])
     await db.end()
     return NextResponse.json({
       status: 201,
@@ -73,6 +86,10 @@ export async function PATCH(req: NextRequest, res: { params: { id: number } }) {
   }
 }
 
+const deleteQuery = `
+DELETE FROM quotes
+WHERE quote_id = $1
+`
 // DELETE | 단일 포스트 삭제
 export async function DELETE(
   req: NextRequest,
@@ -82,6 +99,18 @@ export async function DELETE(
 
   try {
     const db = await openDB()
+    const { userId: socialUserId } = await oauth2UserInfoExtractor() || { userId: '', email: '' }
+
+    // 소셜 로그인 ⭕
+    if (socialUserId) {
+      db.query(deleteQuery, [id])
+
+      return NextResponse.json({
+        status: 201,
+        success: true,
+        meg: '성공적으로 처리 되었습니다.',
+      })
+    }
 
     // 토큰 검증 및 에러 처리
     const { status, meg, success, user } = tokenVerify(req, true)
@@ -90,12 +119,7 @@ export async function DELETE(
     if (status === 401) return NextResponse.json({ status, success, meg })
 
     // 토큰 검증 성공 후 처리
-    const { sub: userId } = user
-    const query = `
-            DELETE FROM quotes
-            WHERE quote_id = $1 AND user_id = $2
-        `
-    db.query(query, [id, userId])
+    db.query(deleteQuery, [id])
 
     return NextResponse.json({
       status: 201,
