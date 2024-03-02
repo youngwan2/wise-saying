@@ -1,7 +1,7 @@
 import { Method, getDefaultConfig } from '@/configs/config.api'
 import { ItemsType } from '@/types/items.types'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
-import { ChangeEvent, FormEvent } from 'react'
+import { FormEvent } from 'react'
 import toast from 'react-hot-toast'
 
 interface MapType {

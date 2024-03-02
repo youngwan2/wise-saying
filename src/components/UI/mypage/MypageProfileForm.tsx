@@ -69,7 +69,7 @@ export default function MypageProfileForm({ userInfo, session }: PropsType) {
 
   // 이미지 업로드
   const onChangeImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
-    const src = await imagePreviewReader(e) || ''
+    const src = await imagePreviewReader(e,'mypage') || ''
     if (src?.length < 2) return
     setSrc(src)
     imageUploader(e)

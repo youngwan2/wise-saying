@@ -14,15 +14,15 @@ export default function CarouselControlButtons({ emblaApi }: PropsType) {
   }, [emblaApi])
 
   return (
-    <article className="flex justify-center items-center mb-[3em] text-white">
+    <article className="flex justify-center items-center mb-[1.5em] mt-[-1em] text-white">
       <button
-        className="px-[10px] hover:bg-[gold] hover:text-black border mr-[10px]"
+        className="p-[8px] rounded-[5px] px-[10px] hover:bg-[white] hover:font-bold hover:text-[#162557] border mr-[10px]"
         onClick={scrollPrev}
       >
         Prev
       </button>
       <button
-        className="px-[10px] hover:bg-[gold] hover:text-black border"
+        className="p-[8px] rounded-[5px] px-[10px] hover:bg-[white] hover:font-bold hover:text-[#162557] border"
         onClick={scrollNext}
       >
         Next

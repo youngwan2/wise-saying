@@ -18,11 +18,13 @@ interface QuoteType {
 }
 
 // 음.. 너무 길다.
+
+const DEFALT_LINE_HEIGHT = 9
 export default function Canvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [imageEl, setImageEl] = useState<HTMLImageElement | null>(null)
 
-  const { color, font, fontStyle, size, unit, lineHeight } = useTextStyle()
+  const { color, font, fontStyle, size, unit, lineHeight, textPositionY } = useTextStyle()
   const { color: strokeColor, thickness: strokeThickness } = useStrokeStyle()
   const { width, height, bgColor } = useCanvasStyle()
 
@@ -58,8 +60,6 @@ export default function Canvas() {
       ctx.strokeStyle = strokeColor
       ctx.font = `${size}${unit} ${font}`
 
-      const split = wrap(quote, { newline: '\n\n', width: 20 }).split('\n\n') // 텍스트가 일정 넓이를 벗어나면 자동 개행
-      let textY = 0 // 캔버스에 그려질 텍스트의 Y 좌표축을 저장(또한, 개행 되는 텍스트의 높이를 저장)
       if (!imageEl) return
       imageEl.alt = '명언 카드 배경 이미지'
 
@@ -69,16 +69,24 @@ export default function Canvas() {
         ctx.fillStyle = `${color}`
         ctx.drawImage(imageEl, 0, 0, canvas.width, canvas.height)
 
+
+        let appliedLineHeight = 0;
+        let defaultTextPositionY = 0
+        const changeTextPositionY = textPositionY
+        const split = wrap(quote, { newline: '\n\n', width: 25 }).split('\n\n') // 텍스트가 일정 넓이를 벗어나면 자동 개행
+
         // 배열 형태로 분리된 텍스트를 조건에 따라서 다르게 렌더링한다.
         split.forEach((text, i) => {
-          textY = height / 3 + i * lineHeight
+          appliedLineHeight = ((lineHeight + 2) * DEFALT_LINE_HEIGHT * i)
+
+          defaultTextPositionY = height / 5 + appliedLineHeight + changeTextPositionY
           if (fontStyle === 'fill') {
-            ctx.fillText(text, width / 2, textY)
+            ctx.fillText(text, width / 2, defaultTextPositionY)
           }
-          if (fontStyle === 'stroke') ctx.strokeText(text, width / 2, textY)
+          if (fontStyle === 'stroke') ctx.strokeText(text, width / 2, defaultTextPositionY)
           if (fontStyle === 'hybrid') {
-            ctx.strokeText(text, width / 2, textY)
-            ctx.fillText(text, width / 2, textY)
+            ctx.strokeText(text, width / 2, defaultTextPositionY)
+            ctx.fillText(text, width / 2, defaultTextPositionY)
           }
         })
       }
@@ -100,6 +108,7 @@ export default function Canvas() {
       unit,
       lineHeight,
       strokeColor,
+      textPositionY,
       strokeThickness,
       bgImageSrc,
       bgColorDraw,
@@ -142,7 +151,7 @@ export default function Canvas() {
   }, [])
 
   return (
-    <article className="min-h-[500px] w-[95%] bg-[#0f0f0fa4] p-[5px] relative shadow-[inset_5px_5px_5px_rgba(0,0,0,0.3)] rounded-[5px]">
+    <article className="mt-[1.2em] min-h-[500px] w-[95%] shadow-[0_0_0_2px_white] bg-[#0f0f0f72] p-[5px] relative rounded-[5px]">
       <span className="text-white">
         {width}X{height}
       </span>
@@ -173,9 +182,10 @@ const useTextStyle = () => {
   const size = useQuotesTextStyleStore((state) => state.size)
   const font = useQuotesTextStyleStore((state) => state.font)
   const fontStyle = useQuotesTextStyleStore((state) => state.fontStyle)
+  const textPositionY = useQuotesTextStyleStore((state) => state.textPositionY)
   const lineHeight = useQuotesLineHeightStore((state) => state.lineHeight)
 
-  return { color, unit, size, font, fontStyle, lineHeight }
+  return { color, unit, size, font, fontStyle, lineHeight, textPositionY }
 }
 
 const useCanvasStyle = () => {

@@ -23,9 +23,7 @@ export default function BackgroundStyler({ selectTapNum }: PropsType) {
   }, [bgColor])
 
   return (
-    <article
-      className={`${selectTapNum === 1 ? 'block' : 'hidden'} transition-all`}
-    >
+    <article className={`${selectTapNum ===1 ? 'visible ' : 'invisible absolute'} lg:max-w-[90%] flex flex-col`}>
       <h2 className="flex items-center text-[1.2em] mt-[1.25em] pb-[0.25em] text-[white]">
         <HiPaintBrush color="white" />{' '}
         <p className="ml-[0.5em]">배경 색 변경</p>

@@ -27,8 +27,8 @@ export default function StylerCarosel() {
   const setImageSrc = useImageElementStore((state) => state.setImageSrc)
 
   return (
-    <article className="overflow-hidden" ref={emblaRef}>
-      <figure className="flex  max-w-[1000px] px-[3em] pb-[5em] mt-[5em]">
+    <article className=" my-[2em] max-w-[1200px] w-[95%] overflow-hidden px-[3em]  shadow-[0_0_0_2px_white]  rounded-[5px]  " ref={emblaRef}>
+      <figure className="flex pb-[5em] mt-[5em]">
         {images.map((image, i) => {
           return (
             <Image
@@ -36,7 +36,8 @@ export default function StylerCarosel() {
                 const src = images[i]
                 setImageSrc(src)
               }}
-              className="rounded-[1em] mx-[10px] shadow-custom1 hover:cursor-pointer bg-[#fafafa]"
+              className=" hover:shadow-[0_0_0_5px_tomato] rounded-[5px] mx-[10px] hover:cursor-pointer bg-[#fafafa] max-h-[250px] max-w-[250px] min-w-[250px] w-full  shadow-[0_0_0_2px_white]"
+              
               key={image}
               src={image}
               alt="명언 카드 배경 이미지"

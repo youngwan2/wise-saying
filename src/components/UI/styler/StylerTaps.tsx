@@ -25,7 +25,7 @@ export default function StylerTaps({
             key={tap.num}
             className={`${
               selectTapNum === tap.num
-                ? 'bg-[#f8e787] text-[black] font-bold'
+                ? 'bg-[white] text-[#162557] font-bold'
                 : 'bg-[transparent]'
             } border text=white p-[5px] px-[10px] w-[100px] transition-all`}
           >

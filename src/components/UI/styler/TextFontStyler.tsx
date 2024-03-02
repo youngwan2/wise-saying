@@ -12,12 +12,14 @@ export default function TextFontStyler({
 }: PropsType) {
   const fontFamilies = [
     'Arial',
+    'cursive', // 손으로 쓴 것 같은 서체
     'Helvetica',
+    'fantasy', // 화려한 서체
     'Times New Roman',
     'Times',
     'Courier New',
     'Courier',
-    'monospace',
+    'monospace',// 글자 폭과 간격이 일정한 서제
     'Georgia',
     'Palatino',
     'Palatino Linotype',
@@ -26,12 +28,17 @@ export default function TextFontStyler({
     'Trebuchet MS',
     'Impact',
     'Charcoal',
-    'sans-serif',
+    'sans-serif', // 삐침 없는 글자
     'MS Sans Serif',
     'MS Serif',
-    'serif',
+    'serif', // 삐침 있는 글자
     '궁서',
     '궁서체',
+    '고딕',
+    '고딕체',
+    'dotum', // 돋움
+    'dotumche', // 돋움체
+    'gulim' // 굴림
   ]
 
   const fontStyles = ['fill', 'stroke', 'hybrid']

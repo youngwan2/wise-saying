@@ -60,6 +60,7 @@ export const useQuotesTextStyleStore = create<TextStyleState>((set) => ({
   unit: 'px',
   font: 'Arial',
   fontStyle: 'fill',
+  textPositionY:0,
   setTextStyle: (style) =>
     set(() => ({
       color: style.color,
@@ -67,6 +68,7 @@ export const useQuotesTextStyleStore = create<TextStyleState>((set) => ({
       unit: style.unit,
       font: style.font,
       fontStyle: style.fontStyle,
+      textPositionY:style.textPositionY,
     })),
 }))
 
@@ -74,7 +76,7 @@ export const useQuotesTextStyleStore = create<TextStyleState>((set) => ({
  * * Zustand |  줄간격
  */
 export const useQuotesLineHeightStore = create<LienHeightState>((set) => ({
-  lineHeight: 30,
+  lineHeight: 0,
   setLineHeight: (lineHeight) => set(() => ({ lineHeight })),
 }))
 

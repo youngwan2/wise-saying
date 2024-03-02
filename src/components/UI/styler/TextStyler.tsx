@@ -7,6 +7,7 @@ import TextFontStyler from './TextFontStyler'
 import TextColorStyler from './TextColorStyler'
 import TextLineHeightStyler from './TextLineHeightStyler'
 import TextStrokeStyler from './TextStrokeStyler'
+import TextPositionStyler from './TextPositionStyler'
 
 interface PropsType {
   selectTapNum: number
@@ -18,6 +19,7 @@ export interface TextStyleType {
   color: string
   font: string
   fontStyle: string
+  textPositionY: number
 }
 export default function TextStyler({ selectTapNum }: PropsType) {
   const [textStyle, setTextStyleState] = useState<TextStyleType>({
@@ -26,6 +28,7 @@ export default function TextStyler({ selectTapNum }: PropsType) {
     color: 'black',
     font: 'Arial',
     fontStyle: 'fill',
+    textPositionY: 0
   })
 
   const [sizeUnits] = useState(['px', 'em', 'rem'])
@@ -35,15 +38,18 @@ export default function TextStyler({ selectTapNum }: PropsType) {
     setTextStyle(textStyle)
   }, [setTextStyle, textStyle])
 
-  if (selectTapNum !== 0) return <></>
   return (
-    <article className=" lg:max-w-[90%] flex flex-col">
+    <article className={`${selectTapNum ===0 ? 'visible ' : 'invisible absolute'} lg:max-w-[90%] flex flex-col`}>
       <TextColorStyler
         setTextStyleState={setTextStyleState}
         textStyle={textStyle}
       />
       <TextSizeStyler
         sizeUnits={sizeUnits}
+        setTextStyleState={setTextStyleState}
+        textStyle={textStyle}
+      />
+      <TextPositionStyler
         setTextStyleState={setTextStyleState}
         textStyle={textStyle}
       />

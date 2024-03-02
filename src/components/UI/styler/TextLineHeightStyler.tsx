@@ -13,7 +13,7 @@ export default function TextLineHeightStyler() {
         min={0}
         className="p-[5px] rounded-[0.5em] shadow-[0_0px_0px_1px_black] w-[200px] text-center"
         type="number"
-        placeholder="Defalut : 35"
+        placeholder="Defalut : 0"
         onChange={(e) => {
           const height = Number(e.currentTarget.value)
           debounceCloser(height, '', null, setLineHeight, 500)

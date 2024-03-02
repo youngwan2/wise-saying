@@ -27,6 +27,7 @@ type TextType = {
   unit: string
   font: string
   fontStyle: string
+  textPositionY:number
 }
 
 export interface TextStyleState extends TextType {
