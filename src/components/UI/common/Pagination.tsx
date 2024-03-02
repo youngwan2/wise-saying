@@ -10,7 +10,6 @@ export default function Pagination({
   limit,
   pageList,
 }: PropsType) {
-  if (limit === 0) return <></>
   return (
     <article className="flex  max-w-[600px] justify-center mx-auto items-center mt-[1.5em] rounded-[1em] p-[5px] text-[1.1em]">
       {/* 뒤로 가기 */}

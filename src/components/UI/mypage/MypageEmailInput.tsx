@@ -6,7 +6,7 @@ export default function MypageEmailInput({ email }: PropsType) {
     <div className="mx-auto my-[1em]">
       <label
         htmlFor="email"
-        className=" mr-[5px] rounded-[5px]  text-center min-w-[70px] inline-block text-white"
+        className=" mb-[8px] rounded-[5px] min-w-[70px] inline-block text-white"
       >
         이메일
       </label>
@@ -16,7 +16,7 @@ export default function MypageEmailInput({ email }: PropsType) {
         readOnly
         value={email}
         id="email"
-        className="shadow-[0_0_0_2px_white] bg-[transparent]  rounded-[2px] border-gray min-w-[200px] p-[6px] placeholder:text-[gray] bg-[#e2dfdf] focus:outline-none text-black font-bold hover:cursor-not-allowed "
+        className="shadow-[0_0_0_2px_white] bg-[transparent]  rounded-[2px] border-gray min-w-[200px] max-w-[250px] w-full p-[6px] placeholder:text-[gray] bg-[#e2dfdf] focus:outline-none text-white hover:cursor-not-allowed "
       ></input>
     </div>
   )

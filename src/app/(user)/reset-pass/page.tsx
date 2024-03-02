@@ -23,7 +23,7 @@ export default function ResetPage() {
     const result = validator(pass, confirm)
     if (!result) return
 
-    const url = '/api/auth/forgot/reset-pass'
+    const url = '/api/auth/general-auth/forgot/reset-pass'
     const config = {
       method: 'POST',
       headers: {

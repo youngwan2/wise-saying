@@ -5,6 +5,7 @@ import Header from '@/components/layout/Header'
 import ScrollAndNavButtons from '@/components/UI/common/ScrollAndNavButtons'
 import { Toaster } from 'react-hot-toast'
 import Timer from '@/components/UI/common/Timer'
+import { SessionProvider } from 'next-auth/react'
 
 const gowunDodum = Gowun_Dodum({ weight: '400', subsets: ['latin'] })
 
@@ -36,13 +37,15 @@ export default function RootLayout({
   return (
     <html lang="ko" className=" h-full bg-[#162557]">
       <body className={`${gowunDodum.className}`}>
-        <Header />
-        <Timer/>
-        <main className="min-h-[100vh] w-full mx-auto max-w-[1700px] relative">
-          <Toaster />
-          {children}
-          <ScrollAndNavButtons />
-        </main>
+        <SessionProvider>
+          <Header />
+          <Timer />
+          <main className="min-h-[100vh] w-full mx-auto max-w-[1700px] relative">
+            <Toaster />
+            {children}
+            <ScrollAndNavButtons />
+          </main>
+        </SessionProvider>
       </body>
     </html>
   )

@@ -12,6 +12,7 @@ import BookmarkList from './BookmarkList'
 import { deleteBookmark } from '@/services/user/delete'
 import toast from 'react-hot-toast'
 import useHasToken from '@/custom/useHasToken'
+import { useSession } from 'next-auth/react'
 
 export interface BookmarkListType {
   id: number
@@ -30,13 +31,14 @@ export default function BookmarkModal() {
   const { toggleState, setListCount } = useBookmark()
 
   const hasToken = useHasToken()
+  const { data: session } = useSession()
 
   // SWR | 북마크 리스트 조회
   const {
     data: bookmarkInfo,
     isLoading,
     mutate,
-  } = useSWR([`/api/bookmark?page=${page}&limit=5`], getBookmarkListFetcher, {
+  } = useSWR(!hasToken || !session ? `/api/bookmark?page=${page}&limit=5` : null, getBookmarkListFetcher, {
     refreshInterval: 300000,
     revalidateOnMount: true,
     revalidateIfStale: false,
@@ -54,7 +56,7 @@ export default function BookmarkModal() {
 
   // DELETE | 북마크 삭제
   const onClickDeleteBookmark = async (bookmarkId: number) => {
-    if (!hasToken) return toast.error('로그인 후 이용해주세요.')
+    if (!hasToken && !session) return toast.error('로그인 후 이용해주세요.')
     setIsDeleting(true)
     const success = await deleteBookmark(bookmarkId)
     if (success) {
@@ -103,7 +105,6 @@ export default function BookmarkModal() {
       <BookmarkPagination
         maxPageSize={maxPage}
         page={page}
-        currentTotal={currentListCount}
         onClickPrevSwitch={() => { setPage(Math.max(0, page - 1)); mutate() }}
         onClickNextSwitch={() => { setPage(Math.min(maxPage, page + 1)); mutate() }}
       />

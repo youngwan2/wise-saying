@@ -53,7 +53,6 @@ export default function ZommInQuoteCard({ item }: PropsType) {
             return -y * 15
           },
           rotateZ: () => {
-            console.log(xy)
             return -x * y * 5
           },
           background: `linear-gradient(${-x * 360}deg, white, rgba(555,555,555,0.7) 80%)`,

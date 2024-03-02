@@ -3,9 +3,9 @@ export default function ForgotLink() {
   return (
     <Link
       href={'/forgot'}
-      className="text-[15px] hover:hover:bg-[#162557]  text-white px-[2px]  rounded-[5px] hover:font-semibold absolute bottom-[9.4em] right-[1em]"
+      className="text-[15px] hover:hover:bg-[#162557]  text-white px-[2px]  hover:font-semibold border-b "
     >
-      이메일/비밀번호 찾기
+      아이디/비밀번호 찾기
     </Link>
   )
 }

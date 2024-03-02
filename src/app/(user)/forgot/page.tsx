@@ -27,7 +27,7 @@ export default function ForgotPage() {
         ?.valueOf()
         .toString() || ''
     const config = defaultConfig(Method.POST, email)
-    const url = '/api/auth/forgot/email'
+    const url = '/api/auth/general-auth/forgot/email'
     const { success, meg } = await defaultFetch(url, config)
     if (success) toast.success(meg)
     else toast.error(meg)
@@ -41,7 +41,7 @@ export default function ForgotPage() {
         ?.valueOf()
         .toString() || ''
     const config = defaultConfig(Method.POST, email)
-    const url = '/api/auth/forgot/password'
+    const url = '/api/auth/general-auth/forgot/password'
     const { success, meg } = await defaultFetch(url, config)
     if (success) toast.success(meg)
     else toast.error(meg)

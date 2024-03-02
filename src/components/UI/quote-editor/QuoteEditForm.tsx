@@ -23,7 +23,9 @@ export type PostType = {
 
 export default function QuoteEditForm() {
   const router = useRouter()
-  const formRef = useRef<HTMLFormElement>(null)
+  const updateFormRef = useRef<HTMLFormElement>(null)
+
+  useDraggable(updateFormRef, 'free')
 
   const [post, setPost] = useState<PostType | null>(null)
   const postId = useUserPostIdStore((state) => state.postId)
@@ -44,7 +46,7 @@ export default function QuoteEditForm() {
     getUserPostBy(postId)
   }, [postId])
 
-  useDraggable(formRef, 'free')
+
 
   if (loading)
     return <ReplaceMessageCard childern="데이터를 불러오는 중입니다..." />
@@ -72,12 +74,10 @@ export default function QuoteEditForm() {
     router.push('/user-quotes')
   }
   return (
-    <>
-      <Overlay />
       <form
         action={updateFormAction}
-        ref={formRef}
-        className="text-white z-[1000] w-full  max-w-[560px]  rounded-[10px] shadow-[inset_0_0_0_2px_white] fixed left-[50%] top-[45%] translate-x-[-50%] translate-y-[-50%] "
+        ref={updateFormRef}
+        className="text-white z-[1000] w-full  max-w-[560px]  rounded-[10px] shadow-[inset_0_0_0_2px_white] fixed left-[50%] top-[45%] translate-x-[-50%] translate-y-[-50%] backdrop-blur-[3px] "
       >
         <h2 className="text-[1.25em] mb-[1em] shadow-[inset_0_0_0_2px_white] p-[8px]  rounded-t-lg">
           명언 수정
@@ -87,6 +87,5 @@ export default function QuoteEditForm() {
         <QuoteAuthorInput post={post} name="author" />
         <QuoteFormButtons onClickCancel={onClickCancel} />
       </form>
-    </>
   )
 }
