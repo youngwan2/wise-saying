@@ -1,5 +1,6 @@
 import Google from 'next-auth/providers/google'
-
+import type { NextAuthConfig } from 'next-auth'
+import NextAuth from 'next-auth'
 
 const {
     AUTH_GOOGLE_ID,
@@ -8,8 +9,7 @@ const {
 } = process.env
 
 
-import type { NextAuthConfig } from 'next-auth'
-import NextAuth from 'next-auth'
+
 
 
 export const authConfig = {
@@ -23,3 +23,5 @@ export const authConfig = {
 
 
 export const { handlers: { GET, POST }, auth } = NextAuth(authConfig)
+
+

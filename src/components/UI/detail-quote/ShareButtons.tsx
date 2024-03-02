@@ -59,7 +59,7 @@ export default function ShareButtons() {
         onClick={() => {
           setIsDisplay(true)
         }}
-        className="sm:text-[14.5px] text-[13px] hover:bg-[tomato] min-w-[60px] my-[2px] py-[5px] mx-auto rounded-[5px]  flex items-center text-white justify-center"
+        className="sm:text-[1.05em] text-[0.95em] hover:bg-[tomato] min-w-[60px] my-[2px] py-[5px] mx-auto rounded-[5px]  flex items-center text-white justify-center"
       >
         <HiShare className="mr-[0.5em]" />
         공유

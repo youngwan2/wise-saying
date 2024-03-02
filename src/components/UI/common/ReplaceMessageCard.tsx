@@ -11,7 +11,7 @@ export default function ReplaceMessageCard({
 
   return (
     <h2
-      className="  text-center z-50  border inline-block p-[2em] absolute top-[40%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-[1.25em] 
+      className="sm:text-[1.25em] text-[1em] sm:p-[2em] p-[1em] text-center z-50  border inline-block  absolute top-[40%] left-[50%] translate-x-[-50%] translate-y-[-50%]  
         rounded-[10px] shadow-[5px_10px_10px_0_rgba(0,0,0,0.5)] bg-gradient-to-tr from-orange-50 to-white"
     >
       {childern}

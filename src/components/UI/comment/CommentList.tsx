@@ -16,7 +16,7 @@ export default function CommentList({ comments }: PropsType) {
 
 function EmptyMessage() {
   return (
-    <p className="text-white text-[1.25em] text-center mx-auto mt-[2em]">
+    <p className="text-white sm:text-[1.25em] text-[1em] text-center mx-auto mt-[2em]">
       해당 명언/속담/글귀에 대한 의견을 공유해주세요!
     </p>
   )

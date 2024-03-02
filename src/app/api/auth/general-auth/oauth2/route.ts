@@ -7,6 +7,7 @@ export async function GET() {
     const session = await auth()
     const email = session?.user?.email
     const image = session?.user?.image
+
     const nickname = session?.user?.name
     const db = await openDB()
 

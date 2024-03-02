@@ -15,7 +15,7 @@ export default function BookmarkList({
   onClickDelete,
 }: PropsType) {
   return (
-    <div className="px-[1em] mt-[2em] overflow-y-auto overflow-x-hidden min-h-[400px]  p-[1em] w-[90%] mx-auto flex flex-col justify-center items-center">
+    <div className="sm:px-[1em] px-[0.2em] sm:text-[1em] text-[0.95em] mt-[2em] overflow-y-auto overflow-x-hidden min-h-[400px]  py-[1em] w-[90%] mx-auto flex flex-col justify-center items-center">
       {!isLoading ? (
         bookmarkList?.map((bookmark: BookmarkListType) => {
           return (

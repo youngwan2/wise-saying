@@ -9,6 +9,8 @@ import { useRouter } from 'next/navigation'
 import { addBookmarkItem } from '@/services/data/post'
 import useTTS from '@/custom/useTTS'
 import { useBookmarkUpdate } from '@/store/store'
+import { useSession } from 'next-auth/react'
+import toast from 'react-hot-toast'
 
 interface PropsType {
   item: {
@@ -21,15 +23,16 @@ interface PropsType {
 
 export default function DetailPageControlButtons({ item }: PropsType) {
   const hasToken = useHasToken()
+  const { data: session } = useSession();
   const router = useRouter()
   const setIsUpdate = useBookmarkUpdate((state) => state.setIsUpdate)
 
   const { setText } = useTTS()
 
   const onClickBookmarkAdd = async () => {
-    if (!item && !hasToken) return
+    if (!item && !hasToken && !session) return toast.error('로그인 후 이용 가능합니다.')
     const { id } = item
-    const isSuccess = await addBookmarkItem(id)
+    const isSuccess = await addBookmarkItem(id, `/quotes/authors/${item.author}/${id}`)
     isSuccess && setIsUpdate(true)
   }
 
@@ -42,7 +45,7 @@ export default function DetailPageControlButtons({ item }: PropsType) {
 
   return (
     <>
-      <article className="sm:text-[14.5px] text-[13px] flex items-start  w-full text-white ">
+      <article className="sm:text-[1.05em] text-[0.95em] flex items-start  w-full text-white ">
         {/* 카드 만들기 버튼 */}
         <button
           onClick={onClickStylerPageSwitch}
@@ -56,7 +59,7 @@ export default function DetailPageControlButtons({ item }: PropsType) {
         {/* 북마크 추가 버튼 */}
         <button
           onClick={onClickBookmarkAdd}
-          className="  flex items-center hover:bg-[tomato] mt-[0.25em] hover:text-[white] rounded-[0.3em] p-[5px] "
+          className="flex items-center hover:bg-[tomato] mt-[0.25em] hover:text-[white] rounded-[0.3em] p-[5px] "
           aria-label="명언 북마크 버튼"
         >
           <HiOutlineBookmark className="pr-[3px]" />

@@ -39,7 +39,7 @@ export default async function DetailPage({
 
   if (!item) return <ReplaceMessageCard childern="데이터를 조회중 입니다.." />
   return (
-    <div className="sm:p-[4em] p-[1em]  min-h-[100vh] h-full  mx-auto my-[3em]  perspective-500 flex flex-col max-w-[900px] bg-[#0000001b]">
+    <article className="sm:p-[4em] p-[1em]  min-h-[100vh] h-full  mx-auto my-[3em]  perspective-500 flex flex-col max-w-[1300px] bg-[#0000001b]">
       <h2 className="sm:text-[1.5em] text-[1.2em]  flex justify-center items-center p-[10px]  text-center text-white">
         <span className="mx-[3px] text-[gold] font-mono">
           <Link href={`/quotes/authors/${decodeName}`}>{decodeName}</Link>
@@ -48,11 +48,12 @@ export default async function DetailPage({
       </h2>
       {/* 명언 텍스트 영역 */}
       <blockquote
-        className="sm:p-[4em] p-[1em] pt-[3em] pb-[3.5em]  bg-[#ffffffdb] text-centermax-w-[900px] w-full mx-auto rounded-[10px] mt-[2em]
+        className="
+        sm:text-[1.4em] text-[1.2em] sm:px-[4em] sm:py-[4em] min-h-[280px] p-[3em] text-center  bg-[#ffffffdb] text-centermax-w-[900px] w-full mx-auto rounded-[10px] mt-[2em]
             shadow-[inset_0_5px_5px_0_rgba(0,0,0,0.5)] relative
             "
       >
-        <p className="sm:text-[1.25em] text-[1em]">{item.quote}</p>
+        <p className="">{item.quote}</p>
         <QuoteLikeBox id={id} />
       </blockquote>
 
@@ -64,6 +65,6 @@ export default async function DetailPage({
       </div>
       {/* 댓글 영역 */}
       <Comment id={id} />
-    </div>
+    </article>
   )
 }

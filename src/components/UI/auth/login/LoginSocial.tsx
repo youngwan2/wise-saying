@@ -6,7 +6,6 @@ import { useCallback, useEffect } from 'react'
 import { setUserInfo } from '@/utils/session-storage'
 
 export default function LoginGoogle() {
-
     const { data: session } = useSession()
 
     async function reqGoolgeRogin() {
