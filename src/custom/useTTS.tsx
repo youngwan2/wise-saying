@@ -16,6 +16,7 @@ export default function useTTS() {
     if (synth !== null && text.length > 1) {
       const utterance = new SpeechSynthesisUtterance(text)
       synth.speak(utterance)
+      setText('')
     }
   }, [])
 

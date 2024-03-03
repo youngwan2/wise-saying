@@ -1,4 +1,5 @@
 import {
+  HiCommandLine,
     HiNewspaper,
     HiOutlineHandThumbUp,
     HiOutlineHomeModern,
@@ -14,6 +15,7 @@ const navList = [
     { path: '/user-quotes', label: '유저 명언', icon: HiOutlineHandThumbUp },
     { path: '/add-wisesaying', label: '명언 쓰기', icon: HiOutlinePencil },
     { path: '/mypage', label: '마이페이지', icon: HiPhotograph },
+    { path:'/ai-quote', label:'AI 명언', icon:HiCommandLine},
     { path: '/', label: '홈', icon: HiOutlineHomeModern },
   ]
 
