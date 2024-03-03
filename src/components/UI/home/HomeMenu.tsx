@@ -1,6 +1,5 @@
 "use client"
 
-import useHasToken from "@/custom/useHasToken";
 import navList from "@/router";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -8,7 +7,6 @@ import { HiMenuAlt3 } from "react-icons/hi";
 
 export default function HomeMenu() {
     const { push, prefetch } = useRouter()
-    const hasToken = useHasToken()
 
     return (
         <>
