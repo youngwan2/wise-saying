@@ -4,12 +4,13 @@ import useHasToken from '@/custom/useHasToken'
 import { useRouter } from 'next/navigation'
 import { HiPower } from 'react-icons/hi2'
 import { useSession, signOut } from 'next-auth/react'
+
 export default function LogoutButton() {
   const router = useRouter()
   const hasToken = useHasToken()
-
   const { data: session } = useSession()
 
+  
   if (!hasToken && !session) return <></>
   if (hasToken || session)
     return (

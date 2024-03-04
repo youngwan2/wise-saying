@@ -118,6 +118,7 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
         quoteId,
       })
     }
+    
     await db.query(insertQuery, [userId, quoteId])
     const result = await db.query(likeCountSelectQuery, [quoteId])
     const likeCount = result.rows[0].count

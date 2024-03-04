@@ -24,7 +24,6 @@ export default function QuoteLikeBox({ id }: PropsType) {
   const onClickHandleLikeClick = async () => {
      if(!hasToken &&  !session ) return toast.error('로그인 후 이용 가능 합니다.')
     const {isSuccess, likeCount} = await postLike(Number(id)) || {isSuccess:false, count:0}
-  console.log(likeCount)
 
     if (isSuccess) {
       setLikeCount(likeCount)

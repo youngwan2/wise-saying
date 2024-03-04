@@ -19,6 +19,8 @@ export default function UserQuotesCardControlButtons({
   item,
 }: PropsType) {
   const userEmail = getUserEmail()
+
+  console.log(userEmail)
   const router = useRouter()
 
   const {data:session} = useSession();
@@ -39,7 +41,7 @@ export default function UserQuotesCardControlButtons({
     setPostId(Number(item.id))
     router.push('/update-wisesaying')
   }
-
+  
   return (
     <article aria-label="수정 및 삭제, 꾸미기,담기, 확대, 듣기 버튼의 컨테이너">
       <article

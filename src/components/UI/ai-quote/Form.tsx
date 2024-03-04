@@ -4,7 +4,7 @@ import { HiPencilSquare } from 'react-icons/hi2'
 
 interface PropsType {
     onClickCancel: MouseEventHandler<HTMLButtonElement>
-    generateAction: (form: FormData) => Promise<void>
+    generateAction: (form: FormData) => Promise<string | void>
 }
 const Form = forwardRef<HTMLTextAreaElement, PropsType>(function Form(props, textAreaRef) {
     const { generateAction, onClickCancel } = props

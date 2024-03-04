@@ -6,9 +6,7 @@ import { useGSAP } from "@gsap/react"
 import { useState, useRef, useEffect } from 'react'
 import gsap from "gsap"
 import { TextPlugin } from "gsap/all"
-import { HiPencilSquare } from "react-icons/hi2"
 import toast from "react-hot-toast"
-import ReplaceMessageCard from "@/components/UI/common/ReplaceMessageCard"
 
 import GuideMessage from "@/components/UI/ai-quote/GuideMessage"
 import AiQuote from "@/components/UI/ai-quote/AiQuote"
@@ -20,7 +18,6 @@ export default function AiQuotePage() {
 
     const [aiQuote, setAiQuote] = useState('')
     const [isLoading, setIsLoading] = useState(false)
-    const [isError, setIsError] = useState(false)
 
     const textAreaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -72,6 +69,8 @@ export default function AiQuotePage() {
     // Action | 인공지능 명언 생성 
     async function generateAction(form: FormData) {
         const prompt = form.get('prompt')?.valueOf().toString() || ''
+        if(prompt.length<5) return toast.error('보다 정확한 명언 생성을 위해 5자 이상 입력해주세요.')
+        
         getAiQuote(prompt)
     }
 
@@ -83,9 +82,11 @@ export default function AiQuotePage() {
 
         if (isSuccess) {
             setAiQuote(results.result || '')
-            setIsError(false)
         }
-        if (!isSuccess) { setIsError(true) }
+        if (!isSuccess) {
+            setAiQuote(results.result || '')
+        }
+
         setIsLoading(false)
 
         if (!textAreaRef.current) return
@@ -98,7 +99,6 @@ export default function AiQuotePage() {
         !isCancel && toast.success('요청을 취소하였습니다.')
     }
 
-    if (isError) return <ReplaceMessageCard childern='현재 서비스 이용이 불가능 합니다. 나중에 다시시도 해주세요.' />
     return (
         <>
             <article className="max-w-[700px] w-full fixed left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] shadow-[0_0_0_2px_white] p-[1em] rounded-[5px] text-white">
@@ -107,7 +107,7 @@ export default function AiQuotePage() {
                 <AiQuote isLoading={isLoading} aiQuote={aiQuote} />
 
                 {/* 명언 생성 요청 */}
-                <Form onClickCancel={onClickCancel} generateAction={generateAction} ref={textAreaRef}/>
+                <Form onClickCancel={onClickCancel} generateAction={generateAction} ref={textAreaRef} />
 
             </article>
         </>
