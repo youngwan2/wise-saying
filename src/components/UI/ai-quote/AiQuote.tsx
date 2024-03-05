@@ -27,7 +27,7 @@ export default function AiQuote({ isLoading, aiQuote }: PropsType) {
                 }} className="hover:bg-[tomato] p-[3px] rounded-[5px] flex items-center"><TbHeadphones className='mr-[5px]' /> 듣기</button>
 
             </article>
-            <p className="text-center pb-[10px]">{'주의) AI 가 생성한 정보는 불명확할 수 있습니다. 사용 시 주의 부탁드립니다.'}</p>
+            <p className="text-center pb-[10px]">{'주의) AI 가 생성한 명언(글귀)의 출처는 부정확할 수 있습니다. 사용 시 주의 부탁드립니다.'}</p>
         </article>
     )
 }

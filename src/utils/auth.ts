@@ -103,7 +103,7 @@ export async function oauth2UserInfoExtractor() {
   try {
     const session = await auth()
 
-    if (!session) return 
+    if (!session) return { userId: 0, email: '' }
 
     const { email } = session.user || { user: { email: '' } }
 
@@ -116,13 +116,14 @@ export async function oauth2UserInfoExtractor() {
     const results = await db.query(selectQuery, [email, 'social'])
     const count = results.rowCount || 0
     const userId = results.rows[0].user_id
-    
-    if (count < 1) return 
 
-    return {userId, email}
+    if (count < 1) return { userId: 0, email: '' }
+
+    return { userId, email }
 
   } catch (error) {
-    console.error('소셜 로그인 유저정보 추출 실패:', error)
-    return
+    console.error('utils/auth.ts : 소셜 로그인 유저정보 추출 실패:', error)
+    return { userId: '', email: '' }
+
   }
 }

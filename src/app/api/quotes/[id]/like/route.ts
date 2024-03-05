@@ -3,7 +3,7 @@ import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 
 // GET | 좋아요 조회
-export async function GET(_:null, res: { params: { id: string } }) {
+export async function GET(req:NextRequest, res: { params: { id: string } }) {
   try {
     const db = await openDB()
     const quoteId = res.params.id

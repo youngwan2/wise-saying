@@ -10,12 +10,16 @@ WHERE user_id = $1
 
 // GET | 유저 프로필 정보 요청
 export async function GET(req: NextRequest) {
-  try {
-    const db = await openDB()
+  req.headers.get('')
 
+  const db = await openDB()
+
+
+  try {
 
     // 소셜 로그인 ⭕
-    const { userId: socialUserId } = await oauth2UserInfoExtractor() || { userId: '', email: '' }
+    const { userId: socialUserId } = await oauth2UserInfoExtractor() || { userId: 0, email: '' }
+    
     if (socialUserId) {
       const results = await db.query(query, [socialUserId])
       const userInfo = results.rows[0]
@@ -51,7 +55,7 @@ export async function GET(req: NextRequest) {
   } catch (error) {
     console.error('/api/users/route.ts', error)
     return NextResponse.json({
-      meg: '처리중입니다.',
+      meg: '서버에서 문제가 발생하였습니다. 나중에 다시시도 해주세요.',
       success: false,
       status: 500,
     })

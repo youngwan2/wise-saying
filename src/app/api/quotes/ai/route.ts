@@ -3,7 +3,7 @@ import { openDB } from "@/utils/connect";
 import { NextRequest, NextResponse } from "next/server";
 
 const insertQuery = `
-INSERT INTO ai_quotes (quote, created_at)
+INSERT INTO ai_quotes (quote)
 VALUES ($1)
 `
 

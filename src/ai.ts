@@ -12,7 +12,7 @@ export async function generateQuoteBy(content:string) {
         messages : [
             {
                 'role':'system',
-                'content':'You need to respond by generating a helpful message based on the sentence the user provide and a relevant Korean quote in one line.'
+                'content':'Your role is to analyze emotions based on the text provided by the user and respond with words that provide strength, encouragement, or motivation. The response format should be in Korean without including quotation marks or double quotation marks, and it should not indicate who said it. Responses are limited to two sentences'
             },
             {
                 'role':'user',
