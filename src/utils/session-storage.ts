@@ -13,7 +13,7 @@ export const getUserEmail = () => {
 
     return userEmail
   } catch (error) {
-    console.error('sessionStorage getItem 실패:', error)
+ //   console.error('sessionStorage getItem 실패:', error)
     return ''
   }
 }
@@ -40,7 +40,7 @@ export const getUserInfo = () => {
   try {
     sessionStorage.getItem('user')
   } catch (error) {
-    console.error('user 정보 가져오기 실패:', error)
+   // console.error('user 정보 가져오기 실패:', error)
   }
 }
 
@@ -60,7 +60,7 @@ export const getLoginExp = () => {
     const exp = sessionStorage.getItem('exp')
     if(exp) {return Number(exp)}
   } catch (error) {
-    console.error('exp 가져오기 실패:', error)
+    //console.error('exp 가져오기 실패:', error)
     return false
   }
 }
@@ -83,7 +83,7 @@ export const getAccessToken = () => {
     const token = sessionStorage.getItem('token')
     return token
   } catch (error) {
-    console.error('accessToken 가져오기 실패:' + error)
+    //console.error('accessToken 가져오기 실패:' + error)
     return null
   }
 }
