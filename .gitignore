@@ -38,3 +38,7 @@ next-env.d.ts
 
 # db
 /wise_saying.db
+
+# amplify
+.amplify
+amplifyconfiguration*

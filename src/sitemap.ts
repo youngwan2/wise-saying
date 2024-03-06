@@ -6,14 +6,16 @@ export default async function sitemap(): Promise<{ url: string; lastModified?: s
     const topics = await getQuoteCategoryFromDb('topics')
     const authors = await getQuoteCategoryFromDb('authors')
 
+    const inCode = encodeURI
+
 
     const topicEntries = topics.map((categoryInfo: { category: string }) => ({
-        url: `${BASE_URL}/quotes/topics/${categoryInfo.category}`,
+        url: `${BASE_URL}/quotes/topics/${inCode(categoryInfo.category)}`,
         lastModified: new Date(),
     }))
 
     const authorEntries = authors.map((categoryInfo: { author: string }) => ({
-        url: `${BASE_URL}/quotes/authors/${categoryInfo.author.replaceAll(' ','').replaceAll('&','and')}`,
+        url: `${BASE_URL}/quotes/authors/${inCode(categoryInfo.author).replaceAll('&','and')}`,
         lastModified: new Date(),
     }))
 
@@ -23,7 +25,7 @@ export default async function sitemap(): Promise<{ url: string; lastModified?: s
     }))
 
     const detailEntries = authors.map((categoryInfo:{author:string, id:number})=> ({
-        url:`${BASE_URL}/quotes/authors/${categoryInfo.author.replaceAll(' ','').replaceAll('&','and')}/${categoryInfo.id}`
+        url:`${BASE_URL}/quotes/authors/${inCode(categoryInfo.author).replaceAll('&','and')}/${categoryInfo.id}`
     }))
     return [
         {
