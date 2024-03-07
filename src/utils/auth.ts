@@ -4,8 +4,6 @@ import { NextRequest } from 'next/server'
 import { auth } from '@/configs/config.auth'
 import { openDB } from './connect'
 
-
-
 class User {
   userId!: number
   userEmail!: string
@@ -86,10 +84,9 @@ export const tokenVerify = (req: NextRequest, isAccessToken: boolean) => {
  * 토큰의 만료시간(exp) 추출
  * @param token 토큰
  * @param isAccessToken accessToken 여부(false 인 경우 refreshToken)
- * @returns 
+ * @returns
  */
 export function tokenExpCalculator(token: string, isAccessToken: boolean) {
-
   const decode = jwt.decode(token) as JwtPayload
   if (!decode) return
   const exp = decode.exp || 0
@@ -97,9 +94,7 @@ export function tokenExpCalculator(token: string, isAccessToken: boolean) {
   return exp
 }
 
-
 export async function oauth2UserInfoExtractor() {
-
   try {
     const session = await auth()
 
@@ -120,10 +115,8 @@ export async function oauth2UserInfoExtractor() {
     if (count < 1) return { userId: 0, email: '' }
 
     return { userId, email }
-
   } catch (error) {
     console.error('utils/auth.ts : 소셜 로그인 유저정보 추출 실패:', error)
     return { userId: '', email: '' }
-
   }
 }

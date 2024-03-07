@@ -16,10 +16,11 @@ export async function DELETE(
   const db = await openDB()
 
   try {
-    const { userId: socialUserId } = await oauth2UserInfoExtractor() || { userId: '' }
+    const { userId: socialUserId } = (await oauth2UserInfoExtractor()) || {
+      userId: '',
+    }
 
     if (socialUserId) {
-
       await db.query(query, [quoteId, socialUserId])
       db.end()
       return NextResponse.json({
@@ -28,7 +29,6 @@ export async function DELETE(
         success: true,
       })
     }
-
 
     // 토큰 유효성 검증
     const { status, meg, success, user } = tokenVerify(req, true)
@@ -54,5 +54,3 @@ export async function DELETE(
     })
   }
 }
-
-

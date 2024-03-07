@@ -14,7 +14,7 @@ export default function UpdatePage() {
   return (
     <section>
       <UpdateForm />
-      <BackMoveButton/>
+      <BackMoveButton />
     </section>
   )
 }

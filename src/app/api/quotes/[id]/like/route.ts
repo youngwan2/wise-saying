@@ -3,7 +3,7 @@ import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 
 // GET | 좋아요 조회
-export async function GET(req:NextRequest, res: { params: { id: string } }) {
+export async function GET(req: NextRequest, res: { params: { id: string } }) {
   try {
     const db = await openDB()
     const quoteId = res.params.id
@@ -34,7 +34,6 @@ export async function GET(req:NextRequest, res: { params: { id: string } }) {
   }
 }
 
-
 const checkSelectQuery = `
 SELECT COUNT(*) as count
 FROM quote_likes A JOIN users B
@@ -51,12 +50,15 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
     const db = await openDB()
     const quoteId = res.params.id
 
-
     // 소셜 로그인
-    const { email: socialEmail, userId: socialUserId } = await oauth2UserInfoExtractor() || { email: '', userId: '' }
+    const { email: socialEmail, userId: socialUserId } =
+      (await oauth2UserInfoExtractor()) || { email: '', userId: '' }
 
     if (socialUserId) {
-      const checkResult = await db.query(checkSelectQuery, [socialEmail, quoteId])
+      const checkResult = await db.query(checkSelectQuery, [
+        socialEmail,
+        quoteId,
+      ])
       const isLiked = checkResult.rows[0].count
 
       if (Number(isLiked) > 0) {
@@ -118,7 +120,7 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
         quoteId,
       })
     }
-    
+
     await db.query(insertQuery, [userId, quoteId])
     const result = await db.query(likeCountSelectQuery, [quoteId])
     const likeCount = result.rows[0].count
@@ -130,7 +132,6 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
       likeCount,
       quoteId,
     })
-
   } catch (error) {
     console.error('POST /api/quotes/[id]/like', error)
     return NextResponse.json({

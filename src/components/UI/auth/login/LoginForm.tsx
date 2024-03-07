@@ -19,14 +19,16 @@ export default function LoginForm() {
 
   const router = useRouter()
   const hasToken = useHasToken()
-  const {data:session} = useSession()
+  const { data: session } = useSession()
 
   const [isLoading, setIsLoading] = useState(false)
 
   // 토큰 존재 시 리디렉트
   useEffect(() => {
-    if(hasToken || session) { redirect('/') }
-  }, [ hasToken, session])
+    if (hasToken || session) {
+      redirect('/')
+    }
+  }, [hasToken, session])
 
   // 드래그어블 적용
   useDraggable(loginFormRef, 'free')
@@ -39,7 +41,9 @@ export default function LoginForm() {
     reqLogin({ email, password }).then(() => setIsLoading(false))
   }
 
-  function onClickBackMove() { router.back() }
+  function onClickBackMove() {
+    router.back()
+  }
 
   return (
     <form
@@ -50,13 +54,12 @@ export default function LoginForm() {
       <FormTitle>로그인</FormTitle>
       <BackButton onClickBack={onClickBackMove} />
       <LoginSocial />
-      <LoginDefault/>
+      <LoginDefault />
       <ReqLoginInput isLoading={isLoading} />
-      <div className='flex items-center justify-center my-[2em]'>
+      <div className="flex items-center justify-center my-[2em]">
         <SignInGuideLink />
         <ForgotLink />
       </div>
-
     </form>
   )
 }

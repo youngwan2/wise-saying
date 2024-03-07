@@ -10,6 +10,7 @@ export default function LoginPasswordInput() {
         <HiOutlineLockClosed className={'inline-block'} />
       </label>
       <input
+        autoComplete="on"
         aria-label="비밀번호 입력창"
         placeholder="비밀번호"
         className="pl-[10px] min-w-[230px] w-[100%] bg-transparent shadow-[inset_0_0_0_2px_white] text-white focus:bg-white focus:outline-none focus:text-black focus:font-bold"

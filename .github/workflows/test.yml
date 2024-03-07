@@ -4,15 +4,15 @@ name: Test Action
 # 이벤트 등록
 on:
   # 풀 리퀘스트 시
-  pull_request: 
+  pull_request:
     branches:
-      - main 
+      - main
 
   # push 시
   push:
     branches:
       - main
-      
+
 # 실행할 작업들
 jobs:
   test:

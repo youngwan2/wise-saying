@@ -13,7 +13,10 @@ export async function POST(req: NextRequest) {
   const { '0': body } = await req.json()
   const { category, content: quote, author } = body
 
-  const { userId: socialUserId } = await oauth2UserInfoExtractor() || { userId: '', email: '' }
+  const { userId: socialUserId } = (await oauth2UserInfoExtractor()) || {
+    userId: '',
+    email: '',
+  }
 
   try {
     // 소셜 로그인 ⭕
@@ -35,29 +38,26 @@ export async function POST(req: NextRequest) {
 
     // 소셜 로그인 ❌
 
+    // 토큰 유효성 검증
+    const { status, meg, success, user } = tokenVerify(req, true)
+    if (status === 400) return NextResponse.json({ status, success, meg })
+    if (status === 401) return NextResponse.json({ status, success, meg })
 
-      // 토큰 유효성 검증
-      const { status, meg, success, user } = tokenVerify(req, true)
-      if (status === 400) return NextResponse.json({ status, success, meg })
-      if (status === 401) return NextResponse.json({ status, success, meg })
+    const { sub: userId } = user
 
-      const { sub: userId } = user
-
-      await db.query(insertQuery, [
-        quote,
-        category.trim(),
-        author,
-        '사용자',
-        userId,
-      ])
-      await db.end()
-      return NextResponse.json({
-        status: 201,
-        success: true,
-        meg: '정상적으로 처리되었습니다.',
-      })
-
-    
+    await db.query(insertQuery, [
+      quote,
+      category.trim(),
+      author,
+      '사용자',
+      userId,
+    ])
+    await db.end()
+    return NextResponse.json({
+      status: 201,
+      success: true,
+      meg: '정상적으로 처리되었습니다.',
+    })
   } catch (error) {
     console.error('/api/quotes/users/post/route.ts', error)
     return NextResponse.json({

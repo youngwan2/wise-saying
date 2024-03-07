@@ -54,8 +54,6 @@ export async function GET(req: NextRequest, res: { params: { id: string } }) {
   }
 }
 
-
-
 const insertQuery = `
 INSERT INTO usercomments(comment, user_id, quote_id)
 VALUES ($1,$2,$3)
@@ -63,7 +61,6 @@ VALUES ($1,$2,$3)
 
 // POST | 댓글 등록
 export async function POST(req: NextRequest, res: { params: { id: string } }) {
-
   const { '0': comment } = await req.json()
   const quoteId = res.params.id
 
@@ -77,8 +74,10 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
       success: false,
     })
 
-
-  const { userId: socialUserId } = await oauth2UserInfoExtractor() || { email: '', userId: '' }
+  const { userId: socialUserId } = (await oauth2UserInfoExtractor()) || {
+    email: '',
+    userId: '',
+  }
 
   try {
     // 소셜 로그인
@@ -117,8 +116,6 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
   }
 }
 
-
-
 const updateQuery = `
 UPDATE usercomments
 SET comment = $1, updated_at = CURRENT_TIMESTAMP
@@ -140,7 +137,10 @@ export async function PATCH(req: NextRequest, res: { params: { id: string } }) {
   const db = await openDB()
 
   try {
-    const { userId: socialUserId } = await oauth2UserInfoExtractor() || { email: '', userId: '' }
+    const { userId: socialUserId } = (await oauth2UserInfoExtractor()) || {
+      email: '',
+      userId: '',
+    }
 
     // 소셜 로그인
     if (socialUserId) {
@@ -182,9 +182,6 @@ export async function PATCH(req: NextRequest, res: { params: { id: string } }) {
   }
 }
 
-
-
-
 const deleteQuery = `
 DELETE FROM usercomments
 WHERE comment_id = $1
@@ -195,14 +192,15 @@ export async function DELETE(
   req: NextRequest,
   res: { params: { id: string } },
 ) {
-
-
   const db = await openDB()
   const commentId = res.params.id || ''
 
   try {
     // 소셜 로그인
-    const { userId: socialUserId } = await oauth2UserInfoExtractor() || { email: '', userId: '' }
+    const { userId: socialUserId } = (await oauth2UserInfoExtractor()) || {
+      email: '',
+      userId: '',
+    }
     if (socialUserId) {
       await db.query(deleteQuery, [commentId])
       db.end()
@@ -216,12 +214,12 @@ export async function DELETE(
     // 일반 로그인
     // 토큰 유효성 검증
     const { status, meg, success, user } = tokenVerify(req, true)
-  if (status === 400) {
-    return NextResponse.json({ status, success, meg })
-  }
-  if (status === 401) {
-    return NextResponse.json({ status, success, meg })
-  }
+    if (status === 400) {
+      return NextResponse.json({ status, success, meg })
+    }
+    if (status === 401) {
+      return NextResponse.json({ status, success, meg })
+    }
     const { sub: userId } = user
 
     await db.query(deleteQuery, [commentId])
@@ -231,12 +229,12 @@ export async function DELETE(
       meg: '정상적으로 삭제 처리되었습니다.',
       success: true,
     })
-} catch (error) {
-  console.error('/api/quotes/[id]/comments/route.ts', error)
-  return NextResponse.json({
-    status: 500,
-    meg: '서버에서 문제가 발생하였습니다. 나중에 다사시도 해주세요.',
-    success: false,
-  })
-}
+  } catch (error) {
+    console.error('/api/quotes/[id]/comments/route.ts', error)
+    return NextResponse.json({
+      status: 500,
+      meg: '서버에서 문제가 발생하였습니다. 나중에 다사시도 해주세요.',
+      success: false,
+    })
+  }
 }

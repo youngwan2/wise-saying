@@ -28,7 +28,10 @@ export default function QuotesCardControlButtons({ item, index }: PropsType) {
   const onClickBookmarkAdd = async () => {
     if (!item && !hasToken && !session) return
     const { id } = item
-    const isSuccess = await addBookmarkItem(id, `/quotes/authors/${item.author}/${id}`)
+    const isSuccess = await addBookmarkItem(
+      id,
+      `/quotes/authors/${item.author}/${id}`,
+    )
     isSuccess && setIsUpdate(true)
   }
 
@@ -61,8 +64,9 @@ export default function QuotesCardControlButtons({ item, index }: PropsType) {
         onMouseLeave={() => {
           setIsDisplay(false)
         }}
-        className={` ${isDisplay ? 'visible opacity-100 top-2 z-50' : 'invisible opacity-0'
-          } transition-all absolute top-0 right-[2.6em] bg-white shadow-[inset_0_0_5px_0_rgba(0,0,0,0.5)] rounded-[5px] `}
+        className={` ${
+          isDisplay ? 'visible opacity-100 top-2 z-50' : 'invisible opacity-0'
+        } transition-all absolute top-0 right-[2.6em] bg-white shadow-[inset_0_0_5px_0_rgba(0,0,0,0.5)] rounded-[5px] `}
       >
         {/* 카드 만들기 버튼 */}
         <button
@@ -113,9 +117,6 @@ function ButtonMenuIcon({ isDisplay, onClickToggleMenu }: MenuIconPropsType) {
     </button>
   )
 }
-
-
-
 
 const useCardStore = () => {
   const setIsZoomIn = useCardZoomInOutStore((state) => state.setIsZoomIn)

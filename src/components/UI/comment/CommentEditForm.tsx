@@ -18,14 +18,13 @@ export default function CommentEditForm({
   setEditFormDisplay,
 }: PropsType) {
   const hasToken = useHasToken()
-  const {data:session} = useSession()
+  const { data: session } = useSession()
 
   const formRef = useRef<HTMLFormElement>(null)
-  
 
   // PATCH | 유저가 작성한 댓글을 수정하는 요청
   async function commentUpdate(formData: FormData) {
-    if (!hasToken && !session ) return toast.error('로그인 후 이용 가능합니다.')
+    if (!hasToken && !session) return toast.error('로그인 후 이용 가능합니다.')
     const comment = formData.get('comment')?.valueOf().toString() || ''
     updateComment(commentId, comment).then(() => setEditFormDisplay(false))
   }

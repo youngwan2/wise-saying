@@ -21,7 +21,6 @@ interface UserQuotesType {
   quote: string
   author: string
   category: string
-  
 }
 
 const MAX_SIZE = 5
@@ -104,7 +103,8 @@ export default function MypageMyQuote({
     categoryCreator()
   }, [categoryCreator])
 
-  if(!userQuotes || categories.length<1) return <ReplaceMessageCard childern="데이터가 존재하지 않습니다."/>
+  if (!userQuotes || categories.length < 1)
+    return <ReplaceMessageCard childern="데이터가 존재하지 않습니다." />
   return (
     <>
       <MypageMyQuotesCategoryList

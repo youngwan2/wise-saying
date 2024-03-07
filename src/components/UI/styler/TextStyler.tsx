@@ -28,7 +28,7 @@ export default function TextStyler({ selectTapNum }: PropsType) {
     color: 'black',
     font: 'Arial',
     fontStyle: 'fill',
-    textPositionY: 0
+    textPositionY: 0,
   })
 
   const [sizeUnits] = useState(['px', 'em', 'rem'])
@@ -39,7 +39,9 @@ export default function TextStyler({ selectTapNum }: PropsType) {
   }, [setTextStyle, textStyle])
 
   return (
-    <article className={`${selectTapNum ===0 ? 'visible ' : 'invisible absolute'} lg:max-w-[90%] flex flex-col`}>
+    <article
+      className={`${selectTapNum === 0 ? 'visible ' : 'invisible absolute'} lg:max-w-[90%] flex flex-col`}
+    >
       <TextColorStyler
         setTextStyleState={setTextStyleState}
         textStyle={textStyle}

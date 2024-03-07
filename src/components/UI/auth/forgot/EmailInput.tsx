@@ -1,11 +1,10 @@
-import useFocus from "@/custom/useFocus"
-import { useRef } from "react"
+import useFocus from '@/custom/useFocus'
+import { useRef } from 'react'
 
 interface PropsType {
   uId: string
 }
 export default function EmailInput({ uId }: PropsType) {
-
   const inputRef = useRef<HTMLInputElement>(null)
   useFocus(inputRef)
 

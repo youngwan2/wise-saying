@@ -13,11 +13,9 @@ export default async function Home() {
   if (items.length < 1)
     return <ReplaceMessageCard childern="데이터를 불러오는 중입니다.." />
   return (
-
     <>
       <TodayQuotelist quotes={items} />
       <HomeMenu />
     </>
-
   )
 }

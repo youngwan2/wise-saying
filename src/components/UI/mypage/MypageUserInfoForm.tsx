@@ -13,7 +13,7 @@ interface PropsType {
     email: string
     profile_image: string
     user_id: number
-  },
+  }
   session: Session | null
 }
 
@@ -41,7 +41,9 @@ export default function MypageUserInfoForm({ userInfo, session }: PropsType) {
       action={updateUserInfo}
       className=" mx-auto m-2 mt-[3em] p-6  shadow-[inset_0_0_0_2.5px_white] rounded-[10px] max-w-[600px] text-white "
     >
-      <h1 className="text-[1.25em] font-bold mb-[1.5em]">비밀번호 변경/ 회원 탈퇴</h1>
+      <h1 className="text-[1.25em] font-bold mb-[1.5em]">
+        비밀번호 변경/ 회원 탈퇴
+      </h1>
       {/* 이메일(읽기 전용) */}
       <div className="mb-4">
         <label className="text-lg  mb-2" htmlFor={uId + 'email'}>
@@ -56,13 +58,10 @@ export default function MypageUserInfoForm({ userInfo, session }: PropsType) {
           value={userInfo.email}
         ></input>
       </div>
-      <article className={session? 'hidden':''}>
+      <article className={session ? 'hidden' : ''}>
         {/* 비밀번호 */}
         <div className="mb-4">
-          <label
-            className="text-lg  mb-2"
-            htmlFor={uId + 'password'}
-          >
+          <label className="text-lg  mb-2" htmlFor={uId + 'password'}>
             비밀번호(Password)
           </label>
           <input
@@ -94,7 +93,7 @@ export default function MypageUserInfoForm({ userInfo, session }: PropsType) {
       <article className="mt-[2em]">
         <button
           aria-label="수정하기 버튼으로, 클릭 시 입력된 정보로 패스워드(비밀번호)가 변경"
-          className={`${session? 'hidden':''} bg-white text-black font-bold px-4 py-2 rounded-[5px] mr-2`}
+          className={`${session ? 'hidden' : ''} bg-white text-black font-bold px-4 py-2 rounded-[5px] mr-2`}
         >
           수정하기
         </button>

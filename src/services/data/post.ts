@@ -10,7 +10,7 @@ export const addBookmarkItem = async (itemId: number, path: string) => {
   const quoteUrl = location.origin + `${path}`
   const postData = {
     quoteId: itemId,
-    url: quoteUrl
+    url: quoteUrl,
   }
 
   const url = '/api/bookmark'
@@ -26,6 +26,3 @@ export const addBookmarkItem = async (itemId: number, path: string) => {
     return false
   }
 }
-
-
-

@@ -10,11 +10,11 @@ import toast from 'react-hot-toast'
 export default function CommentForm() {
   const { id } = useParams()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
-  const hasToken = useHasToken();
-  const {data:session} = useSession();
+  const hasToken = useHasToken()
+  const { data: session } = useSession()
 
   async function addComment(formData: FormData) {
-    if(!hasToken && !session) return toast.error('로그인 후 등록 가능합니다.')
+    if (!hasToken && !session) return toast.error('로그인 후 등록 가능합니다.')
     const comment = formData.get('comment')?.valueOf().toString() || ''
     await postComment(comment, id)
     clearTextarea(textareaRef)

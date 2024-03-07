@@ -67,23 +67,20 @@ export async function PATCH(req: NextRequest) {
   }
 }
 
-
 const query = `
 DELETE FROM users
 WHERE email = $1 AND user_id = $2
 `
-
 
 // DELETE | 회원탈퇴
 export async function DELETE(req: NextRequest) {
   try {
     const db = await openDB()
 
-
-    const { email: socialEmail, userId: socialUserId } = await oauth2UserInfoExtractor() || { email: '', userId: '' }
+    const { email: socialEmail, userId: socialUserId } =
+      (await oauth2UserInfoExtractor()) || { email: '', userId: '' }
 
     if (socialUserId) {
-
       await db.query(query, [socialEmail, socialUserId])
       await db.end()
       return NextResponse.json({

@@ -15,9 +15,11 @@ interface PropsType {
   }[]
 }
 
+
 export default function QuoteList({ items }: PropsType) {
   const ulRef = useRef<HTMLUListElement>(null)
   const cardIndex = useCardZoomInOutStore((state) => state.cardIndex)
+
 
   if (items.length < 1)
     return <ReplaceMessageCard childern="데이터를 불러오는 중 입니다.." />

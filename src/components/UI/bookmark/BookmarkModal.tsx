@@ -38,15 +38,19 @@ export default function BookmarkModal() {
     data: bookmarkInfo,
     isLoading,
     mutate,
-  } = useSWR(!hasToken || !session ? `/api/bookmark?page=${page}&limit=5` : null, getBookmarkListFetcher, {
-    refreshInterval: 300000,
-    revalidateOnMount: true,
-    revalidateIfStale: false,
-    revalidateOnFocus: true,
-    onErrorRetry: ({ retryCount }) => {
-      if (retryCount >= 5) return
+  } = useSWR(
+    !hasToken || !session ? `/api/bookmark?page=${page}&limit=5` : null,
+    getBookmarkListFetcher,
+    {
+      refreshInterval: 300000,
+      revalidateOnMount: true,
+      revalidateIfStale: false,
+      revalidateOnFocus: true,
+      onErrorRetry: ({ retryCount }) => {
+        if (retryCount >= 5) return
+      },
     },
-  })
+  )
 
   const hasData = !!bookmarkInfo
   const total = bookmarkInfo?.totalCount || 0
@@ -105,8 +109,14 @@ export default function BookmarkModal() {
       <BookmarkPagination
         maxPageSize={maxPage}
         page={page}
-        onClickPrevSwitch={() => { setPage(Math.max(0, page - 1)); mutate() }}
-        onClickNextSwitch={() => { setPage(Math.min(maxPage, page + 1)); mutate() }}
+        onClickPrevSwitch={() => {
+          setPage(Math.max(0, page - 1))
+          mutate()
+        }}
+        onClickNextSwitch={() => {
+          setPage(Math.min(maxPage, page + 1))
+          mutate()
+        }}
       />
     </article>
   )

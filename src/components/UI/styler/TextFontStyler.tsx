@@ -19,7 +19,7 @@ export default function TextFontStyler({
     'Times',
     'Courier New',
     'Courier',
-    'monospace',// 글자 폭과 간격이 일정한 서제
+    'monospace', // 글자 폭과 간격이 일정한 서제
     'Georgia',
     'Palatino',
     'Palatino Linotype',
@@ -38,7 +38,7 @@ export default function TextFontStyler({
     '고딕체',
     'dotum', // 돋움
     'dotumche', // 돋움체
-    'gulim' // 굴림
+    'gulim', // 굴림
   ]
 
   const fontStyles = ['fill', 'stroke', 'hybrid']

@@ -46,10 +46,9 @@ export const requestNewAccessToken = async () => {
     const { status, accessToken, exp, success } = await respone.json()
 
     if (status === 201) {
-
-      setAccessToken(accessToken); setLoginExp(exp)
+      setAccessToken(accessToken)
+      setLoginExp(exp)
       return success
-
     }
   } catch (error) {
     console.error('accessToken 발급 실패: ', error)
@@ -83,9 +82,6 @@ export const reqLogin = async ({ ...userInfo }: UserType) => {
     setUserInfo({ profile, dbEmail: email })
     setAccessToken(accessToken)
     setLoginExp(exp)
-
-
-
 
     toast.success(`${email}님 환영합니다!. 잠시 후 Home 화면으로 이동합니다.`)
     setTimeout(() => {
@@ -121,15 +117,12 @@ export async function reqSingIn({ ...userInfo }: SignInUserType) {
  * POST | 유저가 작성한 포스트를 등록 요청하는 메소드
  * @param userPost
  */
-export const postUserPost = async (
-  userPost: {
-    category: string
-    content: string
-    author: string
-    isUser: boolean
-  },
-) => {
-
+export const postUserPost = async (userPost: {
+  category: string
+  content: string
+  author: string
+  isUser: boolean
+}) => {
   const { category, content, author } = userPost
 
   // 유효성 검증
@@ -154,8 +147,6 @@ export const postUserPost = async (
     return false
   }
 }
-
-
 
 /**
  * POST | 유저가 작성한 댓글을 등록
@@ -211,7 +202,7 @@ export const postLike = async (id: number) => {
   console.log(results)
   if (success) {
     toast.success('반영되었습니다. 평가해주셔서 감사합니다.')
-    return {isSuccess:true, likeCount: results.likeCount||0 }
+    return { isSuccess: true, likeCount: results.likeCount || 0 }
   }
   if (!success) {
     return false

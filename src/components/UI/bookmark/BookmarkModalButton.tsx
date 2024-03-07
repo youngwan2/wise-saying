@@ -5,7 +5,6 @@ import { useBookmarkStore } from '@/store/store'
 import { useRef } from 'react'
 
 export default function BookmarkModalButton() {
-
   const bookmarkButtonRef = useRef<HTMLButtonElement>(null)
   const { count, toggleState, setToggleState } = useBookmark()
 
@@ -28,15 +27,11 @@ export default function BookmarkModalButton() {
         >
           {count}
         </span>
-        <HiOutlineBookmark
-          aria-hidden="true"
-          className={'text-[25px] '}
-        />
+        <HiOutlineBookmark aria-hidden="true" className={'text-[25px] '} />
       </span>
     </button>
   )
 }
-
 
 const useBookmark = () => {
   const toggleState = useBookmarkStore((state) => state.toggleState)
@@ -44,5 +39,4 @@ const useBookmark = () => {
   const setToggleState = useBookmarkStore((state) => state.setToggleState)
 
   return { count, toggleState, setToggleState }
-
 }

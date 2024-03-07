@@ -12,7 +12,7 @@ export default function EmailValidityMessage({
 
   if (!isEmail)
     return (
-      <span className=" font-sans text-[red] block  ml-[0.5em] text-[14.3px]">
+      <span className=" font-sans  text-[#f25555] block  ml-[0.5em] text-[14.3px]">
         - 이메일 형식과 일치시키세요{' '}
       </span>
     )

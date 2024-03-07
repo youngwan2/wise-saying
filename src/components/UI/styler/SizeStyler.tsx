@@ -34,7 +34,9 @@ export default function SizeStyler({ selectTapNum }: PropsType) {
   const debounceFunWrapper = debounce()
 
   return (
-    <article className={`${selectTapNum ===2 ? 'visible ' : 'invisible absolute'} lg:max-w-[90%] flex flex-col`}>
+    <article
+      className={`${selectTapNum === 2 ? 'visible ' : 'invisible absolute'} lg:max-w-[90%] flex flex-col`}
+    >
       <h2 className="flex items-center text-[1.2em] mt-[1.25em] pb-[0.25em] text-[white]">
         <HiScissors color="white" />{' '}
         <p className="ml-[0.5em]">카드 크기 변경</p>

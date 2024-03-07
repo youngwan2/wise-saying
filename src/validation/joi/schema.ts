@@ -13,4 +13,3 @@ export const userSchema = Joi.object({
   ),
   reConfirmPw: Joi.ref(`password`),
 })
-

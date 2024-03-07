@@ -14,7 +14,8 @@ export default function QuoteFormButtons({ onClickCancel }: PropsType) {
       <button
         type="button"
         onClick={onClickCancel}
-        className="shadow-[inset_0_0_0_1px_white] p-[10px] bg-[white] text-black font-bold hover:bg-[#cbc5c5] rounded-[5px]">
+        className="shadow-[inset_0_0_0_1px_white] p-[10px] bg-[white] text-black font-bold hover:bg-[#cbc5c5] rounded-[5px]"
+      >
         취소
       </button>
     </article>

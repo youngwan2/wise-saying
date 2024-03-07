@@ -32,6 +32,7 @@ export default function ReplyEditForm({
         className="sm:mt-[1em] mt-[0.5em] p-[0.5em] flex flex-col w-[100%] min-h-[20px] z-30  backdrop-blur-[4px] rounded-[5px] text-white"
       >
         <textarea
+          autoComplete="on"
           rows={1}
           placeholder="대댓글 수정"
           className="sm:text-[14px] text-[13px] resize-none overflow-hidden pb-[3px] pl-[0.25em] font-sans border-none  bg-transparent w-full mt-[0.5em] focus:outline-none outline-none transition-all shadow-[inset_0_-1px_0_0_gray] focus:shadow-[inset_0_-2px_0_0_gray] min-h-[10px] placeholder:text-[gray]   "

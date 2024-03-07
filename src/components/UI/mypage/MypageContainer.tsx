@@ -19,7 +19,7 @@ export default function MypageContainer() {
   const hasLogin = !hasToken && !session
 
   // 유저 정보
-  const { data  } = useSwrFetchWithToken('/api/users/', true)
+  const { data } = useSwrFetchWithToken('/api/users/', true)
   const { userInfo } = data || {}
 
   // 유저 명언 목록
@@ -42,17 +42,20 @@ export default function MypageContainer() {
 
   return (
     <>
-      {tapId === 0 && <MypageProfileForm userInfo={userInfo} session={session} />}
+      {tapId === 0 && (
+        <MypageProfileForm userInfo={userInfo} session={session} />
+      )}
       {tapId === 1 && (
         <MypageMyQuote
           userQuotes={userQuotes}
           setPage={setPage}
           page={page}
           count={quotesCount}
-
         />
       )}
-      {tapId === 2 && <MypageUserInfoForm userInfo={userInfo} session={session} />}
+      {tapId === 2 && (
+        <MypageUserInfoForm userInfo={userInfo} session={session} />
+      )}
     </>
   )
 }

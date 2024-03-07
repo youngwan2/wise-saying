@@ -60,7 +60,7 @@ export const useQuotesTextStyleStore = create<TextStyleState>((set) => ({
   unit: 'px',
   font: 'Arial',
   fontStyle: 'fill',
-  textPositionY:0,
+  textPositionY: 0,
   setTextStyle: (style) =>
     set(() => ({
       color: style.color,
@@ -68,7 +68,7 @@ export const useQuotesTextStyleStore = create<TextStyleState>((set) => ({
       unit: style.unit,
       font: style.font,
       fontStyle: style.fontStyle,
-      textPositionY:style.textPositionY,
+      textPositionY: style.textPositionY,
     })),
 }))
 

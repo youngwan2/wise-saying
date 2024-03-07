@@ -1,15 +1,14 @@
 'use client'
 
-import { useLayoutEffect, useRef } from 'react'
 import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import TextPlugin from 'gsap/TextPlugin'
-import { SlEarphones } from 'react-icons/sl'
 import useTTS from '@/custom/useTTS'
 import ReplaceMessageCard from '../common/ReplaceMessageCard'
 import { useRouter } from 'next/navigation'
 import { HiCalendarDays } from 'react-icons/hi2'
-gsap.registerPlugin(ScrollTrigger)
+import { useGSAP } from '@gsap/react'
+import TodayQuoteCard from './TodayQuoteCard'
+
 gsap.registerPlugin(TextPlugin)
 
 interface PropsType {
@@ -22,75 +21,64 @@ interface PropsType {
 
 export default function TodayQuotelist({ quotes }: PropsType) {
   const { setText } = useTTS()
-  const textRefs = useRef<HTMLParagraphElement[]>([])
   const router = useRouter()
 
-  useLayoutEffect(() => {
-    if (!textRefs.current) return
 
-    const context = gsap.context(() => {
-      if (!quotes) return
-      const tl = gsap.timeline()
-      textRefs.current.forEach((text, i) => {
-        tl.set(text, { transformOrigin: '0 50%' })
-        tl.to(text, {
-          scale: 1,
-          text: {
-            value: quotes[i].quote,
-            speed: 1.2,
-          },
-          ease: 'none',
-        })
-      })
+  useGSAP(() => {
+    if (!quotes) return
+    const tl = gsap.timeline()
+    const textSplit = gsap.utils.toArray('.today-quote') as HTMLSpanElement[] || []
+    textSplit.forEach((text,i) => {
+      tl.from(text, {
+        x:()=>{
+          return -50
+        },
+        y:()=>{
+          return i%2? -50 : 50
+        },
+        opacity: 0,
+        position:'absolute',
+        ease: 'none',
+      },'-=0.4')
     })
-
-    return () => context.revert()
   }, [quotes])
+
+  // 페이지 사전로드
+  function onMouseEnterPrefetch(author: string) {
+    router.prefetch(`/quotes/authors/${author}`)
+  }
+  // 페이지 이동
+  function onClickPush(author: string) {
+    router.push(`/quotes/authors/${author}`)
+  }
+
+  // 명언듣기 텍스트 설정
+  function onClickSetText(quote: string) {
+    setText(quote)
+  }
 
   if (!quotes)
     return <ReplaceMessageCard childern="데이터를 불러오는 중입니다.." />
   return (
     <>
-      <h2 className="sm:text-[1.5em] text-[1.35em] pl-[8px] flex items-center text-white max-w-[600px] mx-auto  mt-[5em] "><HiCalendarDays className='mr-[5px]'/> 오늘의 명언</h2>
+      <h2 className="sm:text-[1.5em] text-[1.35em] pl-[8px] flex items-center text-white max-w-[600px] mx-auto  mt-[5em] ">
+        <HiCalendarDays className="mr-[5px]" /> 오늘의 명언
+      </h2>
       <ul className="overflow-hidden mx-[10px]">
-        {quotes.slice(0,1).map((quote, i) => {
+        {quotes.slice(0, 1).map((quote, i) => {
           return (
-            <li
-              className="shadow-[inset_0_0_0_3px_white] rounded-[10px]  my-[1em] max-w-[600px] bg-transparent  px-[15px] py-[35px] mx-auto relative hover:bg-[#d5d5d533] "
+            <TodayQuoteCard
               key={quote.id}
-            >
-              {/* 명언 듣기 버튼 */}
-              <button
-                aria-label="명언 듣기"
-                onClick={() => {
-                  setText(quote.quote)
-                }}
-                className="absolute top-2 right-2 hover:border hover:border-[tomato] text-white p-[5px]"
-              >
-                <SlEarphones />
-              </button>
-              {/* 명언 */}
-              <p
-                ref={(ref) => ref && (textRefs.current[i] = ref)}
-                className="sm:text-[1.25em] text-[1.1em] mt-[0.5em] text-white"
-              ></p>
-              {/* 저자 */}
-              <strong
-                onMouseEnter={() => {
-                  router.prefetch(`/quotes/authors/${quote.author}`)
-                }}
-                onClick={() => {
-                  router.push(`/quotes/authors/${quote.author}`)
-                }}
-                className="inline-block mt-[2em] mr-[1em] text-white text-right w-full hover:text-[tomato] hover:cursor-pointer"
-              >
-                {quote.author}
-              </strong>
-              <div className="max-w-[100px] border-t-[20px] border-b-[20px] absolute  right-0 z-[1] top-0"></div>
-            </li>
+              id={quote.id}
+              quote={quote.quote}
+              author={quote.author}
+              onPrefetch={() => onMouseEnterPrefetch(quote.author)}
+              onPush={() => onClickPush(quote.author)}
+              onSetText={() => onClickSetText(quote.quote)}
+            />
           )
         })}
       </ul>
-      </>
+    </>
   )
 }

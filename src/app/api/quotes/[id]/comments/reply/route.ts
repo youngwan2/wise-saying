@@ -6,7 +6,6 @@ import { NextRequest, NextResponse } from 'next/server'
 export async function GET(req: NextRequest) {
   const commentId = req.nextUrl.searchParams.get('comment-id')
 
-
   try {
     const db = await openDB()
     const selectQuery = `
@@ -38,8 +37,6 @@ export async function GET(req: NextRequest) {
   }
 }
 
-
-
 const selectQuery = `
 SELECT reply_id AS id, content,  nickname, email, A.created_at
 FROM replies A INNER JOIN users B 
@@ -66,7 +63,10 @@ export async function POST(req: NextRequest) {
     })
 
   try {
-    const { userId: soicalUserId } = await oauth2UserInfoExtractor() || { email: '', userId: '' }
+    const { userId: soicalUserId } = (await oauth2UserInfoExtractor()) || {
+      email: '',
+      userId: '',
+    }
 
     // 소셜 로그인
     if (soicalUserId) {
@@ -114,8 +114,6 @@ export async function POST(req: NextRequest) {
   }
 }
 
-
-
 const updateQuery = `
 UPDATE replies
 SET content = $1
@@ -132,18 +130,17 @@ export async function PATCH(req: NextRequest) {
   const LENGTH_LESS_THAN_ONE = content.length < 1
 
   if (LENGTH_LESS_THAN_ONE)
-
-
     return NextResponse.json({
       meg: '잘못된 요청입니다. 문자는 최소 1자 이상 입력하여야 합니다.',
       success: false,
       status: 400,
     })
 
-
   try {
-
-    const { userId: soicalUserId } = await oauth2UserInfoExtractor() || { email: '', userId: '' }
+    const { userId: soicalUserId } = (await oauth2UserInfoExtractor()) || {
+      email: '',
+      userId: '',
+    }
 
     // 소셜 로그인
     if (soicalUserId) {
@@ -188,8 +185,10 @@ export async function DELETE(req: NextRequest) {
   const db = await openDB()
 
   try {
-
-    const { userId: soicalUserId } = await oauth2UserInfoExtractor() || { email: '', userId: '' }
+    const { userId: soicalUserId } = (await oauth2UserInfoExtractor()) || {
+      email: '',
+      userId: '',
+    }
 
     // 소셜 로그인
     if (soicalUserId) {

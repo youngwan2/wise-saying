@@ -36,7 +36,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko" className=" h-full bg-[#162557]">
-      <body className={`${gowunDodum.className}`}>
+      <body className={`${gowunDodum.className}`} suppressHydrationWarning>
         <SessionProvider>
           <Header />
           <Timer />

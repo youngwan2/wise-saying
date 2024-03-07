@@ -7,5 +7,9 @@ export const metadata: Metadata = {
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <section className="w-full">{children}  <BackMoveButton/></section>
+  return (
+    <section className="w-full">
+      {children} <BackMoveButton />
+    </section>
+  )
 }

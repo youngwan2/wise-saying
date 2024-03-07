@@ -34,7 +34,6 @@ export async function GET(req: NextRequest, res: { params: { id: number } }) {
   }
 }
 
-
 const updateQuery = `
 UPDATE quotes
 SET quote = $1, category = $2, author = $3
@@ -43,13 +42,15 @@ WHERE quote_id = $4
 
 // PATCH | 단일 포스트 수정
 export async function PATCH(req: NextRequest, res: { params: { id: number } }) {
-
   const db = await openDB()
   const postId = res.params.id
   const { '0': body } = await req.json()
   const { content: quote, category, author } = body
 
-  const { userId: socialUserId } = await oauth2UserInfoExtractor() || { userId: '', email: '' }
+  const { userId: socialUserId } = (await oauth2UserInfoExtractor()) || {
+    userId: '',
+    email: '',
+  }
 
   try {
     // 소셜 로그인 ⭕
@@ -99,7 +100,10 @@ export async function DELETE(
 
   try {
     const db = await openDB()
-    const { userId: socialUserId } = await oauth2UserInfoExtractor() || { userId: '', email: '' }
+    const { userId: socialUserId } = (await oauth2UserInfoExtractor()) || {
+      userId: '',
+      email: '',
+    }
 
     // 소셜 로그인 ⭕
     if (socialUserId) {

@@ -22,6 +22,7 @@ export default function QuoteTopicInput({
         주제
       </label>
       <input
+        autoComplete="on"
         ref={inputRef}
         type="text"
         name={name}

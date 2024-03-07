@@ -10,7 +10,7 @@ import MypageImageUploadInput from './MypageImageUploadInput'
 import MypageNicknameInput from './MypageNicknameInput'
 import MypageEmailInput from './MypageEmailInput'
 import toast from 'react-hot-toast'
-import {v4 as uuidv4} from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 import { Session } from 'next-auth'
 
 interface PropsType {
@@ -19,7 +19,7 @@ interface PropsType {
     email: string
     profile_image: string
     user_id: number
-  },
+  }
   session: Session | null
 }
 
@@ -66,10 +66,9 @@ export default function MypageProfileForm({ userInfo, session }: PropsType) {
     updateUserInfo(nickname, profileUrl)
   }
 
-
   // 이미지 업로드
   const onChangeImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
-    const src = await imagePreviewReader(e,'mypage') || ''
+    const src = (await imagePreviewReader(e, 'mypage')) || ''
     if (src?.length < 2) return
     setSrc(src)
     imageUploader(e)

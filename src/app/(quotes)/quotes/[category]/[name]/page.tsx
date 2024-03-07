@@ -6,6 +6,7 @@ import QuoteList from '@/components/UI/quote/QuoteList'
 import ReplaceMessageCard from '@/components/UI/common/ReplaceMessageCard'
 import { useItemMetadataFetch } from '@/custom/useItemMetadataFetch'
 
+
 interface PropsType {
   params: {
     name: string
@@ -14,6 +15,7 @@ interface PropsType {
 }
 
 export default function AuthorPage({ params }: PropsType) {
+
   const { category: mainCategory, name: subCategory } = params
 
   const {
@@ -36,6 +38,8 @@ export default function AuthorPage({ params }: PropsType) {
         childern={<p>아이템을 조회중입니다. 잠시만 기다려 주세요.</p>}
       />
     )
+
+
   return (
     <>
       <h2 className="flex justify-center items-center text-[1.5em] p-[10px]  text-center text-white max-w-[250px] mx-auto bg-gradient-to-b from-[transparent] to-[#00000033]  shadow-[0_9px_2px_0_rgba(0,0,0,0.5)] rounded-[5px] my-[2em] ">

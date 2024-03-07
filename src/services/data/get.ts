@@ -3,6 +3,7 @@ import { requestNewAccessToken } from '../user/post'
 import { getAccessToken } from '@/utils/session-storage'
 import { defaultFetch } from '@/utils/fetcher'
 import { Method, getDefaultConfig } from '@/configs/config.api'
+import toast from 'react-hot-toast'
 
 /**
  * * GET | 명언  카테고리 목록 갯수 불러오기
@@ -27,7 +28,6 @@ export async function getCategoryCountFromDb(url: string) {
  * @param url
  */
 export const getBookmarkListFetcher = async (url: string) => {
-
   const config = getDefaultConfig(Method.GET, true)
   const response = await fetch(url, config)
   const results = await response.json()
@@ -65,15 +65,15 @@ export const getApiMetaDataFromServer = async (
   }
 }
 
-
 /**
  * GET | 랜덤으로 명언 정보 불러오기
  */
 export const getTodayQuotesFromDb = async () => {
-  const url = config.apiPrefix + config.apiHost + '/api/quotes/random'
+  const url = `${config.apiPrefix}${config.apiHost}/api/quotes/today`
   const configs = getDefaultConfig(Method.GET, false)
-  const { items } = await defaultFetch(url, configs)
-  return items
+  const { success, items, meg } = await defaultFetch(url, configs)
+  if (success) return items
+  else { return toast.error(meg) }
 }
 
 /**
@@ -97,7 +97,6 @@ async function fetchModule(url: string) {
   return result
 }
 
-
 /**
  * 사이트 맵 | 카테고리 목록
  * @param mainCategory 주요 분기 카테고리 (authors | topics)
@@ -108,10 +107,9 @@ export async function getQuoteCategoryFromDb(mainCategory: string) {
 
   try {
     const res = await fetch(url)
-    const categories = await res.json();
+    const categories = await res.json()
     return categories
   } catch (error) {
-    console.error("사이트맵 전용 카테고리 목록 불러오기 실패:", error)
+    console.error('사이트맵 전용 카테고리 목록 불러오기 실패:', error)
   }
 }
-

@@ -13,17 +13,19 @@ interface PropsType {
   id: string
 }
 
-
 export default function QuoteLikeBox({ id }: PropsType) {
   const [likeCount, setLikeCount] = useState(0)
   const [quoteId, setQuoteId] = useState(0)
 
   const hasToken = useHasToken()
-  const {data:session} = useSession()
+  const { data: session } = useSession()
 
   const onClickHandleLikeClick = async () => {
-     if(!hasToken &&  !session ) return toast.error('로그인 후 이용 가능 합니다.')
-    const {isSuccess, likeCount} = await postLike(Number(id)) || {isSuccess:false, count:0}
+    if (!hasToken && !session) return toast.error('로그인 후 이용 가능 합니다.')
+    const { isSuccess, likeCount } = (await postLike(Number(id))) || {
+      isSuccess: false,
+      count: 0,
+    }
 
     if (isSuccess) {
       setLikeCount(likeCount)

@@ -1,6 +1,4 @@
-
 import type { Metadata } from 'next'
-
 
 export const metadata: Metadata = {
   title: '로그인',
@@ -8,7 +6,5 @@ export const metadata: Metadata = {
 }
 
 export default function Layout({ children }: any) {
-  return (
-      <section>{children}</section>
-  )
+  return <section>{children}</section>
 }

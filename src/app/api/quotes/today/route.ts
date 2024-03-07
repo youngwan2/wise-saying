@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
     const { totalresult: count } = result.rows[0] || { count: 0 }
     const randomNumbers: number[] = []
 
-    while (randomNumbers.length < 3) {
+    while (randomNumbers.length < 1) {
       let randomNumber = Math.floor(Math.random() * count) + 1
       if (!randomNumbers.includes(randomNumber)) {
         randomNumbers.push(randomNumber)
@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
     const query = `
         SELECT quote_id AS id, author, quote, job
         FROM quotes
-        WHERE quote_id IN ($1,$2,$3)
+        WHERE quote_id IN ($1)
     `
     const results = await db.query(query, randomNumbers)
     await db.end()

@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import { openDB } from '@/utils/connect'
 import { oauth2UserInfoExtractor, tokenVerify } from '@/utils/auth'
 
-
 const query = `
 UPDATE users
 SET nickname = $1, profile_img_url = $2, updated_at = CURRENT_TIMESTAMP
@@ -16,7 +15,8 @@ export async function PATCH(req: NextRequest) {
     const { '0': body } = await req.json()
     const { nickname, profile_image } = body
 
-    const { userId: socialUserId, email } = await oauth2UserInfoExtractor() || { userId: '', email: '' }
+    const { userId: socialUserId, email } =
+      (await oauth2UserInfoExtractor()) || { userId: '', email: '' }
 
     if (socialUserId) {
       db.query(query, [nickname, profile_image, email, socialUserId])
@@ -37,7 +37,6 @@ export async function PATCH(req: NextRequest) {
 
     // 검증 통과 후 유저 프로필 업로드 처리
     const { email: dbEmail, sub: userId } = user
-
 
     await db.query(query, [nickname, profile_image, dbEmail, userId])
     db.end()

@@ -55,7 +55,7 @@ export default function SignInForm() {
     setIsShowModal(false)
   }
 
-  useDraggable(formRef,'free')
+  useDraggable(formRef, 'free')
 
   return (
     <form

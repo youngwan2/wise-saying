@@ -12,7 +12,6 @@ export default function BookmarkPagination({
   onClickPrevSwitch,
   onClickNextSwitch,
 }: PropsType) {
-
   return (
     <article className="flex justify-center ">
       {/* 이전 */}
@@ -33,7 +32,7 @@ export default function BookmarkPagination({
       {/* 다음 */}
       <button
         className={`mx-[10px] text-white ${
-          maxPageSize === page+1 ? 'invisible' : 'visible'
+          maxPageSize === page + 1 ? 'invisible' : 'visible'
         }`}
         onClick={onClickNextSwitch}
       >

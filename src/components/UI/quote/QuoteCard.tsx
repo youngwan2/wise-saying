@@ -1,4 +1,4 @@
-import { MouseEvent, Suspense, useCallback, useEffect, useRef } from 'react'
+import { MouseEvent, MouseEventHandler, useCallback, useEffect, useRef } from 'react'
 import UserQuotesCardControlButtons from './UserQuotesCardControlButtons'
 import useIntersectionObserver from '@/custom/useIntersectionObserver'
 import { useCardZoomInOutStore } from '@/store/store'
@@ -10,6 +10,7 @@ import QuotesCardControlButtons from './QuotesCardControlButtons'
 import { HiDocumentMagnifyingGlass } from 'react-icons/hi2'
 import { SlEarphones } from 'react-icons/sl'
 import useTTS from '@/custom/useTTS'
+import { HiSpeakerphone } from 'react-icons/hi'
 
 interface PropsType {
   item: ItemsType
@@ -17,10 +18,11 @@ interface PropsType {
   index: number
 }
 
+const MIN_TEXT_LENGTH = 1
 export default function QuoteCard({ item, items, index }: PropsType) {
   const liRefs = useRef<HTMLLIElement[]>([])
   const pathName = usePathname()
-  const { setText } = useTTS()
+  const { setText, readText, progress, isPlaying } = useTTS()
 
   const router = useRouter()
   const isZoomIn = useCardZoomInOutStore((state) => state.isZoomIn)
@@ -67,7 +69,6 @@ export default function QuoteCard({ item, items, index }: PropsType) {
     const tl = gsap.timeline()
     tl.to(e.currentTarget.parentElement, {
       rotateY: -20,
-      translateZ: -100,
       scale: 0.1,
       background: 'tomato',
       ease: 'bounce.inOut',
@@ -102,16 +103,35 @@ export default function QuoteCard({ item, items, index }: PropsType) {
         }
       }}
       key={item.id}
-      className="invisible shadow-[inset_0_0_0_3px_white] rounded-[10px] w-[95%] my-[1em] max-w-[500px] bg-transparent  px-[15px] py-[35px] mx-auto relative hover:bg-[#d5d5d533] "
+      className={`invisible shadow-[inset_0_0_0_3px_white] rounded-[10px] w-[95%] my-[1em] max-w-[500px] bg-transparent  px-[15px] py-[35px] mx-auto relative hover:bg-[#d5d5d533]`}
     >
 
-      {/* 명언 정보 */}
-      <blockquote className="mt-[1em] text-white ">
-        <p className=" p-[1em] text-[1.15em]">{item.quote}</p>
-        <span className="block font-bold mt-[1em] text-right">
-          - {item.author} -
-        </span>
-      </blockquote>
+      {/* 프로그래스 */}
+      <progress
+        id='tts-progress'
+        aria-label='명언 듣기 진행률(100프로 기준)'
+        className='transition-all absolute top-[1em] w-[50%]'
+        max={100} value={progress} />
+
+      {/* 듣기 버튼 */}
+      <button
+        aria-label="명언 듣기 버튼"
+        className="absolute right-[3.3em] top-[0.429em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-white "
+        onClick={() => {
+          setText(item.quote)
+        }}
+      >
+        <SlEarphones className="pr-[2px]" />
+      </button>
+
+      {/* 상세 페이지 이동 버튼 */}
+      <button
+        aria-label="상세 페이지 이동"
+        onClick={onClickPushAnimation}
+        className="absolute right-[1.8em] top-[0.45em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-white  "
+      >
+        <HiDocumentMagnifyingGlass />
+      </button>
 
       {pathName.includes('/user-quotes') ? (
         <UserQuotesCardControlButtons index={index} item={item} items={items} />
@@ -119,23 +139,29 @@ export default function QuoteCard({ item, items, index }: PropsType) {
         <QuotesCardControlButtons index={index} item={item} />
       )}
 
-      {/* 상세 페이지 이동 버튼 */}
-      <button
-        aria-label='상세 페이지 이동'
-        onClick={onClickPushAnimation}
-        className="absolute right-[1.8em] top-[0.45em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-white  "
-      >
-        <HiDocumentMagnifyingGlass />
-      </button>
-
-      {/* 듣기 버튼 */}
-      <button
-        aria-label="명언 듣기 버튼"
-        className="absolute right-[3.3em] top-[0.429em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-white "
-        onClick={() => {setText(item.quote)}}
-      >
-        <SlEarphones className="pr-[2px]" />
-      </button>
+      {/* 명언 정보 */}
+      <Quote readText={readText} author={item.author} quote={item.quote} />
+      <p>{isPlaying
+        ? <span className='text-[1.05em] animate-pulse absolute bottom-2 left-2 text-white rounded-[10px] p-[2px] px-[7px] flex items-center'><HiSpeakerphone color='gold' className='mr-[5px]' /> {progress}/100</span>
+        : <span className='text-[1.05em] animate-none absolute bottom-2 left-2 text-white rounded-[10px] p-[2px] px-[7px]'></span>}</p>
     </li>
+  )
+}
+
+interface ChildProps {
+  [key: string]: string
+}
+function Quote({ readText, author, quote }: ChildProps) {
+  return (
+    <blockquote className="mt-[1em] text-white ">
+      <p className='p-[1em]'>
+        <span className=" text-[1.11em]">{readText.length > MIN_TEXT_LENGTH ? readText : quote}</span>
+      </p>
+
+      <span className="block font-bold mt-[1em] text-right">
+        - {author} -
+      </span>
+    </blockquote>
+
   )
 }

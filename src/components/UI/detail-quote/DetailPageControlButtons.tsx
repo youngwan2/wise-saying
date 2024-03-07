@@ -23,16 +23,20 @@ interface PropsType {
 
 export default function DetailPageControlButtons({ item }: PropsType) {
   const hasToken = useHasToken()
-  const { data: session } = useSession();
+  const { data: session } = useSession()
   const router = useRouter()
   const setIsUpdate = useBookmarkUpdate((state) => state.setIsUpdate)
 
   const { setText } = useTTS()
 
   const onClickBookmarkAdd = async () => {
-    if (!item && !hasToken && !session) return toast.error('로그인 후 이용 가능합니다.')
+    if (!item && !hasToken && !session)
+      return toast.error('로그인 후 이용 가능합니다.')
     const { id } = item
-    const isSuccess = await addBookmarkItem(id, `/quotes/authors/${item.author}/${id}`)
+    const isSuccess = await addBookmarkItem(
+      id,
+      `/quotes/authors/${item.author}/${id}`,
+    )
     isSuccess && setIsUpdate(true)
   }
 

@@ -82,7 +82,6 @@ export async function updateUserPassword(password: string, userId: number) {
   if (!success) toast.error(meg)
 }
 
-
 /**
  * PATCH | 유저 프로필 추가
  * @param nickname 유저 닉네임
@@ -107,4 +106,3 @@ export async function updateUserInfo(
     requestNewRefreshToken()
   }
 }
-

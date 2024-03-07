@@ -11,6 +11,7 @@ export default function LoginEmailInput() {
     <article className=" flex mb-[1em] mx-[10px]">
       <EmailLabel />
       <input
+        autoComplete="on"
         aria-label="이메일 입력창"
         ref={emailInputRef}
         placeholder="이메일"

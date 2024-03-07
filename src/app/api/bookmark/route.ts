@@ -29,7 +29,8 @@ export async function GET(req: NextRequest) {
 
   try {
     const db = await openDB()
-    const { userId: socialUserId, email: socialEmail } = await oauth2UserInfoExtractor() || { userId: '', email: '' }
+    const { userId: socialUserId, email: socialEmail } =
+      (await oauth2UserInfoExtractor()) || { userId: '', email: '' }
 
     if (socialUserId) {
       const itemResults = await db.query(query, [
@@ -89,8 +90,6 @@ export async function GET(req: NextRequest) {
   }
 }
 
-
-
 const selectQuery = `
 SELECT A.user_id AS user_id, A.quote_id AS quote_id, B.email AS email 
 FROM bookmarks A JOIN users B
@@ -104,17 +103,20 @@ VALUES ($1, $2, $3)
 `
 // POST | 북마크 추가 처리
 export async function POST(req: NextRequest) {
-
   const { '0': body } = await req.json()
   const { quoteId, url } = body
 
   try {
     const db = await openDB()
-    const { userId: socialUserId, email: socialEmail } = await oauth2UserInfoExtractor() || { userId: '', email: '' }
+    const { userId: socialUserId, email: socialEmail } =
+      (await oauth2UserInfoExtractor()) || { userId: '', email: '' }
 
     if (socialUserId) {
       // (북마크 목록에 이미 존재하는 경우) 북마크 목록에 추가하지 않기
-      const bookmarkResults = await db.query(selectQuery, [socialEmail, quoteId])
+      const bookmarkResults = await db.query(selectQuery, [
+        socialEmail,
+        quoteId,
+      ])
       const isExistingItem = bookmarkResults.rows[0]
 
       if (isExistingItem) {
@@ -164,7 +166,6 @@ export async function POST(req: NextRequest) {
       success: true,
       status: 201,
     })
-
   } catch (error) {
     console.error('/api/bookmark/route.ts', error)
     return NextResponse.json({

@@ -59,8 +59,6 @@ export const logoutUser = async () => {
   }
 }
 
-
-
 // submit 브라우저 이벤트 방지
 export const onSubmit = (e: FormEvent) => {
   e.preventDefault()

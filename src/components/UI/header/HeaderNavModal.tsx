@@ -1,6 +1,5 @@
 'use client'
 
-
 import navList from '@/router'
 import { useNavDisplayStateStore } from '@/store/store'
 import { useRouter } from 'next/navigation'
@@ -17,7 +16,6 @@ interface PropsType {
 export default function HeaderNavModal() {
   const isDisplay = useNavDisplayStateStore((state) => state.isDisplay)
   const router = useRouter()
-
 
   return (
     <article

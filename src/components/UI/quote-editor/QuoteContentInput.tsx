@@ -21,6 +21,7 @@ export default function QuoteContentInput({
         내용
       </label>
       <textarea
+        autoComplete="on"
         ref={textareaRef}
         name={name}
         id="content"

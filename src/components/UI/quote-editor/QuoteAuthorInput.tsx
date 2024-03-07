@@ -22,6 +22,7 @@ export default function QuoteAuthorInput({
         작성자
       </label>
       <input
+        autoComplete="on"
         ref={inputRef}
         name={name}
         type="text"

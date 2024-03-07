@@ -87,8 +87,6 @@ export async function POST(req: NextRequest) {
       path: '/', // 쿠키에 접근할 수 있는 사이트 경로
     })
 
-
-
     return NextResponse.json({
       success: true,
       meg: '정상적으로 처리 되었습니다..',

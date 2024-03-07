@@ -1,3 +1,5 @@
+import { JWT_TOKEN_REGEX } from '@/constants'
+
 /**
  * SessionStorage | 유저 이메일 정보를 로컬의 세션 스토로지에서 가져온다.
  * @returns
@@ -13,7 +15,7 @@ export const getUserEmail = () => {
 
     return userEmail
   } catch (error) {
- //   console.error('sessionStorage getItem 실패:', error)
+    //   console.error('sessionStorage getItem 실패:', error)
     return ''
   }
 }
@@ -29,7 +31,7 @@ interface UserInfoType {
  * SET SessionStorage | 유저 정보 저장
  * @param user
  */
-export const setUserInfo = (user: UserInfoType| any) => {
+export const setUserInfo = (user: UserInfoType | any) => {
   sessionStorage.setItem('user', JSON.stringify(user))
 }
 
@@ -40,15 +42,16 @@ export const getUserInfo = () => {
   try {
     sessionStorage.getItem('user')
   } catch (error) {
-   // console.error('user 정보 가져오기 실패:', error)
+    // console.error('user 정보 가져오기 실패:', error)
   }
 }
 
 /**
  * SET SessionStorage | 유저의 로그인 만료 시간 저장
- * @param exp 
+ * @param exp
  */
 export const setLoginExp = (exp: number) => {
+  if (exp < 2) return
   sessionStorage.setItem('exp', JSON.stringify(exp))
 }
 
@@ -58,9 +61,11 @@ export const setLoginExp = (exp: number) => {
 export const getLoginExp = () => {
   try {
     const exp = sessionStorage.getItem('exp')
-    if(exp) {return Number(exp)}
+    if (exp) {
+      return Number(exp)
+    }
   } catch (error) {
-    //console.error('exp 가져오기 실패:', error)
+    console.error('exp 가져오기 실패:', error)
     return false
   }
 }
@@ -71,19 +76,22 @@ export const getLoginExp = () => {
  */
 
 export const setAccessToken = (token: string) => {
-  sessionStorage.setItem('token', token)
+  const isToken = JWT_TOKEN_REGEX.test(token)
+  if (isToken) {
+    sessionStorage.setItem('token', token)
+  }
 }
 
 /**
  * GET  SessionStorage | accessToken 가져오기
- * @returns 
+ * @returns
  */
 export const getAccessToken = () => {
   try {
-    const token = sessionStorage.getItem('token')
+    const token = sessionStorage ? sessionStorage.getItem('token') : null
     return token
   } catch (error) {
-    //console.error('accessToken 가져오기 실패:' + error)
+    console.error('accessToken 가져오기 실패:' + error)
     return null
   }
 }

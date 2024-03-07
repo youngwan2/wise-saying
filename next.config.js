@@ -15,35 +15,32 @@ const nextConfig = {
         pathname: '/**',
       },
       {
-        protocol:'https',
-        hostname:'lh3.googleusercontent.com'
-
-      }
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+      },
     ],
-    
   },
   async headers() {
     return [
       {
-        source: "/api/:path*",
+        source: '/api/:path*',
         headers: [
           {
-            key: "Access-Control-Allow-Origin",
-            value: "www.wise-sayings.com", //
+            key: 'Access-Control-Allow-Origin',
+            value: 'www.wise-sayings.com', //
           },
           {
-            key: "Access-Control-Allow-Methods",
-            value: "GET, POST, PUT, DELETE, OPTIONS",
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET, POST, PUT, DELETE, OPTIONS',
           },
           {
-            key: "Access-Control-Allow-Headers",
-            value: "Content-Type, Authorization",
+            key: 'Access-Control-Allow-Headers',
+            value: 'Content-Type, Authorization',
           },
         ],
       },
-    ];
+    ]
   },
 }
-
 
 module.exports = withBundleAnalyzer(nextConfig)

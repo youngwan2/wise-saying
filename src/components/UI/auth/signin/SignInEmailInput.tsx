@@ -65,6 +65,7 @@ export default function SignInEmailInput({
         {/* 이메일 입력 */}
         <EmailLabel />
         <input
+          autoComplete="on"
           onInput={onInputEmail}
           className="text-white pl-[8px]  min-w-[230px] w-[100%] shadow-[inset_0_0_0_2px_white] bg-transparent focus:bg-white focus:outline-none focus:text-black focus:font-bold"
           type="email"

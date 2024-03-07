@@ -15,6 +15,5 @@ export default async function CategoryPage({
 }) {
   const { category } = params
 
-  return  <CategoryList category={category} />
-  
+  return <CategoryList category={category} />
 }
