@@ -1,3 +1,4 @@
+import { HTTP_CODE } from '@/app/http-code'
 import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -9,11 +10,11 @@ export async function GET(req: NextRequest) {
   const pageNum = Number(page)
 
   try {
+    
     if (!userId)
       return NextResponse.json({
+        ...HTTP_CODE.BAD_REQUEST,   
         meg: '잘못된 요청입니다. 쿼리 변수를 다시 확인해주세요.',
-        status: 400,
-        success: false,
       })
 
     const db = await openDB()
@@ -39,18 +40,12 @@ export async function GET(req: NextRequest) {
     db.end()
 
     return NextResponse.json({
-      meg: '요청을 완료하였습니다.',
-      status: 200,
-      success: true,
+      ...HTTP_CODE.OK,
       quotes,
       count,
     })
   } catch (error) {
     console.log('/api/user/mypage/posts/route.ts', error)
-    return NextResponse.json({
-      status: 500,
-      success: false,
-      meg: '서버에서 문제가 발생하였습니다. 나중에 다시시도 해주세요.',
-    })
+    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
 }

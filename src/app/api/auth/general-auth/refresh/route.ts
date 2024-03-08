@@ -3,14 +3,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createToken, tokenVerify } from '@/utils/auth'
 
 export async function POST(req: NextRequest) {
-  const { status, meg, success, user } = tokenVerify(req, true)
+  const { user, ...HTTP } = tokenVerify(req, true) as any
 
-  if (status === 400) {
-    return NextResponse.json({ status, success, meg })
-  }
-  if (status === 401) {
-    return NextResponse.json({ status, success, meg })
-  }
+  if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
 
   const refreshToken = createToken(user, false)
 

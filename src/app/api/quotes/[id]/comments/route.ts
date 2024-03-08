@@ -1,6 +1,7 @@
 import { openDB } from '@/utils/connect'
 import { oauth2UserInfoExtractor, tokenVerify } from '@/utils/auth'
 import { NextRequest, NextResponse } from 'next/server'
+import { HTTP_CODE } from '@/app/http-code'
 
 // GET | 특정 포스트 댓글 조회
 export async function GET(req: NextRequest, res: { params: { id: string } }) {
@@ -37,20 +38,15 @@ export async function GET(req: NextRequest, res: { params: { id: string } }) {
     ])
     const comments = commentResults.rows
     db.end()
+
     return NextResponse.json({
-      status: 200,
-      meg: '정상적으로 처리되었습니다.',
-      success: true,
+      ...HTTP_CODE.OK,
       comments,
       totalCount,
     })
   } catch (error) {
     console.error('/api/quotes/[id]/comments/route.ts', error)
-    return NextResponse.json({
-      status: 500,
-      meg: '서버에서 문제가 발생하였습니다. 나중에 다사시도 해주세요.',
-      success: false,
-    })
+    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
 }
 
@@ -69,9 +65,8 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
   // 댓글 유효성 검사
   if (comment.length < 2)
     return NextResponse.json({
-      status: 400,
+      ...HTTP_CODE.BAD_REQUEST,
       meg: '댓글 형식은 공백을 포함하여 2자 이상 입력해야 합니다.',
-      success: false,
     })
 
   const { userId: socialUserId } = (await oauth2UserInfoExtractor()) || {
@@ -84,35 +79,21 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
     if (socialUserId) {
       db.query(insertQuery, [comment, socialUserId, quoteId])
       db.end()
-      return NextResponse.json({
-        status: 201,
-        meg: '정상적으로 처리되었습니다.',
-        success: true,
-      })
+      return NextResponse.json(HTTP_CODE.CREATED)
     }
 
-    // 일반 로그인
-    // 토큰 유효성 검증
-    const { status, meg, success, user } = tokenVerify(req, true)
-    if (status === 400) return NextResponse.json({ status, success, meg })
-    if (status === 401) return NextResponse.json({ status, success, meg })
+    // 일반 로그인 | 토큰 유효성 검증
+    const { user, ...HTTP } = tokenVerify(req, true) as any
+    if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
 
     const { sub: userId } = user
 
     db.query(insertQuery, [comment, userId, quoteId])
     db.end()
-    return NextResponse.json({
-      status: 201,
-      meg: '정상적으로 처리되었습니다.',
-      success: true,
-    })
+    return NextResponse.json(HTTP_CODE.CREATED)
   } catch (error) {
     console.error('/api/quotes/[id]/comments/route.ts', error)
-    return NextResponse.json({
-      status: 500,
-      meg: '서버에서 문제가 발생하였습니다. 나중에 다사시도 해주세요.',
-      success: false,
-    })
+    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
 }
 
@@ -129,9 +110,8 @@ export async function PATCH(req: NextRequest, res: { params: { id: string } }) {
   // 댓글 유효성 검사
   if (comment.length < 2)
     return NextResponse.json({
-      status: 400,
+      ...HTTP_CODE.BAD_REQUEST,
       meg: '댓글 형식은 공백을 포함하여 2자 이상 입력해야 합니다.',
-      success: false,
     })
 
   const db = await openDB()
@@ -146,39 +126,23 @@ export async function PATCH(req: NextRequest, res: { params: { id: string } }) {
     if (socialUserId) {
       db.query(updateQuery, [comment, socialUserId, commentId])
       db.end()
-      return NextResponse.json({
-        status: 201,
-        meg: '정상적으로 처리되었습니다.',
-        success: true,
-      })
+      return NextResponse.json(
+        HTTP_CODE.CREATED
+      )
     }
 
-    const { status, meg, success, user } = tokenVerify(req, true)
-
-    if (status === 400) {
-      return NextResponse.json({ status, success, meg })
-    }
-
-    if (status === 401) {
-      return NextResponse.json({ status, success, meg })
-    }
+    // 일반 로그인 | 토큰 유효성 검증
+    const { user, ...HTTP } = tokenVerify(req, true) as any
+    if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
 
     const { sub: userId } = user
 
     await db.query(updateQuery, [comment, userId, commentId])
     db.end()
-    return NextResponse.json({
-      status: 201,
-      meg: '정상적으로 수정되었습니다.',
-      success: true,
-    })
+    return NextResponse.json(HTTP_CODE.CREATED)
   } catch (error) {
     console.error('/api/quotes/[id]/comments/route.ts', error)
-    return NextResponse.json({
-      status: 500,
-      meg: '서버에서 문제가 발생하였습니다. 나중에 다사시도 해주세요.',
-      success: false,
-    })
+    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
 }
 
@@ -204,37 +168,18 @@ export async function DELETE(
     if (socialUserId) {
       await db.query(deleteQuery, [commentId])
       db.end()
-      return NextResponse.json({
-        status: 200,
-        meg: '정상적으로 삭제 처리되었습니다.',
-        success: true,
-      })
+      return NextResponse.json(HTTP_CODE.NO_CONTENT)
     }
 
-    // 일반 로그인
-    // 토큰 유효성 검증
-    const { status, meg, success, user } = tokenVerify(req, true)
-    if (status === 400) {
-      return NextResponse.json({ status, success, meg })
-    }
-    if (status === 401) {
-      return NextResponse.json({ status, success, meg })
-    }
-    const { sub: userId } = user
+    // 일반 로그인 | 토큰 유효성 검증
+    const { user, ...HTTP } = tokenVerify(req, true) as any
+    if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
 
     await db.query(deleteQuery, [commentId])
     db.end()
-    return NextResponse.json({
-      status: 200,
-      meg: '정상적으로 삭제 처리되었습니다.',
-      success: true,
-    })
+    return NextResponse.json(HTTP_CODE.NO_CONTENT)
   } catch (error) {
     console.error('/api/quotes/[id]/comments/route.ts', error)
-    return NextResponse.json({
-      status: 500,
-      meg: '서버에서 문제가 발생하였습니다. 나중에 다사시도 해주세요.',
-      success: false,
-    })
+    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
 }

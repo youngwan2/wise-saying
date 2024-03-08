@@ -91,7 +91,7 @@ export const getAccessToken = () => {
     const token = sessionStorage ? sessionStorage.getItem('token') : null
     return token
   } catch (error) {
-    console.error('accessToken 가져오기 실패:' + error)
+    // console.error('accessToken 가져오기 실패:' + error)
     return null
   }
 }

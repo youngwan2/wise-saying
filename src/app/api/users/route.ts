@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { openDB } from '@/utils/connect'
 import { oauth2UserInfoExtractor, tokenVerify } from '@/utils/auth'
+import { HTTP_CODE } from '@/app/http-code'
 
 const query = `
 SELECT user_id, email, nickname, profile_img_url AS profile_image FROM users
@@ -24,20 +25,16 @@ export async function GET(req: NextRequest) {
       const results = await db.query(query, [socialUserId])
       const userInfo = results.rows[0]
       await db.end()
+
       return NextResponse.json({
-        meg: '정상처리되었습니다.',
-        success: true,
-        status: 200,
+        ...HTTP_CODE.OK,
         userInfo,
       })
     }
 
-    // 소셜 로그인 ❌
-    // 토큰 검증
-    const { status, success, meg, user } = tokenVerify(req, true)
-
-    if (status === 400) return NextResponse.json({ status, success, meg })
-    if (status === 401) return NextResponse.json({ status, success, meg })
+    // 소셜 로그인 ❌ | 토큰 검증
+    const { user, ...HTTP } = tokenVerify(req, true) as any
+    if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
 
     // 검증 후 처리
     const { sub: userId } = user
@@ -46,17 +43,11 @@ export async function GET(req: NextRequest) {
     const userInfo = results.rows[0]
     await db.end()
     return NextResponse.json({
-      meg: '정상처리되었습니다.',
-      success: true,
-      status: 200,
+      ...HTTP_CODE.OK,
       userInfo,
     })
   } catch (error) {
     console.error('/api/users/route.ts', error)
-    return NextResponse.json({
-      meg: '서버에서 문제가 발생하였습니다. 나중에 다시시도 해주세요.',
-      success: false,
-      status: 500,
-    })
+    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
 }

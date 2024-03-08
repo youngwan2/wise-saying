@@ -1,3 +1,4 @@
+import { HTTP_CODE } from '@/app/http-code'
 import { oauth2UserInfoExtractor, tokenVerify } from '@/utils/auth'
 import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
@@ -17,20 +18,14 @@ export async function GET(req: NextRequest, res: { params: { id: string } }) {
     const result = await db.query(selectQuery, [quoteId])
     const likeCount = result.rows[0].count
     return NextResponse.json({
+      ...HTTP_CODE.CREATED,
       meg: '정상적으로 처리되었습니다.',
-      status: 201,
-      success: true,
       likeCount,
       quoteId,
     })
   } catch (error) {
     console.error('GET /api/quotes/[id]/like', error)
-    return NextResponse.json({
-      meg: '서버에서 문제가 발생하였습니다. 나중에 다시시도 해주세요.',
-      status: 500,
-      success: false,
-      likeCount: 0,
-    })
+    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
 }
 
@@ -54,6 +49,7 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
     const { email: socialEmail, userId: socialUserId } =
       (await oauth2UserInfoExtractor()) || { email: '', userId: '' }
 
+    // 좋아요 중복 체크
     if (socialUserId) {
       const checkResult = await db.query(checkSelectQuery, [
         socialEmail,
@@ -66,11 +62,9 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
         const result = await db.query(likeCountSelectQuery, [quoteId])
         const likeCount = result.rows[0].count
         db.end()
-
         return NextResponse.json({
-          meg: '정상 처리 되었습니다.',
-          status: 201,
-          success: true,
+          ...HTTP_CODE.CREATED,
+          meg: '평가를 취소하였습니다.',
           likeCount,
           quoteId,
         })
@@ -83,9 +77,8 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
         const likeCount = result.rows[0].count
         db.end()
         return NextResponse.json({
-          meg: '정상 처리 되었습니다..',
-          status: 201,
-          success: true,
+          ...HTTP_CODE.CREATED,
+          meg: '평가를 반영하였습니다',
           likeCount,
           quoteId,
         })
@@ -93,14 +86,8 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
     }
 
     // 일반 로그인
-    const { meg, status, success, user } = tokenVerify(req, true)
-
-    if (status === 400) {
-      return NextResponse.json({ status, success, meg })
-    }
-    if (status === 401) {
-      return NextResponse.json({ status, success, meg })
-    }
+    const { user, ...HTTP } = tokenVerify(req, true) as any
+    if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
 
     const { sub: userId, email: jwtEmail } = user
 
@@ -113,9 +100,8 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
       const likeCount = result.rows[0].count
 
       return NextResponse.json({
-        meg: '평가를 취소합니다..',
-        status: 201,
-        success: true,
+        ...HTTP_CODE.CREATED,
+        meg: '평가를 취소하였습니다.',
         likeCount,
         quoteId,
       })
@@ -126,18 +112,13 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
     const likeCount = result.rows[0].count
 
     return NextResponse.json({
-      meg: '정상적으로 처리되었습니다.',
-      status: 201,
-      success: true,
+      ...HTTP_CODE.CREATED,
+      meg: '평가를 반영 하였습니다.',
       likeCount,
       quoteId,
     })
   } catch (error) {
     console.error('POST /api/quotes/[id]/like', error)
-    return NextResponse.json({
-      meg: '서버에서 문제가 발생하였습니다. 나중에 다시시도 해주세요.',
-      status: 500,
-      success: false,
-    })
+    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
 }

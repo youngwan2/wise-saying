@@ -2,6 +2,7 @@ import bcrpt from 'bcrypt'
 import { NextRequest, NextResponse } from 'next/server'
 import { openDB } from '@/utils/connect'
 import { userSchema } from '@/validation/joi/schema'
+import { HTTP_CODE } from '@/app/http-code'
 
 // 암호화 설정(옵션)
 const SALT = 10
@@ -21,12 +22,12 @@ export async function POST(req: NextRequest) {
       reConfirmPw,
     })
 
+
     // 3. 검증 실패 시 처리
     if (error) {
       return NextResponse.json({
+        ...HTTP_CODE.BAD_REQUEST,
         meg: error.details,
-        success: false,
-        status: 400,
       })
     }
 
@@ -42,19 +43,11 @@ export async function POST(req: NextRequest) {
       await db.end()
     })
 
-    return NextResponse.json({
-      meg: '정상적으로 처리되었습니다.',
-      status: 201,
-      success: true,
-    })
+    return NextResponse.json(HTTP_CODE.CREATED)
 
     // 그 외 서버 에러 처리
   } catch (error) {
     console.error('/api/auth/signin/route.ts')
-    return NextResponse.json({
-      status: 500,
-      success: false,
-      meg: '서버에서 문제가 발생하였습니다. 나중에 다시시도 해주세요.',
-    })
+    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
 }

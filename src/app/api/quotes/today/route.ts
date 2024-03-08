@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { openDB } from '@/utils/connect'
+import { HTTP_CODE } from '@/app/http-code'
 
 export async function GET(req: NextRequest) {
   try {
@@ -28,19 +29,14 @@ export async function GET(req: NextRequest) {
     `
     const results = await db.query(query, randomNumbers)
     await db.end()
+
     const items = results.rows
     return NextResponse.json({
-      meg: '성공적으로 처리되었습니다.',
-      status: 200,
-      success: true,
+      ...HTTP_CODE.OK,
       items,
     })
   } catch (error) {
     console.error('/api/quotes/random/routs.ts', error)
-    return NextResponse.json({
-      status: 500,
-      success: false,
-      meg: '서버 측에서 문제가 발생하였습니다. 나중에 다시시도 해주세요.',
-    })
+    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
 }

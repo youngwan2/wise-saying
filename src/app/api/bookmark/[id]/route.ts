@@ -1,6 +1,7 @@
 import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 import { oauth2UserInfoExtractor, tokenVerify } from '@/utils/auth'
+import { HTTP_CODE } from '@/app/http-code'
 
 const query = `
 DELETE FROM bookmarks
@@ -19,38 +20,27 @@ export async function DELETE(
     const { userId: socialUserId } = (await oauth2UserInfoExtractor()) || {
       userId: '',
     }
-
+    // 소셜 로그인
     if (socialUserId) {
       await db.query(query, [quoteId, socialUserId])
       db.end()
-      return NextResponse.json({
-        meg: '정상적으로 삭제 처리되었습니다.',
-        status: 204,
-        success: true,
-      })
+      return NextResponse.json(HTTP_CODE.NO_CONTENT)
+
     }
 
-    // 토큰 유효성 검증
-    const { status, meg, success, user } = tokenVerify(req, true)
-
-    if (status === 400) return NextResponse.json({ status, success, meg })
-    if (status === 401) return NextResponse.json({ status, success, meg })
+    // 일반 로그인 | 토큰 유효성 검증
+    const { user, ...HTTP } = tokenVerify(req, true) as any
+    if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
 
     // 검증 통과 후 처리
     const { sub: userId } = user
 
     await db.query(query, [quoteId, userId])
     db.end()
-    return NextResponse.json({
-      meg: '정상적으로 삭제 처리되었습니다.',
-      status: 204,
-      success: true,
-    })
+    return NextResponse.json(HTTP_CODE.NO_CONTENT)
+
   } catch (error) {
     console.error('/api/bookmark/[id]/route.ts')
-    return NextResponse.json({
-      status: 500,
-      meg: '사버에서 처리 중 문제가 발생 하였습니다. 나중에 다시 시도해주세요.',
-    })
+    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
 }

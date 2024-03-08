@@ -59,6 +59,8 @@ wise sayings
 
 - (정리본②) https://duklook.tistory.com/427
 
+- (정리본③) https://duklook.tistory.com/439
+
 ## 🚬트러블 슈팅(이슈)
 
 - (트러블 슈팅①) https://duklook.tistory.com/417
