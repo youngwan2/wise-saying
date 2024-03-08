@@ -13,9 +13,6 @@ export default function Logout() {
   const {data:session} = useSession()
   const [nickname, setNickname] = useState('')
 
-  useEffect(() => {
-    if (!hasToken) redirect('/login')
-  }, [hasToken])
 
   useEffect(() => {
     if (sessionStorage.getItem('user') === null) return

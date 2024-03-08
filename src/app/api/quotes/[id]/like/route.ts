@@ -38,7 +38,8 @@ WHERE B.email = $1 AND quote_id = $2
 const deleteQuery = `
 DELETE FROM quote_likes
 USING users
-WHERE users.email = $1 AND quote_likes.quote_id = $2
+WHERE users.user_id = quote_likes.user_id
+AND quote_likes.quote_id= $2 AND users.email = $1 
 `
 const insertQuery = `INSERT INTO quote_likes(user_id, quote_id) VALUES ($1, $2)`
 const likeCountSelectQuery = `SELECT COUNT(*) as count FROM quote_likes  WHERE quote_id = $1 `
@@ -52,6 +53,7 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
     // 소셜 로그인
     const { email: socialEmail, userId: socialUserId } =
       (await oauth2UserInfoExtractor()) || { email: '', userId: '' }
+
 
     // 좋아요 중복 체크
     if (socialUserId) {
@@ -92,6 +94,7 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
     // 일반 로그인
     const { user, ...HTTP } = tokenVerify(req, true) as any
     if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
+
 
     const { sub: userId, email: jwtEmail } = user
 

@@ -10,7 +10,7 @@ WHERE user_id = $1
 
 // GET | 유저 프로필 정보 요청
 export async function GET(req: NextRequest) {
-  req.headers.get('')
+  req.headers
 
   const db = await openDB()
 
