@@ -7,6 +7,7 @@ interface PropsType {
 export default function Overlay({ isZoomIn, onClickSetIsZoomIn }: PropsType) {
   return (
     <div
+      aria-hidden={isZoomIn? 'false':'true'}
       aria-label="카드 오버레이(카드의 뒷배경)"
       onClick={onClickSetIsZoomIn}
       className={`${
