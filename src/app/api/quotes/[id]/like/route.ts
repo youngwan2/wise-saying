@@ -35,7 +35,11 @@ FROM quote_likes A JOIN users B
 ON A.user_id = B.user_id
 WHERE B.email = $1 AND quote_id = $2
 `
-const deleteQuery = `DELETE FROM quote_likes WHERE user_id = $1 AND quote_id = $2`
+const deleteQuery = `
+DELETE FROM quote_likes
+USING users
+WHERE users.email = $1 AND quote_likes.quote_id = $2
+`
 const insertQuery = `INSERT INTO quote_likes(user_id, quote_id) VALUES ($1, $2)`
 const likeCountSelectQuery = `SELECT COUNT(*) as count FROM quote_likes  WHERE quote_id = $1 `
 
@@ -58,7 +62,7 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
       const isLiked = checkResult.rows[0].count
 
       if (Number(isLiked) > 0) {
-        await db.query(deleteQuery, [socialUserId, quoteId])
+        await db.query(deleteQuery, [socialEmail, quoteId])
         const result = await db.query(likeCountSelectQuery, [quoteId])
         const likeCount = result.rows[0].count
         db.end()
@@ -95,7 +99,7 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
     const isLiked = checkResult.rows[0].count
 
     if (Number(isLiked) > 0) {
-      await db.query(deleteQuery, [userId, quoteId])
+      await db.query(deleteQuery, [jwtEmail, quoteId])
       const result = await db.query(likeCountSelectQuery, [quoteId])
       const likeCount = result.rows[0].count
 
