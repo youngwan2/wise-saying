@@ -16,10 +16,11 @@ import { useSWRConfig } from 'swr'
 import ReplyButtons from '../reply/ReplyButtons'
 import { clearTextarea } from '@/utils/textarea'
 
-interface PropsType extends CommentType {}
+interface PropsType extends CommentType { }
 
 export default function CommentCard({ comment }: PropsType) {
   const [isShow, setIsShow] = useState(false)
+  const [isShowReplies, setIsShowReplies] = useState(false)
   const [editFormDisplay, setEditFormDisplay] = useState(false)
   const [replyFormDisply, setReplyFormDisplay] = useState(false)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -41,6 +42,10 @@ export default function CommentCard({ comment }: PropsType) {
   // 대댓글 등록 창 열기
   function onClickReplyFormDisplay() {
     setReplyFormDisplay(!replyFormDisply)
+  }
+
+  function onClickIsShowReplies() {
+    setIsShowReplies(!isShowReplies)
   }
 
   // Action : 대댓글 등록 액션
@@ -97,6 +102,7 @@ export default function CommentCard({ comment }: PropsType) {
 
         <ReplyButtons
           totalCount={replyInfo.totalCount || 0}
+          onClickIsShowReplies ={onClickIsShowReplies}
           onClickReplyFormDisplay={onClickReplyFormDisplay}
         />
       </li>
@@ -108,6 +114,7 @@ export default function CommentCard({ comment }: PropsType) {
       />
       <li>
         <ReplyList
+          isShowReplies={isShowReplies}
           commentId={commentId}
           userEmail={userEmail}
           replyInfo={replyInfo}

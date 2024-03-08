@@ -2,6 +2,8 @@ import { CommentsInfoType } from './Comment'
 import CommentCard from './CommentCard'
 
 interface PropsType extends CommentsInfoType {}
+
+
 export default function CommentList({ comments }: PropsType) {
   if (comments.length < 1) return <EmptyMessage />
 

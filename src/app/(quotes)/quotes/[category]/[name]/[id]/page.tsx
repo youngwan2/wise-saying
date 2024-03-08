@@ -49,14 +49,14 @@ export default async function DetailPage({
       {/* 명언 텍스트 영역 */}
       <blockquote
         className="
-        sm:text-[1.4em] text-[1.2em] sm:px-[4em] sm:py-[4em] min-h-[280px] p-[3em] text-center  bg-[#ffffffdb] text-centermax-w-[900px] w-full mx-auto rounded-[10px] mt-[2em]
-            shadow-[inset_0_5px_5px_0_rgba(0,0,0,0.5)] relative
+         flex items-center justify-center sm:text-[1.4em] text-[1.2em] sm:px-[3em] px-[3.5em] min-h-[280px]  text-center  bg-[#ffffffdb] text-centermax-w-[900px] w-full mx-auto rounded-[10px] mt-[2em]
+            shadow-[inset_0_5px_5px_0_rgba(0,0,0,0.5)] 
             "
       >
         <p className="">{item.quote}</p>
         <QuoteLikeBox id={id} />
       </blockquote>
-
+      
       <div className="flex">
         {/* 컨트롤 버튼 */}
         <DetailPageControlButtons item={item} />
