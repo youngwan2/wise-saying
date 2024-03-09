@@ -1,3 +1,4 @@
+import { HTTP_CODE } from '@/app/http-code'
 import { openDB } from '@/utils/connect'
 import joi from 'joi'
 import { NextRequest, NextResponse } from 'next/server'
@@ -18,11 +19,11 @@ export async function POST(req: NextRequest) {
 
     const vaildEmail = schema.validate({ email })
 
+
     if (vaildEmail.error) {
       return NextResponse.json({
+        ...HTTP_CODE.BAD_REQUEST,
         meg: '잘못된 형식의 이메일 입니다.',
-        status: 400,
-        success: false,
       })
     }
 
@@ -38,23 +39,17 @@ export async function POST(req: NextRequest) {
     db.end()
     if (queriedUserCount > USER_MATCH_COUNT) {
       return NextResponse.json({
+        ...HTTP_CODE.BAD_REQUEST,
         meg: '이미 존재하는 이메일 입니다.',
-        status: 400,
-        success: false,
       })
     }
 
     return NextResponse.json({
+      ...HTTP_CODE.NO_CONTENT,
       meg: '존재하지 않는 이메일 입니다.',
-      status: 201,
-      success: true,
     })
   } catch (error) {
     console.error('/api/users/route.ts', error)
-    return NextResponse.json({
-      meg: '서버 문제가 발생하였습니다. 나중에 다시시도 해주세요.',
-      status: 500,
-      success: false,
-    })
+    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
 }

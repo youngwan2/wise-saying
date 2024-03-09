@@ -1,14 +1,18 @@
 'use client'
 import useHasToken from '@/custom/useHasToken'
 import { logoutUser } from '@/utils/common-func'
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Overlay from '../common/Overlay'
+import ReplaceMessageCard from '../common/ReplaceMessageCard'
+import { useSession } from 'next-auth/react'
 
 export default function Logout() {
   const router = useRouter()
   const hasToken = useHasToken()
+  const {data:session} = useSession()
   const [nickname, setNickname] = useState('')
+
 
   useEffect(() => {
     if (sessionStorage.getItem('user') === null) return
@@ -19,6 +23,7 @@ export default function Logout() {
     setNickname(nickname)
   }, [])
 
+  if (!hasToken && !session) <ReplaceMessageCard childern='만일 자동으로 이동되지 않고, 해당 알림창이 보인다면 아래 버튼을 이용해주세요.'/>
   if (hasToken) {
     return (
       <>
@@ -41,6 +46,7 @@ export default function Logout() {
             onClick={() => {
               alert('곧 로그아웃 처리가 완료 됩니다.')
               logoutUser()
+
             }}
           >
             로그아웃

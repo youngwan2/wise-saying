@@ -1,3 +1,4 @@
+import { HTTP_CODE } from '@/app/http-code'
 import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -18,25 +19,19 @@ export async function POST(req: NextRequest) {
 
     if (hasEmail > 0) {
       return NextResponse.json({
+        ...HTTP_CODE.OK,
         meg: '존재하는 이메일 입니다. 확인 후 로그인 해주세요.',
-        success: true,
-        status: 201,
       })
     }
 
     if (hasEmail < 1) {
       return NextResponse.json({
+        ...HTTP_CODE.NOT_FOUND,
         meg: '존재하지 않는 이메일 입니다.',
-        success: false,
-        status: 404,
       })
     }
   } catch (error) {
     console.error('/api/auth/forgot/password')
-    return NextResponse.json({
-      meg: '서버에서 문제가 발생하였습니다. 나중에 다시시도 해주세요.',
-      success: false,
-      status: 500,
-    })
+    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
 }

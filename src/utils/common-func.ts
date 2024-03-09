@@ -46,14 +46,15 @@ export const logoutUser = async () => {
   try {
     const respone = await fetch(url, config)
     const { success, meg } = await respone.json()
-    if (!success) {
+
+    if (success) {
       toast.success(meg)
       sessionStorage.clear()
       setTimeout(() => {
         window.location.reload()
       }, 1000)
     }
-    if (success) toast.error(meg)
+    if (!success) toast.error(meg)
   } catch (error) {
     console.error('로그아웃 요청 실패:', error)
   }

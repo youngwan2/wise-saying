@@ -4,6 +4,7 @@ import bycrypt from 'bcrypt'
 import { openDB } from '@/utils/connect'
 import { createToken, tokenExpCalculator } from '@/utils/auth'
 import { cookies } from 'next/headers'
+import { HTTP_CODE } from '@/app/http-code'
 
 // POST | 로그인 요청 처리
 export async function POST(req: NextRequest) {
@@ -31,9 +32,8 @@ export async function POST(req: NextRequest) {
 
     if (validResults.error?.name === 'ValidationError') {
       return NextResponse.json({
-        success: false,
+        ...HTTP_CODE.BAD_REQUEST,
         meg: validResults.error.message,
-        status: 400,
       })
     }
 
@@ -47,9 +47,9 @@ export async function POST(req: NextRequest) {
     // 1. 유저정보 유무 판단
     if (user.rows.length < 1)
       return NextResponse.json({
-        success: false,
+        ...HTTP_CODE.NOT_FOUND,
         meg: '등록한 정보가 존재하지 않습니다. 회원가입 후 다시시도 해주세요.',
-        status: 400,
+
       })
 
     // 1-2. 데이터베이스에서 가져온 데이터 저장
@@ -64,12 +64,10 @@ export async function POST(req: NextRequest) {
 
     // 2. 유효한 비밀번호 인지 판단
     const vaildPw = await bycrypt.compare(password, userPassword)
-
     if (!vaildPw)
       return NextResponse.json({
-        success: false,
+        ...HTTP_CODE.BAD_REQUEST,
         meg: '비밀번호가 일치하지 않습니다.',
-        status: 400,
       })
 
     // 3. 토큰 발급
@@ -88,9 +86,7 @@ export async function POST(req: NextRequest) {
     })
 
     return NextResponse.json({
-      success: true,
-      meg: '정상적으로 처리 되었습니다..',
-      status: 201,
+      ...HTTP_CODE.CREATED,
       email: userEmail,
       profile: { image: profile_image, nickname: nickname || '익명의 명인' },
       exp,
@@ -101,10 +97,6 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error('/api/auth/login/route.ts', error)
 
-    return NextResponse.json({
-      success: false,
-      meg: ' 서버에서 문제가 발생하였습니다. 나중에 다시시도 해주세요.',
-      status: 500,
-    })
+    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
 }

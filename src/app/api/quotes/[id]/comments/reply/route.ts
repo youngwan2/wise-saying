@@ -1,3 +1,4 @@
+import { HTTP_CODE } from '@/app/http-code'
 import { oauth2UserInfoExtractor, tokenVerify } from '@/utils/auth'
 import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
@@ -21,19 +22,13 @@ export async function GET(req: NextRequest) {
     const replies = selectResult.rows
 
     return NextResponse.json({
-      meg: '성공적으로 등록처리 되었습니다.',
-      status: 201,
-      success: true,
+      ...HTTP_CODE.CREATED,
       replies,
       totalCount,
     })
   } catch (error) {
     console.error('GET /api/quotes/:id/comments/reply', error)
-    return NextResponse.json({
-      meg: '서버 측에서 문제가 발생하였습니다. 나중에 다시시도 해주세요',
-      status: 500,
-      success: false,
-    })
+    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
 }
 
@@ -57,9 +52,8 @@ export async function POST(req: NextRequest) {
 
   if (LENGTH_LESS_THAN_ONE)
     return NextResponse.json({
+      ...HTTP_CODE.BAD_REQUEST,
       meg: '잘못된 요청입니다. 문자는 최소 1자 이상 입력하여야 합니다.',
-      success: false,
-      status: 400,
     })
 
   try {
@@ -76,19 +70,16 @@ export async function POST(req: NextRequest) {
       const replies = selectResult.rows
 
       return NextResponse.json({
-        meg: '성공적으로 등록처리 되었습니다.',
-        status: 201,
-        success: true,
+        ...HTTP_CODE.CREATED,
         replies,
         totalCount,
       })
     }
 
     // 일반 로그인
-    const { meg, status, success, user } = tokenVerify(req, true)
+    const { user, ...HTTP } = tokenVerify(req, true) as any
 
-    if (status === 400) return NextResponse.json({ status, success, meg })
-    if (status === 401) return NextResponse.json({ status, success, meg })
+    if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
 
     const { sub: userId } = user
 
@@ -98,19 +89,13 @@ export async function POST(req: NextRequest) {
     const replies = selectResult.rows
 
     return NextResponse.json({
-      meg: '성공적으로 등록처리 되었습니다.',
-      status: 201,
-      success: true,
+      ...HTTP_CODE.CREATED,
       replies,
       totalCount,
     })
   } catch (error) {
     console.error('POST /api/quotes/:id/comments/reply', error)
-    return NextResponse.json({
-      meg: '서버 측에서 문제가 발생하였습니다. 나중에 다시시도 해주세요',
-      status: 500,
-      success: false,
-    })
+    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
 }
 
@@ -131,9 +116,8 @@ export async function PATCH(req: NextRequest) {
 
   if (LENGTH_LESS_THAN_ONE)
     return NextResponse.json({
+      ...HTTP_CODE.BAD_REQUEST,
       meg: '잘못된 요청입니다. 문자는 최소 1자 이상 입력하여야 합니다.',
-      success: false,
-      status: 400,
     })
 
   try {
@@ -145,32 +129,20 @@ export async function PATCH(req: NextRequest) {
     // 소셜 로그인
     if (soicalUserId) {
       await db.query(updateQuery, [content, replyId])
-      return NextResponse.json({
-        meg: '성공적으로 등록처리 되었습니다.',
-        status: 200,
-        success: true,
-      })
+      return NextResponse.json(HTTP_CODE.CREATED)
     }
 
     // 일반 로그인
-    const { meg, status, success } = tokenVerify(req, true)
+    const { user, ...HTTP } = tokenVerify(req, true) as any
 
-    if (status === 400) return NextResponse.json({ status, success, meg })
-    if (status === 401) return NextResponse.json({ status, success, meg })
+    if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
 
     await db.query(updateQuery, [content, replyId])
-    return NextResponse.json({
-      meg: '성공적으로 등록처리 되었습니다.',
-      status: 200,
-      success: true,
-    })
+    return NextResponse.json(HTTP_CODE.CREATED)
+
   } catch (error) {
     console.error('PATCH /api/quotes/:id/comments/reply', error)
-    return NextResponse.json({
-      meg: '서버 측에서 문제가 발생하였습니다. 나중에 다시시도 해주세요',
-      status: 500,
-      success: false,
-    })
+    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
 }
 
@@ -193,31 +165,18 @@ export async function DELETE(req: NextRequest) {
     // 소셜 로그인
     if (soicalUserId) {
       await db.query(deleteQuery, [replyId])
-      return NextResponse.json({
-        meg: '성공적으로 등록처리 되었습니다.',
-        status: 200,
-        success: true,
-      })
+      return NextResponse.json(HTTP_CODE.CREATED)
     }
 
     // 일반 로그인
-    const { meg, status, success } = tokenVerify(req, true)
-
-    if (status === 400) return NextResponse.json({ status, success, meg })
-    if (status === 401) return NextResponse.json({ status, success, meg })
+    const { user, ...HTTP } = tokenVerify(req, true) as any
+    if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
 
     await db.query(deleteQuery, [replyId])
-    return NextResponse.json({
-      meg: '성공적으로 등록처리 되었습니다.',
-      status: 200,
-      success: true,
-    })
+    return NextResponse.json(HTTP_CODE.CREATED)
+
   } catch (error) {
     console.error('DELTE /api/quotes/:id/comments/reply', error)
-    return NextResponse.json({
-      meg: '서버 측에서 문제가 발생하였습니다. 나중에 다시시도 해주세요',
-      status: 500,
-      success: false,
-    })
+    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
 }

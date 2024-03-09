@@ -1,3 +1,4 @@
+import { HTTP_CODE } from '@/app/http-code'
 import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -50,9 +51,7 @@ export async function GET(req: NextRequest) {
 
         db.end()
         return NextResponse.json({
-          status: 200,
-          meg: '성공적으로 처리 되었습니다.',
-          success: true,
+          ...HTTP_CODE.OK,
           totalCounts: {
             byAuthorCount,
             byKeywordCount,
@@ -77,9 +76,7 @@ export async function GET(req: NextRequest) {
 
         db.end()
         return NextResponse.json({
-          status: 200,
-          meg: '성공적으로 처리 되었습니다.',
-          success: true,
+          ...HTTP_CODE.OK,
           items,
           totalCount,
         })
@@ -99,9 +96,7 @@ export async function GET(req: NextRequest) {
 
         db.end()
         return NextResponse.json({
-          status: 200,
-          meg: '성공적으로 처리 되었습니다.',
-          success: true,
+          ...HTTP_CODE.OK,
           items,
           totalCount,
         })
@@ -109,10 +104,6 @@ export async function GET(req: NextRequest) {
     }
   } catch (error) {
     console.log('api/quotes/search/route.ts:', error)
-    return NextResponse.json({
-      status: 500,
-      meg: '서버에서 문제가 발생하였습니다. 나중에 다시시도 해주세요.',
-      success: false,
-    })
+    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
 }

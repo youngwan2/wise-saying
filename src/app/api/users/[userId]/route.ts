@@ -3,6 +3,7 @@ import { oauth2UserInfoExtractor, tokenVerify } from '@/utils/auth'
 import { NextRequest, NextResponse } from 'next/server'
 import bcrpt from 'bcrypt'
 import joi from 'joi'
+import { HTTP_CODE } from '@/app/http-code'
 
 // PATCH | 비밀번호 변경
 const SALT = 10
@@ -25,24 +26,22 @@ export async function PATCH(req: NextRequest) {
 
   if (result.error) {
     return NextResponse.json({
+      ...HTTP_CODE.BAD_REQUEST,
       meg: '비밀번호 형식과 일치하지 않습니다.',
-      success: false,
-      status: 400,
     })
   }
 
   // 토큰 검증
-  const { meg, success, status, user } = tokenVerify(req, true)
-  const { sub: userId } = user
+  const { user, ...HTTP } = tokenVerify(req, true) as any
+  if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
 
-  if (status === 400) return NextResponse.json({ status, success, meg })
-  if (status === 401) return NextResponse.json({ status, success, meg })
+  const { sub: userId } = user
 
   // 비밀번호 해쉬 및 데이터베이스 저장
   try {
     const db = await openDB()
 
-    bcrpt.hash(validPs, SALT, async function (err, hash) {
+    bcrpt.hash(validPs, SALT, async function (_, hash) {
       const query = `
             UPDATE users
             SET password = $1
@@ -52,18 +51,10 @@ export async function PATCH(req: NextRequest) {
       await db.end()
     })
 
-    return NextResponse.json({
-      meg: '정상적으로 처리되었습니다.',
-      status: 201,
-      success: true,
-    })
+    return NextResponse.json(HTTP_CODE.NO_CONTENT)
   } catch (error) {
     console.error('/api/users/[id]/route.ts')
-    return NextResponse.json({
-      status: 500,
-      success: false,
-      meg: '서버에서 문제가 발생하였습니다. 나중에 다시시도 해주세요.',
-    })
+    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
 }
 
@@ -80,37 +71,30 @@ export async function DELETE(req: NextRequest) {
     const { email: socialEmail, userId: socialUserId } =
       (await oauth2UserInfoExtractor()) || { email: '', userId: '' }
 
+    // 소셜 로그인
     if (socialUserId) {
       await db.query(query, [socialEmail, socialUserId])
       await db.end()
       return NextResponse.json({
+        ...HTTP_CODE.NO_CONTENT,
         meg: '회원탈퇴 처리가 완료 되었습니다. 그 동안 이용해 주셔서 감사합니다. 회원 관련 서비스 이외에는 정상 이용 가능하니 생각나실 때 한 번씩 이용 해주세요.',
-        success: true,
-        status: 204,
       })
     }
 
     // 토큰 검증
-    const { meg, success, status, user } = tokenVerify(req, true)
-
-    if (status === 400) return NextResponse.json({ status, success, meg })
-    if (status === 401) return NextResponse.json({ status, success, meg })
+    const { user, ...HTTP } = tokenVerify(req, true) as any
+    if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
 
     const { email: dbEmail, sub: userId } = user
 
     await db.query(query, [dbEmail, userId])
     await db.end()
     return NextResponse.json({
+      ...HTTP_CODE.NO_CONTENT,
       meg: '회원탈퇴 처리가 완료 되었습니다. 그 동안 이용해 주셔서 감사합니다. 회원 관련 서비스 이외에는 정상 이용 가능하니 생각나실 때 한 번씩 이용 해주세요.',
-      success: true,
-      status: 204,
     })
   } catch (error) {
     console.error('/api/users/[userId]', error)
-    return NextResponse.json({
-      meg: '서버에서 문제가 발생하였습니다. 나중에 다시시도 해주세요',
-      status: 500,
-      success: false,
-    })
+    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
 }

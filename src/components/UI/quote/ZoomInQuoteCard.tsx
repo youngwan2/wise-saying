@@ -1,9 +1,10 @@
 import { useCardZoomInOutStore } from '@/store/store'
 import { ItemsType } from '@/types/items.types'
-import { MouseEvent, useEffect, useRef, useState } from 'react'
+import { MouseEvent, useRef, useState } from 'react'
 import { gsap } from 'gsap/all'
 import { Draggable } from 'gsap/Draggable'
 import Overlay from './Overlay'
+import { useGSAP } from '@gsap/react'
 
 interface PropsType {
   item: ItemsType
@@ -35,12 +36,13 @@ export default function ZommInQuoteCard({ item }: PropsType) {
     setPosition({ x, y, xy })
   }
 
-  useEffect(() => {
+  useGSAP(() => {
     if (cardRef.current && gsap) {
+
       const card = cardRef.current
       // 카드 확대 시
       if (isZoomIn) {
-        const { x, y, xy } = position
+        const { x, y } = position
         gsap.to(card, {
           opacity: 1,
           lineHeight: 2,
@@ -75,15 +77,40 @@ export default function ZommInQuoteCard({ item }: PropsType) {
     }
   }, [isZoomIn, position])
 
+  // 카드 줌 시 텍스트 렌더링 애니메이션
+  useGSAP(() => {
+    if (!isZoomIn) return
+
+    const tl = gsap.timeline()
+    const textSplits = gsap.utils.toArray('.zoomin-quote-split') as HTMLSpanElement[] || []
+
+    // delay |  애니메이션 시작 1초 지연
+    tl.delay(1)
+
+    // animation | 각 텍스트 애니메이션 적용
+    textSplits.forEach((text, i) => {
+
+      tl.from(text, {
+        position: 'relative',
+        onUpdate: () => {
+          gsap.to(text, { boxShadow: '0 -2px 0 inset rgba(0,0,0,0.3) ' })
+        },
+        onComplete: () => {
+          gsap.to(text, { boxShadow: '0 -2px 0 inset rgba(0,0,0,0) ' })
+        },
+        opacity: 0.5,
+      }, '-=0.43')
+    })
+  }, [isZoomIn])
+
   if (!item) return <></>
   return (
     <article
       ref={wrapperRef}
-      className={` ${
-        isZoomIn
-          ? 'fixed left-0 top-0 bottom-0 right-0 visible opacity-100 z-50 '
-          : 'fixed left-0 top-0 bottom-0 right-0 invisible opacity-0'
-      } transition-all duration-1000`}
+      className={` ${isZoomIn
+        ? 'fixed left-0 top-0 bottom-0 right-0 visible opacity-100 z-50 '
+        : 'fixed left-0 top-0 bottom-0 right-0 invisible opacity-0'
+        } transition-all duration-1000`}
     >
       <Overlay isZoomIn={isZoomIn} onClickSetIsZoomIn={onClickSetIsZoomIn} />
       {/* 카드 */}
@@ -93,7 +120,7 @@ export default function ZommInQuoteCard({ item }: PropsType) {
         ref={cardRef}
         key={item.id}
         className={`
-                sm:p-[2.2em] p-[1.3em] sm:text-[1em] text-[0.95em]
+                sm:p-[2.2em] p-[2em] sm:text-[1em] text-[0.95em]
                 invisible opacity-0 z-[1000] fixed left-[50%] top-[30%] translate-x-[-50%] translate-y-[-50%]
                 shadow-[1px_10px_5px_0_rgba(0,0,0,0.3)] odd:-rotate-2  even:rotate-2  max-w-[350px] bg-[#FFE5A0] 
                 w-[100%] text-center delay-300 duration-100
@@ -101,7 +128,9 @@ export default function ZommInQuoteCard({ item }: PropsType) {
                 `}
       >
         <blockquote className="mt-[1em]">
-          <p className=" p-[0.5em] text-">{item.quote}</p>
+          <p className=" p-[0.5em] text-">{item.quote.split('').map((quote, i) => {
+            return <span key={i} className=' zoomin-quote-split relative opacity-100'>{quote}</span>
+          })}</p>
           <footer className="font-bold mt-[1em]">{item.author}</footer>
         </blockquote>
       </div>

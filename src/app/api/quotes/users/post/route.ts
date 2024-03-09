@@ -1,6 +1,7 @@
 import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 import { oauth2UserInfoExtractor, tokenVerify } from '@/utils/auth'
+import { HTTP_CODE } from '@/app/http-code'
 
 const insertQuery = `
 INSERT INTO quotes(quote, category, author,job, user_id)
@@ -29,19 +30,12 @@ export async function POST(req: NextRequest) {
         socialUserId,
       ])
       await db.end()
-      return NextResponse.json({
-        status: 201,
-        success: true,
-        meg: '정상적으로 처리되었습니다.',
-      })
+      return NextResponse.json(HTTP_CODE.NO_CONTENT)
     }
 
-    // 소셜 로그인 ❌
-
-    // 토큰 유효성 검증
-    const { status, meg, success, user } = tokenVerify(req, true)
-    if (status === 400) return NextResponse.json({ status, success, meg })
-    if (status === 401) return NextResponse.json({ status, success, meg })
+    // 소셜 로그인 ❌ |  토큰 유효성 검증
+    const { user, ...HTTP } = tokenVerify(req, true) as any
+    if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
 
     const { sub: userId } = user
 
@@ -52,18 +46,11 @@ export async function POST(req: NextRequest) {
       '사용자',
       userId,
     ])
+
     await db.end()
-    return NextResponse.json({
-      status: 201,
-      success: true,
-      meg: '정상적으로 처리되었습니다.',
-    })
+    return NextResponse.json(HTTP_CODE.NO_CONTENT)
   } catch (error) {
     console.error('/api/quotes/users/post/route.ts', error)
-    return NextResponse.json({
-      status: 500,
-      success: false,
-      meg: '서버 측 문제 입니다. 나중에 다시 시도 해주세요.',
-    })
+    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
 }

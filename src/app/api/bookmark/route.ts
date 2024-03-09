@@ -1,6 +1,7 @@
 import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 import { oauth2UserInfoExtractor, tokenVerify } from '@/utils/auth'
+import { HTTP_CODE } from '@/app/http-code'
 
 const query = `
 SELECT quote_url AS url, quote, A.quote_id AS id, author
@@ -44,9 +45,8 @@ export async function GET(req: NextRequest) {
       const totalCount = countResults.rows[0].count || 0
 
       return NextResponse.json({
+        ...HTTP_CODE.OK,
         meg: '성공적으로 북마크 목록을 가져왔습니다.',
-        success: true,
-        status: 200,
         bookmarks: {
           bookmarks,
           totalCount,
@@ -54,10 +54,8 @@ export async function GET(req: NextRequest) {
       })
     }
 
-    const { status, meg, success, user } = tokenVerify(req, true)
-
-    if (status === 400) return NextResponse.json({ status, success, meg })
-    if (status === 401) return NextResponse.json({ status, success, meg })
+    const { user, ...HTTP } = tokenVerify(req, true) as any
+    if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
 
     const jwtEmail = user.email
     const itemResults = await db.query(query, [
@@ -69,12 +67,9 @@ export async function GET(req: NextRequest) {
     const countResults = await db.query(countSelectQuery, [jwtEmail])
     const bookmarks = itemResults.rows
     const totalCount = countResults.rows[0].count || 0
-
     // 존재하는 경우
     return NextResponse.json({
-      meg: '성공적으로 북마크 목록을 가져왔습니다.',
-      success: true,
-      status: 200,
+      ...HTTP_CODE.OK,
       bookmarks: {
         bookmarks,
         totalCount,
@@ -82,11 +77,7 @@ export async function GET(req: NextRequest) {
     })
   } catch (error) {
     console.error('/api/bookmark/route.ts', error)
-    return NextResponse.json({
-      meg: '서버에서 문제가 발생하였습니다. 나중에 다시시도해 주세요',
-      success: false,
-      status: 500,
-    })
+    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
 }
 
@@ -121,9 +112,8 @@ export async function POST(req: NextRequest) {
 
       if (isExistingItem) {
         return NextResponse.json({
+          ...HTTP_CODE.BAD_REQUEST,
           meg: '이미 북마크 목록에 추가된 카드입니다.',
-          success: false,
-          status: 304,
         })
       }
 
@@ -131,17 +121,14 @@ export async function POST(req: NextRequest) {
       await db.query(insertQuery, [socialUserId, quoteId, url])
       db.end()
       return NextResponse.json({
+        ...HTTP_CODE.CREATED,
         meg: '북마크에 추가되었습니다.',
-        success: true,
-        status: 201,
       })
     }
 
     // 토큰 유효성 검증
-    const { status, meg, success, user } = tokenVerify(req, true)
-
-    if (status === 400) return NextResponse.json({ status, success, meg })
-    if (status === 401) return NextResponse.json({ status, success, meg })
+    const { user, ...HTTP } = tokenVerify(req, true) as any
+    if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
 
     const jwtEmail = user.email
     const userId = user.sub
@@ -152,9 +139,8 @@ export async function POST(req: NextRequest) {
 
     if (isExistingItem) {
       return NextResponse.json({
+        ...HTTP_CODE.BAD_REQUEST,
         meg: '이미 북마크 목록에 추가된 카드입니다.',
-        success: false,
-        status: 304,
       })
     }
 
@@ -162,16 +148,11 @@ export async function POST(req: NextRequest) {
     await db.query(insertQuery, [userId, quoteId, url])
     db.end()
     return NextResponse.json({
+      ...HTTP_CODE.CREATED,
       meg: '북마크에 추가되었습니다.',
-      success: true,
-      status: 201,
     })
   } catch (error) {
     console.error('/api/bookmark/route.ts', error)
-    return NextResponse.json({
-      meg: '서버에서 문제가 발생하였습니다. 나중에 다시시도 해주세요.',
-      success: false,
-      status: 500,
-    })
+    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
 }

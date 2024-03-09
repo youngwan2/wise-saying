@@ -1,3 +1,4 @@
+import { HTTP_CODE } from '@/app/http-code'
 import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -16,7 +17,6 @@ export async function GET(
     /** 카테고리 목록 반환 */
     if (category === 'category-all') {
       const type = req.nextUrl.searchParams.get('type') || ''
-
       const limit = req.nextUrl.searchParams.get('limit') || 30
       const limitNum = Number(limit)
 
@@ -81,10 +81,6 @@ export async function GET(
     // 그 외 에러 처리
   } catch (error) {
     console.error('/api/quotes/topicks/[subCategory]/route.ts', error)
-    return NextResponse.json({
-      status: 500,
-      success: false,
-      meg: '서버측에서 문재가 발생하였습니다. 나중에 다시시도해주세요.',
-    })
+    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
 }

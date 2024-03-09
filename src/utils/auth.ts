@@ -3,6 +3,7 @@ import { cookies } from 'next/headers'
 import { NextRequest } from 'next/server'
 import { auth } from '@/configs/config.auth'
 import { openDB } from './connect'
+import { HTTP_CODE } from '@/app/http-code'
 
 class User {
   userId!: number
@@ -48,11 +49,8 @@ export const tokenVerify = (req: NextRequest, isAccessToken: boolean) => {
     : cookies().get('refreshToken')?.value.split(' ') || [] // refresh
 
   if (!rawToken)
-    return {
-      meg: '정상적인 token 요청 형식이 아닙니다. 로그인 상태가 맞는지 확인해 주세요.',
-      status: 400,
-      success: false,
-    }
+    return HTTP_CODE.BAD_REQUEST
+    
 
   const token = rawToken[1]
   const scrept = process.env.JWT_SCREPT || ''
@@ -60,11 +58,8 @@ export const tokenVerify = (req: NextRequest, isAccessToken: boolean) => {
 
   try {
     if (prefix !== rawToken[0] || !token) {
-      return {
-        meg: '정상적인 token 요청 형식이 아닙니다. 접두사를 확인해주세요.',
-        status: 400,
-        success: false,
-      }
+      return HTTP_CODE.BAD_REQUEST
+      
     }
     const decode = (jwt.verify(token, scrept) as JwtPayload) || ''
     const user = decode.data
@@ -72,11 +67,8 @@ export const tokenVerify = (req: NextRequest, isAccessToken: boolean) => {
     return { user }
   } catch (error) {
     console.error('/utis/validation.ts')
-    return {
-      meg: '토큰이 만료되어 접근이 거절되었습니다. 인증(ex. 로그인/재발급 요청 등) 후 재요청 해주세요.',
-      status: 401,
-      success: false,
-    }
+    return HTTP_CODE.UNAUTHORIZED
+    
   }
 }
 

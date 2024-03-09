@@ -3,6 +3,8 @@ import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcrypt'
 import { userSchema } from '@/validation/joi/schema'
+import { HTTP_CODE } from '@/app/http-code'
+
 
 const SALT = 10
 export async function POST(req: NextRequest) {
@@ -10,10 +12,9 @@ export async function POST(req: NextRequest) {
 
   try {
     const db = await openDB()
-    const { status, meg, success, user } = tokenVerify(req, true)
+    const { user, ...HTTP } = tokenVerify(req, true) as any
 
-    if (status === 400) return NextResponse.json({ status, success, meg })
-    if (status === 401) return NextResponse.json({ status, success, meg })
+    if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
 
     const { email } = user
 
@@ -24,11 +25,7 @@ export async function POST(req: NextRequest) {
       reConfirmPw: confirm,
     })
     if (!validUser)
-      return NextResponse.json({
-        meg: '유효한 데이터 형식이 아닙니다. 다시 확인해주세요',
-        status: 400,
-        success: false,
-      })
+      return NextResponse.json(HTTP_CODE.BAD_REQUEST)
 
     // 새 비밀번호 암호화
     const { password } = validUser
@@ -44,16 +41,11 @@ export async function POST(req: NextRequest) {
     db.end()
 
     return NextResponse.json({
+      ...HTTP_CODE.CREATED,
       meg: '비밀번호가 재설정 되었습니다.',
-      status: 201,
-      success: true,
     })
   } catch (error) {
     console.error('POST /api/auth/forgot/reset-pass', error)
-    return NextResponse.json({
-      meg: '서버에서 문제가 발생하였습니다. 나중에 다시시도 해주세요.',
-      status: 500,
-      success: false,
-    })
+    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
 }
