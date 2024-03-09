@@ -1,4 +1,4 @@
-import { MouseEvent, MouseEventHandler, useCallback, useEffect, useRef } from 'react'
+import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react'
 import UserQuotesCardControlButtons from './UserQuotesCardControlButtons'
 import useIntersectionObserver from '@/custom/useIntersectionObserver'
 import { useCardZoomInOutStore } from '@/store/store'
@@ -7,10 +7,15 @@ import { ItemsType } from '@/types/items.types'
 import ReplaceMessageCard from '../common/ReplaceMessageCard'
 import gsap from 'gsap/all'
 import QuotesCardControlButtons from './QuotesCardControlButtons'
-import { HiDocumentMagnifyingGlass } from 'react-icons/hi2'
-import { SlEarphones } from 'react-icons/sl'
 import useTTS from '@/custom/useTTS'
 import { HiSpeakerphone } from 'react-icons/hi'
+import toast from 'react-hot-toast'
+import { viewCounter } from '@/services/data/patch'
+import TtsButton from '../common/TtsButton'
+import QuoteViews from './QuoteViews'
+import QuoteProgress from './QuoteProgress'
+import QuoteDetailMoveButton from './QuoteDetailMoveButton'
+import QuoteContent from './QuoteContent'
 
 interface PropsType {
   item: ItemsType
@@ -18,26 +23,40 @@ interface PropsType {
   index: number
 }
 
-const MIN_TEXT_LENGTH = 1
 export default function QuoteCard({ item, items, index }: PropsType) {
-  const liRefs = useRef<HTMLLIElement[]>([])
+  const router = useRouter()
   const pathName = usePathname()
+
+  const [viewCount, setViewCount] = useState(0)
+
   const { setText, readText, progress, isPlaying } = useTTS()
 
-  const router = useRouter()
   const isZoomIn = useCardZoomInOutStore((state) => state.isZoomIn)
   const cardIndex = useCardZoomInOutStore((state) => state.cardIndex)
 
+  const liRefs = useRef<HTMLLIElement[]>([])
   const setLiRefs = (index: number, element: HTMLLIElement | null) => {
     element instanceof HTMLLIElement && (liRefs.current[index] = element)
   }
 
+
+  async function getQuoteViewsFromDB(quoteId: number) {
+
+    const url = '/api/quotes/' + quoteId + '/views'
+    try {
+      const response = await fetch(url)
+      const { views } = await response.json()
+      setViewCount(views)
+    } catch (error) {
+      console.error('조회수 조회 실패:', error)
+    }
+  }
+
+
+  // 페이지 사전 로드
   function onPrefetch() {
     router.prefetch(`/quotes/authors/${item.author}/${item.id}`)
   }
-
-  // 인터섹션 옵저버 적용하는 커스텀 훅
-  useIntersectionObserver(liRefs)
 
   const cardZoomInoutSwitch = useCallback(
     (target: HTMLLIElement) => {
@@ -66,14 +85,30 @@ export default function QuoteCard({ item, items, index }: PropsType) {
 
   // 상세 페이지 이동
   const onClickPushAnimation = (e: MouseEvent<HTMLButtonElement>) => {
+    viewCounter(item.id)
+
     const tl = gsap.timeline()
     tl.to(e.currentTarget.parentElement, {
-      rotateY: -20,
-      scale: 0.1,
-      background: 'tomato',
-      ease: 'bounce.inOut',
-      opacity: 0,
+      scale: 0.8,
       duration: 1,
+      onStart() {
+        toast('✈ 잠시후, 디테일 명언 카드 페이지로 이동합니다.', {
+          className: 'font-sans'
+        })
+      },
+    })
+    tl.to(e.currentTarget.parentElement, {
+      scale: 0.5,
+      rotateY: 10,
+      filter: 'blur(1px)',
+      borderTopLeftRadius: '5%',
+      borderBottomLeftRadius: '5%',
+      boxShadow: '-100px 0 100px 0 tomato'
+
+    })
+    tl.to(e.currentTarget.parentElement, {
+      x: window.innerWidth,
+      opacity: 0,
     })
     tl.to(e.currentTarget.parentElement, {
       onComplete() {
@@ -83,6 +118,14 @@ export default function QuoteCard({ item, items, index }: PropsType) {
     })
   }
 
+  const onClickSetText = () => {
+    setText(item.quote)
+  }
+
+
+  // 인터섹션 옵저버 적용하는 커스텀 훅
+  useIntersectionObserver(liRefs)
+
   useEffect(() => {
     if (liRefs.current[cardIndex] === undefined) return
     if (liRefs.current.length > 0 && cardIndex >= 0) {
@@ -91,6 +134,10 @@ export default function QuoteCard({ item, items, index }: PropsType) {
       cardZoomInoutSwitch(liEl)
     }
   }, [cardIndex, cardZoomInoutSwitch])
+
+  useEffect(() => {
+    getQuoteViewsFromDB(item.id)
+  }, [item])
 
   if (!item)
     return <ReplaceMessageCard childern="게시글이 존재하지 않습니다." />
@@ -106,32 +153,9 @@ export default function QuoteCard({ item, items, index }: PropsType) {
       className={`invisible shadow-[inset_0_0_0_3px_white] rounded-[10px] w-[95%] my-[1em] max-w-[500px] bg-transparent  px-[15px] py-[35px] mx-auto relative hover:bg-[#d5d5d533]`}
     >
 
-      {/* 프로그래스 */}
-      <progress
-        id='tts-progress'
-        aria-label='명언 듣기 진행률(100프로 기준)'
-        className='transition-all absolute top-[1em] w-[50%]'
-        max={100} value={progress} />
-
-      {/* 듣기 버튼 */}
-      <button
-        aria-label="명언 듣기 버튼"
-        className="absolute right-[3.3em] top-[0.429em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-white "
-        onClick={() => {
-          setText(item.quote)
-        }}
-      >
-        <SlEarphones className="pr-[2px]" />
-      </button>
-
-      {/* 상세 페이지 이동 버튼 */}
-      <button
-        aria-label="상세 페이지 이동"
-        onClick={onClickPushAnimation}
-        className="absolute right-[1.8em] top-[0.45em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-white  "
-      >
-        <HiDocumentMagnifyingGlass />
-      </button>
+      <QuoteProgress progress={progress} />
+      <TtsButton onClickSetText={onClickSetText} className='absolute right-[3.3em] top-[0.429em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-white ' />
+      <QuoteDetailMoveButton onClickDetailMove={onClickPushAnimation} />
 
       {pathName.includes('/user-quotes') ? (
         <UserQuotesCardControlButtons index={index} item={item} items={items} />
@@ -140,28 +164,15 @@ export default function QuoteCard({ item, items, index }: PropsType) {
       )}
 
       {/* 명언 정보 */}
-      <Quote readText={readText} author={item.author} quote={item.quote} />
+      <QuoteContent readText={readText} author={item.author} quote={item.quote} />
+
+      {/* 프로그래스 숫자형 ex 1/100 */}
       <p>{isPlaying
         ? <span className='text-[1.05em] animate-pulse absolute bottom-2 left-2 text-white rounded-[10px] p-[2px] px-[7px] flex items-center'><HiSpeakerphone color='gold' className='mr-[5px]' /> {progress}/100</span>
         : <span className='text-[1.05em] animate-none absolute bottom-2 left-2 text-white rounded-[10px] p-[2px] px-[7px]'></span>}</p>
+
+      <QuoteViews viewCount={viewCount} />
     </li>
   )
 }
 
-interface ChildProps {
-  [key: string]: string
-}
-function Quote({ readText, author, quote }: ChildProps) {
-  return (
-    <blockquote className="mt-[1em] text-white ">
-      <p className='p-[1em]'>
-        <span className=" text-[1.11em]">{readText.length > MIN_TEXT_LENGTH ? readText : quote}</span>
-      </p>
-
-      <span className="block font-bold mt-[1em] text-right">
-        - {author} -
-      </span>
-    </blockquote>
-
-  )
-}
