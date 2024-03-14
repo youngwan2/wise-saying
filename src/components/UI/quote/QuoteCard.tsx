@@ -154,7 +154,7 @@ export default function QuoteCard({ item, items, index }: PropsType) {
     >
 
       <QuoteProgress progress={progress} />
-      <TtsButton onClickSetText={onClickSetText} className='absolute right-[3.3em] top-[0.429em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-white ' />
+      <TtsButton onClickSetText={onClickSetText} className='absolute right-[3.3em] top-[0.429em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-white' quote={null} />
       <QuoteDetailMoveButton onClickDetailMove={onClickPushAnimation} />
 
       {pathName.includes('/user-quotes') ? (

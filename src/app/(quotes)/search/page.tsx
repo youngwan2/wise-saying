@@ -30,8 +30,8 @@ export default function SearchPage() {
   /**
    * * 전체, 인물별, 키워드 각 탭(타입) 별로 데이터를 처리하여 상태에 저장하는 함수
    * @param items 인물별 && 키워드별 검색 전체 결과가 담긴 배열
-   * @param totalCounts 인물별 && 키워드별 검색 전체 결과 항목 수를 저장하고 있는 객체
-   * @param totalCount 인물별 || 키워드별 전체 검색 결과 항목 수를 저장하고 있는 객체
+   * @param totalCounts 인물별 AND 키워드별 전체 검색 결과 항목 수를 저장하고 있는 객체
+   * @param totalCount 인물별 OR 키워드별 개별 검색 결과 항목 수를 저장하고 있는 객체
    */
   const processByType = useCallback(
     (
@@ -41,11 +41,13 @@ export default function SearchPage() {
       totalCount: number,
     ) => {
       switch (type) {
+        // 전체 검색 결과에 검색된 항목수를 결합
         case 'all': {
           const mergeItems = { ...items, ...totalCounts }
           setItems(mergeItems)
           break
         }
+        // 개별 검색 결과에 검색된 항목수를 결합
         case 'keyword':
         case 'author': {
           const mergeItems = { quotes: items, totalCount }

@@ -1,6 +1,3 @@
-
-
-
 interface PropsType {
     [key: string]: string
 }

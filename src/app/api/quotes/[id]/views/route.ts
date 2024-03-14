@@ -41,7 +41,7 @@ export async function PATCH(req: NextRequest, res: { params: { id: string } }) {
     const db = await openDB();
 
     const selectQuery = `
-    SELECT COUNT(quote_id) as count
+    SELECT views
     FROM views
     WHERE quote_id = $1 
     `
@@ -55,10 +55,10 @@ export async function PATCH(req: NextRequest, res: { params: { id: string } }) {
     WHERE quote_id =  $2
     `
     const selectResult = await db.query(selectQuery, [id])
-    const isViews = (selectResult.rows[0].count || 0) > 0
-    const views = selectResult.rows[0].count
+    const isViews = (selectResult.rowCount || 0) > 0
+    const views = isViews ?selectResult.rows[0].views : 0
     let viewsTypeToNum = Number(views)
-
+    
 
     // 게시글을 1번이라도 조회하여 테이블에 등록된 경우
     if (isViews) {
