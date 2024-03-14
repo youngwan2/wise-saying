@@ -25,6 +25,7 @@ export default async function DetailPage({
         `
       const result = await db.query(query, [id, decodeURIComponent(name)])
       const item = result.rows[0]
+      
       return item
     } catch (error) {
       console.error(
@@ -36,8 +37,9 @@ export default async function DetailPage({
   }
 
   const item = await getQuoteDetail(id)
-
   if (!item) return <ReplaceMessageCard childern="데이터를 조회중 입니다.." />
+
+  
   return (
     <article className="sm:p-[4em] p-[1em]  min-h-[100vh] h-full  mx-auto my-[3em]  perspective-500 flex flex-col max-w-[1300px] bg-[#0000001b]">
       <h2 className="sm:text-[1.5em] text-[1.2em]  flex justify-center items-center p-[10px]  text-center text-white">
@@ -56,7 +58,7 @@ export default async function DetailPage({
         <p className="">{item.quote}</p>
         <QuoteLikeBox id={id} />
       </blockquote>
-      
+
       <div className="flex">
         {/* 컨트롤 버튼 */}
         <DetailPageControlButtons item={item} />
