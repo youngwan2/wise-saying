@@ -5,7 +5,7 @@ import { TextareaAutoResize, clearTextarea } from '@/utils/textarea'
 import { useSession } from 'next-auth/react'
 import { useParams } from 'next/navigation'
 import { useRef } from 'react'
-import toast from 'react-hot-toast'
+import {toast} from 'react-toastify'
 
 export default function CommentForm() {
   const { id } = useParams()

@@ -1,6 +1,6 @@
 import { Method, defaultConfig } from '@/configs/config.api'
 import { defaultFetch } from '@/utils/fetcher'
-import toast from 'react-hot-toast'
+import {toast} from 'react-toastify'
 /**
  * POST | 북마크 아이템을 추가하는 함수
  * @param itemId 북마크에 추가할 아이템의 식별자(=>quote_id)

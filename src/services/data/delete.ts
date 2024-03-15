@@ -1,6 +1,6 @@
 import { Method, defaultConfig } from '@/configs/config.api'
 import { defaultFetch } from '@/utils/fetcher'
-import toast from 'react-hot-toast'
+import {toast} from 'react-toastify'
 import { mutate } from 'swr'
 
 /**

@@ -1,9 +1,8 @@
 import { config } from '@/configs/config.url'
 import { requestNewAccessToken } from '../user/post'
-import { getAccessToken } from '@/utils/session-storage'
 import { defaultFetch } from '@/utils/fetcher'
 import { Method, getDefaultConfig } from '@/configs/config.api'
-import toast from 'react-hot-toast'
+import {toast} from 'react-toastify'
 
 /**
  * * GET | 명언  카테고리 목록 갯수 불러오기

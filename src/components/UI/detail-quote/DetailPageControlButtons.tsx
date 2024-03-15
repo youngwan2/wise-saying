@@ -10,7 +10,7 @@ import { addBookmarkItem } from '@/services/data/post'
 import useTTS from '@/custom/useTTS'
 import { useBookmarkUpdate } from '@/store/store'
 import { useSession } from 'next-auth/react'
-import toast from 'react-hot-toast'
+import {toast} from 'react-toastify'
 
 interface PropsType {
   item: {

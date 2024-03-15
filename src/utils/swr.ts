@@ -1,6 +1,6 @@
 import useSWR from 'swr'
 import { getFetcher } from './fetcher'
-import toast from 'react-hot-toast'
+import {toast} from 'react-toastify'
 
 // reference : https://swr.vercel.app/ko/docs/data-fetching
 export const useSwrFetch = (url: string, refreshTimer:number|undefined, isActRefresh:boolean | undefined) => {

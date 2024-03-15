@@ -27,6 +27,7 @@ export default function PopularQuoteCard({ quoteInfo }: PropsType) {
 
       // 상세 페이지 이동
   const onClickPushAnimation = (e: MouseEvent<HTMLButtonElement>) => {
+    if(!quoteInfo) return
     viewCounter(quoteInfo.quote_id)
 
     const tl = gsap.timeline()
@@ -34,7 +35,7 @@ export default function PopularQuoteCard({ quoteInfo }: PropsType) {
       scale: 0.8,
       duration: 1,
       onStart() {
-        toast('✈ 잠시후, 디테일 명언 카드 페이지로 이동합니다.', {
+        toast('✈ 잠시 후, 페이지를 전환합니다.', {
           className: 'font-sans'
         })
       },

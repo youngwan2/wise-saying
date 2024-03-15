@@ -5,7 +5,7 @@ import {
   setLoginExp,
   setUserInfo,
 } from '@/utils/session-storage'
-import toaster, { toast } from 'react-hot-toast'
+import { toast } from 'react-toastify'
 
 /**
  * POST | 새로운 refreshToken 발급
@@ -125,13 +125,13 @@ export const postUserPost = async (userPost: {
 
   // 유효성 검증
   if (!(category && content && author))
-    return toaster.error('모든 빈칸을 채워주세요.')
+    return toast.error('모든 빈칸을 채워주세요.')
   if (category.toString().length < 1 || category.toString().length > 3)
-    return toaster.error('주제를 최소 2자 이상~ 3자 이하로 적어 주세요.')
+    return toast.error('주제를 최소 2자 이상~ 3자 이하로 적어 주세요.')
   if (content.toString().length < 3)
-    return toaster.error('내용을 최소 3자 이상 적어 주세요.')
+    return toast.error('내용을 최소 3자 이상 적어 주세요.')
   if (author.toString().length < 2)
-    return toaster.error('작성자를 최소 2자 이상 적어주세요.')
+    return toast.error('작성자를 최소 2자 이상 적어주세요.')
 
   const url = '/api/quotes/users/post'
   const config = defaultConfig(Method.POST, userPost)

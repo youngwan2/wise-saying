@@ -1,9 +1,8 @@
-import useDraggable from '@/custom/useDraggable'
 import useHasToken from '@/custom/useHasToken'
 import { updateComment } from '@/services/user/patch'
 import { useSession } from 'next-auth/react'
 import { MouseEventHandler, useRef } from 'react'
-import toast from 'react-hot-toast'
+import {toast} from 'react-toastify'
 
 interface PropsType {
   onClickEditCancel: MouseEventHandler<HTMLButtonElement>

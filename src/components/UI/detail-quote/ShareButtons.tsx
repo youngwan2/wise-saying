@@ -7,7 +7,7 @@ import { HiShare } from 'react-icons/hi2'
 import { useRef, useState } from 'react'
 import { SiNaver } from 'react-icons/si'
 import { HiXCircle } from 'react-icons/hi'
-import toaster from 'react-hot-toast'
+import {toast} from 'react-toastify'
 import useDraggable from '@/custom/useDraggable'
 
 export default function ShareButtons() {
@@ -46,9 +46,9 @@ export default function ShareButtons() {
     try {
       const url = window.location.href
       await window.navigator.clipboard.writeText(url)
-      toaster.success('클립보드에 복사되었습니다. 이용해 주셔서 감사합니다.')
+      toast.success('클립보드에 복사되었습니다. 이용해 주셔서 감사합니다.')
     } catch (error) {
-      toaster.error('불편을 드려 죄송합니다. 나중에 다시시도 해주세요.')
+      toast.error('불편을 드려 죄송합니다. 나중에 다시시도 해주세요.')
       console.error(error)
     }
   }

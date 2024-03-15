@@ -6,7 +6,7 @@ import { postLike } from '@/services/user/post'
 import { defaultFetch } from '@/utils/fetcher'
 import { useSession } from 'next-auth/react'
 import { useCallback, useEffect, useState } from 'react'
-import toast from 'react-hot-toast'
+import {toast} from 'react-toastify'
 import { HiHandThumbUp } from 'react-icons/hi2'
 
 interface PropsType {

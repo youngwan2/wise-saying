@@ -69,7 +69,7 @@ export default function CommentCard({ comment }: PropsType) {
   // MEMO : 대댓글 수정 및 삭제는 ReplyCard 컴포넌트에 위치.
   // SWR + GET | 대댓글 정보 요청
   const { data: replyInfo, isLoading }: DataType = useSwrFetch(
-    `/api/quotes/0/comments/reply?comment-id=` + commentId,
+    `/api/quotes/0/comments/reply?comment-id=` + commentId, undefined, undefined
   )
 
   if (isLoading || !(comment && replyInfo))

@@ -6,7 +6,7 @@ import { useSWRConfig } from 'swr'
 import { deleteFetcher, patchFetcher } from '@/utils/fetcher'
 import ReplyContent from './ReplyContent'
 import { ReplyType } from '@/types/items.types'
-import toast from 'react-hot-toast'
+import {toast} from 'react-toastify'
 
 interface PropsType extends ReplyType {
   commentId: number
@@ -70,7 +70,7 @@ export default function ReplyCard({ commentId, userEmail, reply }: PropsType) {
     <>
       <li
         key={reply.id}
-        className="flex w-[90%] bg-white my-[0.2em] rounded-[10px] p-[10px] items-center relative"
+        className="flex w-[90%] bg-white my-[0.2em] rounded-[10px] p-[8px] pt-[5px] items-center relative"
       >
         <ReplyContent reply={reply} />
         <ReplyMenuDropdownButton

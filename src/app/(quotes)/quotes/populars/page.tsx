@@ -2,7 +2,7 @@
 import ReplaceMessageCard from "@/components/UI/common/ReplaceMessageCard"
 import PopularQuoteList from "@/components/UI/quote/PopularQuoteList"
 import { useSwrFetch } from "@/utils/swr"
-import toast from "react-hot-toast"
+import {toast} from "react-hot-toast"
 import { HiRefresh } from "react-icons/hi"
 
 export interface QuoteType {

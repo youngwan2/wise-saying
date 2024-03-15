@@ -11,6 +11,7 @@ import CarouselControlButtons from './CarouselControlButtons'
 export default function StylerCarosel() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay()])
   const [images, setImages] = useState([
+    '/images/image0.png',
     '/images/image1.png',
     '/images/image2.png',
     '/images/image3.png',
@@ -23,6 +24,9 @@ export default function StylerCarosel() {
     '/images/image10.png',
     '/images/image11.png',
     '/images/image12.png',
+    '/images/image13.png',
+    '/images/image14.png',
+    '/images/image15.png',
   ])
   const setImageSrc = useImageElementStore((state) => state.setImageSrc)
 

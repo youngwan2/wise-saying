@@ -10,7 +10,7 @@ import BookmarkCloseButton from './BookmarkCloseButton'
 import BookmarkPagination from './BookmarkPagination'
 import BookmarkList from './BookmarkList'
 import { deleteBookmark } from '@/services/user/delete'
-import toast from 'react-hot-toast'
+import {toast} from 'react-toastify'
 import useHasToken from '@/custom/useHasToken'
 import { useSession } from 'next-auth/react'
 

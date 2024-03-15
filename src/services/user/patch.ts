@@ -1,7 +1,7 @@
 import { Method, defaultConfig } from '@/configs/config.api'
 import { logoutUser } from '@/utils/common-func'
 import { defaultFetch } from '@/utils/fetcher'
-import toast from 'react-hot-toast'
+import {toast} from 'react-toastify'
 import { requestNewRefreshToken } from './post'
 
 interface UserPostType {

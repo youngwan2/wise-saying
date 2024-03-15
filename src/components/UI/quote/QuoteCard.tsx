@@ -9,7 +9,7 @@ import gsap from 'gsap/all'
 import QuotesCardControlButtons from './QuotesCardControlButtons'
 import useTTS from '@/custom/useTTS'
 import { HiSpeakerphone } from 'react-icons/hi'
-import toast from 'react-hot-toast'
+import {toast} from 'react-toastify'
 import { viewCounter } from '@/services/data/patch'
 import TtsButton from '../common/TtsButton'
 import QuoteViews from './QuoteViews'
@@ -92,7 +92,7 @@ export default function QuoteCard({ item, items, index }: PropsType) {
       scale: 0.8,
       duration: 1,
       onStart() {
-        toast('✈ 잠시후, 디테일 명언 카드 페이지로 이동합니다.', {
+        toast('✈ 잠시 후 페이지를 전환합니다.', {
           className: 'font-sans'
         })
       },
