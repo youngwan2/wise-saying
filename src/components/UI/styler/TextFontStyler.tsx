@@ -11,22 +11,13 @@ export default function TextFontStyler({
   textStyle,
 }: PropsType) {
   const fontFamilies = [
+    'TTHakgyoansimUndongjangL',
+    'TTHakgyoansimMoheomgaB',
+    'Dovemayo_gothic',
+    'YEONGJUSeonbiTTF',
+    'kdg_Medium',
     'Arial',
     'cursive', // 손으로 쓴 것 같은 서체
-    'Helvetica',
-    'fantasy', // 화려한 서체
-    'Times New Roman',
-    'Times',
-    'Courier New',
-    'Courier',
-    'monospace', // 글자 폭과 간격이 일정한 서제
-    'Georgia',
-    'Palatino',
-    'Palatino Linotype',
-    'Verdana',
-    'Geneva',
-    'Trebuchet MS',
-    'Impact',
     'Charcoal',
     'sans-serif', // 삐침 없는 글자
     'MS Sans Serif',
@@ -39,6 +30,7 @@ export default function TextFontStyler({
     'dotum', // 돋움
     'dotumche', // 돋움체
     'gulim', // 굴림
+    
   ]
 
   const fontStyles = ['fill', 'stroke', 'hybrid']
