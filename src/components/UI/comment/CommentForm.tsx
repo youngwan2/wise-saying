@@ -5,9 +5,14 @@ import { TextareaAutoResize, clearTextarea } from '@/utils/textarea'
 import { useSession } from 'next-auth/react'
 import { useParams } from 'next/navigation'
 import { useRef } from 'react'
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
+import { KeyedMutator } from 'swr'
+import { CommentsInfoType } from './Comment'
 
-export default function CommentForm() {
+interface PropsType {
+  mutate: KeyedMutator<CommentsInfoType>
+}
+export default function CommentForm({ mutate }: PropsType) {
   const { id } = useParams()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const hasToken = useHasToken()
@@ -18,6 +23,7 @@ export default function CommentForm() {
     const comment = formData.get('comment')?.valueOf().toString() || ''
     await postComment(comment, id)
     clearTextarea(textareaRef)
+    mutate()
   }
 
   return (

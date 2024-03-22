@@ -15,7 +15,7 @@ import type {
   NavDisplayState,
   HeaderSearchFormDisplayState,
   BodyOverflowState,
-  BookmarkUpdateState,
+  UpdateState,
 } from '../types/store.type'
 
 /**
@@ -177,7 +177,15 @@ export const useBookmarkStore = create<BookmarkToggleState>((set) => ({
 /**
  * * Zutand | 북마크 리스트 목록 갱신 트리거 상태 저장
  */
-export const useBookmarkUpdate = create<BookmarkUpdateState>((set) => ({
+export const useBookmarkUpdate = create<UpdateState>((set) => ({
   isUpdate: false,
   setIsUpdate: (isUpdate) => set(() => ({ isUpdate })),
+}))
+
+/**
+ * * Zutand | 댓글목록  갱신 트리거 상태 저장
+ */
+export const useCommentUpdate = create<UpdateState>((set)=>({
+  isUpdate: false,
+  setIsUpdate: (isUpdate) => set(() => ({isUpdate}))
 }))

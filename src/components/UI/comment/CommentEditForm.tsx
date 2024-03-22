@@ -1,5 +1,6 @@
 import useHasToken from '@/custom/useHasToken'
 import { updateComment } from '@/services/user/patch'
+import { useCommentUpdate } from '@/store/store'
 import { useSession } from 'next-auth/react'
 import { MouseEventHandler, useRef } from 'react'
 import {toast} from 'react-toastify'
@@ -21,11 +22,14 @@ export default function CommentEditForm({
 
   const formRef = useRef<HTMLFormElement>(null)
 
+  const setIsUpdateComment = useCommentUpdate((state)=> state.setIsUpdate)
+
   // PATCH | 유저가 작성한 댓글을 수정하는 요청
-  async function commentUpdate(formData: FormData) {
+  async function commentUpdateAction(formData: FormData) {
     if (!hasToken && !session) return toast.error('로그인 후 이용 가능합니다.')
     const comment = formData.get('comment')?.valueOf().toString() || ''
     updateComment(commentId, comment).then(() => setEditFormDisplay(false))
+    setIsUpdateComment(true)
   }
 
   if (!editFormDisplay) return <></>
@@ -33,7 +37,7 @@ export default function CommentEditForm({
     <li>
       <form
         ref={formRef}
-        action={commentUpdate}
+        action={commentUpdateAction}
         className="sm:text-[15px] text-[14.5px] text-white flex flex-col w-full mt-[1em] h-auto backdrop-blur-[4px] rounded-[5px]   p-[10px]"
       >
         <textarea

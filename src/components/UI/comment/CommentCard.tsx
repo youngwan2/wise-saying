@@ -15,6 +15,7 @@ import { useSwrFetch } from '@/utils/swr'
 import { useSWRConfig } from 'swr'
 import ReplyButtons from '../reply/ReplyButtons'
 import { clearTextarea } from '@/utils/textarea'
+import { useCommentUpdate } from '@/store/store'
 
 interface PropsType extends CommentType { }
 
@@ -28,6 +29,7 @@ export default function CommentCard({ comment }: PropsType) {
   const commentId = (comment && comment.id) || 0
   const userEmail = getUserEmail()
   const { mutate } = useSWRConfig()
+  const setIsUpdateComment = useCommentUpdate((state)=>state.setIsUpdate)
 
   // 댓글 수정 창 열기
   function onClickFormDisplay() {
@@ -96,7 +98,7 @@ export default function CommentCard({ comment }: PropsType) {
           onLeaveMenuHide={() => {
             setIsShow(false)
           }}
-          onClickDeleteComment={() => deleteComment(commentId)}
+          onClickDeleteComment={() => deleteComment(commentId).then(()=> setIsUpdateComment(true))}
           onClickFormDisplay={onClickFormDisplay}
         />
 
