@@ -13,14 +13,14 @@ export async function GET() {
   // 이미 존재하는 유저인가?
   const selectQuery = `
     SELECT * FROM users
-    WHERE provider = $1 AND email = $2
+    WHERE email = $1
     `
 
-  const results = await db.query(selectQuery, ['social', email])
+  const results = await db.query(selectQuery, [email])
   const hasUser = (results?.rowCount || 0) > 0
-
+  const date = new Date().toLocaleString()
   if (hasUser) {
-    return NextResponse.json({ success: false })
+    return NextResponse.json({meg:`${nickname}님! 반갑습니다(접속일시:${date}) `, success:false })
   }
 
   // 새로운 유저
@@ -31,5 +31,5 @@ export async function GET() {
 
   db.query(insertQuery, [email, image, nickname, 'social'])
 
-  return NextResponse.json({ success: true })
+  return NextResponse.json({ meg:`${nickname}님! 반갑습니다(접속일시:${date}) `, success:true })
 }

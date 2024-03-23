@@ -24,7 +24,6 @@ export default function SizeStyler({ selectTapNum }: PropsType) {
     return function (newValue: number, targetName: string, delayTime: number) {
       clearTimeout(timerId)
       timerId = setTimeout(() => {
-        console.count('함수 호출 횟수:')
         setSize({ ...size, [targetName]: newValue })
       }, delayTime)
     }
@@ -50,7 +49,6 @@ export default function SizeStyler({ selectTapNum }: PropsType) {
           placeholder="넓이(기본: 300px)"
           onChange={(e) => {
             const width = Number(e.currentTarget.value)
-            console.log('디바운스 적용전:', width)
             debounceFunWrapper(width, 'width', 500)
           }}
         ></input>
@@ -64,7 +62,6 @@ export default function SizeStyler({ selectTapNum }: PropsType) {
           placeholder="높이(기본: 400px)"
           onChange={(e) => {
             const height = Number(e.currentTarget.value)
-
             debounceFunWrapper(height, 'height', 1000)
           }}
         ></input>

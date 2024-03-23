@@ -5,17 +5,14 @@ const pElContents = [
 ]
 export default function GuideMessage() {
   return (
-    <>
-      <p className="sm:text-[1.15em] p-[8px] inline-block py-[1.25em] min-h-[110px]">
+      <span className="sm:text-[1.15em] p-[8px] inline-block py-[1.25em] min-h-[110px]">
         {pElContents.map((content) =>
           content.split('').map((splitText, i) => (
-            <span className=" splitText opacity-100 relative" key={i}>
+            <span className="splitText opacity-100 relative" key={i}>
               {splitText}
             </span>
           )),
         )}
-      </p>
-      <hr />
-    </>
+      </span>
   )
 }

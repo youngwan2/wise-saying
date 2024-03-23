@@ -1,13 +1,22 @@
-interface PropsType{
-    progress:number
+import { useEffect, useRef } from "react"
+
+interface PropsType {
+    progress: number
 }
-export default function QuoteProgress({progress}:PropsType){
+export default function QuoteProgress({ progress }: PropsType) {
+    const divRef = useRef<HTMLDivElement>(null)
+    useEffect(() => {
+        if (!divRef.current) return
+        divRef.current.style.cssText = `
+            width:${progress}%
+        `
+    }, [progress])
 
     return (
-        <progress
-        id='tts-progress'
-        aria-label='명언 듣기 진행률(100프로 기준)'
-        className='transition-all absolute top-[1em] w-[50%]'
-        max={100} value={progress} />
+        <article>
+            <div className="w-full h-[5px] bg-white mt-[1em] rounded-[10px] relative">
+                <div ref={divRef} className="transition-all absolute w-0 bg-[tomato] top-0 left-0 h-[5px]"></div>
+            </div>
+        </article>
     )
 }

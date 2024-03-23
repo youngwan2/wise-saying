@@ -108,9 +108,8 @@ export default function AiQuotePage() {
 
   return (
     <>
-      <article className="max-w-[700px] w-full fixed left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] shadow-[0_0_0_2px_white] p-[1em] rounded-[5px] text-white">
-        <GuideMessage />
-
+      <article className="max-w-[1200px] bg-[#162557] w-full relative left-[50%] translate-x-[-50%] mt-[5em] shadow-[0_0_0_2px_white] p-[1em] rounded-[5px] text-white overflow-auto">
+        
         <AiQuote isLoading={isLoading} aiQuote={aiQuote} />
 
         {/* 명언 생성 요청 */}

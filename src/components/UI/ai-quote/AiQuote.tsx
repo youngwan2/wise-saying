@@ -1,6 +1,7 @@
 import { TbHeadphones } from 'react-icons/tb'
 import { HiAcademicCap } from 'react-icons/hi2'
 import useTTS from '@/custom/useTTS'
+import GuideMessage from './GuideMessage'
 
 interface PropsType {
   isLoading: boolean
@@ -15,14 +16,15 @@ export default function AiQuote({ isLoading, aiQuote }: PropsType) {
         <HiAcademicCap className="mr-[5px]" /> AI 명언
       </h2>
       {isLoading ? (
-        <p className=" bg-white text-black font-semibold text-center p-[2em] sm:text-[1.35em] py-[1.25em] min-h-[110px] animate-pulse">
+        <p className=" bg-white text-black font-semibold text-center p-[2em] sm:text-[1.35em] py-[1.25em] h-[300px] animate-pulse">
           생성중...
         </p>
       ) : (
-        <p className=" bg-white text-black font-semibold text-center p-[2em] sm:text-[1.35em] text-[1.15em] shadow-[0_0_0_2px_white] h-[150px] rounded-[5px]">
+        <p className=" bg-white text-black font-semibold text-center p-[2em] pt-[4em] sm:text-[1.35em] text-[1.15em] shadow-[0_0_0_2px_white] h-[300px] rounded-[5px]">
+          {aiQuote.length<1? <GuideMessage/>:null}
           {aiQuote.split('').map((splitQuote, i) => {
             return (
-              <span key={i} className="aiSplitText opacity-100  relative">
+              <span key={i} className="aiSplitText opacity-100   relative">
                 {splitQuote}
               </span>
             )

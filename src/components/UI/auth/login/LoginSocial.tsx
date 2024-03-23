@@ -4,24 +4,27 @@ import { signIn } from 'next-auth/react'
 import { useSession } from 'next-auth/react'
 import { useCallback, useEffect } from 'react'
 import { setUserInfo } from '@/utils/session-storage'
+import { toast } from 'react-toastify'
 
 export default function LoginGoogle() {
   const { data: session } = useSession()
 
   async function reqGoolgeRogin() {
-    await signIn()
+    const user = await signIn()
+    console.log(user)
   }
 
-  const reqLogin = useCallback(() => {
-    fetch('/api/auth/general-auth/oauth2').then(() => {
-      const {
-        email: dbEmail,
-        image,
-        name: nickname,
-      } = session?.user ?? { email: '', image: '', name: '익명의 시인' }
-      const userInfo = { dbEmail, profile: { nickname, image } }
-      setUserInfo(userInfo)
-    })
+  const reqLogin = useCallback(async () => {
+
+    const response = await fetch('/api/auth/general-auth/oauth2')
+    const { meg, success } = await response.json()
+
+
+    const { email: dbEmail, image, name: nickname } = session?.user ?? { email: '', image: '', name: '익명의 시인' }
+    const userInfo = { dbEmail, profile: { nickname, image } }
+    setUserInfo(userInfo)
+    if (!success) return toast(meg)
+    toast.success(nickname + '님의 첫 방문을 환영합니다.🎊')
   }, [session])
 
   useEffect(() => {
