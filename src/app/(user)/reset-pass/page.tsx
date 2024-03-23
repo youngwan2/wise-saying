@@ -34,7 +34,7 @@ export default function ResetPage() {
 
     const { success, meg } = await defaultFetch(url, config)
     if (success) {
-      toast.success('meg')
+      toast.success(meg)
       router.push('/login')
     }
 
@@ -46,7 +46,7 @@ export default function ResetPage() {
   return (
     <form
       ref={formRef}
-      className="shadow-[inset_-3px_-3px_5px_0_rgba(0,0,0,0.5)] bg-[#d8644f] max-w-[400px] w-full h-[370px] p-[10px] rounded-[10px] absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"
+      className="shadow-[inset_-3px_-3px_5px_0_rgba(0,0,0,0.5)] bg-[#d8644f] max-w-[600px] w-full h-[370px] p-[10px] rounded-[5px] absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"
       action={postResetPassAction}
     >
       <h2 className=" text-[1.5em] text-center my-[0.6em] mb-[0.8em] font-bold text-white">
@@ -57,7 +57,8 @@ export default function ResetPage() {
           새 비밀번호
         </label>
         <input
-          className="placeholder:text-[0.85em] text-[1.05em] shadow-[inset_-3px_-3px_5px_0_rgba(0,0,0,0.5)] bg-white  rounded-[20px] p-[8px] px-[10px] focus:outline-none text-[tomato] font-semibold "
+
+          className="placeholder:text-[0.85em] text-[1.05em] bg-white  rounded-[5px] p-[8px] px-[10px] focus:outline-none font-semibold "
           type="password"
           id="password"
           name="password"
@@ -67,10 +68,10 @@ export default function ResetPage() {
       <br />
       <div className="flex flex-col">
         <label htmlFor="confirm-password" className="text-white  p-[5px]">
-          재확인
+          새 비밀번호 확인
         </label>
         <input
-          className="placeholder:text-[0.85em] text-[1.05em] shadow-[inset_-3px_-3px_5px_0_rgba(0,0,0,0.5)] bg-white  rounded-[20px] p-[8px] px-[10px] focus:outline-none text-[tomato] font-semibold "
+          className="placeholder:text-[0.85em] text-[1.05em] bg-white  rounded-[5px] p-[8px] px-[10px] focus:outline-none font-semibold "
           type="password"
           id="confirm-password"
           name="confirm-password"
@@ -87,7 +88,6 @@ export default function ResetPage() {
   function valiToken(token: string) {
     const regex = /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.[A-Za-z0-9-_.+/=]+$/
     const isValid = regex.test(token)
-
     return isValid
   }
 
@@ -106,7 +106,10 @@ export default function ResetPage() {
 
   // 비밀번호 검증 함수 래퍼
   function validator(pass: string, confirm: string) {
-    if (!tempToken) return alert('접근 권한이 없습니다.')
+    if (!tempToken) {
+      toast.error('접근 권한이 없습니다.')
+      return false
+    }
 
     const isValid = validPass(pass)
     if (!isValid) {

@@ -11,6 +11,11 @@ export default function TextFontStyler({
   textStyle,
 }: PropsType) {
   const fontFamilies = [
+    '선택',
+    '궁서',
+    '궁서체',
+    '고딕',
+    '고딕체',
     'TTHakgyoansimUndongjangL',
     'TTHakgyoansimMoheomgaB',
     'Dovemayo_gothic',
@@ -23,10 +28,6 @@ export default function TextFontStyler({
     'MS Sans Serif',
     'MS Serif',
     'serif', // 삐침 있는 글자
-    '궁서',
-    '궁서체',
-    '고딕',
-    '고딕체',
     'dotum', // 돋움
     'dotumche', // 돋움체
     'gulim', // 굴림

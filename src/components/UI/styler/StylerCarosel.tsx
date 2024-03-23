@@ -27,6 +27,14 @@ export default function StylerCarosel() {
     '/images/image13.png',
     '/images/image14.png',
     '/images/image15.png',
+    '/images/image16.png',
+    '/images/image17.png',
+    '/images/image18.png',
+    '/images/image19.png',
+    '/images/image20.png',
+    '/images/image21.png',
+    '/images/image22.png',
+    '/images/image23.png',
   ])
   const setImageSrc = useImageElementStore((state) => state.setImageSrc)
 
@@ -39,7 +47,7 @@ export default function StylerCarosel() {
         {images.map((image, i) => {
           return (
             <Image
-              onClick={(e) => {
+              onClick={() => {
                 const src = images[i]
                 setImageSrc(src)
               }}
