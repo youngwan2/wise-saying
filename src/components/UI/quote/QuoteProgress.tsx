@@ -13,7 +13,7 @@ export default function QuoteProgress({ progress }: PropsType) {
     }, [progress])
 
     return (
-        <article>
+        <article aria-label='TTS 프로그래스 바'>
             <div className="w-full h-[5px] bg-white mt-[1em] rounded-[10px] relative">
                 <div ref={divRef} className="transition-all absolute w-0 bg-[tomato] top-0 left-0 h-[5px]"></div>
             </div>
