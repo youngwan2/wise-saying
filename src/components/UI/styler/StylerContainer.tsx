@@ -9,8 +9,11 @@ import StylerTaps from './StylerTaps'
 import StylerCarosel from './StylerCarosel'
 import BackMoveButton from '../common/BackMoveButton'
 
+
 export default function StylerContainer() {
   const [selecTapNum, setSelectTapNum] = useState(0)
+
+
 
   return (
     <section className="flex flex-col justify-center w-full p-[2em] mt-[2em] lg:flex-row lg:min-h-[90vh] min-h-70">

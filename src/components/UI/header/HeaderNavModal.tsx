@@ -5,9 +5,9 @@ import { useNavDisplayStateStore } from '@/store/store'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap/all'
 import { usePathname, useRouter } from 'next/navigation'
-
 import React, { MouseEventHandler } from 'react'
 import type { IconType } from 'react-icons'
+import { HiArrowLeftOnRectangle  } from 'react-icons/hi2'
 
 
 const CSS_AFTER = `after:content-["현재"] after:bg-[tomato] after:text-white after:rounded-[10px] after:p-[3px] after:absolute after:top-[50%] after:translate-y-[-50%] after:right-[10px] `
@@ -22,6 +22,7 @@ interface PropsType {
 
 export default function HeaderNavModal() {
   const isDisplay = useNavDisplayStateStore((state) => state.isDisplay)
+  const setIsDisplay = useNavDisplayStateStore((state) => state.setIsDisplay)
   const router = useRouter()
   const pathSplit = usePathname()
 
@@ -31,6 +32,10 @@ export default function HeaderNavModal() {
     const result = pathSplit.includes(path)
 
     return result
+  }
+
+  function onClickClose(){
+    setIsDisplay(false)
   }
 
 
@@ -48,34 +53,33 @@ export default function HeaderNavModal() {
   }, [isDisplay])
 
   return (
-    <article
-      aria-hidden={!isDisplay}
-      aria-label="하단 네비게이션"
-      id='header_nav'
-      className={`max-w-[250px] w-full translate-y-[-50%] top-[50%] h-[100vh] fixed bottom-0 z-[10000] justify-start flex flex-col
+      <article
+        aria-hidden={!isDisplay}
+        aria-label="네비게이션"
+        id='header_nav'
+        className={`max-w-[250px] w-full translate-y-[-50%] top-[50%] h-[100vh] fixed bottom-0 z-[10000] justify-start flex flex-col
                      overflow-y-auto overflow-x-hidden bg-[#ffffff]
                      transition-all duration-700
           ${isDisplay
-          ? 'visible opacity-100 translate-x-0'
-          : 'translate-x-[-250px] origin-[left_left] invisible opacity-0'
-        } `}
-    >
-      <article className='h-[100%] w-[100%]'>
-        <h3 onClick={() => {
-          router.push('/')
-        }} className='hover:cursor-pointer pl-[1em] py-[13px] mb-[1em] font-bold text-white text-[1.15em] bg-[tomato]'>Wise Sayings</h3>
-        {navList.map((navItem, index) => (
-          <NavLinkButton
-            key={index}
-            onClick={() => router.push(navItem.path)}
-            icon={navItem.icon}
-            label={navItem.label}
-            path={navItem.path}
-            matchPath={matchPath}
-          />
-        ))}
+            ? 'visible opacity-100 translate-x-0'
+            : 'translate-x-[-250px] origin-[left_left] invisible opacity-0'
+          } `}
+      >
+        <button onClick={onClickClose} aria-label='사이드바 닫기 버튼' className='hover:cursor-pointer hover:text-white absolute right-[1em] top-[0.5em] h-[30px] w-[10px] text-[1.5em]'><HiArrowLeftOnRectangle/> </button>
+        <article className='h-[100%] w-[100%]'>
+          <h3 className='pl-[1em] py-[13px] mb-[1em] font-bold text-white text-[1.15em] bg-[tomato]'>Wise Sayings</h3>
+          {navList.map((navItem, index) => (
+            <NavLinkButton
+              key={index}
+              onClick={() => router.push(navItem.path)}
+              icon={navItem.icon}
+              label={navItem.label}
+              path={navItem.path}
+              matchPath={matchPath}
+            />
+          ))}
+        </article>
       </article>
-    </article>
   )
 }
 

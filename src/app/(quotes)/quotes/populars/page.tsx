@@ -16,7 +16,7 @@ export interface QuoteType {
 export default function PopularQuotesPage() {
 
     const url = '/api/quotes/populars'
-    const { data, mutate } = useSwrFetch(url,1000 * 60, false)
+    const { data, mutate } = useSwrFetch(url,15000, false)
     const { quotes } = data || { quotes: null }
 
     async function reload() {

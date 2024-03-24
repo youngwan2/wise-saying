@@ -28,7 +28,6 @@ export default function QuoteCard({ item, items, index }: PropsType) {
   const pathName = usePathname()
 
   const [viewCount, setViewCount] = useState(0)
-
   const { setText, readText, progress, isPlaying } = useTTS()
 
   const isZoomIn = useCardZoomInOutStore((state) => state.isZoomIn)
@@ -39,9 +38,7 @@ export default function QuoteCard({ item, items, index }: PropsType) {
     element instanceof HTMLLIElement && (liRefs.current[index] = element)
   }
 
-
   async function getQuoteViewsFromDB(quoteId: number) {
-
     const url = '/api/quotes/' + quoteId + '/views'
     try {
       const response = await fetch(url)

@@ -16,19 +16,21 @@ export default function AiQuote({ isLoading, aiQuote }: PropsType) {
         <HiAcademicCap className="mr-[5px]" /> AI 명언
       </h2>
       {isLoading ? (
-        <p className=" bg-white text-black font-semibold text-center p-[2em] sm:text-[1.35em] py-[1.25em] h-[300px] animate-pulse">
+        <p className=" bg-white text-black font-semibold text-center p-[4em] sm:text-[1.35em] py-[1.25em] h-[300px] animate-pulse">
           생성중...
         </p>
       ) : (
-        <p className=" bg-white text-black font-semibold text-center p-[2em] pt-[4em] sm:text-[1.35em] text-[1.15em] shadow-[0_0_0_2px_white] h-[300px] rounded-[5px]">
-          {aiQuote.length<1? <GuideMessage/>:null}
-          {aiQuote.split('').map((splitQuote, i) => {
-            return (
-              <span key={i} className="aiSplitText opacity-100   relative">
-                {splitQuote}
-              </span>
-            )
-          })}
+        <p className="sm:text-[1.35em] sm:py-[3em] sm:px-[2em] text-[1.2em] py-[2.5em] px-[1em] bg-white text-black font-semibold text-center p-[2em] shadow-[0_0_0_2px_white] h-[300px] rounded-[5px]">
+          {aiQuote.length < 1 ? <GuideMessage /> : null}
+          <span className='sm:text-[1.15em] p-[8px] inline-block py-[1.25em] min-h-[110px]'>
+            {aiQuote.split('').map((splitQuote, i) => {
+              return (
+                <span key={i} className="aiSplitText opacity-100   relative">
+                  {splitQuote}
+                </span>
+              )
+            })}
+          </span>
         </p>
       )}
       <article className="m-[8px] flex justify-end">

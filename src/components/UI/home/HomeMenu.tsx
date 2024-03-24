@@ -16,7 +16,7 @@ export default function HomeMenu() {
       <nav className="grid sm:grid-cols-3 grid-cols-2  max-w-[600px] mx-auto ">
         {navList
           .filter((navItem) => navItem.path !== '/')
-          .map((navItem, index) => {
+          .map((navItem) => {
             return (
               <button
                 className="flex flex-col items-center h-[100px] text-white m-1 rounded-[10px] p-2 shadow-[inset_0_0_0_3px_white]  hover:bg-[#d5d5d533] mt-[0.5em] transition-all"

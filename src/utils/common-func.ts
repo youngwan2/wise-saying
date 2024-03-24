@@ -1,8 +1,8 @@
 import { Method, getDefaultConfig } from '@/configs/config.api'
 import { ItemsType } from '@/types/items.types'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
-import { FormEvent } from 'react'
-import {toast} from 'react-toastify'
+import { Dispatch, FormEvent, SetStateAction } from 'react'
+import { toast } from 'react-toastify'
 
 interface MapType {
   [topick: string]: string
@@ -65,7 +65,7 @@ export const onSubmit = (e: FormEvent) => {
   e.preventDefault()
 }
 
-// 디바운스
+// 전역상태 관리용 디바운스
 function debounce() {
   let timerId: NodeJS.Timeout
 
@@ -100,3 +100,25 @@ function debounce() {
  * @example  예를들어, debounceCloser(50, 'height',size, setSize,300) 와 같이 호출한다.
  */
 export const debounceCloser = debounce()
+
+
+/**
+ * * 윈도우 리사이즈 시 상태 설정 
+ * @param setIsActive innerWidth 에 따른 상태 설정 Setter
+ * @returns 
+ */
+function resizeChecker(delay: number, width: number, setIsActive: Dispatch<SetStateAction<boolean>>) {
+  let timer: NodeJS.Timeout
+
+  return function () {
+    if (timer) { clearTimeout(timer) }
+    timer = setTimeout(() => {
+      const innerWidth = window.innerWidth
+      const isActive = innerWidth < width ? false : true
+      setIsActive(isActive)
+    }, delay)
+  }
+
+}
+export const resizeCheck = resizeChecker
+

@@ -1,7 +1,7 @@
 'use client'
 import useHasToken from '@/custom/useHasToken'
 import { logoutUser } from '@/utils/common-func'
-import { redirect, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Overlay from '../common/Overlay'
 import ReplaceMessageCard from '../common/ReplaceMessageCard'
@@ -15,15 +15,14 @@ export default function Logout() {
 
 
   useEffect(() => {
-    if (sessionStorage.getItem('user') === null) return
-
+    if (sessionStorage.getItem('user') === null) return router.push('/')
     const profile = sessionStorage.getItem('user') as string
     const user = JSON.parse(profile)
     const nickname = user.profile.nickname || '익명의 창작자'
     setNickname(nickname)
-  }, [])
+  }, [router])
 
-  if (!hasToken && !session) <ReplaceMessageCard childern='만일 자동으로 이동되지 않고, 해당 알림창이 보인다면 아래 버튼을 이용해주세요.'/>
+  if (!hasToken && !session) return <ReplaceMessageCard childern='만일 자동으로 이동되지 않고, 해당 알림창이 보인다면 아래 버튼을 이용해주세요.'/>
   if (hasToken) {
     return (
       <>

@@ -4,7 +4,7 @@ const nodemailer = require('nodemailer')
 const { MAIL_SERVICE, USER, PASS } = process.env
 
 // 메일 본문 HTML
-function setHtml(path: string) {
+function setHtml(path: string, userEmail:string) {
   console.log(path)
   const html = `
     <html>
@@ -39,7 +39,7 @@ function setHtml(path: string) {
     </head>
     <body>
         <div class="container">
-            <h1>Hello ~ </h1>
+            <h1>반갑습니다. ${userEmail} 님! </h1>
             <p>비밀번호 재설정 링크: <a style="color:white" href="${path}"><span>바로가기</span></a></p>
         </div>
     </body>
@@ -61,7 +61,7 @@ export function setMailOptions(userEmail: string, tempToken: string) {
   const referer = headers().get('referer')
   const redirectPath = referer?.replace('/forgot', '/reset-pass') || ''
 
-  const html = setHtml(redirectPath + '?temp-token=' + tempToken)
+  const html = setHtml(redirectPath + '?temp-token=' + tempToken, userEmail)
 
   mailOptions.to = userEmail
   mailOptions.html = html

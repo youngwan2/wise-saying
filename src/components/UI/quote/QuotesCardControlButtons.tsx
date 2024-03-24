@@ -111,7 +111,7 @@ function ButtonMenuIcon({ isDisplay, onClickToggleMenu }: MenuIconPropsType) {
   return (
     <button
       onClick={onClickToggleMenu}
-      className="text-white hover:border-[tomato] border border-[transparent] absolute top-[0.5em] right-[0.55em]  p-[4px] text-[1.05em]"
+      className="text-white hover:border-[tomato] border border-[transparent] absolute top-[0.55em] right-[0.45em] py-[4px] px-[3px] text-[1.05em]"
     >
       {isDisplay ? <HiXMark /> : <HiDotsVertical />}
     </button>

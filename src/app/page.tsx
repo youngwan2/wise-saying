@@ -6,6 +6,7 @@ import TodayQuotelist from '@/components/UI/quote/TodayQuoteList'
 import { getTodayQuotesFromDb } from '@/services/data/get'
 
 export default async function Home() {
+  
   const items = (await getTodayQuotesFromDb()) || []
 
   if (!items)

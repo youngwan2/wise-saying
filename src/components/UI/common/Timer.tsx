@@ -56,12 +56,8 @@ export default function Timer() {
     return () => removeEventListener('focus', windowBlur)
   }, [windowBlur])
   return (
-    <article className="fixed right-[2em] top-[3em] text-white bg-[#00000039] rounded-[10px] p-[8px] font-sans text-[0.95em] ">
-      <p>재로그인</p>
-
-      <h2 className="flex items-center justify-center">
-        <HiClock /> <span className="mx-[5px]">{timeScale}</span>
-      </h2>
-    </article>
+    <></>
+    // <article className="fixed right-[2em] top-[3em] text-white bg-[#00000039] rounded-[10px] p-[8px] font-sans text-[0.95em] ">
+    // </article>
   )
 }

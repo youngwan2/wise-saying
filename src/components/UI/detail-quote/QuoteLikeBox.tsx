@@ -52,7 +52,7 @@ export default function QuoteLikeBox({ id }: PropsType) {
     <button
       aria-label="해당 명언에 대한 좋아요 클릭"
       onClick={onClickHandleLikeClick}
-      className={`bg-[white] left-0 top-[6em]  transition-shadow  text-[1.35em] flex items-center px-[15px] shadow-[inset_0_0_2px_0_black] rounded-r-[5px] absolute `}
+      className={`bg-[white] right-0 top-[6em]  transition-shadow  text-[1.25em] flex items-center px-[15px] shadow-[inset_0_0_2px_0_black] absolute `}
     >
       <HiHandThumbUp color="rgba(255,0,0,0.7)" />
       <span className="mx-[2px]">

@@ -8,6 +8,7 @@ import SearchForm from '../UI/search/SearchForm'
 import HeaderSearchButton from '../UI/header/HeaderSearchButton'
 import FocusModeButton from '../UI/header/FocusModeButton'
 import HeaderLogo from '../UI/header/HeaderLogo'
+import Overlay from '../UI/common/Overlay'
 
 export default function Header() {
   return (
@@ -26,6 +27,7 @@ export default function Header() {
       <SearchForm />
       <HeaderNavModal />
       <BookmarkModal />
+      <Overlay/>
     </>
   )
 }

@@ -48,7 +48,7 @@ export default async function DetailPage({
         </span>
         가라사대
       </h2>
-      <QuoteLikeBox id={id} />
+
       {/* 명언 텍스트 영역 */}
       <blockquote
         className="
@@ -59,7 +59,7 @@ export default async function DetailPage({
             "
       >
         <p className="">{item.quote}</p>
-        
+        <QuoteLikeBox id={id} />
       </blockquote>
 
       <div className="flex">
