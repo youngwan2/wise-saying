@@ -18,6 +18,9 @@ export async function GET(req: NextRequest, res: { params: { id: string } }) {
     const selectResult = await db.query(selectQuery, [id])
     const views = selectResult.rows[0]?.views || 0
 
+
+    db.end()
+
     return NextResponse.json({...HTTP_CODE.OK, views})
 
 
