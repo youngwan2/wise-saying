@@ -16,7 +16,7 @@ export default function QuoteWriteForm() {
   const formRef = useRef<HTMLFormElement>(null)
   const hasToken = useHasToken()
 
-  useDraggable(formRef, 'free')
+  useDraggable(formRef, null)
 
   const router = useRouter()
 
@@ -52,8 +52,7 @@ export default function QuoteWriteForm() {
     <form
       ref={formRef}
       action={postQuoteAction}
-      className="sm:mx-auto mx-[10px] text-white max-w-[560px] mt-[7em] rounded-[10px] shadow-[inset_0_0_0_2px_white] backdrop-blur-[3px] "
-    >
+      className={`sm:mx-auto mx-[10px] text-white max-w-[560px] mt-[7em] rounded-[10px] shadow-[inset_0_0_0_2px_white] backdrop-blur-[3px] `}     >
       <h2 className="text-[1.25em] mt-[-4px] mb-[1em] bg-transparent text-[white] p-[8px]  rounded-t-lg shadow-[inset_0_0_0_2px_white] ">
         명언 등록
       </h2>

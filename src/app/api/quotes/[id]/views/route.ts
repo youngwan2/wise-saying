@@ -18,21 +18,14 @@ export async function GET(req: NextRequest, res: { params: { id: string } }) {
     const selectResult = await db.query(selectQuery, [id])
     const views = selectResult.rows[0]?.views || 0
 
-
     db.end()
 
     return NextResponse.json({...HTTP_CODE.OK, views})
-
-
-
   } catch (error) {
     console.error('/api/quotes/[id]/views/route.ts', error)
     return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
-
-
 }
-
 
 
 // PATCH | 명언 조회수 업데이트

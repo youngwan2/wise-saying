@@ -20,22 +20,22 @@ interface HTTP_CODE_TYPE {
  */
 export const HTTP_CODE= {
     'OK': {
-        meg: '성공적으로 요청을 처리하였습니다.',
+        meg: '성공적으로 요청이 처리되었습니다.',
         success: true,
         status: 200
     },
     'CREATED': {
-        meg: '성공적으로 요청하신 데이터를 반영 하였습니다. ',
+        meg: '추가 되었습니다. ',
         success: true,
         status: 201
     },
     'NO_CONTENT': {
-        meg: '정상적으로 삭제처리 되었습니다. ',
+        meg: '삭제 되었습니다. ',
         success: true,
         status: 204
     },
     'BAD_REQUEST': {
-        meg: '잘못된 요청입니다.',
+        meg: '잘못된 요청입니다. 로그인 상태, 잘못된 값 등을 살펴보시길 바랍니다.',
         success: false,
         status: 400
     },
@@ -45,12 +45,12 @@ export const HTTP_CODE= {
         status: 401
     },
     'NOT_FOUND': {
-        meg: '요청하신 데이터를 찾을 수 없습니다.',
+        meg: '조회된 데이터를 찾을 수 없습니다.',
         success: false,
         status: 404
     },
     'INTERNAL_SERVER_ERROR': {
-        meg: '서버에서 문제가 발생하였습니다. 나중에 다시시도 해주세요.',
+        meg: '서버에서 알 수 없는 문제가 발생하였습니다. 나중에 다시시도 해주세요.',
         success: false,
         status: 500
     }

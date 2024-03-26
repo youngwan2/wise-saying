@@ -34,7 +34,7 @@ export async function DELETE(
     if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
 
     // 검증 통과 후 처리
-    const { sub: userId, email:dbEmail } = user
+    const { email:dbEmail } = user
 
     await db.query(query, [quoteId, dbEmail ])
     db.end()

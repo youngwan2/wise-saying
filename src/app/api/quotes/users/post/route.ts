@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
     ])
 
     await db.end()
-    return NextResponse.json(HTTP_CODE.NO_CONTENT)
+    return NextResponse.json({...HTTP_CODE.NO_CONTENT, meg:'정상적으로 등록되었습니다.'})
   } catch (error) {
     console.error('/api/quotes/users/post/route.ts', error)
     return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)

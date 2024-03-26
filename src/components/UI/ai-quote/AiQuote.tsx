@@ -16,7 +16,7 @@ export default function AiQuote({ isLoading, aiQuote }: PropsType) {
         <HiAcademicCap className="mr-[5px]" /> AI 명언
       </h2>
       {isLoading ? (
-        <p className=" bg-white text-black font-semibold text-center p-[4em] sm:text-[1.35em] py-[1.25em] h-[300px] animate-pulse">
+        <p className=" bg-white text-black font-semibold text-center sm:text-[1.35em] py-[4.25em] h-[300px] animate-pulse">
           생성중...
         </p>
       ) : (

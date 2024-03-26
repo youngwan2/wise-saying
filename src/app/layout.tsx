@@ -44,7 +44,7 @@ export default function RootLayout({
           <Header />
           <Timer />
           <main className="min-h-[100vh] w-full mx-auto max-w-[1700px] relative">
-            <ToastContainer />
+            <ToastContainer pauseOnFocusLoss={false}/>
             <Toaster/>
             {children}
             <ScrollAndNavButtons />

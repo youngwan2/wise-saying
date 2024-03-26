@@ -12,7 +12,7 @@ export async function generateQuoteBy(content: string) {
       {
         role: 'system',
         content:
-          'Your role is to analyze emotions based on the text provided by the user and respond with words that provide strength, encouragement, or motivation. The response format should be in Korean without including quotation marks or double quotation marks, and it should not indicate who said it. Responses are limited to two sentences',
+          'Your role is to analyze emotions based on the text provided by the user and respond with words that provide strength, encouragement, or motivation. The response format should be in Korean without including quotation marks or double quotation marks, and it should not indicate who said it. Responses are limited to three sentences',
       },
       {
         role: 'user',
@@ -20,7 +20,7 @@ export async function generateQuoteBy(content: string) {
       },
     ],
     temperature: 0.5,
-    max_tokens: 64,
+    max_tokens: 120,
     top_p: 1,
   })
 
