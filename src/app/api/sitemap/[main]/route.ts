@@ -24,8 +24,6 @@ export async function GET(req: NextRequest, res: { params: { main: string } }) {
       const results = await db.query(query)
       const items = results.rows
 
-      console.log(items)
-
       return NextResponse.json(items)
     }
   } catch (error) {
