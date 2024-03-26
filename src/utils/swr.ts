@@ -3,7 +3,7 @@ import { getFetcher } from './fetcher'
 import {toast} from 'react-toastify'
 
 // reference : https://swr.vercel.app/ko/docs/data-fetching
-export const useSwrFetch = (url: string, refreshTimer:number|undefined, isActRefresh:boolean | undefined) => {
+export const useSwrFetch = (url: string, refreshTimer:number|undefined, isActRefresh?:boolean) => {
   const { data, isLoading, error, mutate } = useSWR(url, getFetcher, {
     errorRetryCount: 2,
     refreshInterval: refreshTimer || 60000,
@@ -14,6 +14,7 @@ export const useSwrFetch = (url: string, refreshTimer:number|undefined, isActRef
   return { data, isLoading, error, mutate }
 }
 
+// accessToken 검증으로 데이터 페치
 export const useSwrFetchWithToken = (
   url: string | null,
   isTokenVertify: boolean,

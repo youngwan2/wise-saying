@@ -7,11 +7,13 @@ on:
   pull_request:
     branches:
       - main
+      - dev
 
   # push 시
   push:
     branches:
       - main
+      - dev
 
 # 실행할 작업들
 jobs:

@@ -1,6 +1,9 @@
+export const dynamic = 'force-dynamic' 
+
 import { NextRequest, NextResponse } from 'next/server'
 import { openDB } from '@/utils/connect'
 import { HTTP_CODE } from '@/app/http-code'
+
 
 export async function GET(req: NextRequest) {
   try {
