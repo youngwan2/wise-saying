@@ -4,3 +4,4 @@ export const PASSWORD_REGEXP =
 export const MAX_BOOKMARK_LIMIT = 1000
 export const JWT_TOKEN_REGEX =
   /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.[A-Za-z0-9-_.+/=]+$/
+

@@ -16,8 +16,8 @@ export default function Footer() {
                         <li>이메일: <span>qodna25@gmail.com</span></li>
                     </ul>
                     <ul className="sm:w-[30%] sm:ml-[4em] sm:mt-[0] w-[100%] ml-[0] mt-[10px]">
-                        <li className="hover:shadow-[inset_0_-1px_0_0_white] hover:font-bold"><Link href={'#'}>이용약관</Link></li>
-                        <li className="hover:shadow-[inset_0_-1px_0_0_white] hover:font-bold"><Link href={'#'}>개인정보처리방침</Link></li>
+                        <li className="hover:shadow-[inset_0_-1px_0_0_white] hover:font-bold"><Link href={'/policy'}>이용약관</Link></li>
+                        <li className="hover:shadow-[inset_0_-1px_0_0_white] hover:font-bold"><Link href={'/policy'}>개인정보처리방침</Link></li>
                         <li className="hover:shadow-[inset_0_-1px_0_0_white] hover:font-bold"><Link target="_blank" href={'https://docs.google.com/forms/d/e/1FAIpQLSd2rc8Jf-tewVy7mLJRZ9NnuYiv7GAKX3gAPvH-vZ34AI9QRg/viewform?usp=sf_link'}>불편 및 건의사항 신고</Link></li>
                     </ul>
                 </div>
