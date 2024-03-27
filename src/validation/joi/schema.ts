@@ -13,3 +13,13 @@ export const userSchema = Joi.object({
   ),
   reConfirmPw: Joi.ref(`password`),
 })
+
+// 약관 동의 필수 항목 체크 유효성 검사
+export const consentSchema = Joi.object({
+  all : Joi.boolean(),
+  term: Joi.boolean().required().valid(true),
+  private: Joi.boolean().required().valid(true),
+  child: Joi.boolean().required().valid(true),
+  event: Joi.boolean()
+  
+})

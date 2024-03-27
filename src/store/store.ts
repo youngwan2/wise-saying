@@ -16,6 +16,7 @@ import type {
   HeaderSearchFormDisplayState,
   BodyOverflowState,
   UpdateState,
+  PolicyTapState,
 } from '../types/store.type'
 
 /**
@@ -175,7 +176,7 @@ export const useBookmarkStore = create<BookmarkToggleState>((set) => ({
 }))
 
 /**
- * * Zutand | 북마크 리스트 목록 갱신 트리거 상태 저장
+ * * Zustand | 북마크 리스트 목록 갱신 트리거 상태 저장
  */
 export const useBookmarkUpdate = create<UpdateState>((set) => ({
   isUpdate: false,
@@ -183,9 +184,17 @@ export const useBookmarkUpdate = create<UpdateState>((set) => ({
 }))
 
 /**
- * * Zutand | 댓글목록  갱신 트리거 상태 저장
+ * * Zustand | 댓글목록  갱신 트리거 상태 저장
  */
-export const useCommentUpdate = create<UpdateState>((set)=>({
+export const useCommentUpdate = create<UpdateState>((set) => ({
   isUpdate: false,
-  setIsUpdate: (isUpdate) => set(() => ({isUpdate}))
+  setIsUpdate: (isUpdate) => set(() => ({ isUpdate }))
+}))
+
+/**
+ * Zustand | 사이트 정책 탭 식별자 저장
+ */
+export const usePolicyTaps = create<PolicyTapState>((set) => ({
+  tapNum: 0,
+  setTapNum: (tapNum) => set(() => ({ tapNum }))
 }))

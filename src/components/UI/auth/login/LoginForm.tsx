@@ -42,7 +42,7 @@ export default function LoginForm() {
   }
 
   function onClickBackMove() {
-    router.back()
+    router.push('/')
   }
 
   return (

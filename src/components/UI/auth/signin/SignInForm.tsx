@@ -11,12 +11,24 @@ import { reqSingIn } from '@/services/user/post'
 import BackButton from '../common/BackButton'
 import SignInWarnModal from './SignInWarnModal'
 import FormTitle from '../common/FormTitle'
+import Consent from './Consent'
+import toast from 'react-hot-toast'
+import { ConsentsType } from '@/types/items.types'
 
 export default function SignInForm() {
   const [isEmail, setIsEmail] = useState(false)
   const [isPassword, setIsPassword] = useState(false)
   const [isReconfirmPassword, setIsReconfirmPassword] = useState(false)
   const [isSuccess, setisSuccess] = useState(false)
+  const [consents, setConsents] = useState({
+    all: false,
+    term: false,
+    private: false,
+    child: false,
+    event: false
+
+
+  })
   const [existsEmail, setExistsEmail] = useState(false)
 
   const [email, setEmail] = useState('')
@@ -35,20 +47,23 @@ export default function SignInForm() {
     if (isSuccess) return router.push('/login')
   }, [isSuccess, router])
 
-  // onClick | 로그인 요청
+  // onClick | 회원가입 요청
   async function onClickReqSingin() {
-    router.prefetch('/')
-    const isSuccess =
-      (await reqSingIn({ email, password, reConfirmPw })) || null
+    const isAgreementConcent = consentCheck(consents)
+    if(!isAgreementConcent) return toast('작업을 완료하려면 모든 필수 동의사항에 동의해야 합니다.')
+
+    const isSuccess = await reqSingIn({ email, password, reConfirmPw }, consents)
+
     if (isSuccess) {
       setExistsEmail(false)
       setisSuccess(true)
       router.push('/')
+      toast.success('승인되었습니다.')
     }
   }
 
   function onClickBack() {
-    router.back()
+    router.push('/login')
   }
 
   function onClickModalClose() {
@@ -60,7 +75,7 @@ export default function SignInForm() {
   return (
     <form
       ref={formRef}
-      className="rounded-[10px] flex flex-col fixed max-w-[480px] px-[5px] min-h-[350px] left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-[100%] shadow-[inset_0_0_0_2px_white] "
+      className="sm:max-h-[100%] max-h-[650px] backdrop-blur-[5px] rounded-[10px] flex flex-col fixed max-w-[550px] px-[5px] min-h-[350px] left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-[100%] shadow-[inset_0_0_0_2px_white] overflow-y-auto  "
       onSubmit={onSubmit}
     >
       <FormTitle> 회원가입</FormTitle>
@@ -95,13 +110,26 @@ export default function SignInForm() {
         setReConfirmPw={setReConfirmPw}
       />
 
+      {/* 약관 동의 */}
+      <Consent consents={consents} setConsents={setConsents} />
+
+
       {/* 전송버튼 */}
       <SignInSubmitButton
         isDisabled={isSuccess}
-        existsEmail={existsEmail}
         isVaildForm={isVaildForm}
+        existsEmail={existsEmail}
         onClick={onClickReqSingin}
       />
     </form>
   )
+}
+
+// 필수 약관에 동의하였는지 체크
+function consentCheck(consents: ConsentsType) {
+  const { term, child, private: privateConsent } = consents
+
+  if (term && child && privateConsent) {
+    return true
+  } else { return false }
 }

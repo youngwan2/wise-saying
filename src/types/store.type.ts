@@ -114,3 +114,7 @@ export interface UpdateState {
   setIsUpdate: (isUpdate: boolean) => void
 }
 
+export interface PolicyTapState {
+  tapNum:number
+  setTapNum : (tapNum:number) => void
+}

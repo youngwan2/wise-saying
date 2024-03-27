@@ -47,13 +47,13 @@ export default function SignInPasswordReConfirmInput({
         />
       </div>
       {isReconfirmPassword ? (
-        <span className="block px-[5px] text-[#56e146] ml-[0.5em]  font-sans text-[14.3px]">
-          - 패스워드 형식과 일치합니다.
+        <span className="font-sans px-[5px] text-[#56e146] ml-[3.3em] text-[14.3px] inline-block">
+          패스워드 형식과 일치합니다.
         </span>
       ) : (
         <>
-          <span className=" text-[#f25555] block  ml-[0.5em] font-sans text-[14.3px]">
-            - 앞서 작성한 패스워드와 일치시키세요
+          <span className="font-sans text-[#f25555] ml-[3.6em] text-[14.3px] inline-block">
+            앞서 작성한 패스워드와 일치시키세요
           </span>
         </>
       )}
