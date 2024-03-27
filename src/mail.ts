@@ -5,7 +5,6 @@ const { MAIL_SERVICE, USER, PASS } = process.env
 
 // 메일 본문 HTML
 function setHtml(path: string, userEmail:string) {
-  console.log(path)
   const html = `
     <html>
     <head>
@@ -29,8 +28,7 @@ function setHtml(path: string, userEmail:string) {
                 color: #333;
             }
             p {
-                color: white;
-                background:rgba(0,0,0,0.7) ;
+                color: black;
                 padding:10px;
                 border-radius:10px;
                 font-size:15px;
@@ -40,7 +38,8 @@ function setHtml(path: string, userEmail:string) {
     <body>
         <div class="container">
             <h1>반갑습니다. ${userEmail} 님! </h1>
-            <p>비밀번호 재설정 링크: <a style="color:white" href="${path}"><span>바로가기</span></a></p>
+            <p>해당 링크는 ${new Date().toLocaleTimeString()} 부터 7분 동안 유효합니다.</p>
+            <p>비밀번호 재설정 링크: <a href="${path}"><span>바로가기</span></a></p>
         </div>
     </body>
     </html>
@@ -52,7 +51,7 @@ function setHtml(path: string, userEmail:string) {
 export const mailOptions = {
   from: USER,
   to: '',
-  subject: '[Wise Sayings] 임시 패스워드 입니다.',
+  subject: '[Wise Sayings] 패스워드 재설정 안내 메시지 입니다..',
   html: '',
 }
 
