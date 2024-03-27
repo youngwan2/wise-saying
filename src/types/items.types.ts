@@ -48,3 +48,8 @@ export interface ReplyType {
     created_at: string
   }
 }
+
+
+export interface ConsentsType {
+  [key:string]:boolean
+}

@@ -2,7 +2,7 @@
 
 export default function PrivacyPolicy() {
     return (
-        <div className="bg-[#f3f3f3] shadow-[0_5px_5px_5px_0_rgba(0,0,0,0.5)]">
+        <div className="bg-[white] shadow-[0_5px_5px_5px_0_rgba(0,0,0,0.5)]">
             <article className="mt-[3em]  p-[15px] font-sans text-[black]">
                 <ul>
                     <li className="leading-7"><h2 className="py-[0.5em] font-bold text-[1.25em]  mt-[1em]">제1조（본 방침의 공개）</h2></li>

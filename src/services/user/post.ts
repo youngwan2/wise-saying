@@ -1,4 +1,5 @@
 import { Method, defaultConfig } from '@/configs/config.api'
+import { ConsentsType } from '@/types/items.types'
 import { defaultFetch } from '@/utils/fetcher'
 import {
   setAccessToken,
@@ -102,8 +103,10 @@ interface SignInUserType {
   password: string
   reConfirmPw: string
 }
-export async function reqSingIn({ ...userInfo }: SignInUserType) {
-  const body = userInfo
+
+
+export async function reqSingIn({ ...userInfo }: SignInUserType, consents:ConsentsType) {
+  const body = {...userInfo, consents}
   const config = defaultConfig(Method.POST, body)
   const url = '/api/auth/general-auth/signin'
   const { success: isSuccess } = await defaultFetch(url, config)
@@ -165,7 +168,7 @@ export const postComment = async (
 
   if (success) {
     toast.success('댓글이 등록 되었습니다.')
-    
+
     return true
   } else {
     return false
