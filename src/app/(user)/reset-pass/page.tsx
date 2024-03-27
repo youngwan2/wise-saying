@@ -46,7 +46,7 @@ export default function ResetPage() {
   return (
     <form
       ref={formRef}
-      className="shadow-[inset_-3px_-3px_5px_0_rgba(0,0,0,0.5)] bg-[#d8644f] max-w-[600px] w-full h-[370px] p-[10px] rounded-[5px] absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"
+      className="backdrop-blur-[5px] shadow-[inset_0_0_0_2px_white] bg-transparent max-w-[600px] w-full h-[370px] p-[10px] rounded-[5px] absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"
       action={postResetPassAction}
     >
       <h2 className=" text-[1.5em] text-center my-[0.6em] mb-[0.8em] font-bold text-white">
@@ -78,7 +78,7 @@ export default function ResetPage() {
           placeholder="비밀번호 재확인"
         />
       </div>
-      <button className="shadow-[inset_-3px_-3px_5px_0_rgba(0,0,0,0.5)] hover:text-white hover:bg-[#162557] bg-white w-[130px] relative left-[50%] translate-x-[-50%] mt-[2em] text-[tomato] rounded-[5px] p-[8px] font-bold">
+      <button className="shadow-[inset_-3px_-3px_5px_0_rgba(0,0,0,0.5)] text-[#162557] hover:bg-[#dfe0e2] bg-white w-[130px] relative left-[50%] translate-x-[-50%] mt-[2em] rounded-[5px] p-[8px] font-bold">
         전송
       </button>
     </form>
