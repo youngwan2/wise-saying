@@ -92,12 +92,13 @@ function debounce() {
 // 디바운스 함수 호출 : debonce 함수의 클로저 반환하고 이를 활용.
 /**
  * @argument newValue 새롭게 업데이트할 상태 값
- * @argument targetName 상태값의 타입 (타입이 필요 없으면 빈문자열<''> 을 전달한다.)
- * @argument state 기존 상태(기존상태가 필요없으면 null 을 전달한다.)
+ * @argument targetName - 프로퍼티가 2개 이상인 경우 필수- 상태값의 타입 (타입이 필요 없으면 빈문자열<''> 을 전달한다.)
+ * @argument state - 프로퍼티가 2개 이상인 경우 필수- 기존 상태(기존상태가 필요없으면 null 을 전달한다.)
  * @argument setState 상태를 업데이트하는 함수
  * @argument delayTime 지연시간
  * @returns
- * @example  예를들어, debounceCloser(50, 'height',size, setSize,300) 와 같이 호출한다.
+ * @example  // 예를들어, {height:0, width:0}과 같이 프로퍼티가 여러개 라면  debounceCloser(50, 'height',size, setSize,300) 와 같이 호출한다. 그러면 내부적으로 전개연산자를 사용해서 기존 프로퍼티를 건드리지 않고, 상태를 업데이트 한다
+ * //  만일 프로퍼티가 하나라면 (50,'', null, 500) 와 같이 targetName 과 state 를 처리하면 내부적으로 전달받은 상태를 업데이트 함수를 사용하여 변경한다.
  */
 export const debounceCloser = debounce()
 

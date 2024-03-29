@@ -27,16 +27,22 @@ type TextType = {
   unit: string
   font: string
   fontStyle: string
-  textPositionY: number
 }
 
 export interface TextStyleState extends TextType {
   setTextStyle: (style: TextType) => void
 }
 
-export interface LienHeightState {
+
+export type TextOptionType = {
+  textPositionY: number
+  textPositionX: number
   lineHeight: number
-  setLineHeight: (height: number) => void
+  textLength:number
+}
+
+export interface TextOptionState extends TextOptionType {
+  setTextOption: (state: TextOptionType) =>void
 }
 
 type StorkeType = {
@@ -48,6 +54,15 @@ export interface StorkeState extends StorkeType {
   setStrokeThicknessStyle: (thickness: number) => void
   setStrokeColorStyle: (color: string) => void
 }
+
+
+export interface AlignState {
+  align:string
+  setAlign:(align:string) => void
+}
+
+
+
 
 export interface ImageElState {
   imageSrc: string
@@ -115,6 +130,6 @@ export interface UpdateState {
 }
 
 export interface PolicyTapState {
-  tapNum:number
-  setTapNum : (tapNum:number) => void
+  tapNum: number
+  setTapNum: (tapNum: number) => void
 }

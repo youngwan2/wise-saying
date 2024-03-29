@@ -1,0 +1,227 @@
+/* 폰트 색깔 */
+.font_color {
+    position: relative;
+}
+
+.font_color::before {
+    content: '';
+    position: absolute;
+}
+
+.font_color::after {
+    content: '';
+    position: absolute;
+}
+
+.font_color:hover::after {
+    content: ' 글자색';
+    height: 25px;
+    width: 70px;
+    padding:0 0 0 9px;
+    border-radius: 5px;
+    left: -1em;
+    top: -1.8em;
+    background-color: white;
+}
+
+
+.font_color:hover::before {
+    content: ' ';
+    top: -0.3em;
+    left: 0.68em;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 10px solid white;
+    border-bottom: 10px solid transparent;
+}
+
+/* 외곽선  */
+
+.stroke_color {
+    position: relative;
+}
+
+.stroke_color::before {
+    content: '';
+    position: absolute;
+}
+
+.stroke_color::after {
+    content: '';
+    position: absolute;
+}
+
+.stroke_color:hover::after {
+    content: ' 외곽선 색';
+    height: 25px;
+    width: 85px;
+    padding:0 0 0 9px;
+    border-radius: 5px;
+    left: -1em;
+    top: -1.7em;
+    background-color: white;
+}
+
+
+.stroke_color:hover::before {
+    content: ' ';
+    top: -0.3em;
+    left: 0.68em;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 10px solid white;
+    border-bottom: 10px solid transparent;
+}
+
+/* 글자 옵션 */
+.text_option_button {
+    position: relative;
+}
+
+.text_option_button::before {
+    content: '';
+    position: absolute;
+}
+
+.text_option_button::after {
+    content: '';
+    position: absolute;
+}
+
+.text_option_button:hover::after {
+    content: ' 글자 조정';
+    height: 25px;
+    color:black;
+    font-size: 15px;
+    width: 82px;
+    padding:0 0 0 5px;
+    border-radius: 5px;
+    left: -0.6em;
+    top: -2.2em;
+    background-color:white;
+}
+
+
+.text_option_button:hover::before {
+    content: ' ';
+    top: -0.35em;
+    left: 0.3em;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 10px solid white;
+    border-bottom: 10px solid transparent;
+}
+
+
+/* 글자 정렬 */
+.align_option_button {
+    position: relative;
+}
+
+.align_option_button::before {
+    content: '';
+    position: absolute;
+}
+
+.align_option_button::after {
+    content: '';
+    position: absolute;
+}
+
+.align_option_button:hover::after {
+    content: ' 글자 정렬';
+    height: 25px;
+    color:black;
+    font-size: 15px;
+    width: 82px;
+    padding:0 0 0 5px;
+    border-radius: 5px;
+    left: 0em;
+    top: -2.2em;
+    background-color:white;
+}
+
+
+.align_option_button:hover::before {
+    content: ' ';
+    top: -0.35em;
+    left: 0.4em;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 10px solid white;
+    border-bottom: 10px solid transparent;
+}
+
+/* 숨기기 버튼 */
+.styler_hide_button::before {
+    content: '';
+    position: absolute;
+}
+
+.styler_hide_button::after {
+    content: '';
+    position: absolute;
+}
+
+.styler_hide_button:hover::after {
+    content: '편집창 열기/닫기';
+    height: 25px;
+    color:white;
+    font-weight: 500;
+    font-size: 15px;
+    width: 150px;
+    padding:0 0 0 5px;
+    border-radius: 5px;
+    left: 0em;
+    top: -2.3em;
+    background-color:black;
+}
+
+
+.styler_hide_button:hover::before {
+    content: ' ';
+    top: -0.38em;
+    left: 0.7em;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 10px solid black;
+    border-bottom: 10px solid transparent;
+}
+
+/* 편집기 탭 버튼 */
+
+.styler_tap_buttons::before {
+    content: '';
+    position: absolute;
+}
+
+.styler_tap_buttons::after {
+    content: '';
+    position: absolute;
+}
+
+.styler_tap_buttons:hover::after {
+    content: '글자/배경';
+    height: 25px;
+    color:white;
+    font-weight: 500;
+    font-size: 15px;
+    width: 150px;
+    padding:0 0 0 5px;
+    border-radius: 5px;
+    left: -5em;
+    top: -2.3em;
+    background-color:black;
+}
+
+
+.styler_tap_buttons:hover::before {
+    content: ' ';
+    top: -0.38em;
+    left: 1.62em;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 10px solid black;
+    border-bottom: 10px solid transparent;
+}
+
