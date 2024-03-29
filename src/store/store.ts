@@ -5,7 +5,6 @@ import type {
   BgColorState,
   CardSizeState,
   TextStyleState,
-  LienHeightState,
   StorkeState,
   ImageElState,
   BookmarkToggleState,
@@ -17,6 +16,8 @@ import type {
   BodyOverflowState,
   UpdateState,
   PolicyTapState,
+  TextOptionState,
+  AlignState,
 } from '../types/store.type'
 
 /**
@@ -57,11 +58,10 @@ export const useQuotesCardSizeStore = create<CardSizeState>((set) => ({
  */
 export const useQuotesTextStyleStore = create<TextStyleState>((set) => ({
   color: 'black',
-  size: 14,
+  size: 14.3,
   unit: 'px',
-  font: 'Arial',
+  font: 'NanumGothicLight',
   fontStyle: 'fill',
-  textPositionY: 0,
   setTextStyle: (style) =>
     set(() => ({
       color: style.color,
@@ -69,16 +69,19 @@ export const useQuotesTextStyleStore = create<TextStyleState>((set) => ({
       unit: style.unit,
       font: style.font,
       fontStyle: style.fontStyle,
-      textPositionY: style.textPositionY,
     })),
 }))
 
 /**
- * * Zustand |  줄간격
+ * * Zustand |  텍스트 옵션
  */
-export const useQuotesLineHeightStore = create<LienHeightState>((set) => ({
-  lineHeight: 0,
-  setLineHeight: (lineHeight) => set(() => ({ lineHeight })),
+export const useQuotesTextOptions = create<TextOptionState>((set) => ({
+
+  lineHeight: 3,
+  textPositionY: 0,
+  textPositionX: 152,
+  textLength: 20,
+  setTextOption: (state) => set(() => ({ lineHeight: state.lineHeight, textPositionY: state.textPositionY, textPositionX: state.textPositionX, textLength:state.textLength }))
 }))
 
 /**
@@ -91,11 +94,19 @@ export const useQuotesStrokeStyleStore = create<StorkeState>((set) => ({
   setStrokeColorStyle: (color) => set(() => ({ color })),
 }))
 
+
+
+export  const useQuotesTextAlign = create<AlignState>((set)=> ({
+  align:'center',
+  setAlign:(align)=>set(()=> ({align}))
+}))
+
+
 /**
  * * Zustand |  이미지 요소 저장
  */
 export const useImageElementStore = create<ImageElState>((set) => ({
-  imageSrc: '/images/image1.png',
+  imageSrc: '/images/image0.png',
   isClear: false,
   setImageSrc: (imageSrc) => set(() => ({ imageSrc })),
   setImageReset: (state) => set(() => ({ isClear: state })),

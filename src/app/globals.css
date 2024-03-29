@@ -2,40 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'TTHakgyoansimUndongjangL';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_keris@1.0/TTHakgyoansimUndongjangL.woff2') format('woff2');
-  font-weight: 300;
-  font-style: normal;
-}
 
-@font-face {
-  font-family: 'TTHakgyoansimMoheomgaB';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_keris@1.0/TTHakgyoansimMoheomgaB.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Dovemayo_gothic';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'YEONGJUSeonbiTTF';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2403@1.0/YEONGJUSeonbiTTF.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'kdg_Medium';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/kdg_Medium.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
 
 
 :root {
@@ -59,22 +26,20 @@ body {
 
 /* 스크롤바 넓이 */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 5px;
 }
 
 /* 트랙 */
 ::-webkit-scrollbar-track {
   background: #dcdcdc;
-  border-radius: 5px;
 }
 
 /* 손잡이 */
 ::-webkit-scrollbar-thumb {
-  background: #e99292;
-  border-radius: 5px;
+  background: #2A54AE;
 }
 
 /* 손잡이 호버 시 색 */
 ::-webkit-scrollbar-thumb:hover {
-  background: #f97979;
+  background: #2A54AE;
 }

@@ -1,4 +1,4 @@
-import { HiPaintBrush } from 'react-icons/hi2'
+import { HiArrowDown } from 'react-icons/hi2'
 import type { TextStyleType } from './TextStyler'
 
 interface PropsType {
@@ -11,68 +11,75 @@ export default function TextFontStyler({
   textStyle,
 }: PropsType) {
   const fontFamilies = [
-    '선택',
-    '궁서',
-    '궁서체',
-    '고딕',
-    '고딕체',
-    'TTHakgyoansimUndongjangL',
-    'TTHakgyoansimMoheomgaB',
-    'Dovemayo_gothic',
-    'YEONGJUSeonbiTTF',
-    'kdg_Medium',
-    'Arial',
-    'cursive', // 손으로 쓴 것 같은 서체
-    'Charcoal',
-    'sans-serif', // 삐침 없는 글자
-    'MS Sans Serif',
-    'MS Serif',
-    'serif', // 삐침 있는 글자
-    'dotum', // 돋움
-    'dotumche', // 돋움체
-    'gulim', // 굴림
-    
+    {
+      type: '네이버 나눔 글씨',
+      fonts: [
+        'NanumGothicLight',
+        'NanumSquareNeo-aLt',
+        'NanumSquareNeo-bRg',
+        'NanumSquareNeo-cBd',
+        'NanumSquareNeo-dEb',
+        'NanumSquareNeo-eHv',
+        'NanumMyeongjo',
+        'NanumMyeongjoBold',
+        'NanumMyeongjoExtraBold',
+      ]
+    },
+    {
+      type: '네이버 나눔 손글씨',
+      fonts: [
+        '할아버지의나눔체',
+        '곰신체',
+        '다시시작해체',
+        '맛있는체',
+        '배은헤체',
+        '부장님눈치체',
+        '성실체',
+        '야근하는김주임체',
+        '희망누리체',
+        '대한민국열사체'
+      ]
+    },
+
   ]
+
 
   const fontStyles = ['fill', 'stroke', 'hybrid']
 
   return (
-    <article>
-      {/* 폰트 */}
-      <article>
-        <h2 className="flex items-center text-[1.2em] mt-[1.25em] pb-[0.25em] text-[white]">
-          <HiPaintBrush color="white" /> <p className="ml-[0.5em]">폰트</p>
-        </h2>
+    <>
+      <article className='flex flex-col relative pb-[10px] justify-center'>
+        {/* 폰트 */}
+        <span className='absolute top-[0.5em] right-[0.5em]'><HiArrowDown /> </span>
+
         <select
-          className="p-[5px] text-center rounded-[0.5em] shadow-[0_0px_0px_1px_black] w-[200px]"
+          className="p-[5px] text-center rounded-[5px] shadow-[0_0px_0px_1px_black] w-full  appearance-none focus:outline-none focus:bg-[#e3e1e1]"
           onChange={(e) => {
             const font = e.currentTarget.value
             setTextStyleState({ ...textStyle, font })
           }}
         >
-          {fontFamilies.map((font) => {
-            return (
-              <option value={font} key={font}>
-                {font}
-              </option>
-            )
-          })}
+          <optgroup label={fontFamilies[0].type}>
+            {fontFamilies[0].fonts.map((font) => {
+              return <option key={font}>{font}</option>
+            })}
+          </optgroup>
+          <optgroup label={fontFamilies[1].type}>
+            {fontFamilies[1].fonts.map((font) => {
+              return <option key={font}>{font}</option>
+            })}
+          </optgroup>
         </select>
-      </article>
-      {/* 폰트 스타일 */}
-      <article>
-        <h2 className="flex items-center text-[1.2em] mt-[1.25em] pb-[0.25em] text-[white]">
-          <HiPaintBrush color="white" />{' '}
-          <p className="ml-[0.5em]">폰트 스타일</p>
-        </h2>
+        {/* 폰트 스타일 */}
+        <span className='absolute top-[2.85em] right-[0.5em]'><HiArrowDown /> </span>
         <select
-          className="p-[5px] text-center rounded-[0.5em] shadow-[0_0px_0px_1px_black] w-[200px] "
-          id=""
+          className="p-[5px] text-center rounded-[5px] mt-[0.25em] shadow-[0_0px_0px_1px_black] w-full  appearance-none focus:outline-none focus:bg-[#e3e1e1]"
           onChange={(e) => {
             const fontStyle = e.currentTarget.value
             setTextStyleState({ ...textStyle, fontStyle })
           }}
         >
+
           {fontStyles.map((fontStyle) => {
             return (
               <option value={fontStyle} key={fontStyle}>
@@ -82,6 +89,6 @@ export default function TextFontStyler({
           })}
         </select>
       </article>
-    </article>
+    </>
   )
 }
