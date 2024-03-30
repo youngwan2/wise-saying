@@ -5,6 +5,7 @@ import QuoteCard from './QuoteCard'
 import ZommInQuoteCard from './ZoomInQuoteCard'
 import { useCardZoomInOutStore } from '@/store/store'
 import ReplaceMessageCard from '../common/ReplaceMessageCard'
+import CardTheme from '../theme/CardTheme'
 
 interface PropsType {
   items: {
@@ -25,6 +26,7 @@ export default function QuoteList({ items }: PropsType) {
     return <ReplaceMessageCard childern="데이터를 불러오는 중 입니다.." />
   return (
     <>
+      <CardTheme />
       <ul
         ref={ulRef}
         className={`

@@ -1,0 +1,23 @@
+.theme_button::after, .theme_button::before {
+    content: '';
+    position: absolute;
+}
+
+.theme_button:hover::before{
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-top: 15px solid white;
+    top: -0.7em;
+    left: 0.45em;
+    border-bottom: 20px solid transparent;
+}
+
+.theme_button:hover::after{
+    content: '카드 테마';
+    font-size: 15px;
+    background-color: white;
+    border-radius: 5px;
+    top:-2.3em;
+    right: -0.85em;
+    width: 80px;
+}
