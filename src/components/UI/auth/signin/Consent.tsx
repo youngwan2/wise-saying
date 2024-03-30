@@ -63,7 +63,7 @@ export default function Consent({ setConsents, consents }: ProsType) {
                     </div>
                 ))}
             </article>
-            {createPortal(
+            { typeof window === 'object'&& createPortal(
                 <PolicyModal isOpenModal={isOpenModal} onClickAgreement={onClickAgreement} />, document.body
             )}
         </>
