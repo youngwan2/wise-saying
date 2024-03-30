@@ -1,24 +1,34 @@
-import { useQuotesLineHeightStore } from '@/store/store'
-import { debounceCloser } from '@/utils/common-func'
-import { HiPaintBrush } from 'react-icons/hi2'
+import { TextOptionType } from '@/types/store.type'
+import { ChangeEvent } from 'react'
 
-export default function TextLineHeightStyler() {
-  const setLineHeight = useQuotesLineHeightStore((state) => state.setLineHeight)
+interface PropsType {
+  textOptions: TextOptionType,
+  onSetOption: (e:ChangeEvent<HTMLInputElement>, target:string)=> void
+}
+export default  function TextLineHeightStyler({ textOptions, onSetOption }: PropsType) {
   return (
-    <article>
-      <h2 className="flex items-center text-[1.2em] mt-[1.25em] pb-[0.25em] text-[white]">
-        <HiPaintBrush color="white" /> <p className="ml-[0.5em]">글자 줄간격</p>
-      </h2>
+    <article className='max-w-[250px] w-full mt-[1em]'>
+      <div className='flex justify-between items-center mb-[0.5em]'>
+        <h2 aria-label='텍스트 높이' className="flex items-center text-[1em] font-bold px-[5px]">
+          행간
+        </h2>
+        <input
+          onChange={(e) => onSetOption(e, 'lineHeight')}
+          value={textOptions.lineHeight}
+          min={0}
+          maxLength={3}
+          type="number"
+          className='appearance-none w-[65px] rounded-[5px] p-[5px] h-[30px] focus:outline-none border border-slate-300 text-black' />
+      </div>
       <input
-        min={0}
-        className="p-[5px] rounded-[0.5em] shadow-[0_0px_0px_1px_black] w-[200px] text-center"
-        type="number"
+        value={textOptions.lineHeight}
+        min={0} max={20}
+        type="range"
+        className="appearance-none border bg-gradient-to-r from-slate-300 to-slate-400 h-[10px] accent-slate-700  text-center rounded-[0.5em] max-w-[250px] w-full"
         placeholder="Defalut : 0"
-        onChange={(e) => {
-          const height = Number(e.currentTarget.value)
-          debounceCloser(height, '', null, setLineHeight, 500)
-        }}
+        onChange={(e) => onSetOption(e, 'lineHeight')}
       />
     </article>
   )
 }
+

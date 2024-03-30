@@ -39,31 +39,31 @@ export default function StylerCarosel() {
   const setImageSrc = useImageElementStore((state) => state.setImageSrc)
 
   return (
-    <article
-      className=" my-[2em] max-w-[1200px] w-[95%] overflow-hidden px-[3em]  shadow-[0_0_0_2px_white]  rounded-[5px]  "
-      ref={emblaRef}
-    >
-      <figure className="flex pb-[5em] mt-[5em]">
-        {images.map((image, i) => {
-          return (
-            <Image
-              onClick={() => {
-                const src = images[i]
-                setImageSrc(src)
-              }}
-              className=" hover:shadow-[0_0_0_5px_tomato] rounded-[5px] mx-[10px] hover:cursor-pointer bg-[#fafafa] max-h-[250px] max-w-[250px] min-w-[250px] w-full  shadow-[0_0_0_2px_white]"
-              key={image}
-              src={image}
-              alt="명언 카드 배경 이미지"
-              width={230}
-              height={230}
-            ></Image>
-          )
-        })}
-        <StylerImageUploadForm setImages={setImages} images={images} />
-      </figure>
-      {/* 캐러셀 조작 버튼 */}
-      <CarouselControlButtons emblaApi={emblaApi} />
-    </article>
+      <article
+        className=" my-[2em] w-full overflow-hidden px-[3em]  shadow-[0_0_0_1px_white] rounded-[5px]  hover:bg-[#ffffff0e] "
+        ref={emblaRef}
+      >
+        <figure className="flex pb-[5em] mt-[5em]">
+          {images.map((image, i) => {
+            return (
+              <Image
+                onClick={() => {
+                  const src = images[i]
+                  setImageSrc(src)
+                }}
+                className="shadow-[0_0_20px_10px_rgba(0,0,0,0.1)] rounded-[5px] mx-[10px] hover:cursor-pointer bg-[#fafafa] max-h-[250px] max-w-[250px] min-w-[250px] w-full "
+                key={image}
+                src={image}
+                alt="명언 카드 배경 이미지"
+                width={230}
+                height={230}
+              ></Image>
+            )
+          })}
+          <StylerImageUploadForm setImages={setImages} images={images} />
+        </figure>
+        {/* 캐러셀 조작 버튼 */}
+        <CarouselControlButtons emblaApi={emblaApi} />
+      </article>
   )
 }

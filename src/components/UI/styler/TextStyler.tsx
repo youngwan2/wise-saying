@@ -5,9 +5,9 @@ import TextSizeStyler from './TextSizeStyler'
 import { useQuotesTextStyleStore } from '@/store/store'
 import TextFontStyler from './TextFontStyler'
 import TextColorStyler from './TextColorStyler'
-import TextLineHeightStyler from './TextLineHeightStyler'
 import TextStrokeStyler from './TextStrokeStyler'
-import TextPositionStyler from './TextPositionStyler'
+import TextSettingOptions from './TextSettingOptions'
+import TextAlignStyler from './TextAlignStyler'
 
 interface PropsType {
   selectTapNum: number
@@ -19,19 +19,16 @@ export interface TextStyleType {
   color: string
   font: string
   fontStyle: string
-  textPositionY: number
 }
 export default function TextStyler({ selectTapNum }: PropsType) {
   const [textStyle, setTextStyleState] = useState<TextStyleType>({
-    size: 14,
+    size: 14.3,
     unit: 'px',
     color: 'black',
-    font: 'Arial',
+    font: 'NanumGothicLight',
     fontStyle: 'fill',
-    textPositionY: 0,
   })
 
-  const [sizeUnits] = useState(['px', 'em', 'rem'])
   const setTextStyle = useQuotesTextStyleStore((state) => state.setTextStyle)
 
   useEffect(() => {
@@ -40,27 +37,32 @@ export default function TextStyler({ selectTapNum }: PropsType) {
 
   return (
     <article
-      className={`${selectTapNum === 0 ? 'visible ' : 'invisible absolute'} lg:max-w-[90%] flex flex-col`}
+      className={`${selectTapNum === 0 ? 'visible ' : 'invisible absolute'}`}
     >
-      <TextColorStyler
-        setTextStyleState={setTextStyleState}
-        textStyle={textStyle}
-      />
-      <TextSizeStyler
-        sizeUnits={sizeUnits}
-        setTextStyleState={setTextStyleState}
-        textStyle={textStyle}
-      />
-      <TextPositionStyler
-        setTextStyleState={setTextStyleState}
-        textStyle={textStyle}
-      />
+      <h3 className='text-white my-[0.5em]'>스타일(폰트, 글자 선)</h3>
       <TextFontStyler
         setTextStyleState={setTextStyleState}
         textStyle={textStyle}
       />
-      <TextLineHeightStyler />
+      <h3 className='text-white mt-[0.5em]'>글자</h3>
+      <div className='flex items-center mt-[0.5em] pb-[10px]'>
+        <TextColorStyler
+          setTextStyleState={setTextStyleState}
+          textStyle={textStyle}
+        />
+        <TextSizeStyler
+          setTextStyleState={setTextStyleState}
+          textStyle={textStyle}
+        />
+        <TextSettingOptions />
+        <TextAlignStyler />
+
+      </div>
+      <h3 className='text-white mt-[0.5em]'>외곽선</h3>
       <TextStrokeStyler />
+
+
+
     </article>
   )
 }
