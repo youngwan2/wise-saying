@@ -17,6 +17,7 @@ import type {
   BodyOverflowState,
   UpdateState,
   PolicyTapState,
+  CardThemeState,
 } from '../types/store.type'
 
 /**
@@ -197,4 +198,14 @@ export const useCommentUpdate = create<UpdateState>((set) => ({
 export const usePolicyTaps = create<PolicyTapState>((set) => ({
   tapNum: 0,
   setTapNum: (tapNum) => set(() => ({ tapNum }))
+}))
+
+
+/**
+ * Zustand | 카드 디자인 테마 설정
+ */
+
+export const useCardTheme = create<CardThemeState>((set)=>({
+  isCardTheme:false,
+  setIsCardTheme:(isCardTheme) => set(()=>({isCardTheme}))
 }))

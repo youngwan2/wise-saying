@@ -118,3 +118,8 @@ export interface PolicyTapState {
   tapNum:number
   setTapNum : (tapNum:number) => void
 }
+
+export interface CardThemeState{
+  isCardTheme:boolean
+  setIsCardTheme:(isCardTheme:boolean)=>void
+}

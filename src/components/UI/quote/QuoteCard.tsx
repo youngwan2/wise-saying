@@ -1,7 +1,8 @@
+import styles from './Quotes.module.css'
 import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react'
 import UserQuotesCardControlButtons from './UserQuotesCardControlButtons'
 import useIntersectionObserver from '@/custom/useIntersectionObserver'
-import { useCardZoomInOutStore } from '@/store/store'
+import { useCardTheme, useCardZoomInOutStore } from '@/store/store'
 import { usePathname, useRouter } from 'next/navigation'
 import { ItemsType } from '@/types/items.types'
 import ReplaceMessageCard from '../common/ReplaceMessageCard'
@@ -9,7 +10,7 @@ import gsap from 'gsap/all'
 import QuotesCardControlButtons from './QuotesCardControlButtons'
 import useTTS from '@/custom/useTTS'
 import { HiSpeakerphone } from 'react-icons/hi'
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
 import { viewCounter } from '@/services/data/patch'
 import TtsButton from '../common/TtsButton'
 import QuoteViews from './QuoteViews'
@@ -32,6 +33,7 @@ export default function QuoteCard({ item, items, index }: PropsType) {
 
   const isZoomIn = useCardZoomInOutStore((state) => state.isZoomIn)
   const cardIndex = useCardZoomInOutStore((state) => state.cardIndex)
+  const isCardTheme = useCardTheme((state) => state.isCardTheme)
 
   const liRefs = useRef<HTMLLIElement[]>([])
   const setLiRefs = (index: number, element: HTMLLIElement | null) => {
@@ -147,7 +149,10 @@ export default function QuoteCard({ item, items, index }: PropsType) {
         }
       }}
       key={item.id}
-      className={`invisible shadow-[inset_0_0_0_3px_white] rounded-[10px] w-[95%] my-[1em] max-w-[500px] bg-transparent  px-[15px] py-[35px] mx-auto relative hover:bg-[#d5d5d533]`}
+      className={`${isCardTheme
+        ? styles.card_theme_on
+        : 'shadow-[inset_0_0_0_3px_white] rounded-[10px]  bg-transparent  hover:bg-[#d5d5d533]'} 
+        px-[15px] py-[35px] w-[95%] my-[1em] max-w-[500px] mx-auto invisible relative   `}
     >
 
       <QuoteProgress progress={progress} />
@@ -165,7 +170,7 @@ export default function QuoteCard({ item, items, index }: PropsType) {
 
       {/* 프로그래스 숫자형 ex 1/100 */}
       <p>{isPlaying
-        ? <span className='text-[1.05em] animate-pulse absolute bottom-2 left-2 text-white rounded-[10px] p-[2px] px-[7px] flex items-center'><HiSpeakerphone color='gold' className='mr-[5px]' /> {progress}/100</span>
+        ? <span className='text-[1.05em] animate-pulse absolute bottom-2 left-2 text-white rounded-[10px] p-[2px] px-[7px] flex items-center'><HiSpeakerphone color='gold' className='mr-[5px]' /> {progress || '현재 환경에서는 지원하지 않습니다.'}/100</span>
         : <span className='text-[1.05em] animate-none absolute bottom-2 left-2 text-white rounded-[10px] p-[2px] px-[7px]'></span>}</p>
 
       <QuoteViews viewCount={viewCount} />
