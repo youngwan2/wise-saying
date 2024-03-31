@@ -9,7 +9,7 @@ export async function GET() {
         const db = await openDB();
 
         const selectQuery = `
-        SELECT *  FROM quotes A 
+        SELECT B.quote_id AS id, quote, author, job, category, views  FROM quotes A 
         INNER JOIN views B ON A.quote_id = B.quote_id
         ORDER BY B.views DESC, A.quote_id ASC
         `

@@ -7,10 +7,13 @@ import Image from 'next/image'
 import { useImageElementStore } from '@/store/store'
 import StylerImageUploadForm from './StylerImageUploadForm'
 import CarouselControlButtons from './CarouselControlButtons'
+import { HiInformationCircle } from 'react-icons/hi2'
+
+const DEFAULT_IMG_SIZE = { width: 230, height: 230 }
 
 export default function StylerCarosel() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay()])
-  const [images, setImages] = useState([
+  const [imagesSrc, setImagesSrc] = useState([
     '/images/image0.png',
     '/images/image1.png',
     '/images/image2.png',
@@ -38,32 +41,37 @@ export default function StylerCarosel() {
   ])
   const setImageSrc = useImageElementStore((state) => state.setImageSrc)
 
+  function onClickSetBackgroundImage(i: number) {
+    const src = imagesSrc[i]
+    setImageSrc(src)
+  }
+
   return (
+    <>
+      <p className='sm:text-[1em] text-[0.85em] relative mt-[2em] mb-[1em] text-white flex items-center'><HiInformationCircle className='mt-[1.5px] mr-[2.5px]' /> {'현재 ' + imagesSrc.length + '개의 이미지가 업로드 되었습니다. 필요에 따라 별도의 이미지를 업로드하여 추가할 수 있습니다.'}</p>
       <article
-        className=" my-[2em] w-full overflow-hidden px-[3em]  shadow-[0_0_0_1px_white] rounded-[5px]  hover:bg-[#ffffff0e] "
+        className=" mb-[2em] w-full overflow-hidden px-[3em]  shadow-[0_0_0_1px_white] rounded-[5px]  hover:bg-[#ffffff0e] "
         ref={emblaRef}
       >
         <figure className="flex pb-[5em] mt-[5em]">
-          {images.map((image, i) => {
+          {imagesSrc.map((image, i) => {
             return (
               <Image
-                onClick={() => {
-                  const src = images[i]
-                  setImageSrc(src)
-                }}
+                onClick={() => onClickSetBackgroundImage(i)}
                 className="shadow-[0_0_20px_10px_rgba(0,0,0,0.1)] rounded-[5px] mx-[10px] hover:cursor-pointer bg-[#fafafa] max-h-[250px] max-w-[250px] min-w-[250px] w-full "
                 key={image}
                 src={image}
                 alt="명언 카드 배경 이미지"
-                width={230}
-                height={230}
+                width={DEFAULT_IMG_SIZE.width}
+                height={DEFAULT_IMG_SIZE.height}
               ></Image>
             )
           })}
-          <StylerImageUploadForm setImages={setImages} images={images} />
+          <StylerImageUploadForm setImages={setImagesSrc} images={imagesSrc} />
         </figure>
         {/* 캐러셀 조작 버튼 */}
         <CarouselControlButtons emblaApi={emblaApi} />
       </article>
+    </>
   )
 }

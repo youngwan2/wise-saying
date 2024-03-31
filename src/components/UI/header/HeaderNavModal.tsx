@@ -57,7 +57,7 @@ export default function HeaderNavModal() {
         aria-hidden={!isDisplay}
         aria-label="네비게이션"
         id='header_nav'
-        className={`max-w-[250px] w-full translate-y-[-50%] top-[50%] h-[100vh] fixed bottom-0 z-[10000] justify-start flex flex-col
+        className={`max-w-[250px] w-full translate-y-[-50%] top-[50%] h-[100vh] fixed bottom-0 z-[100000000] justify-start flex flex-col
                      overflow-y-auto overflow-x-hidden bg-[#ffffff]
                      transition-all duration-700
           ${isDisplay

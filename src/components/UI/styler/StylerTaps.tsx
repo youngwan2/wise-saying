@@ -16,7 +16,7 @@ export default function StylerTaps({
     { num: 1, text: <BsCardImage/> },
   ])
   return (
-    <article className="fixed top-[-3.1em] right-0 z-[1000] flex justify-center mt-[1em] text-[white] rounded-tl-[10px] rounded-tr-[10px] backdrop-grayscale-[50%] ">
+    <article className="bg-[tomato] fixed top-[-3.2em] right-[-1.2px] z-[1000] flex justify-center mt-[1em] text-[white] rounded-tl-[10px] rounded-tr-[10px] backdrop-grayscale-[50%]  border-x border-t ">
       {taps.map((tap) => {
         return (
           <button
@@ -28,9 +28,9 @@ export default function StylerTaps({
             ${styles.styler_tap_buttons}
             ${
               selectTapNum === tap.num
-                ? 'bg-[white] text-[#162557] font-bold'
-                : 'bg-[transparent]'
-            } first:rounded-tl-[10px] last:rounded-tr-[10px] text-[1.5em] p-[5px] px-[10px] transition-all text-center hover:bg-[#4f4e4ea8] hover:text-white`}
+                ? 'bg-[white] text-[#162557] font-bold hover:bg-[#e3e1e1]'
+                : 'bg-[transparent] hover:text-white'
+            } first:rounded-tl-[10px] last:rounded-tr-[10px] text-[1.5em] p-[5px] px-[10px] transition-all text-center hover:bg-[#f77e69]`}
           >
             {tap.text}
           </button>

@@ -7,7 +7,7 @@ export const metadata:Metadata= {
 }
 
 export interface QuoteType {
-    quote_id: number
+    id: number
     quote: string
     author: string
     job: string

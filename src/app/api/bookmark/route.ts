@@ -128,7 +128,7 @@ export async function POST(req: NextRequest) {
 
     // 토큰 유효성 검증
     const { user, ...HTTP } = tokenVerify(req, true) as any
-    if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
+    if ([400, 401].includes(HTTP.status)) return NextResponse.json({HTTP})
 
     const jwtEmail = user.email
     const userId = user.sub
