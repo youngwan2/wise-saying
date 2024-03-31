@@ -20,7 +20,7 @@ export default function StylerImageUploadForm({
 
   return (
     <form
-      className="hover:cursor-pointer group min-w-[250px] h-[250px] bg-[white] rounded-[1em]"
+      className="sm:visible invisible hover:cursor-pointer group min-w-[230px] h-[250px] bg-[white] rounded-[1em]"
       onSubmit={onSubmit}
     >
       <label

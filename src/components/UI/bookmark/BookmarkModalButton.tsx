@@ -15,7 +15,7 @@ export default function BookmarkModalButton() {
       onClick={() => {
         setToggleState(!toggleState)
       }}
-      className="sm:p-[10px] p-[5px] text-[0.82em] hover:shadow-[0_0_0_1px_rgba(888,888,888,0.3)]  mt-[0.25em]"
+      className="sm:p-[6px] p-[3px] text-[0.82em] hover:shadow-[0_0_0_1px_rgba(888,888,888,0.3)]  mt-[0.25em]"
     >
       <span
         aria-hidden="true"

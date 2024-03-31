@@ -22,11 +22,11 @@ export default function useInfiniteScroll(
     switch (mainCategory) {
       case 'topics':
       case 'authors': {
-        url = `/api/quotes/${mainCategory}/${subCategory}?page=${pageIndex}&limit=15`
+        url = `/api/quotes/${mainCategory}/${subCategory}?page=${pageIndex}&limit=30`
         break
       }
       case 'users': {
-        url = `/api/quotes/${mainCategory}/post/categories/${subCategory}?page=${pageIndex}&limit=15`
+        url = `/api/quotes/${mainCategory}/post/categories/${subCategory}?page=${pageIndex}&limit=30`
       }
     }
     return url

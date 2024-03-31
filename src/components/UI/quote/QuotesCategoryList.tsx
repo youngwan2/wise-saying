@@ -1,5 +1,6 @@
 'use client'
 
+import styles from './Quotes.module.css'
 import QuotesCategoryCard from './QuotesCategoryCard'
 import useInfiniteScroll from '@/custom/useInfiniteScroll'
 import LoadMoreButton from '../common/ListLoadMoreButton'
@@ -34,7 +35,7 @@ export default function QuotesCategoryList({ category }: PropsType) {
     itemCount: currentCount,
   } = useInfiniteScroll(`${category}`, 'category-all')
 
-  const MAX_PAGE = Math.ceil(totalCategoryCount / 15)
+  const MAX_PAGE = Math.ceil(totalCategoryCount / 30)
 
   useEffect(() => {
     getCategoryCount()
@@ -50,7 +51,7 @@ export default function QuotesCategoryList({ category }: PropsType) {
       <h2 className="flex justify-center items-center text-[1.5em] p-[10px]  text-center text-white max-w-[250px] mx-auto bg-gradient-to-b from-[transparent] to-[#00000033]  shadow-[0_9px_2px_0_rgba(0,0,0,0.5)] rounded-[5px] my-[2em] perspective-500  ">
         {topick} 카테고리 ({currentCount}/{totalCategoryCount})
       </h2>
-      <ul className="flex flex-wrap justify-center text-center min-h-[100vh]">
+      <ul className={`${styles.grid_container}`}>
         {items.map((item: { category: string; job: string }, i) => {
           return (
             <QuotesCategoryCard category={category} key={i} item={item} i={i} />

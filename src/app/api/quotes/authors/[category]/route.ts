@@ -65,6 +65,7 @@ export async function GET(
       if (type === 'meta') {
         const query = `
          SELECT COUNT(DISTINCT author) AS count FROM quotes
+         WHERE job != '사용자' ;
       `
         const result = await db.query(query)
         const count = result.rows[0]
