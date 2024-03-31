@@ -28,16 +28,16 @@ export default function TextFontStyler({
     {
       type: '네이버 나눔 손글씨',
       fonts: [
-        '할아버지의나눔체',
-        '곰신체',
-        '다시시작해체',
-        '맛있는체',
-        '배은헤체',
-        '부장님눈치체',
-        '성실체',
-        '야근하는김주임체',
-        '희망누리체',
-        '대한민국열사체'
+        'GrandfatherSharingStyle',
+        'BearStyle',
+        'RestartStyle',
+        'DeliciousStyle',
+        'SkinPeelingStyle',
+        'BossWatchfulEyeStyle',
+        'DiligentStyle',
+        'OvertimeWorkingKimJuimStyle',
+        'HopefulGatheringStyle',
+        'PatriotismOfSouthKoreaStyle'
       ]
     },
 

@@ -5,6 +5,8 @@ import ReplaceMessageCard from "../common/ReplaceMessageCard";
 import PopularQuoteList from "./PopularQuoteList";
 import toast from "react-hot-toast";
 import { HiRefresh } from "react-icons/hi";
+import ZommInQuoteCard from "./ZoomInQuoteCard";
+import { useCardZoomInOutStore } from "@/store/store";
 
 
 export default function PopularQuoteContainer() {
@@ -21,12 +23,18 @@ export default function PopularQuoteContainer() {
         })
     }
 
+
+    const cardIndex = useCardZoomInOutStore((state) => state.cardIndex)
+
     if (!quotes) return <ReplaceMessageCard childern='데이터를 조회중 입니다..' />
+
+
 
     return (
         <>
             <button className="absolute flex items-center left-[50%] translate-x-[-50%] text-white hover:cursor-pointer z-[20] hover:text-[gold] " onClick={reload}><HiRefresh className='mx-[3px]' />새로고침 </button>
             <PopularQuoteList quotes={quotes} />
+            <ZommInQuoteCard item={quotes[cardIndex]} />
         </>
     )
 }

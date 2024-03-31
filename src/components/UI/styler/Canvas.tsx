@@ -22,18 +22,28 @@ const DEFALT_LINE_HEIGHT = 9
 export default function Canvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [imageEl, setImageEl] = useState<HTMLImageElement | null>(null)
-
   const { color, font, fontStyle, size, unit } = useTextStyle()
   const { color: strokeColor, thickness: strokeThickness } = useStrokeStyle()
-  const align = useQuotesTextAlign((state) => state.align) as CanvasTextAlign
   const { width, height, bgColor } = useCanvasStyle()
   const { textLength, lineHeight, textPositionY, textPositionX } = useQuotesTextOptions()
-
+  const align = useQuotesTextAlign((state) => state.align) as CanvasTextAlign
   // 명언(텍스트)
   const [quote, setQuote] = useState('')
 
   // 배경이미지
   const bgImageSrc = useImageElementStore((state) => state.imageSrc)
+
+
+
+  function onClickDownload() {
+    const imageURL = canvasRef.current?.toDataURL() || ''
+    const link = document.createElement('a')
+    link.href = imageURL
+    link.download = '내가 만든 카드'
+    link.click()
+    toast.success('다운로드 되었습니다. 이용해 주셔서 감사합니다.')
+
+  }
 
   const clearCanvas = (
     ctx: CanvasRenderingContext2D,
@@ -92,8 +102,8 @@ export default function Canvas() {
           fontStyle === 'fill' && ctx.fillText(text, defaultTextPositionX, defaultTextPositionY)
           fontStyle === 'stroke' && ctx.strokeText(text, defaultTextPositionX, defaultTextPositionY)
           fontStyle === 'hybrid' && (
-            ctx.strokeText(text, width / 2, defaultTextPositionY),
-            ctx.fillText(text, width / 2, defaultTextPositionY))
+            ctx.strokeText(text, defaultTextPositionX, defaultTextPositionY),
+            ctx.fillText(text, defaultTextPositionX, defaultTextPositionY))
         })
       }
 
@@ -153,27 +163,22 @@ export default function Canvas() {
   }, [])
 
   return (
-    <article className="mt-[1.2em] min-h-[500px] w-[100%] shadow-[0_0_0_1px_white] p-[5px] relative rounded-[5px] hover:bg-[#ffffff0e]">
-      <span className="text-white">
-        {width} X {height}
-      </span>
-      <canvas
-        ref={canvasRef}
-        width={width}
-        height={height}
-        className="border mx-auto"
-      ></canvas>
-      <DownloadButton
-        onClick={() => {
-          const imageURL = canvasRef.current?.toDataURL() || ''
-          const link = document.createElement('a')
-          link.href = imageURL
-          link.download = '내가 만든 카드'
-          link.click()
-          toast.success('다운로드 되었습니다. 이용해 주셔서 감사합니다.')
-        }}
-      />
-    </article>
+    <>
+      <article className="mt-[1.2em] min-h-[500px] w-[100%] shadow-[0_0_0_1px_white] p-[5px] relative rounded-[5px] hover:bg-[#ffffff0e]">
+        <span className="text-white inline-block mb-[1em]">
+          {width} X {height}
+        </span>
+        <canvas
+          ref={canvasRef}
+          width={width}
+          height={height}
+          className="border mx-auto"
+        ></canvas>
+        <DownloadButton
+          onClick={onClickDownload}
+        />
+      </article>
+    </>
   )
 }
 

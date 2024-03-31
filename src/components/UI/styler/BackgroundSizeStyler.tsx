@@ -109,14 +109,14 @@ export default function BackgroundSizeStyler() {
         ></input>
       </div>
       {/* 추천 사이즈 */}
-      <ul onClick={onClickSetSize} className='flex flex-wrap justify-between text-white mt-[0.5em]'>
+      <ul onClick={onClickSetSize} className='flex flex-wrap justify-between text-white mt-[0.25em]'>
         {backgroundSizes.map((size) => {
           return <li onMouseEnter={() => setMessage({ sizes: { width: size.width, height: size.height }, meg: size.message })} className='border ml-[0] m-[5px] p-[5px] min-w-[100px] hover:bg-[#c5c3c361] hover:cursor-pointer' key={size.message}>{size.width} x {size.height}
           </li>
         })}
 
       </ul>
-      <article  className='absolute top-[17em] mt-[2em] text-white'>
+      <article  className='absolute top-[17em] mt-[1.25em] text-white z-[-1]'>
         <strong className='ml-[3px] flex items-center'><CgInfo className='mr-[3px]'/> info</strong>
         <p className=' max-w-[400px] bg-[#00000097] p-[8px] ml-[6px] mt-[0.2em] rounded-b-[5px] rounded-tr-[5px]  text-[0.95em]'>{message.sizes.width} x {message.sizes.height} - {message.meg}</p></article>
 

@@ -1,6 +1,6 @@
 import { Method, defaultConfig } from '@/configs/config.api'
 import { defaultFetch } from '@/utils/fetcher'
-import {toast} from 'react-toastify'
+import {toast as hotToast} from 'react-hot-toast'
 /**
  * POST | 북마크 아이템을 추가하는 함수
  * @param itemId 북마크에 추가할 아이템의 식별자(=>quote_id)
@@ -18,11 +18,11 @@ export const addBookmarkItem = async (itemId: number, path: string) => {
   const result = await defaultFetch(url, config)
   const { meg, success } = result
   if (success) {
-    toast.success(meg)
+    hotToast.success(meg)
     return true
   }
   if (!success) {
-    toast.error(meg)
+    hotToast.error(meg)
     return false
   }
 }

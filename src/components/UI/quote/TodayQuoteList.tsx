@@ -31,15 +31,16 @@ export default function TodayQuotelist({ quotes }: PropsType) {
     textSplit.forEach((text,i) => {
       tl.from(text, {
         x:()=>{
-          return -50
+          return 300
         },
         y:()=>{
           return i%2? -50 : 50
         },
+        border:'2px solid black',
         opacity: 0,
         position:'absolute',
         ease: 'none',
-      },'-=0.4')
+      },'-=0.45')
     })
   }, [quotes])
 
