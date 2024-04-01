@@ -51,5 +51,7 @@ export interface ReplyType {
 
 
 export interface ConsentsType {
-  [key:string]:boolean
+  [key: string]: boolean
 }
+
+

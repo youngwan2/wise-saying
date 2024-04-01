@@ -201,12 +201,12 @@
 }
 
 .styler_tap_buttons:hover::after {
-    content: '글자/배경';
+    content: '글자 / 배경 / 업로더';
     height: 25px;
     color:white;
     font-weight: 500;
     font-size: 15px;
-    width: 100px;
+    width: 150px;
     padding:0 0 0 5px;
     border-radius: 5px;
     left: -0.5em;
@@ -218,7 +218,7 @@
 .styler_tap_buttons:hover::before {
     content: ' ';
     top: -0.4em;
-    left: 1.62em;
+    left: 2.8em;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     border-top: 10px solid black;

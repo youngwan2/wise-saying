@@ -65,7 +65,7 @@ export default function QuotesCategoryCard({ category, item, i }: PropsType) {
     >
       <strong>{item.category} </strong>
       <hr />
-      {item.job ? <span className='inline-block mt-[1.2em]'>[{item.job}]</span> : null}
+      {item.job ? <span className='inline-block mt-[0.5em]'>[{item.job}]</span> : null}
     </li>
   )
 }

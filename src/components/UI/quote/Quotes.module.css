@@ -27,7 +27,7 @@
 /* 카테고리 */
 .grid_container {
     display: grid;
-    margin: 1em auto;
+    margin: 5em auto;
     gap: 1em;
     max-width: 1000px;
     place-content: center;

@@ -19,7 +19,43 @@ import type {
   TextOptionState,
   AlignState,
   CardThemeState,
+  ImageSrcType,
 } from '../types/store.type'
+
+
+
+const defaultImagsSrc = [
+  '/images/image0.png',
+  '/images/image1.png',
+  '/images/image2.png',
+  '/images/image3.png',
+  '/images/image4.png',
+  '/images/image5.png',
+  '/images/image6.png',
+  '/images/image7.png',
+  '/images/image8.png',
+  '/images/image9.png',
+  '/images/image10.png',
+  '/images/image11.png',
+  '/images/image12.png',
+  '/images/image13.png',
+  '/images/image14.png',
+  '/images/image15.png',
+  '/images/image16.png',
+  '/images/image17.png',
+  '/images/image18.png',
+  '/images/image19.png',
+  '/images/image20.png',
+  '/images/image21.png',
+  '/images/image22.png',
+  '/images/image23.png',
+]
+
+
+
+
+
+
 
 /**
  * * Zustand| 유저 로그인 상태를 저장
@@ -82,7 +118,7 @@ export const useQuotesTextOptions = create<TextOptionState>((set) => ({
   textPositionY: 0,
   textPositionX: 152,
   textLength: 20,
-  setTextOption: (state) => set(() => ({ lineHeight: state.lineHeight, textPositionY: state.textPositionY, textPositionX: state.textPositionX, textLength:state.textLength }))
+  setTextOption: (state) => set(() => ({ lineHeight: state.lineHeight, textPositionY: state.textPositionY, textPositionX: state.textPositionX, textLength: state.textLength }))
 }))
 
 /**
@@ -97,9 +133,9 @@ export const useQuotesStrokeStyleStore = create<StorkeState>((set) => ({
 
 
 
-export  const useQuotesTextAlign = create<AlignState>((set)=> ({
-  align:'center',
-  setAlign:(align)=>set(()=> ({align}))
+export const useQuotesTextAlign = create<AlignState>((set) => ({
+  align: 'center',
+  setAlign: (align) => set(() => ({ align }))
 }))
 
 
@@ -216,7 +252,14 @@ export const usePolicyTaps = create<PolicyTapState>((set) => ({
  * Zustand | 카드 디자인 테마 설정
  */
 
-export const useCardTheme = create<CardThemeState>((set)=>({
-  isCardTheme:false,
-  setIsCardTheme:(isCardTheme) => set(()=>({isCardTheme}))
+export const useCardTheme = create<CardThemeState>((set) => ({
+  isCardTheme: false,
+  setIsCardTheme: (isCardTheme) => set(() => ({ isCardTheme }))
+}))
+
+
+export const useImagesSrcStore = create<ImageSrcType>((set) => ({
+  imagesSrc: defaultImagsSrc,
+  setImagesSrc: (imagesSrc) => set(() => ({ imagesSrc: imagesSrc })),
+  addImageSrc: (newImage) => set((state) => ({ imagesSrc: [...state.imagesSrc, newImage] }))
 }))

@@ -1,6 +1,6 @@
 import styles from './styler.module.css'
 import { useState } from 'react'
-import { BsBrush, BsCardImage } from 'react-icons/bs'
+import { BsBrush, BsCardImage, BsUpload } from 'react-icons/bs'
 
 interface PropsType {
   setSelectTapNum: (p: number) => void
@@ -14,9 +14,10 @@ export default function StylerTaps({
   const [taps] = useState([
     { num: 0, text: <BsBrush/>},
     { num: 1, text: <BsCardImage/> },
+    { num: 2, text: <BsUpload/> },
   ])
   return (
-    <article className="bg-[tomato] fixed top-[-3.2em] right-[-1.2px] z-[1000] flex justify-center mt-[1em] text-[white] rounded-tl-[10px] rounded-tr-[10px] backdrop-grayscale-[50%]  border-x border-t ">
+    <article className="bg-[tomato] fixed top-[-3.3em] right-[-1.2px] z-[1000] flex justify-center mt-[1em] text-[white] rounded-tl-[10px] rounded-tr-[10px] backdrop-grayscale-[50%] border-t ">
       {taps.map((tap) => {
         return (
           <button
@@ -29,8 +30,8 @@ export default function StylerTaps({
             ${
               selectTapNum === tap.num
                 ? 'bg-[white] text-[#162557] font-bold hover:bg-[#e3e1e1]'
-                : 'bg-[transparent] hover:text-white'
-            } first:rounded-tl-[10px] last:rounded-tr-[10px] text-[1.5em] p-[5px] px-[10px] transition-all text-center hover:bg-[#f77e69]`}
+                : 'bg-[transparent] hover:text-white hover:bg-[#f77e69]'
+            } first:rounded-tl-[10px] last:rounded-tr-[10px] border text-[1.5em] p-[5px] px-[10px] transition-all text-center `}
           >
             {tap.text}
           </button>

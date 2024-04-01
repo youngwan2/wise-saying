@@ -1,3 +1,5 @@
+
+
 export interface LoginState {
   loginState: boolean
   setLoginState: (loignState: boolean) => void
@@ -38,11 +40,11 @@ export type TextOptionType = {
   textPositionY: number
   textPositionX: number
   lineHeight: number
-  textLength:number
+  textLength: number
 }
 
 export interface TextOptionState extends TextOptionType {
-  setTextOption: (state: TextOptionType) =>void
+  setTextOption: (state: TextOptionType) => void
 }
 
 type StorkeType = {
@@ -57,8 +59,8 @@ export interface StorkeState extends StorkeType {
 
 
 export interface AlignState {
-  align:string
-  setAlign:(align:string) => void
+  align: string
+  setAlign: (align: string) => void
 }
 
 
@@ -130,11 +132,19 @@ export interface UpdateState {
 }
 
 export interface PolicyTapState {
-  tapNum:number
-  setTapNum : (tapNum:number) => void
+  tapNum: number
+  setTapNum: (tapNum: number) => void
 }
 
-export interface CardThemeState{
-  isCardTheme:boolean
-  setIsCardTheme:(isCardTheme:boolean)=>void
+export interface CardThemeState {
+  isCardTheme: boolean
+  setIsCardTheme: (isCardTheme: boolean) => void
+}
+
+
+export interface ImageSrcType {
+  imagesSrc: string[]
+  setImagesSrc: (imagesSrc: string[]) => void
+  addImageSrc: (newImage: string) => void
+
 }
