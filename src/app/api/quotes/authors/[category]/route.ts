@@ -8,7 +8,7 @@ export async function GET(
 ) {
   try {
     const { category } = res.params
-    const limit = req.nextUrl.searchParams.get('limit') || 15
+    const limit = req.nextUrl.searchParams.get('limit') || 30
     const limitNum = Number(limit)
     const type = req.nextUrl.searchParams.get('type') || ''
     const db = await openDB()

@@ -3,7 +3,7 @@ import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 
 //GET | 유저가 작성한 포스트를 카테고리별로 조회
-const LIMIT = 15
+const LIMIT = 30
 export async function GET(
   req: NextRequest,
   res: { params: { category: string } },
@@ -11,7 +11,6 @@ export async function GET(
   const type = req.nextUrl.searchParams.get('type') || ''
   const page = req.nextUrl.searchParams.get('page') || 0
   const pageNum = Number(page)
-  const limit = 15
   const { category } = res.params
 
   try {
@@ -43,7 +42,7 @@ export async function GET(
                 ON A.user_id = B.user_id
                 LIMIT $1 OFFSET $2
             `
-      const results = await db.query(joinQuery, [limit, pageNum * limit])
+      const results = await db.query(joinQuery, [LIMIT, pageNum * LIMIT])
       const items = results.rows.map((categories, i) => {
         return { category: categories.category, category_id: i }
       }) || [{ category: '', category_id: 0 }]
@@ -66,7 +65,7 @@ export async function GET(
 
         const result = await db.query(query, [category])
         const TOTAL_COUNT = result.rows[0].count || 0
-        const MAX_PAGE = Math.ceil(TOTAL_COUNT / 15)
+        const MAX_PAGE = Math.ceil(TOTAL_COUNT / LIMIT)
 
         db.end()
         return NextResponse.json({ TOTAL_COUNT, MAX_PAGE })
@@ -82,7 +81,7 @@ export async function GET(
             ORDER BY quote_id DESC
             LIMIT $2 OFFSET $3
         `
-      const results = await db.query(query, [category, limit, pageNum * limit])
+      const results = await db.query(query, [category, LIMIT, pageNum * LIMIT])
       const items = results.rows
       return NextResponse.json(items)
     }
