@@ -1,0 +1,40 @@
+
+
+.conversation_li {
+    animation: 1s appear 1;
+}
+
+@keyframes appear {
+
+    from {opacity: 0; transform: translateY(-10px);}
+    
+}
+
+.ai_tail::before{
+    content: '';
+    border-left: 10px solid transparent;
+    border-right: 20px solid rgb(255, 255, 255);
+    position: absolute;
+    left: 2.3em;
+    top: 1.3em;
+    
+    border-top: 10px solid transparent;
+    position: absolute;
+    border-bottom: 10px solid transparent;
+
+}
+
+.user_tail::before{
+    content: '';
+    border-left: 10px solid transparent;
+    border-right: 20px solid  #faeb98;
+    position: absolute;
+    right:2em ;
+    rotate: 170deg;
+    top: 1.15em;
+    
+    border-top: 10px solid transparent;
+    position: absolute;
+    border-bottom: 10px solid transparent;
+
+}

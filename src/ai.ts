@@ -7,12 +7,13 @@ const openai = new OpenAI({
 // 명언 생성
 export async function generateQuoteBy(content: string) {
   const response = await openai.chat.completions.create({
-    model: 'gpt-3.5-turbo',
+    model: 'gpt-3.5-turbo-0125',
+    response_format:{"type":'json_object'},
     messages: [
       {
         role: 'system',
         content:
-          'Your role is to analyze emotions based on the text provided by the user and respond with words that provide strength, encouragement, or motivation. The response format should be in Korean without including quotation marks or double quotation marks, and it should not indicate who said it. Responses are limited to three sentences',
+          'Your role is to analyze the emotions in the text entered by the user and provide a fitting quote for those emotions. And when the user requests additional quotes, you should respond with a similar quote to the one you previously provided. The response format should be in Korean without including quotation marks or double quotation marks, and it should not indicate who said it. Responses are limited to three sentences. Respond in the format of a JSON object like {quote: quote, category: category, role: ai}. Please write the category in Korean',
       },
       {
         role: 'user',
@@ -23,7 +24,7 @@ export async function generateQuoteBy(content: string) {
     max_tokens: 120,
     top_p: 1,
   })
-
+  
   return response.choices[0].message.content
 }
 

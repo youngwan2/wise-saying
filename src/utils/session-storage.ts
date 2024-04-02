@@ -6,6 +6,7 @@ import { JWT_TOKEN_REGEX } from '@/constants'
  * @returns
  */
 export const getUserEmail = () => {
+  if(typeof window !== 'object') return 
   try {
     const user =
       (sessionStorage &&
@@ -21,7 +22,10 @@ export const getUserEmail = () => {
   }
 }
 
-interface UserInfoType {
+
+
+
+export interface UserInfoType {
   dbEmail: string
   profile: {
     nickname: string | null
@@ -33,6 +37,7 @@ interface UserInfoType {
  * @param user
  */
 export const setUserInfo = (user: UserInfoType | any) => {
+  if (typeof window !== 'object') return
   sessionStorage.setItem('user', JSON.stringify(user))
 }
 
@@ -40,10 +45,13 @@ export const setUserInfo = (user: UserInfoType | any) => {
  * GET SessionStorage | 유저 정보 가져오기
  */
 export const getUserInfo = () => {
+  if (typeof window !== 'object') return
   try {
-    sessionStorage.getItem('user')
+    const userInfo =sessionStorage.getItem('user')
+    return userInfo
   } catch (error) {
-    // console.error('user 정보 가져오기 실패:', error)
+    console.error('user 정보 가져오기 실패:', error)
+    return false 
   }
 }
 
@@ -60,6 +68,7 @@ export const setLoginExp = (exp: number) => {
  * GET essionStorage | 로그인 만료시간 가져오기
  */
 export const getLoginExp = () => {
+  if(typeof window !== 'object') return 
   try {
     const exp = sessionStorage.getItem('exp')
     if (exp) {
@@ -92,7 +101,7 @@ export const getAccessToken = () => {
     const token = sessionStorage ? sessionStorage.getItem('token') : null
     return token
   } catch (error) {
-    // console.error('accessToken 가져오기 실패:' + error)
+    console.error('accessToken 가져오기 실패:' + error)
     return null
   }
 }

@@ -4,8 +4,8 @@ import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 
 const insertQuery = `
-INSERT INTO ai_quotes (quote)
-VALUES ($1)
+INSERT INTO ai_quotes (quote, category)
+VALUES ($1, $2)
 `
 
 export async function POST(req: NextRequest) {
@@ -14,18 +14,26 @@ export async function POST(req: NextRequest) {
     if (content.length < 5)
       return NextResponse.json({
         ...HTTP_CODE.BAD_REQUEST,
-        meg: '5자 이상 적어주세요.',
-        result: '5자 이상 입력 바람.',
+        result: `
+        {
+          'quote': '보다 명확한 생성을 위해 5자 이상 적어주세요.',
+          'category': '',
+        }
+        `
       })
 
     const db = await openDB()
-    const aiQuote = await generateQuoteBy(content)
+    const aiQuote = await generateQuoteBy(content) || "{'quote':'','category':''}"
 
-    db.query(insertQuery, [aiQuote])
+    const parse = JSON.parse(aiQuote) as { quote: string, category: string }
+    const { quote, category } = parse
+    await db.query(insertQuery, [quote, category])
+
+    db.end()
 
     return NextResponse.json({
       ...HTTP_CODE.CREATED,
-      result: aiQuote,
+      result: {...parse, created_at:new Date().toLocaleString()},
     })
   } catch (error) {
     console.error('/api/quotes/ai/route.ts', error)

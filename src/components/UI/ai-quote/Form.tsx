@@ -1,41 +1,24 @@
 import { forwardRef, type MouseEventHandler } from 'react'
-import { HiPencilSquare } from 'react-icons/hi2'
-
+import {IoSend}  from 'react-icons/io5'
 interface PropsType {
-  onClickCancel: MouseEventHandler<HTMLButtonElement>
   generateAction: (form: FormData) => Promise<string | void>
 }
 const Form = forwardRef<HTMLTextAreaElement, PropsType>(
   function Form(props, textAreaRef) {
-    const { generateAction, onClickCancel } = props
+    const { generateAction} = props
 
     return (
-      <form className="mt-[1.5em]" action={generateAction}>
-        <label
-          htmlFor="prompt"
-          className="sm:text-[1.25em] text-[1.05em] flex items-center"
-        >
-          <HiPencilSquare className=" mr-[5px]" />
-          글쓰기
-        </label>
+      <form className="font-sans mt-[1.5em] flex justify-center items-center  rounded-[5px] bg-[#ffffff21]" action={generateAction}>
         <textarea
+          placeholder='예) 여름에도 가을처럼 시원하고, 겨울처럼 등꼴이 오싹해지는 명언'
           ref={textAreaRef}
           name="prompt"
           id="prompt"
-          className="p-[10px] w-full resize-none focus:outline-none focus:bg-[#ffffff1a] bg-transparent shadow-[0_0_0_1px_white] mt-[5px] min-h-[150px] rounded-[5px]"
+          className="p-[10px] w-full resize-none focus:outline-none bg-transparent   min-h-[30px]"
         ></textarea>
-        <article className="m-[1em] text-right">
-          <button className="hover:shadow-[0_2px_0_0_white]  mr-[1em]">
-            생성하기
+          <button className="hover:text-[#bcbbbb]  mx-[1em] text-[1.25em]">
+            <IoSend/>
           </button>
-          <button
-            type="button"
-            className="hover:shadow-[0_2px_0_0_white]"
-            onClick={onClickCancel}
-          >
-            취소하기
-          </button>
-        </article>
       </form>
     )
   },
