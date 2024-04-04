@@ -2,6 +2,7 @@ import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(req: NextRequest, res: { params: { main: string } }) {
+
   const main = res.params.main || ''
 
   try {

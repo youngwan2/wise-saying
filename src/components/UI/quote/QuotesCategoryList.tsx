@@ -8,6 +8,7 @@ import { getCategoryCountFromDb } from '@/services/data/get'
 import { useCallback, useEffect, useState } from 'react'
 import ReplaceMessageCard from '../common/ReplaceMessageCard'
 import { categoryClassifier } from '@/utils/common-func'
+import Title from '../common/Title'
 
 interface PropsType {
   category: string
@@ -48,9 +49,7 @@ export default function QuotesCategoryList({ category }: PropsType) {
     return <ReplaceMessageCard childern="데이터를 불러오는 중입니다.." />
   return (
     <>
-      <h2 className="flex justify-center items-center text-[1.5em] p-[10px]  text-center text-white max-w-[250px] mx-auto bg-gradient-to-b from-[transparent] to-[#00000033]  shadow-[0_9px_2px_0_rgba(0,0,0,0.5)] rounded-[5px] my-[2em] perspective-500  ">
-        {topick} 카테고리 ({currentCount}/{totalCategoryCount})
-      </h2>
+      <Title title={`${topick} 카테고리`} current={currentCount} total={totalCategoryCount} />
       <ul className={`${styles.grid_container}`}>
         {items.map((item: { category: string; job: string }, i) => {
           return (

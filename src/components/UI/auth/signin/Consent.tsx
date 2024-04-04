@@ -56,7 +56,7 @@ export default function Consent({ setConsents, consents }: ProsType) {
                         <label className="w-[300px] inline-block font-bold"> {item.id === 'term' || item.id === 'private' ? <span onClick={() => openModal(item.id)} className="text-black shadow-[inset_0_-1px_0_0_green] hover:cursor-pointer">{item.label}</span> : item.label} </label>
                         <input onChange={onChangeCheck} className="hidden" checked={consents[item.id]} data-id={item.id} type="checkbox" name={`${item.id}-consent`} />
                         <span
-                            onClick={onChangeCheck}
+                            onPointerDown={onChangeCheck}
                             data-id={item.id}
                             className={`${consents[item.id] ? 'before:content-["✔"] before:opacity-100 text-green-600 ' : 'before:content-[""] before:opacity-0'} ${checkBoxStyle}`}
                         ></span>

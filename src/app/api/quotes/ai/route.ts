@@ -3,6 +3,35 @@ import { HTTP_CODE } from '@/app/http-code'
 import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 
+
+
+
+
+
+
+const selectQuery = `
+  SELECT * FROM ai_quotes
+`
+export async function GET() {
+
+  try {
+    const db = await openDB()
+    const result = await db.query(selectQuery)
+    const quotes = result.rows
+    return  NextResponse.json(quotes)
+
+  } catch (error) {
+    console.error('/api/quotes/ai/route.ts', error)
+    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
+  }
+
+}
+
+
+
+
+
+
 const insertQuery = `
 INSERT INTO ai_quotes (quote, category)
 VALUES ($1, $2)
@@ -33,7 +62,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       ...HTTP_CODE.CREATED,
-      result: {...parse, created_at:new Date().toLocaleString()},
+      result: { ...parse, created_at: new Date().toLocaleString() },
     })
   } catch (error) {
     console.error('/api/quotes/ai/route.ts', error)

@@ -1,4 +1,5 @@
 import { MouseEventHandler, useEffect, useState } from 'react'
+import { HiArrowUpRight } from 'react-icons/hi2'
 
 interface PropsType {
   onClick: MouseEventHandler<HTMLButtonElement>
@@ -20,21 +21,20 @@ export default function ListLoadMoreButton({
   return (
     <button
       disabled={isLoadingMore || isLastPage}
-      className={`${
-        isLastPage
-          ? 'bg-[#00000042] hover:cursor-not-allowed'
-          : 'hover:cursor-pointer'
-      }   left-[50%] translate-x-[-50%] relative my-[3em] mb-[3em] shadow-[inset_-2px_-2px_5px_0_rgba(0,0,0,0.5)] 
-         rounded-[5px] border-[3px]  bg-white to-slate-400 w-[150px] h-[50px]
-        hover:bg-[tomato] hover:text-white font-semibold text-[1.15em] z-[1] 
+      className={`${isLastPage
+        ? 'bg-[#00000042] hover:cursor-not-allowed'
+        : 'hover:cursor-pointer'
+        }   left-[50%] translate-x-[-50%] relative mt-[6em] mb-[3em] shadow-[inset_-2px_-2px_5px_0_rgba(0,0,0,0.5)] 
+         rounded-[5px] border-[3px]  bg-white to-slate-400 w-[140px] h-[45px]
+        hover:bg-[#ebe8e8]  font-semibold text-[1.15em] z-[1] 
         `}
       onClick={onClick}
     >
       {isLastPage
-        ? '마지막 페이지'
-        : isLoadingMore
-          ? '조회중 입니다...'
-          : size + '페이지'}
+        ? <span>종착지</span>
+        : isLoadingMore || maxPage<1
+          ? '조회중 ...'
+          : <span className='flex items-center justify-center'> 더보기<span className='absolute right-[0.8em] top-[-1.5em] ml-[5px] text-white font-sans font-thin rounded-[10px] text-[0.8em] px-[8px] flex flex-col-reverse'><HiArrowUpRight /> <span className='absolute left-[-2em] top-[-1.25em] w-[200px] '> { maxPage - size} 페이지 남음</span></span></span>}
     </button>
   )
 }
