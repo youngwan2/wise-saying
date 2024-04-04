@@ -17,6 +17,7 @@ export const addBookmarkItem = async (itemId: number, path: string) => {
   const config = defaultConfig(Method.POST, postData)
   const result = await defaultFetch(url, config)
   const { meg, success } = result
+  console.log(result)
   if (success) {
     hotToast.success(meg)
     return true
