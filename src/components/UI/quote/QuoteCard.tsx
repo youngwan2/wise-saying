@@ -151,12 +151,12 @@ export default function QuoteCard({ item, items, index }: PropsType) {
       key={item.id}
       className={`${isCardTheme
         ? styles.card_theme_on
-        : 'shadow-[inset_0_0_0_3px_white] rounded-[10px]  bg-transparent  hover:bg-[#d5d5d533]'} 
+        :'hover:shadow-[0_0_0_1px_rgba(255,255,255,0.1),inset_2px_2px_1px_0_rgba(255,255,255,0.1)] rounded-[5px]   bg-[#d5d5d511]'} 
         px-[15px] py-[35px] w-[95%] my-[1em] max-w-[500px] mx-auto invisible relative   `}
     >
 
       <QuoteProgress progress={progress} />
-      <TtsButton onClickSetText={onClickSetText} className='absolute right-[3.3em] top-[0.429em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-white' quote={null} />
+      <TtsButton onClickSetText={onClickSetText} className='absolute right-[3.3em] top-[0.429em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-[white]' quote={null} />
       <QuoteDetailMoveButton onClickDetailMove={onClickPushAnimation} />
 
       {pathName.includes('/user-quotes') ? (

@@ -38,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="ko" className=" h-full bg-[#162557]">
+    <html lang="ko" className=" bg-gradient-to-tr from-[#23346d] to-[#1b2d69]">
       <body className={`${gowunDodum.className}`} suppressHydrationWarning>
         <SessionProvider>
           <Header />

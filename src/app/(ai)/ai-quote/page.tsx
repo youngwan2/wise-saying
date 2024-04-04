@@ -111,7 +111,7 @@ export default function AiQuotePage() {
 
 
   return (
-    <article className="max-w-[1200px] bg-[#162557] w-full relative left-[50%] translate-x-[-50%] mt-[5em] p-[1em] rounded-[5px] text-white overflow-auto">
+    <article className="max-w-[1200px]  w-full relative left-[50%] translate-x-[-50%] mt-[5em] p-[1em] rounded-[5px] text-white overflow-auto ">
       <Conversation isLoading={isLoading} conversationList={conversationList} />
 
       {/* 명언 생성 요청 */}

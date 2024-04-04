@@ -8,7 +8,7 @@ const Form = forwardRef<HTMLTextAreaElement, PropsType>(
     const { generateAction} = props
 
     return (
-      <form className="font-sans mt-[1.5em] flex justify-center items-center  rounded-[5px] bg-[#ffffff21]" action={generateAction}>
+      <form className="font-sans mt-[1.5em] flex justify-center items-center  rounded-[5px] bg-[#ffffff0e]" action={generateAction}>
         <textarea
           placeholder='예) 여름에도 가을처럼 시원하고, 겨울처럼 등꼴이 오싹해지는 명언'
           ref={textAreaRef}

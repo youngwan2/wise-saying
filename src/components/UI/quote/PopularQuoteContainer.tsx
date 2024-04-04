@@ -7,6 +7,8 @@ import toast from "react-hot-toast";
 import { HiRefresh } from "react-icons/hi";
 import ZommInQuoteCard from "./ZoomInQuoteCard";
 import { useCardZoomInOutStore } from "@/store/store";
+import styles from './Quotes.module.css'
+import Title from "../common/Title";
 
 
 export default function PopularQuoteContainer() {
@@ -32,7 +34,8 @@ export default function PopularQuoteContainer() {
 
     return (
         <>
-            <button className="absolute flex items-center left-[50%] translate-x-[-50%] text-white hover:cursor-pointer z-[20] hover:text-[gold] " onClick={reload}><HiRefresh className='mx-[3px]' />새로고침 </button>
+            <Title title={`실시간 인기명언`} current={quotes.length||0} total={quotes.length||0} />
+            <button aria-label="새로고침" className={`${styles.refresh_btn} top-[11em] border p-[8px] text-[1.15em] absolute flex items-center right-[4%] text-white hover:cursor-pointer z-[20] hover:text-[#e3e3e0] `}onClick={reload}><HiRefresh /></button>
             <PopularQuoteList quotes={quotes} />
             <ZommInQuoteCard item={quotes[cardIndex]} />
         </>
