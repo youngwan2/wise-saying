@@ -2,6 +2,7 @@ import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 import { oauth2UserInfoExtractor, tokenVerify } from '@/utils/auth'
 import { HTTP_CODE } from '@/app/http-code'
+import { aiProfanityFilter } from '@/ai'
 
 // GET | 단일 포스트 조회
 export async function GET(req: NextRequest, res: { params: { id: number } }) {
@@ -42,6 +43,15 @@ export async function PATCH(req: NextRequest, res: { params: { id: number } }) {
   const postId = res.params.id
   const { '0': body } = await req.json()
   const { content: quote, category, author } = body
+
+
+  const filterJson = await aiProfanityFilter([category, quote, author]) || '{"judgment": false, "reason": "" }'
+
+  const { judgment, reason } = JSON.parse(filterJson)
+
+  if (judgment) {
+    return NextResponse.json({ ...HTTP_CODE.BAD_REQUEST, meg: reason })
+  }
 
   const { userId: socialUserId } = (await oauth2UserInfoExtractor()) || {
     userId: '',

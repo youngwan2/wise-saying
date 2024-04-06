@@ -1,3 +1,4 @@
+import { aiProfanityFilter } from '@/ai'
 import { HTTP_CODE } from '@/app/http-code'
 import { oauth2UserInfoExtractor, tokenVerify } from '@/utils/auth'
 import { openDB } from '@/utils/connect'
@@ -48,6 +49,14 @@ export async function POST(req: NextRequest) {
 
   const commentId = req.nextUrl.searchParams.get('comment-id') || ''
   const LENGTH_LESS_THAN_ONE = content.length < 1
+
+  const filterJson = await aiProfanityFilter([content]) || '{"judgment": false, "reason": "" }'
+  const { judgment, reason } = JSON.parse(filterJson)
+
+  if (judgment) {
+    return NextResponse.json({ ...HTTP_CODE.BAD_REQUEST, meg: reason })
+  }
+
   const db = await openDB()
 
   if (LENGTH_LESS_THAN_ONE)
@@ -114,11 +123,20 @@ export async function PATCH(req: NextRequest) {
 
   const LENGTH_LESS_THAN_ONE = content.length < 1
 
-  if (LENGTH_LESS_THAN_ONE)
+  if (LENGTH_LESS_THAN_ONE) {
     return NextResponse.json({
       ...HTTP_CODE.BAD_REQUEST,
       meg: '잘못된 요청입니다. 문자는 최소 1자 이상 입력하여야 합니다.',
     })
+  }
+
+  const filterJson = await aiProfanityFilter([content]) || '{"judgment": false, "reason": "" }'
+  const { judgment, reason } = JSON.parse(filterJson)
+
+  if (judgment) {
+    return NextResponse.json({ ...HTTP_CODE.BAD_REQUEST, meg: reason })
+  }
+
 
   try {
     const { userId: soicalUserId } = (await oauth2UserInfoExtractor()) || {

@@ -105,8 +105,8 @@ interface SignInUserType {
 }
 
 
-export async function reqSingIn({ ...userInfo }: SignInUserType, consents:ConsentsType) {
-  const body = {...userInfo, consents}
+export async function reqSingIn({ ...userInfo }: SignInUserType, consents: ConsentsType) {
+  const body = { ...userInfo, consents }
   const config = defaultConfig(Method.POST, body)
   const url = '/api/auth/general-auth/signin'
   const { success: isSuccess } = await defaultFetch(url, config)
@@ -164,13 +164,13 @@ export const postComment = async (
   const url = `/api/quotes/${quoteId}/comments`
   const config = defaultConfig(Method.POST, comment)
 
-  const { success } = await defaultFetch(url, config)
+  const { success, meg } = await defaultFetch(url, config)
 
   if (success) {
     toast.success('댓글이 등록 되었습니다.')
-
     return true
   } else {
+    toast.error(meg)
     return false
   }
 }
@@ -184,12 +184,15 @@ export const postComment = async (
 export const postReply = async (commentId: number, content: string) => {
   const url = `/api/quotes/0/comments/reply?comment-id=${commentId}`
   const config = defaultConfig(Method.POST, content)
-  const { success } = await defaultFetch(url, config)
+  const { success, meg } = await defaultFetch(url, config)
   if (success) {
     toast.success('댓글이 등록되었습니다.')
     return true
   }
-  if (!success) return success
+  if (!success) {
+    toast.error(meg)
+    return false
+  }
 }
 
 /**

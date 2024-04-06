@@ -6,7 +6,7 @@ import { useSWRConfig } from 'swr'
 import { deleteFetcher, patchFetcher } from '@/utils/fetcher'
 import ReplyContent from './ReplyContent'
 import { ReplyType } from '@/types/items.types'
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
 
 interface PropsType extends ReplyType {
   commentId: number
@@ -53,10 +53,13 @@ export default function ReplyCard({ commentId, userEmail, reply }: PropsType) {
   // PATCH |  대댓글 수정
   async function updateReply(replyId: number, content: string) {
     const url = `/api/quotes/0/comments/reply?reply-id=${replyId}`
-    const isSucecss: boolean = await patchFetcher(url, content)
-    if (isSucecss) {
+    const result = await patchFetcher(url, content) || { meg: '', success: false }
+    if (!(typeof result === 'object')) return
+    if (result.success) {
       toast.success('수정 되었습니다.')
       mutate(`/api/quotes/0/comments/reply?comment-id=${commentId}`)
+    } else {
+      toast.error(result.meg)
     }
   }
 

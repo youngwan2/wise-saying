@@ -4,11 +4,6 @@ import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 
 
-
-
-
-
-
 const selectQuery = `
   SELECT * FROM ai_quotes
 `
@@ -26,11 +21,6 @@ export async function GET() {
   }
 
 }
-
-
-
-
-
 
 const insertQuery = `
 INSERT INTO ai_quotes (quote, category)
