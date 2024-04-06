@@ -4,11 +4,11 @@ const openai = new OpenAI({
   apiKey: process.env.OPEN_AI,
 })
 
-// 명언 생성
+// 명언 생성 AI
 export async function generateQuoteBy(content: string) {
   const response = await openai.chat.completions.create({
     model: 'gpt-3.5-turbo-0125',
-    response_format:{"type":'json_object'},
+    response_format: { "type": 'json_object' },
     messages: [
       {
         role: 'system',
@@ -24,11 +24,11 @@ export async function generateQuoteBy(content: string) {
     max_tokens: 120,
     top_p: 1,
   })
-  
+
   return response.choices[0].message.content
 }
 
-// 이미지 생성
+// 이미지 생성 AI
 export async function generateQuoteImageBy(content: string) {
   const resposne = await openai.images.generate({
     model: 'dall-e-2',
@@ -40,4 +40,30 @@ export async function generateQuoteImageBy(content: string) {
   })
   const imageUrl = resposne.data[0].url
   return imageUrl
+}
+
+// 비속어 필터 AI
+export async function aiProfanityFilter(content: string[]) {
+
+  const response = await openai.chat.completions.create({
+    model: 'gpt-3.5-turbo-0125',
+    response_format: { "type": 'json_object' },
+    messages: [
+      {
+        role: 'system',
+        content: "Your role is to return true if the user uses profanity, swearing, or inappropriate language; otherwise, return false. The response format should be in the form JSON Object of {judgment: false, reason: ''}. Please write the reason in Korean"
+      },
+      {
+        role: 'user',
+        content: content[0] + content[1] + content[2],
+      },
+    ],
+    temperature: 0.5,
+    max_tokens: 120,
+    top_p: 1,
+  })
+
+  return response.choices[0].message.content || '{"judgment": false, "reason": "" }'
+
+
 }

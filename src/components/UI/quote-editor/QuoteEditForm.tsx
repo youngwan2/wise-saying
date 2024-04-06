@@ -11,7 +11,6 @@ import QuoteTopicInput from './QuoteTopicInput'
 import QuoteContentInput from './QuoteContentInput'
 import QuoteAuthorInput from './QuoteAuthorInput'
 import QuoteFormButtons from './QuoteFormButtons'
-import Overlay from '../common/Overlay'
 
 export type PostType = {
   id: number

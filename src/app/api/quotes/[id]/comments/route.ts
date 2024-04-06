@@ -2,6 +2,7 @@ import { openDB } from '@/utils/connect'
 import { oauth2UserInfoExtractor, tokenVerify } from '@/utils/auth'
 import { NextRequest, NextResponse } from 'next/server'
 import { HTTP_CODE } from '@/app/http-code'
+import { aiProfanityFilter } from '@/ai'
 
 // GET | 특정 포스트 댓글 조회
 export async function GET(req: NextRequest, res: { params: { id: string } }) {
@@ -60,6 +61,13 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
   const { '0': comment } = await req.json()
   const quoteId = res.params.id
 
+  const filterJson = await aiProfanityFilter([comment]) || '{"judgment": false, "reason": "" }'
+  const { judgment, reason } = JSON.parse(filterJson)
+
+  if (judgment) {
+    return NextResponse.json({ ...HTTP_CODE.BAD_REQUEST, meg: reason })
+  }
+
   const db = await openDB()
 
   // 댓글 유효성 검사
@@ -113,6 +121,13 @@ export async function PATCH(req: NextRequest, res: { params: { id: string } }) {
       ...HTTP_CODE.BAD_REQUEST,
       meg: '댓글 형식은 공백을 포함하여 2자 이상 입력해야 합니다.',
     })
+
+    const filterJson = await aiProfanityFilter([comment]) || '{"judgment": false, "reason": "" }'
+    const { judgment, reason } = JSON.parse(filterJson)
+  
+    if (judgment) {
+      return NextResponse.json({ ...HTTP_CODE.BAD_REQUEST, meg: reason })
+    }
 
   const db = await openDB()
 

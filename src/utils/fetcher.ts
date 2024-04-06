@@ -40,6 +40,7 @@ export const postFetcher = async (url: string, ...data: any) => {
 export const patchFetcher = async (url: string, ...data: any) => {
   const config = defaultConfig(Method.PATCH, ...data)
   const isSuccess: boolean = await defaultFetch(url, config)
+  console.log(isSuccess)
   return isSuccess
 }
 

@@ -2,6 +2,7 @@ import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 import { oauth2UserInfoExtractor, tokenVerify } from '@/utils/auth'
 import { HTTP_CODE } from '@/app/http-code'
+import { aiProfanityFilter } from '@/ai'
 
 const insertQuery = `
 INSERT INTO quotes(quote, category, author,job, user_id)
@@ -13,6 +14,14 @@ export async function POST(req: NextRequest) {
   const db = await openDB()
   const { '0': body } = await req.json()
   const { category, content: quote, author } = body
+
+  const filterJson = await aiProfanityFilter([category, quote, author]) || '{"judgment": false, "reason": "" }'
+
+  const { judgment, reason } = JSON.parse(filterJson)
+
+  if (judgment) {
+    return NextResponse.json({ ...HTTP_CODE.BAD_REQUEST, meg: reason })
+  }
 
   const { userId: socialUserId } = (await oauth2UserInfoExtractor()) || {
     userId: '',
@@ -48,7 +57,7 @@ export async function POST(req: NextRequest) {
     ])
 
     await db.end()
-    return NextResponse.json({...HTTP_CODE.NO_CONTENT, meg:'정상적으로 등록되었습니다.'})
+    return NextResponse.json({ ...HTTP_CODE.NO_CONTENT, meg: '정상적으로 등록되었습니다.' })
   } catch (error) {
     console.error('/api/quotes/users/post/route.ts', error)
     return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
