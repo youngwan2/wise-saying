@@ -9,10 +9,13 @@ import CardTheme from '../theme/CardTheme'
 
 interface PropsType {
   items: {
-    id: number
+    quote_id: number
     author: string
+    views:number
     quote: string
     job: string
+    birth:string
+    intro:string
   }[]
 }
 
@@ -34,7 +37,7 @@ export default function QuoteList({ items }: PropsType) {
         mt-[1em] pt-[2em] grid  md:grid-cols-2 grid-cols-1 place-content-center w-full perspective-500 transform-style-3d`}
       >
         {items.map((item, i) => {
-          return <QuoteCard key={item.id} index={i} item={item} items={items} />
+          return <QuoteCard key={item.quote_id} index={i} item={item} items={items} />
         })}
       </ul>
       <ZommInQuoteCard item={items[cardIndex || 0]} />

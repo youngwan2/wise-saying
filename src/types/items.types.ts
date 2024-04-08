@@ -1,14 +1,18 @@
 export interface ItemsType {
-  id: number
+  quote_id: number
   author: string
   quote: string
   job: string
+  intro?: string
+  birth?: string
   email?: string
 }
 
 export interface QuoteType {
-  id: number
+  quote_id: number
   author: string
+  intro?: string
+  birth?: string
   quote: string
 }
 

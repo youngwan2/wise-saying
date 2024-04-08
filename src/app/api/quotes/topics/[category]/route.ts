@@ -7,7 +7,7 @@ export async function GET(
   res: { params: { category: string } },
 ) {
   try {
-    const { category } = res.params
+    const { category } = res.params || {category:''}
     const type = req.nextUrl.searchParams.get('type') || ''
     const limit = req.nextUrl.searchParams.get('limit') || 30
     const limitNum = Number(limit)
@@ -63,15 +63,15 @@ export async function GET(
       const page = req.nextUrl.searchParams.get('page') || 0
       const pageNum = Number(page)
       const query = `
-            SELECT quote_id AS id, author, quote, job FROM quotes
-            WHERE category LIKE $1
-            ORDER BY id DESC
+            SELECT A.quote_id, author, quote, job, birth, intro
+            FROM quotes A
+            INNER JOIN authors B ON A.author_id = B.author_id
+            WHERE A.category LIKE $1
+            ORDER BY A.quote_id DESC
             LIMIT $2 OFFSET $3
             `
       const results = await db.query(query, [
-        '%' + category + '%',
-        limit,
-        pageNum * limitNum,
+        '%' + category + '%', limit, pageNum * limitNum,
       ])
       const items = results.rows
       await db.end()

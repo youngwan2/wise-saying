@@ -12,6 +12,8 @@ interface PropsType {
   params: {
     name: string
     category: string
+    birth:string
+    intro:string
   }
 }
 

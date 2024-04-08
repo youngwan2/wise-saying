@@ -1,18 +1,18 @@
 import styles from './Quotes.module.css'
-import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react'
-import UserQuotesCardControlButtons from './UserQuotesCardControlButtons'
-import useIntersectionObserver from '@/custom/useIntersectionObserver'
-import { useCardTheme, useCardZoomInOutStore } from '@/store/store'
-import { usePathname, useRouter } from 'next/navigation'
-import { ItemsType } from '@/types/items.types'
-import ReplaceMessageCard from '../common/ReplaceMessageCard'
 import gsap from 'gsap/all'
-import QuotesCardControlButtons from './QuotesCardControlButtons'
-import useTTS from '@/custom/useTTS'
+import type { ItemsType } from '@/types/items.types'
 import { HiSpeakerphone } from 'react-icons/hi'
 import { toast } from 'react-toastify'
 import { viewCounter } from '@/services/data/patch'
+import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react'
+import { useCardTheme, useCardZoomInOutStore } from '@/store/store'
+import { usePathname, useRouter } from 'next/navigation'
+import useTTS from '@/custom/useTTS'
+import ReplaceMessageCard from '../common/ReplaceMessageCard'
+import QuotesCardControlButtons from './QuotesCardControlButtons'
 import TtsButton from '../common/TtsButton'
+import UserQuotesCardControlButtons from './UserQuotesCardControlButtons'
+import useIntersectionObserver from '@/custom/useIntersectionObserver'
 import QuoteViews from './QuoteViews'
 import QuoteProgress from './QuoteProgress'
 import QuoteDetailMoveButton from './QuoteDetailMoveButton'
@@ -54,7 +54,7 @@ export default function QuoteCard({ item, items, index }: PropsType) {
 
   // 페이지 사전 로드
   function onPrefetch() {
-    router.prefetch(`/quotes/authors/${item.author}/${item.id}`)
+    router.prefetch(`/quotes/authors/${item.author}/${item.quote_id}`)
   }
 
   const cardZoomInoutSwitch = useCallback(
@@ -84,7 +84,7 @@ export default function QuoteCard({ item, items, index }: PropsType) {
 
   // 상세 페이지 이동
   const onClickPushAnimation = (e: MouseEvent<HTMLButtonElement>) => {
-    viewCounter(item.id)
+    viewCounter(item.quote_id)
 
     const tl = gsap.timeline()
     tl.to(e.currentTarget.parentElement, {
@@ -111,7 +111,7 @@ export default function QuoteCard({ item, items, index }: PropsType) {
     })
     tl.to(e.currentTarget.parentElement, {
       onComplete() {
-        router.push(`/quotes/authors/${item.author}/${item.id}`)
+        router.push(`/quotes/authors/${item.author}/${item.quote_id}`)
         tl.kill()
       },
     })
@@ -135,7 +135,7 @@ export default function QuoteCard({ item, items, index }: PropsType) {
   }, [cardIndex, cardZoomInoutSwitch])
 
   useEffect(() => {
-    getQuoteViewsFromDB(item.id)
+    getQuoteViewsFromDB(item.quote_id)
   }, [item])
 
   if (!item)
@@ -148,7 +148,7 @@ export default function QuoteCard({ item, items, index }: PropsType) {
           setLiRefs(index, element)
         }
       }}
-      key={item.id}
+      key={item.quote_id}
       className={`${isCardTheme
         ? styles.card_theme_on
         :'hover:shadow-[0_0_0_1px_rgba(255,255,255,0.1),inset_2px_2px_1px_0_rgba(255,255,255,0.1)] rounded-[5px]   bg-[#d5d5d511]'} 
