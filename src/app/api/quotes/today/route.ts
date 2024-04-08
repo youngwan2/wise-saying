@@ -26,9 +26,9 @@ export async function GET(req: NextRequest) {
     }
 
     const query = `
-        SELECT quote_id AS id, author, quote, job
-        FROM quotes
-        WHERE quote_id IN ($1)
+        SELECT A.quote_id AS quote_id, quote, author, job, birth
+        FROM quotes A INNER JOIN authors B ON A.author_id = B.author_id
+        WHERE quote_id = $1
     `
     const results = await db.query(query, randomNumbers)
     await db.end()

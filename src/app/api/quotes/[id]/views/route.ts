@@ -3,10 +3,9 @@ import { openDB } from "@/utils/connect";
 import { NextRequest, NextResponse } from "next/server";
 
 
-
+// GET | 명언 조회수 가져오기
 export async function GET(req: NextRequest, res: { params: { id: string } }) { 
-  const { id } = res.params
-
+  const { id } = res.params || {id:0}
   try {
     const db = await openDB();
 

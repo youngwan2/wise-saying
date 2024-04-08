@@ -27,10 +27,10 @@ export default function QuotesCardControlButtons({ item, index }: PropsType) {
   // 북마크 추가
   const onClickBookmarkAdd = async () => {
     if (!item && !hasToken && !session) return
-    const { id } = item
+    const {quote_id } = item
     const isSuccess = await addBookmarkItem(
-      id,
-      `/quotes/authors/${item.author}/${id}`,
+      quote_id,
+      `/quotes/authors/${item.author}/${quote_id}`,
     )
     isSuccess && setIsUpdate(true)
   }
@@ -38,8 +38,8 @@ export default function QuotesCardControlButtons({ item, index }: PropsType) {
   // 카드 꾸미기 페이지로 이동
   const onClickStylerPageSwitch = () => {
     if (!item) return
-    const { id } = item
-    pageSwitch(router, id)
+    const { quote_id } = item
+    pageSwitch(router, quote_id)
     quotesSelector(item)
   }
 

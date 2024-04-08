@@ -8,6 +8,7 @@ SELECT quote_url AS url, quote, A.quote_id AS id, author
 FROM bookmarks A 
 JOIN quotes B ON A.quote_id = B.quote_id 
 JOIN users C ON A.user_id = C.user_id
+JOIN authors D ON B.author_id = D.author_id
 WHERE C.email = $1
 LIMIT $2 OFFSET $3
 `
@@ -43,6 +44,8 @@ export async function GET(req: NextRequest) {
       const countResults = await db.query(countSelectQuery, [socialEmail])
       const bookmarks = itemResults.rows
       const totalCount = countResults.rows[0].count || 0
+
+      console.log(bookmarks)
 
       return NextResponse.json({
         ...HTTP_CODE.OK,
@@ -83,8 +86,8 @@ export async function GET(req: NextRequest) {
 
 const selectQuery = `
 SELECT A.user_id AS user_id, A.quote_id AS quote_id, B.email AS email 
-FROM bookmarks A JOIN users B
-ON A.user_id = B.user_id
+FROM bookmarks A 
+JOIN users B ON A.user_id = B.user_id
 WHERE email = $1 AND quote_id = $2
 `
 

@@ -21,8 +21,10 @@ export async function GET(
     if (category !== 'category-all') {
       if (type === 'meta') {
         const countSelectQuery = `
-        SELECT COUNT(*) AS count FROM quotes
-        WHERE author = $1
+        SELECT COUNT(*) AS count 
+        FROM quotes A
+        INNER JOIN authors B ON A.author_id = B.author_id
+        WHERE B.author = $1
         `
         const result = await db.query(countSelectQuery, [category])
         const { count } = result.rows[0]
@@ -36,9 +38,11 @@ export async function GET(
       const page = req.nextUrl.searchParams.get('page') || 0
       const pageNum = Number(page)
       const query = `
-        SELECT quote_id AS id, author, quote, job FROM quotes
-        WHERE author = $1
-        ORDER BY id DESC
+        SELECT A.quote_id, B.author AS author, quote, job, birth, intro 
+        FROM quotes A
+        INNER JOIN authors B ON A.author_id = B.author_id
+        WHERE B.author = $1
+        ORDER BY A.quote_id DESC
         LIMIT $2 OFFSET $3
         `
 
@@ -64,7 +68,9 @@ export async function GET(
       // 타입이 meta 인 경우 카테고리 갯수 반환
       if (type === 'meta') {
         const query = `
-         SELECT COUNT(DISTINCT author) AS count FROM quotes
+         SELECT COUNT(DISTINCT B.author) AS count 
+         FROM quotes A
+         INNER JOIN authors B ON A.author_id = B.author_id
          WHERE job != '사용자' ;
       `
         const result = await db.query(query)
@@ -76,7 +82,9 @@ export async function GET(
       const page = req.nextUrl.searchParams.get('page') || 0
       const pageNum = Number(page)
       const query = `
-      SELECT DISTINCT author AS category, job FROM quotes
+      SELECT DISTINCT B.author AS category, job, intro, birth
+      FROM quotes A
+      INNER JOIN authors B ON A.author_id = B.author_id
       LIMIT $1 OFFSET $2
     `
       const results = await db.query(query, [limit, pageNum * limitNum])
@@ -87,7 +95,7 @@ export async function GET(
 
     // 그 외 에러 처리
   } catch (error) {
-    console.error('/api/quotes/authors/[subCategory]/route.ts', error)
+    console.error('/api/quotes/authors/[category]/route.ts', error)
     return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
 }

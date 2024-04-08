@@ -13,9 +13,12 @@ gsap.registerPlugin(TextPlugin)
 
 interface PropsType {
   quotes: {
-    id: number
+    quote_id: number
     author: string
     quote: string
+    job: string
+    birth:string
+    intro:string
   }[]
 }
 
@@ -69,8 +72,8 @@ export default function TodayQuotelist({ quotes }: PropsType) {
         {quotes.slice(0, 1).map((quote, i) => {
           return (
             <TodayQuoteCard
-              key={quote.id}
-              id={quote.id}
+              key={quote.quote_id}
+              id={quote.quote_id}
               quote={quote.quote}
               author={quote.author}
               onPrefetch={() => onMouseEnterPrefetch(quote.author)}

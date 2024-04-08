@@ -19,8 +19,9 @@ export default async function DetailPage({
     try {
       const db = await openDB()
       const query = `
-            SELECT quote_id AS id, quote, author, job, created_at AS create_date
-            FROM quotes
+            SELECT quote_id, quote, author, job, created_at
+            FROM quotes A
+            INNER JOIN authors B ON A.author_id = B.author_id
             WHERE quote_id = $1 AND author = $2
         `
       const result = await db.query(query, [id, decodeURIComponent(name)])

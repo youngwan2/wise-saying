@@ -16,7 +16,6 @@ export async function POST(req: NextRequest) {
   const { category, content: quote, author } = body
 
   const filterJson = await aiProfanityFilter([category, quote, author]) || '{"judgment": false, "reason": "" }'
-
   const { judgment, reason } = JSON.parse(filterJson)
 
   if (judgment) {

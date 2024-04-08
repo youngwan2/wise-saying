@@ -6,8 +6,6 @@ import { ItemsType } from '@/types/items.types'
 import QuotesCardControlButtons from './QuotesCardControlButtons'
 import { deleteUserQuote } from '@/services/data/delete'
 import { getUserEmail } from '@/utils/session-storage'
-import { useSession } from 'next-auth/react'
-import useHasToken from '@/custom/useHasToken'
 
 interface PropsType {
   item: ItemsType
@@ -24,7 +22,7 @@ export default function UserQuotesCardControlButtons({
 
   // 삭제버튼
   const onClickDelete = async () => {
-    const isSuccess = await deleteUserQuote(item.id)
+    const isSuccess = await deleteUserQuote(item.quote_id)
     if (isSuccess) {
       router.push('/user-quotes')
     }
@@ -32,7 +30,7 @@ export default function UserQuotesCardControlButtons({
 
   // 수정버튼
   const onClickUpdate = () => {
-    setPostId(Number(item.id))
+    setPostId(Number(item.quote_id))
     router.push('/update-wisesaying')
   }
 
