@@ -1,7 +1,7 @@
 import { openDB } from "@/utils/connect";
 import { NextRequest, NextResponse } from "next/server";
-import data from '../../../../data.js'
-import { updateData } from "../../../../data.js";
+// import data from '../../../../data.js'
+// import { updateData } from "../../../../data.js";
 
 export async function POST(req: NextRequest) {
 

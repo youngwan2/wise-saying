@@ -97,6 +97,7 @@ export const setAccessToken = (token: string) => {
  * @returns
  */
 export const getAccessToken = () => {
+  if (typeof window !== 'object') return
   try {
     const token = sessionStorage ? sessionStorage.getItem('token') : null
     return token

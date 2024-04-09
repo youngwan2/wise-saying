@@ -8,12 +8,12 @@ import SearchQuoteList from './SearchQuoteList'
 interface PropsType {
   items: {
     byAuthor: {
-      id: number
+      quote_id: number
       quote: string
       author: string
     }[]
     byKeyword: {
-      id: number
+      quote_id: number
       quote: string
       author: string
     }[]

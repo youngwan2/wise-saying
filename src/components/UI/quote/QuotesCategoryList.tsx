@@ -51,7 +51,7 @@ export default function QuotesCategoryList({ category }: PropsType) {
     <>
       <Title title={`${topick} 카테고리`} current={currentCount} total={totalCategoryCount} />
       <ul className={`${styles.grid_container}`}>
-        {items.map((item: { category: string; job: string }, i) => {
+        {items.map((item: { category: string; job: string, birth:string }, i) => {
           return (
             <QuotesCategoryCard category={category} key={i} item={item} i={i} />
           )

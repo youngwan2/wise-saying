@@ -118,7 +118,7 @@ export default function ZommInQuoteCard({ item }: PropsType) {
         aria-label="확대된 명언 카드"
         onClick={setCardPosition}
         ref={cardRef}
-        key={item.id}
+        key={item.quote_id}
         className={`
                 sm:p-[2.2em] p-[2em] sm:text-[1em] text-[0.95em]
                 invisible opacity-0 z-[1000] fixed left-[50%] top-[30%] translate-x-[-50%] translate-y-[-50%]
