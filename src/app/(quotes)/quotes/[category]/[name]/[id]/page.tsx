@@ -1,10 +1,29 @@
+
 import ReplaceMessageCard from '@/components/UI/common/ReplaceMessageCard'
 import DetailPageControlButtons from '@/components/UI/detail-quote/DetailPageControlButtons'
 import Comment from '@/components/UI/comment/Comment'
 import { openDB } from '@/utils/connect'
 import ShareButtons from '@/components/UI/detail-quote/ShareButtons'
-import Link from 'next/link'
+import { headers } from 'next/headers'
+import DetailQuote from '@/components/UI/quote/DetailQuote'
 import QuoteLikeBox from '@/components/UI/detail-quote/QuoteLikeBox'
+import { config } from '@/configs/config.url'
+import RecommandQuote from '@/components/UI/detail-quote/RecommandQuote'
+
+
+const userCardSelectQuery = `
+SELECT user_quote_id AS quote_id , quote, author, A.created_at AS created_at, category, email, nickname, profile_img_url
+FROM user_quotes A
+JOIN users B ON A.user_id = B.user_id
+WHERE user_quote_id = $1 AND author = $2`
+
+const adminCardSelectQuery = `
+SELECT quote_id, quote, author, job, created_at, category
+FROM quotes A
+INNER JOIN authors B ON A.author_id = B.author_id
+WHERE quote_id = $1 AND author = $2`
+
+
 
 export default async function DetailPage({
   params,
@@ -12,18 +31,15 @@ export default async function DetailPage({
   params: { category: string; name: string; id: string }
 }) {
   const { name, id } = params
-  const decodeName = decodeURIComponent(name)
+
+
+  const type = headers()?.get('x-path-type') || ''
+  const query = type !== 'no-user' ? userCardSelectQuery : adminCardSelectQuery
 
   async function getQuoteDetail(id: string) {
     'use server'
     try {
       const db = await openDB()
-      const query = `
-            SELECT quote_id, quote, author, job, created_at
-            FROM quotes A
-            INNER JOIN authors B ON A.author_id = B.author_id
-            WHERE quote_id = $1 AND author = $2
-        `
       const result = await db.query(query, [id, decodeURIComponent(name)])
       const item = result.rows[0]
 
@@ -37,40 +53,43 @@ export default async function DetailPage({
     }
   }
 
+  async function getRecommandQuote() {
+    const url = `${config.apiPrefix}${config.apiHost}/api/quotes/today?random-count=10`
+    const response = await fetch(url)
+    const { items, success } = await response.json()
+
+    if (success) return items
+    return false
+  }
+
+
   const item = await getQuoteDetail(id)
-  if (!item) return <ReplaceMessageCard childern="데이터를 조회중 입니다.." />
+  const recommandItems = await getRecommandQuote()
+
+
+  if (!item || !recommandItems) return <ReplaceMessageCard childern="데이터를 조회중 입니다.." />
 
 
   return (
-    <article className="sm:p-[4em] p-[1em]  min-h-[100vh] h-full  mx-auto my-[3em]  perspective-500 flex flex-col max-w-[1300px] bg-[#0000001b]">
-      <h2 className="sm:text-[1.5em] text-[1.2em]  flex justify-center items-center p-[10px]  text-center text-white">
-        <span className="mx-[3px] text-[gold] font-mono">
-          <Link href={`/quotes/authors/${decodeName}`}>{decodeName}</Link>
-        </span>
-        가라사대
-      </h2>
+    <article className="sm:p-[4em] p-[1em]  min-h-[100vh] h-full  mx-auto my-[3em]  perspective-500 flex flex-col max-w-[1300px] relative">
 
       {/* 명언 텍스트 영역 */}
-      <blockquote
-        className="
-         sm:text-[1.2em]
-         md:text-[1.4em] text-[1em] sm:px-[3em] p-[3.5em] min-h-[280px]  text-center  bg-[#ffffffdb] text-centermax-w-[900px] w-full mx-auto rounded-[10px] mt-[2em]
-         shadow-[inset_0_5px_5px_0_rgba(0,0,0,0.5)] 
-         flex items-center justify-center
-            "
-      >
-        <p className="">{item.quote}</p>
-        <QuoteLikeBox id={id} />
-      </blockquote>
-
+      <DetailQuote item={item} />
+      <QuoteLikeBox id={id} textColor={'text-black'} />
       <div className="flex">
         {/* 컨트롤 버튼 */}
         <DetailPageControlButtons item={item} />
         {/* 공유 버튼 */}
         <ShareButtons />
       </div>
+
       {/* 댓글 영역 */}
       <Comment id={id} />
+
+      {/* 추천 명언 */}
+      <RecommandQuote recommandItems={recommandItems}/>
+
     </article>
   )
 }
+

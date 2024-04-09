@@ -39,7 +39,7 @@ export default function SignInPasswordInput({
             passwordChecker(password)
           }}
           autoComplete="on"
-          className="pl-[8px] min-w-[230px]  w-[100%] bg-transparent shadow-[inset_0_0_0_2px_white] text-white focus:bg-white focus:outline-none focus:text-black focus:font-bold"
+          className="text-white pl-[8px]  min-w-[230px] w-[100%] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1)] bg-transparent focus:bg-white focus:outline-none focus:text-black focus:font-bold hover:bg-[rgba(255,255,255,0.05)]"
           type="password"
           id="user-password"
           name="user-password"

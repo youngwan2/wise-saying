@@ -37,10 +37,11 @@ export default function LoginGoogle() {
         간편 로그인
       </h2>
       <button
+        type='button'
         onClick={reqGoolgeRogin}
-        className=" text-[1em] font-semibold flex items-center mx-auto bg-white justify-center p-[12px] my-[8px] hover:bg-[#dadada] hover:font-bold rounded-[5px] max-w-[200px] w-full"
+        className=" text-[1em] font-semibold flex items-center mx-auto bg-white justify-center p-[12px] my-[8px] hover:bg-[#dadada] hover:font-bold rounded-[5px] max-w-[220px] w-full"
       >
-        <FcGoogle className={'text-[1.5em] mr-[1em]'} /> 구글 로그인
+        <FcGoogle className={'text-[1.5em] mr-[1em]'} /> 구글 로그인(공사중)
       </button>
     </article>
   )

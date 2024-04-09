@@ -4,10 +4,13 @@ import { oauth2UserInfoExtractor, tokenVerify } from '@/utils/auth'
 import { HTTP_CODE } from '@/app/http-code'
 import { aiProfanityFilter } from '@/ai'
 
+
 const insertQuery = `
-INSERT INTO quotes(quote, category, author,job, user_id)
-VALUES ($1,$2,$3,$4,$5)
+INSERT INTO user_quotes(quote, category,author, user_id)
+VALUES ($1,$2,$3,$4)
 `
+
+
 
 // POST | 유저가 작성한 포스트 등록(추가) 요청
 export async function POST(req: NextRequest) {
@@ -30,13 +33,14 @@ export async function POST(req: NextRequest) {
   try {
     // 소셜 로그인 ⭕
     if (socialUserId) {
+
       await db.query(insertQuery, [
         quote,
         category.trim(),
         author,
-        '사용자',
         socialUserId,
       ])
+
       await db.end()
       return NextResponse.json(HTTP_CODE.NO_CONTENT)
     }
@@ -51,8 +55,7 @@ export async function POST(req: NextRequest) {
       quote,
       category.trim(),
       author,
-      '사용자',
-      userId,
+      userId
     ])
 
     await db.end()

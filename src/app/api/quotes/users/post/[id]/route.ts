@@ -10,11 +10,11 @@ export async function GET(req: NextRequest, res: { params: { id: number } }) {
     const postId = res.params.id
     const db = await openDB()
     const query = `
-    SELECT quote_id, quote, category, author, B.email
-    FROM quotes A 
+    SELECT A.user_quote_id AS quote_id, quote, category, author, email
+    FROM user_quotes A 
     JOIN users B
     ON A.user_id = B.user_id 
-    WHERE quote_id = $1
+    WHERE A.user_quote_id = $1
     LIMIT 1
 `
     const result = await db.query(query, [postId])
@@ -32,9 +32,9 @@ export async function GET(req: NextRequest, res: { params: { id: number } }) {
 }
 
 const updateQuery = `
-UPDATE quotes
+UPDATE user_quotes
 SET quote = $1, category = $2, author = $3
-WHERE quote_id = $4
+WHERE user_quote_id = $4
 `
 
 // PATCH | 단일 포스트 수정
@@ -81,8 +81,8 @@ export async function PATCH(req: NextRequest, res: { params: { id: number } }) {
 }
 
 const deleteQuery = `
-DELETE FROM quotes
-WHERE quote_id = $1
+DELETE FROM user_quotes
+WHERE user_quote_id = $1
 `
 // DELETE | 단일 포스트 삭제
 export async function DELETE(

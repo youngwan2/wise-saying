@@ -13,7 +13,7 @@ export default function LoginPasswordInput() {
         autoComplete="on"
         aria-label="비밀번호 입력창"
         placeholder="비밀번호"
-        className="pl-[10px] min-w-[230px] w-[100%] bg-transparent shadow-[inset_0_0_0_2px_white] text-white focus:bg-white focus:outline-none focus:text-black focus:font-bold"
+        className="pl-[10px]  min-w-[230px] w-[100%] bg-transparent border border-[rgba(255,255,255,0.1)] text-white focus:bg-white focus:outline-none focus:text-black focus:font-bold hover:bg-[rgba(255,255,255,0.1)]"
         type="password"
         id="user-password"
         name="password"

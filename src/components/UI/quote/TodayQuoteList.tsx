@@ -11,7 +11,7 @@ import TodayQuoteCard from './TodayQuoteCard'
 
 gsap.registerPlugin(TextPlugin)
 
-interface PropsType {
+export interface PropsType {
   quotes: {
     quote_id: number
     author: string
@@ -73,9 +73,7 @@ export default function TodayQuotelist({ quotes }: PropsType) {
           return (
             <TodayQuoteCard
               key={quote.quote_id}
-              id={quote.quote_id}
-              quote={quote.quote}
-              author={quote.author}
+              quoteInfo={quote}
               onPrefetch={() => onMouseEnterPrefetch(quote.author)}
               onPush={() => onClickPush(quote.author)}
               onSetText={() => onClickSetText(quote.quote)}

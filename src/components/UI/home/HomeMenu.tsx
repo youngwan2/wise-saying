@@ -1,9 +1,11 @@
 'use client'
 
 import navList from '@/router'
+import styles from './HomeMenu.module.css'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import { HiMenuAlt3 } from 'react-icons/hi'
+import { hoverAnimation } from '@/utils/common-func'
 
 export default function HomeMenu() {
   const { push, prefetch } = useRouter()
@@ -19,7 +21,8 @@ export default function HomeMenu() {
           .map((navItem) => {
             return (
               <button
-                className="flex flex-col items-center h-[100px] text-white m-1 rounded-[10px] p-2 shadow-[inset_0_0_0_3px_white]  hover:bg-[#d5d5d533] mt-[0.5em] transition-all"
+               onMouseMove={hoverAnimation}
+                className={`${styles.card} flex flex-col items-center h-[100px] text-white m-1 rounded-[10px] p-2 hover:shadow-[inset_0_0_0_2px_rgba(255,255,255,0.2)] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.2)] mt-[0.5em] transition-all relative`}
                 onMouseEnter={() => {
                   prefetch(navItem.path)
                 }}

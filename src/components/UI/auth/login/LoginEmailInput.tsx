@@ -15,7 +15,7 @@ export default function LoginEmailInput() {
         aria-label="이메일 입력창"
         ref={emailInputRef}
         placeholder="이메일"
-        className="pl-[10px]  min-w-[230px] w-[100%] bg-transparent shadow-[inset_0_0_0_2px_white] text-white focus:bg-white focus:outline-none focus:text-black focus:font-bold"
+        className="pl-[10px]  min-w-[230px] w-[100%] bg-transparent border border-[rgba(255,255,255,0.1)] text-white focus:bg-white focus:outline-none focus:text-black focus:font-bold hover:bg-[rgba(255,255,255,0.1)]"
         type="email"
         id="user-email"
         name="email"

@@ -2,7 +2,28 @@ import { config } from '@/configs/config.url'
 import { requestNewAccessToken } from '../user/post'
 import { defaultFetch } from '@/utils/fetcher'
 import { Method, getDefaultConfig } from '@/configs/config.api'
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
+
+
+/**
+ * * GET | 명언 카드 세부 페이지 조회수 불러오기
+ * @param quoteId 명언 아이디
+ * @param path views: 관리자가 관리하는 명언 카드 조회, user-card-views: 사용자가 관리하는 명언카드 조회
+ * @returns views
+ */
+export async function getQuoteViewsFromDB(quoteId: number, path: 'user-card-views'|'views') {
+  const url = '/api/quotes/' + quoteId + path
+  try {
+    const response = await fetch(url)
+    const { views } = await response.json()
+    return views
+  } catch (error) {
+    console.error('조회수 조회 실패:', error)
+    return 0
+  }
+}
+
+
 
 /**
  * * GET | 명언  카테고리 목록 갯수 불러오기
@@ -106,12 +127,12 @@ export async function getQuoteCategoryFromDb(mainCategory: string) {
 
   try {
     const res = await fetch(url, {
-      cache:'no-store'
+      cache: 'no-store'
     })
     const categories = await res.json()
     return categories
   } catch (error) {
     console.error('사이트맵 전용 카테고리 목록 불러오기 실패:', error)
-    
+
   }
 }

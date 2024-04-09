@@ -27,8 +27,8 @@ export default function SignInSubmitButton({
             {!isDisabled ? '가입' : '전송중...'}
           </button>
         ) : (
-          <span className="p-[30px] text-center text-white">
-            - 조건 충족시 버튼이 활성화 됩니다.
+          <span className=" m-[30px] py-[10px] text-center text-white bg-[rgba(255,255,255,0.05)]">
+            ❕ 조건 충족시 버튼이 활성화 됩니다.
           </span>
         )}
     </>

@@ -1,5 +1,6 @@
 import { QuoteType } from "@/app/(quotes)/quotes/populars/page";
 import TtsButton from "../common/TtsButton";
+import styles from './Quotes.module.css'
 import QuoteViews from "./QuoteViews";
 import useTTS from "@/custom/useTTS";
 import { HiSpeakerphone } from "react-icons/hi";
@@ -12,6 +13,7 @@ import { useRouter } from "next/navigation";
 import gsap from "gsap/all";
 import useIntersectionObserver from "@/custom/useIntersectionObserver";
 import QuotesCardControlButtons from "./QuotesCardControlButtons";
+import { hoverAnimation } from "@/utils/common-func";
 
 interface PropsType {
   quoteInfo: QuoteType
@@ -35,7 +37,7 @@ export default function PopularQuoteCard({ quoteInfo, index }: PropsType) {
   // 상세 페이지 이동
   const onClickPushAnimation = (e: MouseEvent<HTMLButtonElement>) => {
     if (!quoteInfo) return
-    viewCounter(quoteInfo.id)
+    viewCounter(quoteInfo.quote_id)
 
     const tl = gsap.timeline()
     tl.to(e.currentTarget.parentElement, {
@@ -62,23 +64,26 @@ export default function PopularQuoteCard({ quoteInfo, index }: PropsType) {
     })
     tl.to(e.currentTarget.parentElement, {
       onComplete() {
-        push(`/quotes/authors/${quoteInfo.author}/${quoteInfo.id}`)
+        push(`/quotes/authors/${quoteInfo.author}/${quoteInfo.quote_id}`)
         tl.kill()
       },
     })
   }
 
   return (
-    <li ref={(element) => element instanceof HTMLLIElement && liRefs.current.push(element)} key={quoteInfo.id}
-      className={`visible hover:shadow-[inset_0_2px_1px_0_rgba(255,255,255,0.1)] rounded-[10px] w-[95%] my-[1em] max-w-[500px] px-[15px] py-[35px] mx-auto relative bg-[#d5d5d515]`}>
-      <div className="absolute top-3">{index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 && '🥉'}</div>
+    <li ref={(element) => element instanceof HTMLLIElement && liRefs.current.push(element)} key={quoteInfo.quote_id}
+     onMouseMove={hoverAnimation}
+      className={`
+      ${styles.card}
+      visible hover:shadow-[inset_0_2px_1px_0_rgba(255,255,255,0.1)] rounded-[5px] w-[95%] my-[1em] max-w-[500px] px-[15px] py-[35px] mx-auto relative shadow-[0_0_0_1px_rgba(255,255,255,0.1)]`}>
+      <div className="text-white absolute top-3">{index === 0 ? 'TOP 1' : index === 1 ? 'TOP 2' : index === 2 && 'TOP 3'}</div>
       {/* 카드 만들기 버튼 */}
       <TtsButton quote={quoteInfo.quote} onClickSetText={onClickSetText} className='absolute right-[3.4em] top-[0.429em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-white ' />
       <QuoteDetailMoveButton onClickDetailMove={onClickPushAnimation} />
       <QuoteProgress progress={progress} />
       <QuotesCardControlButtons item={quoteInfo} index={index}/>
       <blockquote className="text-white mt-[1.8em] ">
-        <p>{readText || quoteInfo.quote}</p>
+        <p className="text-[1.05em]" >{readText || quoteInfo.quote}</p>
         <span className="block font-bold mt-[1em] text-right">
           - {quoteInfo.author} -
         </span>
