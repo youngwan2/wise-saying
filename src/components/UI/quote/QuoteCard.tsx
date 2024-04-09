@@ -2,21 +2,21 @@ import styles from './Quotes.module.css'
 import gsap from 'gsap/all'
 import type { ItemsType } from '@/types/items.types'
 import { HiSpeakerphone } from 'react-icons/hi'
-import { toast } from 'react-toastify'
 import { viewCounter } from '@/services/data/patch'
 import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react'
 import { useCardTheme, useCardZoomInOutStore } from '@/store/store'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import useTTS from '@/custom/useTTS'
 import ReplaceMessageCard from '../common/ReplaceMessageCard'
 import QuotesCardControlButtons from './QuotesCardControlButtons'
 import TtsButton from '../common/TtsButton'
-import UserQuotesCardControlButtons from './UserQuotesCardControlButtons'
 import useIntersectionObserver from '@/custom/useIntersectionObserver'
 import QuoteViews from './QuoteViews'
 import QuoteProgress from './QuoteProgress'
 import QuoteDetailMoveButton from './QuoteDetailMoveButton'
 import QuoteContent from './QuoteContent'
+import { hoverAnimation, hoverAnimationMobile } from '@/utils/common-func'
+import { getQuoteViewsFromDB } from '@/services/data/get'
 
 interface PropsType {
   item: ItemsType
@@ -26,7 +26,6 @@ interface PropsType {
 
 export default function QuoteCard({ item, items, index }: PropsType) {
   const router = useRouter()
-  const pathName = usePathname()
 
   const [viewCount, setViewCount] = useState(0)
   const { setText, readText, progress, isPlaying } = useTTS()
@@ -40,21 +39,19 @@ export default function QuoteCard({ item, items, index }: PropsType) {
     element instanceof HTMLLIElement && (liRefs.current[index] = element)
   }
 
-  async function getQuoteViewsFromDB(quoteId: number) {
-    const url = '/api/quotes/' + quoteId + '/views'
-    try {
-      const response = await fetch(url)
-      const { views } = await response.json()
-      setViewCount(views)
-    } catch (error) {
-      console.error('조회수 조회 실패:', error)
-    }
-  }
+  const { quote_id: quoteId, author, quote } = item || { quote_id: 0, author: '일시적 조회 불가', quote: '' }
+
+  const setViews = useCallback(async () => {
+    const views = await getQuoteViewsFromDB(quoteId, "views")
+    setViewCount(views)
+  }, [quoteId])
+
+
 
 
   // 페이지 사전 로드
   function onPrefetch() {
-    router.prefetch(`/quotes/authors/${item.author}/${item.quote_id}`)
+    router.prefetch(`/quotes/authors/${author}/${quoteId}?type=no-user`)
   }
 
   const cardZoomInoutSwitch = useCallback(
@@ -84,41 +81,12 @@ export default function QuoteCard({ item, items, index }: PropsType) {
 
   // 상세 페이지 이동
   const onClickPushAnimation = (e: MouseEvent<HTMLButtonElement>) => {
-    viewCounter(item.quote_id)
-
-    const tl = gsap.timeline()
-    tl.to(e.currentTarget.parentElement, {
-      scale: 0.8,
-      duration: 1,
-      onStart() {
-        toast('✈ 잠시 후 페이지를 전환합니다.', {
-          className: 'font-sans'
-        })
-      },
-    })
-    tl.to(e.currentTarget.parentElement, {
-      scale: 0.5,
-      rotateY: 10,
-      filter: 'blur(1px)',
-      borderTopLeftRadius: '5%',
-      borderBottomLeftRadius: '5%',
-      boxShadow: '-100px 0 100px 0 tomato'
-
-    })
-    tl.to(e.currentTarget.parentElement, {
-      x: window.innerWidth,
-      opacity: 0,
-    })
-    tl.to(e.currentTarget.parentElement, {
-      onComplete() {
-        router.push(`/quotes/authors/${item.author}/${item.quote_id}`)
-        tl.kill()
-      },
-    })
+    viewCounter(quoteId, "views")
+    router.push(`/quotes/authors/${author}/${quoteId}?type=no-user`)
   }
 
   const onClickSetText = () => {
-    setText(item.quote)
+    setText(quote)
   }
 
 
@@ -133,40 +101,40 @@ export default function QuoteCard({ item, items, index }: PropsType) {
       cardZoomInoutSwitch(liEl)
     }
   }, [cardIndex, cardZoomInoutSwitch])
-
   useEffect(() => {
-    getQuoteViewsFromDB(item.quote_id)
-  }, [item])
+    setViews()
+
+  }, [setViews])
+
 
   if (!item)
     return <ReplaceMessageCard childern="게시글이 존재하지 않습니다." />
   return (
     <li
+      onTouchMove={hoverAnimationMobile}
+      onMouseMove={hoverAnimation}
       onMouseEnter={onPrefetch}
       ref={(element) => {
         if (typeof index === 'number' && element instanceof HTMLLIElement) {
           setLiRefs(index, element)
         }
       }}
-      key={item.quote_id}
-      className={`${isCardTheme
-        ? styles.card_theme_on
-        :'hover:shadow-[0_0_0_1px_rgba(255,255,255,0.1),inset_2px_2px_1px_0_rgba(255,255,255,0.1)] rounded-[5px]   bg-[#d5d5d511]'} 
-        px-[15px] py-[35px] w-[95%] my-[1em] max-w-[500px] mx-auto invisible relative   `}
+      key={quoteId}
+      className={`
+      ${styles.card}
+       ${isCardTheme
+          ? styles.card_theme_on
+          : 'rounded-[5px] '} 
+        border border-[rgba(255,255,255,0.1)] px-[15px] py-[35px] w-[95%] my-[1em] max-w-[500px] mx-auto invisible relative   `}
     >
 
       <QuoteProgress progress={progress} />
       <TtsButton onClickSetText={onClickSetText} className='absolute right-[3.3em] top-[0.429em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-[white]' quote={null} />
       <QuoteDetailMoveButton onClickDetailMove={onClickPushAnimation} />
-
-      {pathName.includes('/user-quotes') ? (
-        <UserQuotesCardControlButtons index={index} item={item} items={items} />
-      ) : (
-        <QuotesCardControlButtons index={index} item={item} />
-      )}
+      <QuotesCardControlButtons index={index} item={item} />
 
       {/* 명언 정보 */}
-      <QuoteContent readText={readText} author={item.author} quote={item.quote} />
+      <QuoteContent readText={readText} author={author} quote={quote} />
 
       {/* 프로그래스 숫자형 ex 1/100 */}
       <p>{isPlaying

@@ -3,7 +3,6 @@
 import { SlEarphones } from 'react-icons/sl'
 import useHasToken from '@/custom/useHasToken'
 import { pageSwitch, quotesSelector } from '@/utils/common-func'
-
 import { HiOutlineBookmark, HiScissors } from 'react-icons/hi2'
 import { useRouter } from 'next/navigation'
 import { addBookmarkItem } from '@/services/data/post'
@@ -14,10 +13,12 @@ import {toast} from 'react-toastify'
 
 interface PropsType {
   item: {
-    id: number
+    quote_id: number
     quote: string
     author: string
-    job: string
+    job?: string
+    profile_img_url?:string
+    created_at?:string
   }
 }
 
@@ -32,18 +33,18 @@ export default function DetailPageControlButtons({ item }: PropsType) {
   const onClickBookmarkAdd = async () => {
     if (!item && !hasToken && !session)
       return toast.error('로그인 후 이용 가능합니다.')
-    const { id } = item
+    const { quote_id:quoteId } = item
     const isSuccess = await addBookmarkItem(
-      id,
-      `/quotes/authors/${item.author}/${id}`,
+      quoteId,
+      `/quotes/authors/${item.author}/${quoteId}`,
     )
     isSuccess && setIsUpdate(true)
   }
 
   const onClickStylerPageSwitch = () => {
     if (!item) return
-    const { id } = item
-    pageSwitch(router, id)
+    const { quote_id:quoteId } = item
+    pageSwitch(router, quoteId)
     quotesSelector(item)
   }
 

@@ -49,7 +49,7 @@ export default function LoginForm() {
     <form
       ref={loginFormRef}
       action={loginAction}
-      className="shadow-[inset_0_0_0_2px_white]  rounded-[5px] flex flex-col fixed max-w-[480px] min-h-[350px] left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-[100%] bg-transparent p-[5px] backdrop-blur-[5px]"
+      className="shadow-[inset_0_0_0_2px_rgba(255,255,255,0.1)]  rounded-[5px] flex flex-col fixed max-w-[480px] min-h-[350px] left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-[100%] bg-transparent p-[5px] backdrop-blur-[5px]"
     >
       <FormTitle>로그인</FormTitle>
       <BackButton onClickBack={onClickBackMove} />

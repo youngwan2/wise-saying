@@ -1,5 +1,6 @@
 'use client'
 
+import styles from './eidtor.module.css'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { useUserPostIdStore } from '@/store/store'
@@ -11,6 +12,7 @@ import QuoteTopicInput from './QuoteTopicInput'
 import QuoteContentInput from './QuoteContentInput'
 import QuoteAuthorInput from './QuoteAuthorInput'
 import QuoteFormButtons from './QuoteFormButtons'
+import { hoverAnimation } from '@/utils/common-func'
 
 export type PostType = {
   id: number
@@ -72,11 +74,11 @@ export default function QuoteEditForm() {
   }
   return (
     <form
+      onMouseMove={hoverAnimation}
       action={updateFormAction}
       ref={updateFormRef}
-      className="text-white z-[1000] w-full  max-w-[560px]  rounded-[10px] shadow-[inset_0_0_0_2px_white] fixed left-[50%] top-[45%] translate-x-[-50%] translate-y-[-50%] backdrop-blur-[3px] "
-    >
-      <h2 className="text-[1.25em] mb-[1em] shadow-[inset_0_0_0_2px_white] p-[8px]  rounded-t-lg">
+      className={`${styles.card} text-white z-[1000] w-full  max-w-[560px]  rounded-[5px] hover:shadow-[inset_0_0_0_2px_rgba(255,255,255,0.1)]  shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1)] fixed left-[50%] top-[45%] translate-x-[-50%] translate-y-[-50%] backdrop-blur-[3px]`}    >
+      <h2 className="text-[1.25em] mb-[1em] p-[8px]  rounded-t-lg  hover:shadow-[inset_0_0_0_2px_rgba(255,255,255,0.1)]  shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1)]">
         명언 수정
       </h2>
       <QuoteTopicInput post={post} name="category" />

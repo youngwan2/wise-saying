@@ -2,10 +2,13 @@ export interface ItemsType {
   quote_id: number
   author: string
   quote: string
-  job: string
+  job?: string
   intro?: string
   birth?: string
   email?: string
+  created_at?:string
+  profile_img?:string
+  category?:string
 }
 
 export interface QuoteType {

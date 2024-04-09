@@ -21,9 +21,7 @@ export async function GET(
         const db = await openDB()
         const query = `
                 SELECT COUNT(DISTINCT category) AS count
-                FROM quotes A
-                JOIN users B
-                ON A.user_id = B.user_id
+                FROM user_quotes
                 `
 
         const result = await db.query(query)
@@ -37,9 +35,7 @@ export async function GET(
       const db = await openDB()
       const joinQuery = `
                 SELECT DISTINCT category
-                FROM quotes A
-                JOIN users B
-                ON A.user_id = B.user_id
+                FROM user_quotes
                 LIMIT $1 OFFSET $2
             `
       const results = await db.query(joinQuery, [LIMIT, pageNum * LIMIT])
@@ -58,8 +54,7 @@ export async function GET(
         const db = await openDB()
         const query = `
         SELECT COUNT(*) AS count
-        FROM users A JOIN quotes B 
-        ON A.user_id = B.user_id
+        FROM user_quotes
         WHERE category = $1
         `
 
@@ -74,14 +69,14 @@ export async function GET(
       // 유저가 작성한 명언 목록 조회
       const db = await openDB()
       const query = `
-            SELECT quote_id AS id, quote, category, author, email, nickname
-            FROM users A JOIN quotes B 
-            ON A.user_id = B.user_id
-            WHERE category = $1
+            SELECT user_quote_id AS quote_id, quote, category, author, email, nickname
+            FROM user_quotes A
+            JOIN users B ON A.user_id = B.user_id
+            WHERE category LIKE $1
             ORDER BY quote_id DESC
             LIMIT $2 OFFSET $3
         `
-      const results = await db.query(query, [category, LIMIT, pageNum * LIMIT])
+      const results = await db.query(query, [`%${category}%`, LIMIT, pageNum * LIMIT])
       const items = results.rows
       return NextResponse.json(items)
     }

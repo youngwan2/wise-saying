@@ -4,6 +4,35 @@ import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.share
 import { Dispatch, FormEvent, SetStateAction } from 'react'
 import { toast } from 'react-toastify'
 
+
+export function hoverAnimation(e: any) {
+  const { currentTarget: target } = e
+
+  const rect = target.getBoundingClientRect();
+  const { left, top } = rect;
+  const x = e.clientX - left;
+  const y = e.clientY - top;
+
+  target.style.setProperty("--mouse-x",`${x}px`)
+  target.style.setProperty("--mouse-y",`${y}px`)
+}
+
+
+export function hoverAnimationMobile(e:any) {
+  const { currentTarget: target } = e
+
+  const rect = target.getBoundingClientRect();
+  const { left, top } = rect;
+  const x = e.clientX - left;
+  const y = e.clientY - top;
+
+  target.style.setProperty("--mouse-x",`${x}px`)
+  target.style.setProperty("--mouse-y",`${y}px`)
+
+}
+
+
+
 interface MapType {
   [topick: string]: string
 }

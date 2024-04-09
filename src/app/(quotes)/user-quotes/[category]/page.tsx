@@ -1,9 +1,10 @@
 'use client'
 import LoadMoreButton from '@/components/UI/common/ListLoadMoreButton'
 import useInfiniteScroll from '@/custom/useInfiniteScroll'
-import QuoteList from '@/components/UI/quote/QuoteList'
 import ReplaceMessageCard from '@/components/UI/common/ReplaceMessageCard'
 import { useItemMetadataFetch } from '@/custom/useItemMetadataFetch'
+import UserQuoteList from '@/components/UI/quote/UserQuoteList'
+import Title from '@/components/UI/common/Title'
 
 interface PropsType {
   params: { category: string }
@@ -31,10 +32,8 @@ export default function UsersPage({ params }: PropsType) {
     return <ReplaceMessageCard childern="데이터를 불러오는 중 입니다..." />
   return (
     <>
-      <h2 className="flex justify-center items-center text-[1.5em] p-[10px]  text-center text-white max-w-[250px] mx-auto bg-gradient-to-b from-[transparent] to-[#00000033]  shadow-[0_9px_2px_0_rgba(0,0,0,0.5)] rounded-[5px] my-[2em] ">
-        {pathName} 명언({itemCount}/{totalCount})
-      </h2>
-      <QuoteList items={items} />
+      <Title current={itemCount} total={totalCount} title={pathName+' 명언'} />
+      <UserQuoteList items={items} />
       <LoadMoreButton
         size={size}
         onClick={() => setSize(size + 1)}

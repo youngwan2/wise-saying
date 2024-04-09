@@ -51,7 +51,7 @@ export default function Comment({ id }: PropsType) {
 
   return (
     <section className="py-[1em] ">
-      <h3 className="text-white sm:text-[1.5em] text-[1.25em] mt-[2em]">
+      <h3 className="text-white sm:text-[1.5em] text-[1.25em] mt-[2em]  bg-[rgba(255,255,255,0.05)]">
         댓글({!isLoading ? comments.length : 0})
       </h3>
       <CommentForm mutate={mutate} />

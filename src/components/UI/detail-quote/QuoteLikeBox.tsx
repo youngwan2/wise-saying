@@ -7,13 +7,13 @@ import { defaultFetch } from '@/utils/fetcher'
 import { useSession } from 'next-auth/react'
 import { useCallback, useEffect, useState } from 'react'
 import {toast} from 'react-toastify'
-import { HiHandThumbUp } from 'react-icons/hi2'
 
 interface PropsType {
   id: string
+  textColor:string
 }
 
-export default function QuoteLikeBox({ id }: PropsType) {
+export default function QuoteLikeBox({ id, textColor }: PropsType) {
   const [likeCount, setLikeCount] = useState(0)
   const [quoteId, setQuoteId] = useState(0)
 
@@ -52,11 +52,11 @@ export default function QuoteLikeBox({ id }: PropsType) {
     <button
       aria-label="해당 명언에 대한 좋아요 클릭"
       onClick={onClickHandleLikeClick}
-      className={`bg-[white] right-0 top-[6em]  transition-shadow  text-[1.25em] flex items-center px-[15px] shadow-[inset_0_0_2px_0_black] absolute `}
+      className={`${textColor} text-white  rounded-[2px] max-w-[120px] mt-[8px]  transition-shadow  text-[1.15em] flex justify-center p-[5px] text-center shadow-[inset_0_0_2px_0_white,inset_-1px_-1px_5px_0_rgba(255,255,255,0.06)] relative left-[50%] translate-x-[-50%] hover:bg-[#e5e4e411] `}
     >
-      <HiHandThumbUp color="rgba(255,0,0,0.7)" />
+      <p>명언</p>
       <span className="mx-[2px]">
-        {showLikeCountQuoteIdMatch ? likeCount : 0}
+        ({showLikeCountQuoteIdMatch ? likeCount : 0})
       </span>
     </button>
   )

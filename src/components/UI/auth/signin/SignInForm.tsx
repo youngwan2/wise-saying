@@ -75,7 +75,7 @@ export default function SignInForm() {
   return (
     <form
       ref={formRef}
-      className="sm:max-h-[100%] max-h-[650px] backdrop-blur-[5px] rounded-[10px] flex flex-col fixed max-w-[550px] px-[5px] min-h-[350px] left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-[100%] shadow-[inset_0_0_0_2px_white] overflow-y-auto  "
+      className="sm:max-h-[100%] max-h-[650px] backdrop-blur-[5px] rounded-[5px] flex flex-col fixed max-w-[550px] px-[5px] min-h-[350px] left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-[100%] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1)] overflow-y-auto  "
       onSubmit={onSubmit}
     >
       <FormTitle> 회원가입</FormTitle>
