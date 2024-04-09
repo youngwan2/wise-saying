@@ -37,7 +37,7 @@ export default function PopularQuoteCard({ quoteInfo, index }: PropsType) {
   // 상세 페이지 이동
   const onClickPushAnimation = (e: MouseEvent<HTMLButtonElement>) => {
     if (!quoteInfo) return
-    viewCounter(quoteInfo.quote_id)
+    viewCounter(quoteInfo.quote_id, 'views')
 
     const tl = gsap.timeline()
     tl.to(e.currentTarget.parentElement, {

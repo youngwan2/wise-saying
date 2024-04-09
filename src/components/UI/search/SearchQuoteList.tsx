@@ -19,8 +19,8 @@ export default function SearchQuoteList({
         splitQuotes?.map((item) => {
           return (
             <li
-              onClick={() => onClickPageSwitch(item.author, item.id)}
-              key={item.id}
+              onClick={() => onClickPageSwitch(item.author, item.quote_id)}
+              key={item.quote_id}
               className="sm:flex-row flex-col flex p-[5px] py-[10px] min-h-[50px] border-b-[1px] border-dashed text-white items-center hover:bg-[#ffffff3c] hover:cursor-pointer"
             >
               <p className="mr-[5px] w-[80%]">{item.quote}</p>
