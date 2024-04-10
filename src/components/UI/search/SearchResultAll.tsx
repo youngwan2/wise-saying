@@ -41,7 +41,7 @@ export default function SearchResultAll({ items }: PropsType) {
   const hasItemsByKeyword = !!ResultCountByKeyword
 
   function onClickPageSwitch(author: string, id: number) {
-    router.push(`/quotes/authors/${author}/${id}`)
+    router.push(`/quotes/authors/${author}/${id}?type=no-user`)
   }
 
   return (

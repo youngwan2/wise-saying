@@ -37,7 +37,7 @@ export default function SearchResults({ items }: PropsType) {
   const hasItem = currentQuoteCount < 1 ? false : true
 
   function onClickPageSwitch(author: string, id: number) {
-    router.push(`/quotes/authors/${author}/${id}`)
+    router.push(`/quotes/authors/${author}/${id}?type=no-user`)
   }
 
   if (!(items && quotes))
