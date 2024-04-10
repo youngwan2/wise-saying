@@ -13,8 +13,9 @@ export async function GET(req: NextRequest) {
       case 'all': {
         const authorCountQuery = `
         SELECT COUNT(*) as count
-        FROM quotes
-        WHERE author LIKE $1
+        FROM quotes A
+        JOIN authors B ON A.author_id = B.author_id
+        WHERE B.author LIKE $1
         `
         const keywordCountQuery = `
         SELECT COUNT(*) as count
@@ -22,15 +23,17 @@ export async function GET(req: NextRequest) {
         WHERE quote LIKE $1
         `
         const authorQuery = `
-        SELECT quote_id AS id, author, quote, job
-        FROM quotes
-        WHERE author LIKE $1
+        SELECT quote_id, author, quote, job
+        FROM quotes A
+        JOIN authors B ON A.author_id = B.author_id
+        WHERE B.author LIKE $1
         LIMIT 5
        `
 
         const keywordQuery = `
-        SELECT quote_id AS id, author, quote, job
-        FROM quotes
+        SELECT quote_id, author, quote, job
+        FROM quotes A
+        JOIN authors B ON A.author_id = B.author_id
         WHERE quote LIKE $1
         LIMIT 5
         `
@@ -66,8 +69,9 @@ export async function GET(req: NextRequest) {
       // 키워드 검색
       case 'keyword': {
         const query = `
-                SELECT quote_id AS id, author, quote, job
-                FROM quotes
+                SELECT quote_id, author, quote, job
+                FROM quotes A
+                JOIN authors B ON A.author_id = B.author_id
                 WHERE quote LIKE $1
             `
         const results = await db.query(query, [`%${searchText}%`])
@@ -85,9 +89,10 @@ export async function GET(req: NextRequest) {
       // 저자별 검색
       case 'author': {
         const query = `
-                SELECT quote_id AS id, author, quote, job
-                FROM quotes
-                WHERE author LIKE $1
+                SELECT quote_id, author, quote, job
+                FROM quotes A
+                JOIN authors B ON A.author_id = B.author_id
+                WHERE B.author LIKE $1
             `
 
         const result = await db.query(query, [`%${searchText}%`])
