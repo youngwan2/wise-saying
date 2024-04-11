@@ -9,6 +9,7 @@ import { useSwrFetchWithToken } from '@/utils/swr'
 import useHasToken from '@/custom/useHasToken'
 import MypageMyQuote from './MypageMyQuote'
 import { useSession } from 'next-auth/react'
+import { toast } from 'react-toastify'
 
 export default function MypageContainer() {
   const tapId = useMypageTapsStore((state) => state.tapId)
@@ -28,7 +29,7 @@ export default function MypageContainer() {
       ? '/api/users/mypage/posts?userId=' + userInfo.user_id + '&page=' + page
       : null
 
-  const { data: userQuotesAndCount } = useSwrFetchWithToken(url, false)
+  const { data: userQuotesAndCount, mutate } = useSwrFetchWithToken(url, false)
   const { quotes: userQuotes, count: quotesCount } = userQuotesAndCount || {}
 
   if (hasLogin)
@@ -39,6 +40,12 @@ export default function MypageContainer() {
         childern={'게시글을 불러오는 중입니다. 잠시만 기다려주세요.'}
       />
     )
+    
+  async function onClickQuotesUpdate(){
+    console.log(11)
+    const data = await mutate()
+    toast.info(`현재 총 ${data.count} 개의 목록이 갱신되었습니다.`)
+  }
 
   return (
     <>
@@ -50,6 +57,7 @@ export default function MypageContainer() {
           userQuotes={userQuotes}
           setPage={setPage}
           page={page}
+          onClickQuoteUpdate={onClickQuotesUpdate}
           count={quotesCount}
         />
       )}

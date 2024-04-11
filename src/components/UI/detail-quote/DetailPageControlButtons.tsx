@@ -20,9 +20,10 @@ interface PropsType {
     profile_img_url?:string
     created_at?:string
   }
+  isUserQuote:boolean
 }
 
-export default function DetailPageControlButtons({ item }: PropsType) {
+export default function DetailPageControlButtons({ item, isUserQuote }: PropsType) {
   const hasToken = useHasToken()
   const { data: session } = useSession()
   const router = useRouter()
@@ -33,10 +34,13 @@ export default function DetailPageControlButtons({ item }: PropsType) {
   const onClickBookmarkAdd = async () => {
     if (!item && !hasToken && !session)
       return toast.error('로그인 후 이용 가능합니다.')
+
     const { quote_id:quoteId } = item
+
+    const type = isUserQuote? '?type=user':'?type=no-user'
     const isSuccess = await addBookmarkItem(
       quoteId,
-      `/quotes/authors/${item.author}/${quoteId}`,
+      `/quotes/authors/${item.author}/${quoteId}`+type,
     )
     isSuccess && setIsUpdate(true)
   }

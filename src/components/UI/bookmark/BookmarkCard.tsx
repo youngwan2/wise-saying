@@ -14,7 +14,7 @@ interface BookmarkType {
 interface PropsType {
   bookmark: BookmarkType
   isDeleting: boolean
-  onClickDelete: (bookmarkId: number) => void
+  onClickDelete: () => void
 }
 
 export default function BookmarkCard({
@@ -25,7 +25,7 @@ export default function BookmarkCard({
   const { id, url } = bookmark
   return (
     <ul
-      className="shadow-[inset_-3px_-3px_5px_0_rgba(0,0,0,0.5)]  hover:shadow-[0_0_0_5px_tomato] flex flex-col bg-[white] max-w-[900px] w-full p-[1em] pt-[2em] m-[5px] rounded-[10px] subpixel-antialiased relative"
+      className="shadow-[inset_-3px_-3px_5px_0_rgba(0,0,0,0.5)]  hover:shadow-[0_0_0_2px_tomato] flex flex-col bg-[white] max-w-[900px] w-full p-[1em] pt-[2em] m-[5px] rounded-[10px] subpixel-antialiased relative"
       key={id}
     >
       <BookmarkContent bookmark={bookmark} />
@@ -44,7 +44,7 @@ function BookmarkContent({ bookmark }: ContentPropsType) {
 
   return (
     <li className="mx-[5px] font-bold p-[7px] border border-[#454444a0] ">
-      {id} / {author}/{quote.slice(0, 25)}...
+      {id} / {author||'사용자'}/{quote.slice(0, 25)}...
     </li>
   )
 }

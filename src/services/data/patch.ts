@@ -5,7 +5,7 @@
  */
 export async function viewCounter(quoteId: number | string, path:"user-card-views"|"views") {
     try {
-        const response = await fetch('/api/quotes/' + Number(quoteId) + path,{
+        const response = await fetch('/api/quotes/' + Number(quoteId) +'/'+ path,{
             method:'PATCH'
         })
         if (!response.ok) throw new Error(response.statusText)

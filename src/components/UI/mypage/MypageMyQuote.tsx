@@ -3,24 +3,22 @@ import MypageMyQuotesCategoryList from './MypageMyQuotesCategoryList'
 import MypageMyQuotesList from './MypageMyQuotesList'
 import Pagination from '../common/Pagination'
 import ReplaceMessageCard from '../common/ReplaceMessageCard'
+import { HiRefresh } from 'react-icons/hi'
 
 interface PropsType {
   page: number
   setPage: (p: number) => void
-  userQuotes: {
-    id: number
-    quote: string
-    author: string
-    category: string
-  }[]
+  userQuotes: UserQuotesType[]
   count: number
+  onClickQuoteUpdate:()=>void
 }
 
-interface UserQuotesType {
-  id: number
+export interface UserQuotesType {
+  quote_id: number
   quote: string
   author: string
   category: string
+  email:string
 }
 
 const MAX_SIZE = 5
@@ -30,6 +28,7 @@ export default function MypageMyQuote({
   setPage,
   page,
   count,
+  onClickQuoteUpdate
 }: PropsType) {
   const [categories, setCategories] = useState<string[]>([''])
   const [selectedMyQuotes, setSelectedMyQuotes] = useState<UserQuotesType[]>([])
@@ -111,6 +110,7 @@ export default function MypageMyQuote({
         categories={categories}
         onClickCategoryFilter={onClickQuotesFilter}
       />
+      <button aria-label="목록 갱신하기" className='absolute border p-[5px] text-white right-[5%]' onClick={onClickQuoteUpdate}><HiRefresh/></button>
       <MypageMyQuotesList
         userQuotes={userQuotes}
         selectedMyQuotes={selectedMyQuotes}

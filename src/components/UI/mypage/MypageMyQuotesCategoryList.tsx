@@ -16,7 +16,7 @@ export default function MypageMyQuotesCategoryList({
         onClick={() => {
           onClickCategoryFilter('all')
         }}
-        className="hover:cursor-pointer hover:bg-[white] hover:text-black inline-block border rounded-[2em] py-[3px] px-[10px] bg-[tomato] text-white m-[3px]"
+        className="hover:cursor-pointer hover:bg-[white] hover:text-black inline-block border rounded-[2em] py-[3px] px-[10px] text-white m-[3px]"
       >
         전체{' '}
       </li>

@@ -1,15 +1,11 @@
+import type { UserQuotesType } from './MypageMyQuote'
 import MypageUserQuoteCard from './MypageMyQuoteCard'
 
-interface QuoteType {
-  id: number
-  quote: string
-  author: string
-  category: string
-}
+
 
 interface PropsType {
-  userQuotes: QuoteType[]
-  selectedMyQuotes: QuoteType[]
+  userQuotes: UserQuotesType[]
+  selectedMyQuotes : UserQuotesType[]
 }
 
 export default function MypageMyQuotesList({
@@ -17,10 +13,10 @@ export default function MypageMyQuotesList({
   selectedMyQuotes,
 }: PropsType) {
   return (
-    <article className="mt-[3em] text-center min-h-[200px] px-[5px]">
+    <article className="mt-[6em] text-center min-h-[200px] px-[5px]">
       {(selectedMyQuotes.length > 0 ? selectedMyQuotes : userQuotes).map(
-        (item) => {
-          return <MypageUserQuoteCard key={item.id} item={item} />
+        (item,i) => {
+          return <MypageUserQuoteCard key={item.quote_id} item={item} index={i} />
         },
       )}
     </article>

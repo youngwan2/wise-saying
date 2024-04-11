@@ -16,7 +16,6 @@ export async function GET(req: NextRequest, res: { params: { id: string } }) {
     `
     const selectResult = await db.query(selectQuery, [id])
     const views = selectResult.rows[0]?.views || 0
-
     db.end()
 
     return NextResponse.json({...HTTP_CODE.OK, views})
@@ -41,11 +40,11 @@ export async function PATCH(req: NextRequest, res: { params: { id: string } }) {
     WHERE user_quote_id = $1 
     `
     const insertQuery = `
-    INSERT INTO views(user_quote_id)
+    INSERT INTO user_card_views(user_quote_id)
     VALUES ($1)
     `
     const updateQuery = `
-    UPDATE views
+    UPDATE user_card_views
     SET views = $1
     WHERE user_quote_id = $2 
     `

@@ -10,7 +10,7 @@ import BookmarkCloseButton from './BookmarkCloseButton'
 import BookmarkPagination from './BookmarkPagination'
 import BookmarkList from './BookmarkList'
 import { deleteBookmark } from '@/services/user/delete'
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
 import useHasToken from '@/custom/useHasToken'
 import { useSession } from 'next-auth/react'
 
@@ -59,10 +59,11 @@ export default function BookmarkModal() {
   const maxPage = Math.ceil(total / 5) || 1
 
   // DELETE | 북마크 삭제
-  const onClickDeleteBookmark = async (bookmarkId: number) => {
+  const onClickDeleteBookmark = async (bookmarkId: number, type: string) => {
+    const isUserQuote = type === undefined ? true : false
     if (!hasToken && !session) return toast.error('로그인 후 이용해주세요.')
     setIsDeleting(true)
-    const success = await deleteBookmark(bookmarkId)
+    const success = await deleteBookmark(bookmarkId, isUserQuote)
     if (success) {
       setIsDeleting(false)
       mutate()

@@ -78,7 +78,7 @@ export default async function DetailPage({
       <QuoteLikeBox id={id} textColor={'text-black'} />
       <div className="flex">
         {/* 컨트롤 버튼 */}
-        <DetailPageControlButtons item={item} />
+        <DetailPageControlButtons item={item} isUserQuote={type === 'user' ? true : false} />
         {/* 공유 버튼 */}
         <ShareButtons />
       </div>
@@ -87,7 +87,7 @@ export default async function DetailPage({
       <Comment id={id} />
 
       {/* 추천 명언 */}
-      <RecommandQuote recommandItems={recommandItems}/>
+      <RecommandQuote recommandItems={recommandItems} />
 
     </article>
   )

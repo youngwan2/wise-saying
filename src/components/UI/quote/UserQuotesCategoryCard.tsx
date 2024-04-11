@@ -30,6 +30,7 @@ export default function UserQuotesCategoryCard({ category }: PropsType) {
       min-w-[220px] 
       hover:translate-y-[-10px]
       hover:z-10
+      m-[5px]
       transition-all
       hover:cursor-pointer
       hover:border-[rgba(255,255,255,0.25)]

@@ -42,10 +42,12 @@ export async function deleteComment(commentId: number) {
 /**
  * DELETE | 북마크 아이템 삭제
  * @param bookmarkId
+ * @param type user | no-user
  * @returns
  */
-export async function deleteBookmark(bookmarkId: number) {
-  const url = `/api/bookmark/${bookmarkId}`
+export async function deleteBookmark(bookmarkId: number, isUserQuote:boolean) {
+  const type = isUserQuote? 'user':'no-user'
+  const url = `/api/bookmark/${bookmarkId}?type=`+type
   const config = defaultConfig(Method.DELETE)
   const { success, meg } = await defaultFetch(url, config)
   if (success) return toast.success(meg)

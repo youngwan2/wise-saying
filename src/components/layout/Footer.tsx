@@ -1,5 +1,6 @@
 "use client"
 import Link from "next/link";
+import styles from './layout.module.css'
 import { useRef, useState } from "react";
 
 
@@ -20,7 +21,7 @@ export default function Footer() {
     return (
         <>
             <button className={`${isHide ? 'text-[1.03em] text-white' : 'text-[1.03em] text-white '} border-t border-x rounded-t-[5px] hover:bg-[#ffffff19] min-w-[100px] p-[3px] ml-[2em] relative left-[50%] translate-x-[-50%] mt-[6em]`} onClick={onClickSetHide}>{isHide ? '푸터 보기' : '푸터 숨기기'}</button>
-            <footer ref={footerRef} className={`${isHide ? 'hidden' : 'block'}` + FooterStyle} >
+            <footer ref={footerRef} className={` ${styles.footer} ${isHide ? 'hidden' : 'block bg-center bg-cover'}` + FooterStyle} >
                 <div className="max-w-[1300px] flex justify-around mx-auto px-[4em]">
                     <div className="min-w-[130px]">
                         <h5 className="w-[20%] font-bold">Wise Sayings</h5>

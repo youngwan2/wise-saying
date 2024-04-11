@@ -14,8 +14,9 @@ import { useSession } from 'next-auth/react'
 interface PropsType {
   item: ItemsType
   index: number | 0
+  isUserQuote?: boolean
 }
-export default function QuotesCardControlButtons({ item, index }: PropsType) {
+export default function QuotesCardControlButtons({ item, index, isUserQuote }: PropsType) {
   const { data: session } = useSession()
   const { setIsZoomIn, setCardIndex } = useCardStore()
   const setIsUpdate = useBookmarkUpdate((state) => state.setIsUpdate)
@@ -27,10 +28,12 @@ export default function QuotesCardControlButtons({ item, index }: PropsType) {
   // 북마크 추가
   const onClickBookmarkAdd = async () => {
     if (!item && !hasToken && !session) return
-    const {quote_id } = item
+    const { quote_id } = item
+    const type = isUserQuote ? `?type=user` : `? type=no-user`
+    const url = `/quotes/authors/${item.author}/${quote_id}` + type
     const isSuccess = await addBookmarkItem(
       quote_id,
-      `/quotes/authors/${item.author}/${quote_id}`,
+      url
     )
     isSuccess && setIsUpdate(true)
   }
@@ -64,9 +67,8 @@ export default function QuotesCardControlButtons({ item, index }: PropsType) {
         onMouseLeave={() => {
           setIsDisplay(false)
         }}
-        className={` ${
-          isDisplay ? 'visible opacity-100 top-2 z-50' : 'invisible opacity-0'
-        } transition-all absolute top-0 right-[2.6em] bg-white shadow-[inset_0_0_5px_0_rgba(0,0,0,0.5)] rounded-[5px] `}
+        className={` ${isDisplay ? 'visible opacity-100 top-2 z-50' : 'invisible opacity-0'
+          } transition-all absolute top-0 right-[2.6em] bg-white shadow-[inset_0_0_5px_0_rgba(0,0,0,0.5)] rounded-[5px] `}
       >
         {/* 카드 만들기 버튼 */}
         <button

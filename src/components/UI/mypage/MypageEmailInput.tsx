@@ -3,7 +3,7 @@ interface PropsType {
 }
 export default function MypageEmailInput({ email }: PropsType) {
   return (
-    <div className="mx-auto my-[1em]">
+    <div className="mx-auto my-[1em] cursor-not-allowed">
       <label
         htmlFor="email"
         className=" mb-[8px] rounded-[5px] min-w-[70px] inline-block text-white"
@@ -16,7 +16,7 @@ export default function MypageEmailInput({ email }: PropsType) {
         readOnly
         value={email}
         id="email"
-        className="shadow-[0_0_0_2px_white] bg-[transparent]  rounded-[2px] border-gray min-w-[200px] max-w-[250px] w-full p-[6px] placeholder:text-[gray] bg-[#e2dfdf] focus:outline-none text-white hover:cursor-not-allowed "
+        className="cursor-not-allowed border-[1px] border-[rgba(255,255,255,0.1)] rounded-[2px] border-gray min-w-[220px] max-w-[400px] w-full p-[6px] placeholder:text-[gray] bg-[#e4e2e235] focus:outline-none text-white  "
       ></input>
     </div>
   )

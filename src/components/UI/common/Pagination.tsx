@@ -17,7 +17,7 @@ export default function Pagination({
         onClick={() => {
           setPage(Math.max(--page, 0))
         }}
-        className={`hover:text-[tomato] text-white mx-[5px] ${
+        className={`hover:text-[#e4e2e2] text-white mx-[5px] ${
           page <= 0 ? 'invisible opacity-0' : 'visible opacity-100'
         }`}
       >
@@ -29,8 +29,8 @@ export default function Pagination({
         return (
           <button
             key={i}
-            className={`bg-[tomato] hover:underline px-[10px] text-white mx-[5px] my-[1.5em] 
-            ${page === i ? 'font-bold border-[tomato] rounded-full ' : 'bg-transparent'}
+            className={`bg-[rgba(255,255,255,0.2)] hover:underline px-[10px] text-white mx-[5px] my-[1.5em] 
+            ${page === i ? 'font-bold border-[tomato] rounded-[10%] ' : 'bg-transparent'}
             ${limit >= pageNum ? 'inline-block' : 'hidden'}`}
             onClick={() => {
               setPage(pageNum - 1)
@@ -45,7 +45,7 @@ export default function Pagination({
         onClick={() => {
           setPage(Math.min(++page, limit))
         }}
-        className={`hover:text-[tomato] text-white mx-[5px] ${
+        className={`hover:text-[#e4e2e2] text-white mx-[5px] ${
           page === limit - 1 ? 'invisible opacity-0' : 'visible opacity-100'
         }`}
       >

@@ -39,14 +39,14 @@ export default function MypageUserInfoForm({ userInfo, session }: PropsType) {
   return (
     <form
       action={updateUserInfo}
-      className=" mx-auto m-2 mt-[3em] p-6  shadow-[inset_0_0_0_2.5px_white] rounded-[10px] max-w-[600px] text-white "
+      className=" mx-auto m-2 mt-[3em] p-6  border border-[rgba(255,255,255,0.1)] rounded-[5px] max-w-[600px] text-white "
     >
-      <h1 className="text-[1.25em] font-bold mb-[1.5em]">
+      <h1 className="text-[1.25em] mb-[1.5em]">
         비밀번호 변경/ 회원 탈퇴
       </h1>
       {/* 이메일(읽기 전용) */}
-      <div className="mb-4">
-        <label className="text-lg  mb-2" htmlFor={uId + 'email'}>
+      <div className="mb-5 cursor-not-allowed">
+        <label className="mb-2" htmlFor={uId + 'email'}>
           이메일(Email)
         </label>
         <input
@@ -54,14 +54,13 @@ export default function MypageUserInfoForm({ userInfo, session }: PropsType) {
           type="text"
           readOnly
           id={uId + 'email'}
-          className="mt-[0.25em]  w-full px-3 py-2 rounded-[5px] outline-none bg-[#c8c6c6] text-black font-bold focus:cursor-not-allowed "
-          value={userInfo.email}
+          className="mt-[0.25em]  w-full px-3 py-2 rounded-[3px] outline-none bg-[#dedbdb2d] text-white cursor-not-allowed "  value={userInfo.email}
         ></input>
       </div>
       <article className={session ? 'hidden' : ''}>
         {/* 비밀번호 */}
-        <div className="mb-4">
-          <label className="text-lg  mb-2" htmlFor={uId + 'password'}>
+        <div className="mb-5">
+          <label className="  mb-2" htmlFor={uId + 'password'}>
             비밀번호(Password)
           </label>
           <input
@@ -69,13 +68,13 @@ export default function MypageUserInfoForm({ userInfo, session }: PropsType) {
             type="password"
             name="password"
             autoComplete="off"
-            className="focus:bg-white focus:text-black outline-none  font-bold mt-[0.25em]  w-full px-3 py-2 s rounded-[5px] shadow-[inset_0_0_0_2px_white]  invalid:border-[red] bg-transparent "
+            className="focus:bg-[rgba(255,255,255,0.15)] focus:text-black outline-none  mt-[0.25em]  w-full px-3 py-2 s rounded-[3px]  border border-[rgba(255,255,255,0.1)] invalid:border-[#f39797] bg-transparent "
             placeholder="8자 이상 (a-z, 0-9 무조건 1개 이상 포함, 특수문자 1개 이상 포함)"
           />
         </div>
         {/* 비밀번호 재확인 */}
-        <div className="mb-4">
-          <label className="text-lg  mb-2" htmlFor={uId + 'confirm'}>
+        <div className="mb-5">
+          <label className="  mb-2" htmlFor={uId + 'confirm'}>
             비밀번호 재확인(Confirm)
           </label>
           <input
@@ -84,7 +83,7 @@ export default function MypageUserInfoForm({ userInfo, session }: PropsType) {
             type="password"
             name="confirm"
             autoComplete="off"
-            className="focus:bg-white focus:text-black  outline-none font-bold mt-[0.25em] w-full px-3 py-2  rounded-[5px] shadow-[inset_0_0_0_2px_white] invalid:border-[red] bg-transparent "
+            className="focus:bg-[rgba(255,255,255,0.15)] focus:text-black  outline-none  mt-[0.25em] w-full px-3 py-2  rounded-[3px]   border border-[rgba(255,255,255,0.1)] invalid:border-[#f39797] bg-transparent "
             placeholder="비밀번호 재확인"
           />
         </div>
@@ -93,7 +92,7 @@ export default function MypageUserInfoForm({ userInfo, session }: PropsType) {
       <article className="mt-[2em]">
         <button
           aria-label="수정하기 버튼으로, 클릭 시 입력된 정보로 패스워드(비밀번호)가 변경"
-          className={`${session ? 'hidden' : ''} bg-white text-black font-bold px-4 py-2 rounded-[5px] mr-2`}
+          className={`${session ? 'hidden' : ''} bg-white text-black font-bold px-3 py-[8px] hover:bg-[#e6e3e3] rounded-[3px] mr-2`}
         >
           수정하기
         </button>
@@ -105,7 +104,7 @@ export default function MypageUserInfoForm({ userInfo, session }: PropsType) {
               return toast.error('접근 권한이 없습니다.')
             deleteUserInfo(userInfo.user_id)
           }}
-          className="bg-[white] text-black font-bold px-4 py-2 rounded-[5px] hover:shadow-[inset_0_0_0_20px_rgba(255,0,0,0.7)] hover:font-sans hover:text-[0.97em] hover:text-white transition-all"
+          className="bg-[white] text-black font-bold px-3 py-[8px] rounded-[3px] hover:bg-[#e6e3e3] transition-all"
         >
           탈퇴하기
         </button>

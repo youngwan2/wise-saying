@@ -38,41 +38,12 @@ export default function PopularQuoteCard({ quoteInfo, index }: PropsType) {
   const onClickPushAnimation = (e: MouseEvent<HTMLButtonElement>) => {
     if (!quoteInfo) return
     viewCounter(quoteInfo.quote_id, 'views')
-
-    const tl = gsap.timeline()
-    tl.to(e.currentTarget.parentElement, {
-      scale: 0.8,
-      duration: 1,
-      onStart() {
-        toast('✈ 잠시 후, 페이지를 전환합니다.', {
-          className: 'font-sans'
-        })
-      },
-    })
-    tl.to(e.currentTarget.parentElement, {
-      scale: 0.5,
-      rotateY: 10,
-      filter: 'blur(1px)',
-      borderTopLeftRadius: '5%',
-      borderBottomLeftRadius: '5%',
-      boxShadow: '-100px 0 100px 0 tomato'
-
-    })
-    tl.to(e.currentTarget.parentElement, {
-      x: window.innerWidth,
-      opacity: 0,
-    })
-    tl.to(e.currentTarget.parentElement, {
-      onComplete() {
-        push(`/quotes/authors/${quoteInfo.author}/${quoteInfo.quote_id}`)
-        tl.kill()
-      },
-    })
+    push(`/quotes/authors/${quoteInfo.author}/${quoteInfo.quote_id}?type=no-user`)
   }
 
   return (
     <li ref={(element) => element instanceof HTMLLIElement && liRefs.current.push(element)} key={quoteInfo.quote_id}
-     onMouseMove={hoverAnimation}
+      onMouseMove={hoverAnimation}
       className={`
       ${styles.card}
       visible hover:shadow-[inset_0_2px_1px_0_rgba(255,255,255,0.1)] rounded-[5px] w-[95%] my-[1em] max-w-[500px] px-[15px] py-[35px] mx-auto relative shadow-[0_0_0_1px_rgba(255,255,255,0.1)]`}>
@@ -81,7 +52,7 @@ export default function PopularQuoteCard({ quoteInfo, index }: PropsType) {
       <TtsButton quote={quoteInfo.quote} onClickSetText={onClickSetText} className='absolute right-[3.4em] top-[0.429em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-white ' />
       <QuoteDetailMoveButton onClickDetailMove={onClickPushAnimation} />
       <QuoteProgress progress={progress} />
-      <QuotesCardControlButtons item={quoteInfo} index={index}/>
+      <QuotesCardControlButtons item={quoteInfo} index={index} />
       <blockquote className="text-white mt-[1.8em] ">
         <p className="text-[1.05em]" >{readText || quoteInfo.quote}</p>
         <span className="block font-bold mt-[1em] text-right">

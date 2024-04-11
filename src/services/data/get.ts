@@ -12,7 +12,7 @@ import { toast } from 'react-toastify'
  * @returns views
  */
 export async function getQuoteViewsFromDB(quoteId: number, path: 'user-card-views'|'views') {
-  const url = '/api/quotes/' + quoteId + path
+  const url = '/api/quotes/' + quoteId + '/' + path
   try {
     const response = await fetch(url)
     const { views } = await response.json()

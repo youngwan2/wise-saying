@@ -6,7 +6,7 @@ interface PropsType {
   page: number
   isLoading: boolean
   isDeleting: boolean
-  onClickDelete: (bookmarkId: number) => void
+  onClickDelete: (bookmarkId: number, type:string) => void
 }
 export default function BookmarkList({
   bookmarkList,
@@ -23,7 +23,7 @@ export default function BookmarkList({
               key={bookmark.id}
               bookmark={bookmark}
               isDeleting={isDeleting}
-              onClickDelete={onClickDelete}
+              onClickDelete={()=>onClickDelete(bookmark.id, bookmark.author)}
             />
           )
         })

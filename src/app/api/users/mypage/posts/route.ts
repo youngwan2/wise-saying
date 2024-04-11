@@ -20,17 +20,20 @@ export async function GET(req: NextRequest) {
     const db = await openDB()
 
     const query = `
-     SELECT quote_id AS id, author, quote, category, created_at
-     FROM quotes
-     WHERE user_id = $1
-     ORDER BY id DESC
+     SELECT user_quote_id AS quote_id, author, quote, category, email, A.created_at AS created_at
+     FROM user_quotes A
+     JOIN users B ON A.user_id = B.user_id
+     WHERE A.user_id = $1
+     ORDER BY user_quote_id DESC
      LIMIT $2 OFFSET $3 * 5
     `
     const countSelectQuery = `
-    SELECT COUNT(*) AS count
-    FROM quotes
-    WHERE user_id = $1
-    `
+    SELECT COUNT(*)
+    FROM user_quotes A
+    JOIN users B ON A.user_id = B.user_id
+    WHERE A.user_id = $1
+    
+   `
 
     const countResults = await db.query(countSelectQuery, [userId])
     const itemsResults = await db.query(query, [userId, limit, pageNum])

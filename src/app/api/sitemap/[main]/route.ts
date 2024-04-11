@@ -10,7 +10,9 @@ export async function GET(req: NextRequest, res: { params: { main: string } }) {
 
     if (main === 'authors') {
       const query = `
-            SELECT DISTINCT author, quote_id AS id FROM quotes 
+            SELECT DISTINCT B.author AS author, A.quote_id AS id 
+            FROM quotes A
+            JOIN authors B ON A.author_id = B.author_id
         `
       const results = await db.query(query)
       const items = results.rows
