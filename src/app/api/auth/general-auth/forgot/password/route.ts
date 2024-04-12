@@ -1,5 +1,5 @@
 import { HTTP_CODE } from '@/app/http-code'
-import { sendMail, setMailOptions } from '@/mail'
+import { sendMailWithAwsSes, } from '@/mail'
 import { openDB } from '@/utils/connect'
 import { emailMxValidator, generateTempAccessToken } from '@/utils/forgot'
 import { emailShema } from '@/validation/joi/schema'
@@ -45,8 +45,10 @@ export async function POST(req: NextRequest) {
     if (mailCount > 0 && hasDomain) {
       const tempToken = await generateTempAccessToken(validEmail)
 
-      setMailOptions(validEmail, tempToken)
-      sendMail()
+      await sendMailWithAwsSes(validEmail,"김씨",tempToken )
+
+      // setMailOptions(validEmail, tempToken)
+      // sendMail()
 
       return NextResponse.json({
         ...HTTP_CODE.CREATED,
