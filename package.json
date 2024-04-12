@@ -11,7 +11,9 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@aws-sdk/client-ses": "^3.554.0",
     "@gsap/react": "^2.1.0",
+    "aws-sdk": "^2.1598.0",
     "bcrypt": "^5.1.1",
     "embla-carousel-autoplay": "^8.0.0",
     "embla-carousel-react": "^8.0.0",
