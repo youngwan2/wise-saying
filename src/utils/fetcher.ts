@@ -57,7 +57,6 @@ export const deleteFetcher = async (url: string, ...data: any) => {
  * @returns
  */
 export const defaultFetch = async (url: string, config: any) => {
-  console.log(url)
   try {
     const response = await fetch(url, config)
     const { meg, success, status, ...results } = await response.json()

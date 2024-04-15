@@ -14,7 +14,7 @@ interface PropsType {
   setExistsEmail: (p: boolean) => void
 }
 
-const URL = '/api/users/check-email-duplication'
+const URL = '/api/auth/general-auth/check-email-duplication'
 
 export default function SignInEmailInput({
   isEmail,
@@ -25,6 +25,7 @@ export default function SignInEmailInput({
 }: PropsType) {
   const [isLoading, setIsLoading] = useState(false)
 
+
   // 이메일 유효성 체크
   function emailChecker(email: string) {
     const test = /[a-z0-9]@[a-z]+\.[a-z]{3,}/g.test(email)
@@ -32,7 +33,7 @@ export default function SignInEmailInput({
     return setIsEmail(false)
   }
 
-  // POST | 이메일 중복 체크
+  // POST | 이메일 중복 및 본인인증 체크
   async function userExists(email: string) {
     setIsLoading(true)
     const config = defaultConfig(Method.POST, email)

@@ -1,8 +1,14 @@
 import { headers } from 'next/headers'
 import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses'
 
-// 메일 본문 HTML
-function setHtml(path: string, userEmail: string) {
+/**
+ * 메일 본문 HTML
+ * @param path 비밀번호 찾기 경로 혹은 인증번호
+ * @param userEmail 유저 이메일
+ * @param type 회원가입 요청인지 비밀번호 찾기 요청인지 구분
+ * @returns 메일 본문에 표시할 HTML 반환
+ */
+function setHtml(path: string, userEmail: string, type: "signin"|"forgot") {
   const html = `
     <html>
     <head>
@@ -25,19 +31,19 @@ function setHtml(path: string, userEmail: string) {
             h1 {
                 color: #333;
             }
-            p {
-                color: black;
-                padding:10px;
-                border-radius:10px;
-                font-size:15px;
-            }
         </style>
     </head>
     <body>
         <div class="container">
-            <h1>반갑습니다. ${userEmail} 님! </h1>
-            <p>해당 링크는 ${new Date().toLocaleTimeString()} 부터 7분 동안 유효합니다.</p>
-            <p>비밀번호 재설정 링크: <a href="${path}"><span>바로가기</span></a></p>
+            <h2>반갑습니다. ${userEmail} 님! Wise Sayings 에서 보냈습니다.</h2>
+            <br/>
+            <h3> 보안!) 본인이 인증 요청을 하지 않았음에도 해당 이메일 주소로 해당 메일이나 개인정보를 요구하는 메일이 전송되었다면, 응답하지 마시고 qodna25@gmail.com 으로 신고해주세요.</h3>
+            <br/>
+            <h3>해당 인증은 ${new Date().toLocaleTimeString()} 부터 7분 동안 유효합니다.</h3>
+            <br/>
+            ${type === 'signin' ? `<h2>${path}</h2>` : `<h2>[비밀번호 재설정 페이지] <a href="${path}"><span>비밀번호 재설정 페이지로 이동하기</span></a></h2>`}
+            
+           
         </div>
     </body>
     </html>
@@ -57,19 +63,25 @@ const SES_CONFIG = {
 
 const client = new SESClient(SES_CONFIG)
 
-export async function sendMailWithAwsSes(recipientEmail: string, recipientName: string, token: string) {
-
+/**
+ * AWS SES 클라이언트 연결 및 메일 전송
+ * @param recipientEmail 수신자 이메일
+ * @param recipientName 수신자 이름(닉네임)
+ * @param token 임시토큰 및 인증번호
+ * @param type 회원가입 요청 | 비밀번호 찾기
+ */
+export async function sendMailWithAwsSes(recipientEmail: string, recipientName: string, token: string, type: "signin"|"forgot") {
   const params = {
     Source: process.env.AWS_SES_SENDER, // (보내는사람 === 본인) 발신자 이메일 주소
-    Destination: { // 메일의 목적지는 어디?
+    Destination: { // 메일을 어디로 보낼건데?
       ToAddresses: [
-        recipientEmail // ㄴ 당연히 수신자 메일로 보내지
+        recipientEmail // ㄴ 수신자 메일로 보낼거임
       ]
     },
-    ReplyToAddresses: [], // 수신자가 답하면 어디로?
+    ReplyToAddresses: [process.env.AWS_SES_SENDER||''], // 수신자가 답하면 어디로 응답 받을거? 발신자가 재응답 받도록 할거임
     Message: { // 어떤 내용을 담아서 보낼 것인지?
-      Body: { // ---> 본문 내용
-        // HTML 말고도 Text : {Charset, Data} 도 가능-> 텍스트로 전송
+      Body: { // ---> 본문에는 어떤 내용을 보여줄건데?
+        // 참고로 HTML 말고도 Text : {Charset, Data} 도 가능-> 텍스트로 전송
         Html: {
           Charset: 'UTF-8',
           Data: ` <html>
@@ -88,12 +100,16 @@ export async function sendMailWithAwsSes(recipientEmail: string, recipientName: 
       },
       Subject: { // --> 메일 제목
         Charset: 'UTF-8',
-        Data: `안녕하세요, ${recipientName}!`
+        Data: `안녕하세요, ${recipientName}! AWS Simple Email Send 서비스를 이용하여 발송된 인증 메시지 입니다.`
       }
     }
   }
 
-  params.Message.Body.Html.Data = setMailOptAwsSes(token, recipientEmail)
+  if (type === "signin") {
+    params.Message.Body.Html.Data = setMailOptAwsSes(token, recipientEmail, type)
+  } else {
+    params.Message.Body.Html.Data = setMailOptAwsSes(token, recipientEmail, type)
+  }
 
   try {
     const sendEmailCommend = new SendEmailCommand(params)
@@ -106,14 +122,38 @@ export async function sendMailWithAwsSes(recipientEmail: string, recipientName: 
 }
 
 // 메일 본문 설정
-export function setMailOptAwsSes(tempToken: string, userEmail: string) {
-  const referer = headers().get('referer')
-  const redirectPath = referer?.replace('/forgot', '/reset-pass') || ''
+/**
+ * AWS SES 옵션 지정 함수
+ * @param tempToken 임시토큰 및 인증번호
+ * @param userEmail 유저 이메일
+ * @param type 회원가입, 비밀번호 찾기 요청 구분
+ * @returns 메일 본문에 표시할 HTML 
+ */
+export function setMailOptAwsSes(tempToken: string, userEmail: string, type: "signin"|"forgot") {
+  if (type === 'signin') {
+    const html = setHtml(tempToken, userEmail, type)
+    return html
 
-  const html = setHtml(redirectPath + '?temp-token=' + tempToken, userEmail)
-  return html
+  } else {
+    const referer = headers().get('referer')
+    const redirectPath = referer?.replace('/forgot', '/reset-pass') || ''
 
+    const html = setHtml(redirectPath + '?temp-token=' + tempToken, userEmail, type)
+    return html
+
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
