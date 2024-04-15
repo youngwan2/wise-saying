@@ -2,25 +2,24 @@ import { MouseEventHandler } from 'react'
 
 interface PropsType {
   isDisabled: boolean
-  isVaildForm: boolean
-  existsEmail: boolean
+  isPass:boolean
   onClick: MouseEventHandler<HTMLButtonElement>
 }
 export default function SignInSubmitButton({
   isDisabled,
-  isVaildForm,
-  existsEmail,
+  isPass,
   onClick,
 }: PropsType) {
 
+
   return (
     <>
-      {isVaildForm && existsEmail
+      {isPass
         ? (
           <button
             disabled={isDisabled}
             onClick={onClick}
-            className={`rounded-[5px] my-[2.5em] text-[black] bg-[#FFFFFF] max-w-[150px] py-[0.5em] min-w-[150px] mx-auto hover: cursor-pointer hover:bg-[#ffd9d9] font-bold ${isVaildForm && existsEmail ? 'visible' : 'invisible'
+            className={`rounded-[5px] my-[2.5em] text-[black] bg-[#FFFFFF] max-w-[150px] py-[0.5em] min-w-[150px] mx-auto hover: cursor-pointer hover:bg-[#ffd9d9] font-bold ${isPass ? 'visible' : 'invisible'
               }`}
             type="submit"
           >

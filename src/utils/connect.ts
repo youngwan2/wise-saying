@@ -1,5 +1,6 @@
 import { Pool } from 'pg'
 
+// 포스트그리스
 export async function openDB() {
   let db: Pool | null = null
   if (!db) {
@@ -13,3 +14,4 @@ export async function openDB() {
   }
   return db
 }
+

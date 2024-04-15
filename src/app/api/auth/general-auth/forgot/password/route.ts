@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
     if (mailCount > 0 && hasDomain) {
       const tempToken = await generateTempAccessToken(validEmail)
 
-      await sendMailWithAwsSes(validEmail,"김씨",tempToken )
+      await sendMailWithAwsSes(validEmail,"김씨",tempToken,'forgot' )
 
       // setMailOptions(validEmail, tempToken)
       // sendMail()

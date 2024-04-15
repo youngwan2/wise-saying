@@ -14,6 +14,7 @@ import FormTitle from '../common/FormTitle'
 import Consent from './Consent'
 import toast from 'react-hot-toast'
 import { ConsentsType } from '@/types/items.types'
+import EmailAuthInput from './EmailAuthInput'
 
 export default function SignInForm() {
   const [isEmail, setIsEmail] = useState(false)
@@ -30,7 +31,7 @@ export default function SignInForm() {
 
   })
   const [existsEmail, setExistsEmail] = useState(false)
-
+  const [isAuthEmail, setIsAuthEmail] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [reConfirmPw, setReConfirmPw] = useState('')
@@ -47,10 +48,32 @@ export default function SignInForm() {
     if (isSuccess) return router.push('/login')
   }, [isSuccess, router])
 
+  // 회원가입 요청 가능 유무 체크
+  function checkTransmissionAvailability(isVaildForm:boolean, existsEmail:boolean, isAuthEmail:boolean){
+    const isPass= isVaildForm && existsEmail && isAuthEmail
+    return isPass
+  }
+
+
+  // action | 이메일 본인인증(인증번호 확인 처리)
+  async function reqEmailAuth(value:string|number) {
+    if(value.toString().length!==4) return toast.error('정확히 4자리를 입력해주세요.')
+    const url = '/api/auth/general-auth/auth-email'
+    const response = await fetch(url, {
+      method:'POST',
+      body: JSON.stringify({email, value})
+    })
+
+    const { success, meg } = await response.json()
+    if (!success) return toast.error('인증번호가 일치하지 않습니다.')
+    if (success) { toast.success('인증 되었습니다.'); return setIsAuthEmail(true)}
+
+  }
+
   // onClick | 회원가입 요청
   async function onClickReqSingin() {
     const isAgreementConcent = consentCheck(consents)
-    if(!isAgreementConcent) return toast('작업을 완료하려면 모든 필수 동의사항에 동의해야 합니다.')
+    if (!isAgreementConcent) return toast('작업을 완료하려면 모든 필수 동의사항에 동의해야 합니다.')
 
     const isSuccess = await reqSingIn({ email, password, reConfirmPw }, consents)
 
@@ -59,6 +82,14 @@ export default function SignInForm() {
       setisSuccess(true)
       router.push('/')
       toast.success('승인되었습니다.')
+    }
+  }
+
+  function onClickCloseInput(){
+    const isClose = confirm('닫으시면 인증절차를 다시 시도해야 합니다. 취소하시겠습니까?')
+    if(isClose) { 
+      toast('인증이 취소되었습니다.')
+      setExistsEmail(false)
     }
   }
 
@@ -94,6 +125,7 @@ export default function SignInForm() {
         setIsEmail={setIsEmail}
         setExistsEmail={setExistsEmail}
       />
+      <EmailAuthInput isShowEmailAuthForm={existsEmail} reqEmailAuth={reqEmailAuth} onClickCloseInput={onClickCloseInput} isComplete={isAuthEmail} />
 
       {/* 패스워드 */}
       <SignInPasswordInput
@@ -116,8 +148,8 @@ export default function SignInForm() {
       {/* 전송버튼 */}
       <SignInSubmitButton
         isDisabled={isSuccess}
-        isVaildForm={isVaildForm}
-        existsEmail={existsEmail}
+        isPass={checkTransmissionAvailability(isVaildForm, existsEmail, isAuthEmail)}
+
         onClick={onClickReqSingin}
       />
     </form>
