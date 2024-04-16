@@ -27,7 +27,7 @@ export default function Header() {
       <SearchForm />
       <HeaderNavModal />
       <BookmarkModal />
-      <Overlay/>
+      <Overlay isDisplay={false}/>
     </>
   )
 }

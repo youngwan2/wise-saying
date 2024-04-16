@@ -8,15 +8,12 @@ export default function DownloadButton({ onClick }: PropsType) {
   return (
     <button
       onClick={onClick}
-      className="
-         relative left-[50%] translate-x-[-50%] hover:bg-[#f47058]
-         text-white shadow-[inset_-2px_-2px_5px_0_rgba(0,0,0,0.5)] flex p-[0.25em] pr-[0.5em] mt-[1.25em] text-[16px] rounded-[10px] items-center bg-[tomato] "
+      className="hover: h-[40px] rounded-[5px] border border-[rgba(255,255,255,0.2)] px-[5px] flex items-center text-white hover:bg-[#dbdada23] mr-[6px]"
     >
       <HiDocumentDownload
         color="white"
-        className="mr-[2px] bg-[tomato] p-[1px] rounded-[10px]"
+        className="mr-[2px] text-[1.5em]  p-[1px] rounded-[10px]"
       />
-      다운로드
     </button>
   )
 }

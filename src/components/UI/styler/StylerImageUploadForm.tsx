@@ -11,7 +11,6 @@ export default function StylerImageUploadForm({
   selectTapNum,
   onChangeImageUploader
 }: PropsType) {
-  console.log(selectTapNum)
 
   if(selectTapNum !== 2) return
   return (

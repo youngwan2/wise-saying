@@ -210,7 +210,7 @@
     padding:0 0 0 5px;
     border-radius: 5px;
     left: -0.5em;
-    top: -2.2em;
+    top: -2.3em;
     background-color:black;
 }
 
@@ -225,3 +225,40 @@
     border-bottom: 10px solid transparent;
 }
 
+
+/* 캔버스 다운로드, 전시관 업로드 버튼 */
+
+.canvas_buttons::before {
+    content: '';
+    position: absolute;
+}
+
+.canvas_buttons::after {
+    content: '';
+    position: absolute;
+}
+
+.canvas_buttons:hover::after {
+    content: '다운로드 / 명언전시관 출품';
+    height: 25px;
+    color:white;
+    font-weight: 500;
+    font-size: 15px;
+    width: 180px;
+    padding:0 0 0 5px;
+    border-radius: 5px;
+    right: -0.5em;
+    top: -2em;
+    background-color:black;
+}
+
+
+.canvas_buttons:hover::before {
+    content: ' ';
+    top: -0.4em;
+    left: 2.8em;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 10px solid black;
+    border-bottom: 10px solid transparent;
+}

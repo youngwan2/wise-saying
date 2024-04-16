@@ -26,7 +26,7 @@ export default function Logout() {
   if (hasToken) {
     return (
       <>
-        <Overlay />
+        <Overlay isDisplay={false} />
         <section className="hover:bg-[#ffffff1f] bg-transparent border w-[280px] fixed top-[40%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-center rounded-[5px]">
           <p className=" text-white p-[20px] rounded-[5px]">
             <strong>{nickname}</strong> 님! <br />
