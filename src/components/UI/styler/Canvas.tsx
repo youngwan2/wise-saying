@@ -1,5 +1,6 @@
 'use client'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import styles from './styler.module.css'
+import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react'
 import {
   useBackgroundColorStore,
   useImageElementStore,
@@ -13,6 +14,7 @@ import {
 import toast from 'react-hot-toast'
 import wrap from 'word-wrap'
 import DownloadButton from './DownloadButton'
+import QuoteImgUploadButton from './QuoteImgUploadButton'
 
 interface QuoteType {
   quote: string
@@ -33,6 +35,26 @@ export default function Canvas() {
   // 배경이미지
   const bgImageSrc = useImageElementStore((state) => state.imageSrc)
 
+  async function onSaveUserGeneratedCardToDd(e: MouseEvent<HTMLButtonElement>) {
+    return alert('현재 개발중인 기능입니다.')
+
+    const base64ImgUrl = canvasRef.current?.toDataURL() ||''
+    const url = '/api/aws/s3'
+    toast.loading("등록중",{id:'add'})
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(base64ImgUrl)
+      })
+      const { success, meg } = await response.json()
+      if (success) toast.success(meg)
+      else { toast.error(meg) }
+      toast.remove('add')
+    } catch (error) {
+      console.error('작품 등록 실패')
+    }
+    
+  }
 
 
   function onClickDownload() {
@@ -164,7 +186,7 @@ export default function Canvas() {
 
   return (
     <>
-      <article className="mt-[1.2em] min-h-[500px] w-[100%] shadow-[0_0_0_1px_white] p-[5px] relative rounded-[5px] hover:bg-[#ffffff0e]">
+      <article className={`mt-[2em] min-h-[500px] w-[100%] shadow-[0_0_0_1px_white] p-[5px] rounded-[5px]  bg-[#1E306A] z-[1] hover:bg-[rgba(255,255,255,0.1)]`} >
         <span className="text-white inline-block mb-[1em]">
           {width} X {height}
         </span>
@@ -174,10 +196,15 @@ export default function Canvas() {
           height={height}
           className="border mx-auto"
         ></canvas>
+
+
+      </article>
+      <div className={`${styles.canvas_buttons} absolute top-[2.6em] right-[3.5em] flex z-[0]`}>
         <DownloadButton
           onClick={onClickDownload}
         />
-      </article>
+        <QuoteImgUploadButton onClick={onSaveUserGeneratedCardToDd} />
+      </div>
     </>
   )
 }

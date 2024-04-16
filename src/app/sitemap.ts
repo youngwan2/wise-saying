@@ -25,7 +25,7 @@ export default async function sitemap():Promise<MetadataRoute.Sitemap> {
 
   const detailEntries = authors.map(
     (categoryInfo: { author: string; id: number }) => ({
-      url: `${BASE_URL}/quotes/authors/${inCode(categoryInfo.author)}/${categoryInfo.id}`,
+      url: `${BASE_URL}/quotes/authors/${inCode(categoryInfo.author)}/${categoryInfo.id}?type=no-user`,
     }),
   )
   return [
