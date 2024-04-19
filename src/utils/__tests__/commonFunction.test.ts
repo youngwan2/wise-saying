@@ -25,6 +25,7 @@ vi.mock('next/navigation', async () => {
   return { ...origin, useRouter }
 })
 
+// 페이지 이동
 describe('pageSwisth function', () => {
   it(' "/" 경로로 이동하고, result 는 true 를 반환해야 한다. ', () => {
     const router = useRouter().mockRouter
@@ -35,6 +36,7 @@ describe('pageSwisth function', () => {
   })
 })
 
+// 디바운스 함수 
 describe('debunce function', () => {
   beforeEach(() => {
     vi.useFakeTimers() // 각 테스트 실행 전에 타이머를 모킹한다(vitest 에게 타이머 모킹을 적용할 것임을 알림 ).

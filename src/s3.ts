@@ -6,12 +6,10 @@ const config:S3ClientConfigType = {
     credentials : {
         accessKeyId: process.env.AWS_S3_ACCESS_KEY||'',
         secretAccessKey: process.env.AWS_S3_ACCESS_SECRET||'',
-
     }
 
 }
 const client = new S3Client(config);
-
 
 export const main = async (key:string, imgData:Buffer)=>{
 

@@ -22,9 +22,6 @@ export const getUserEmail = () => {
   }
 }
 
-
-
-
 export interface UserInfoType {
   dbEmail: string
   profile: {

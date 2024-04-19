@@ -18,9 +18,8 @@ const createUncurried = <T>(stateCreator: zustand.StateCreator<T>) => {
   return store
 }
 
-// 스토어 생성 초기 상태를 얻고, 재설정 기능을 생성하여 set 에 추가한다.
+// 스토어 생성 시 초기상태를 가져온 후 리셋(초기화) 함수를 생성하고, set에 추가한다.
 export const create = (<T>(stateCreator: zustand.StateCreator<T>) => {
-  console.log('zustand create mock')
 
   // 카레 버전(시험 버전)의 create 함수 지원
   return typeof stateCreator === 'function'
