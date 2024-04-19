@@ -5,8 +5,8 @@ import toast from 'react-hot-toast'
  * @param size 파일 용량(Byte 단위)
  * @returns
  */
-function imageFileSizeChecker(size: number) {
-  const isValidSize = size <= 500000
+export function imageFileSizeChecker(size: number) {
+  const isValidSize = size <= 512000
 
   if (!isValidSize) return false
   return true
@@ -16,12 +16,14 @@ function imageFileSizeChecker(size: number) {
  * @param src 이미지 주소
  * @returns 이미지 크기가 230x230 을 벗어나는가? true/false
  */
-function imageSizeChecker(src: string) {
+export function imageSizeChecker(src: string) {
+  if(typeof window !== 'object') return
   return new Promise((resolve) => {
     const tempImg = new Image()
     tempImg.src = src
 
     tempImg.addEventListener('load', () => {
+      console.log(tempImg)
       const { width, height } = tempImg
       if (width <= 230 && height <= 230) {
         resolve(true)
@@ -40,7 +42,7 @@ function imageSizeChecker(src: string) {
  * @param imageType 이미지 타입 ex) 'image/jpeg' |  'image/jpg' |  'image/png'
  * @returns
  */
-function imageTypeChecker(imageType: string) {
+export function imageTypeChecker(imageType: string) {
   const types = ['image/jpeg', 'image/jpg', 'image/png']
   const hasType = types.includes(imageType)
 

@@ -148,18 +148,6 @@ export function setMailOptAwsSes(tempToken: string, userEmail: string, type: "si
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 /** 노드 메일러(레거시) */
 
 // const nodemailer = require('nodemailer')
