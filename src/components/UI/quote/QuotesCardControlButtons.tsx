@@ -29,7 +29,7 @@ export default function QuotesCardControlButtons({ item, index, isUserQuote }: P
   const onClickBookmarkAdd = async () => {
     if (!item && !hasToken && !session) return
     const { quote_id } = item
-    const type = isUserQuote ? `?type=user` : `? type=no-user`
+    const type = isUserQuote ? `?type=user` : `?type=no-user`
     const url = `/quotes/authors/${item.author}/${quote_id}` + type
     const isSuccess = await addBookmarkItem(
       quote_id,

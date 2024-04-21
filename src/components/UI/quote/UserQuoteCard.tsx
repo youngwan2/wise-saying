@@ -1,12 +1,19 @@
 import styles from './Quotes.module.css'
-import gsap from 'gsap/all'
-import type { ItemsType } from '@/types/items.types'
-import { HiSpeakerphone } from 'react-icons/hi'
-import { viewCounter } from '@/services/data/patch'
 import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react'
-import { useCardTheme, useCardZoomInOutStore } from '@/store/store'
+
 import { useRouter } from 'next/navigation'
+import { useCardTheme, useCardZoomInOutStore } from '@/store/store'
 import useTTS from '@/custom/useTTS'
+
+import { viewCounter } from '@/services/data/patch'
+
+import type { ItemsType } from '@/types/items.types'
+import gsap from 'gsap/all'
+import { hoverAnimation, hoverAnimationMobile } from '@/utils/common-func'
+import { getQuoteViewsFromDB } from '@/services/data/get'
+
+import { HiSpeakerphone } from 'react-icons/hi'
+
 import ReplaceMessageCard from '../common/ReplaceMessageCard'
 import TtsButton from '../common/TtsButton'
 import UserQuotesCardControlButtons from './UserQuotesCardControlButtons'
@@ -15,8 +22,7 @@ import QuoteViews from './QuoteViews'
 import QuoteProgress from './QuoteProgress'
 import QuoteDetailMoveButton from './QuoteDetailMoveButton'
 import QuoteContent from './QuoteContent'
-import { hoverAnimation, hoverAnimationMobile } from '@/utils/common-func'
-import { getQuoteViewsFromDB } from '@/services/data/get'
+
 
 interface PropsType {
     item: ItemsType

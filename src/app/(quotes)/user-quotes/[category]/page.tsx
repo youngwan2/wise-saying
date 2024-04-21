@@ -26,10 +26,10 @@ export default function UsersPage({ params }: PropsType) {
 
   if (!items)
     return (
-      <ReplaceMessageCard childern="데이터를 불러오는 중 문제가 발생하였습니다. 나중에 다시시도 해주세요." />
+      <ReplaceMessageCard childern="데이터를 불러오는 중입니다." />
     )
   if (items.length < 1)
-    return <ReplaceMessageCard childern="데이터를 불러오는 중 입니다..." />
+    return <ReplaceMessageCard childern="데이터가 존재하지 않습니다." />
   return (
     <>
       <Title current={itemCount} total={totalCount} title={pathName+' 명언'} />

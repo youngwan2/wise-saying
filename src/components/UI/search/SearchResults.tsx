@@ -41,7 +41,7 @@ export default function SearchResults({ items }: PropsType) {
   }
 
   if (!(items && quotes))
-    return <ReplaceMessageCard childern="데이터를 가져오는 중입니다." />
+    return <ReplaceMessageCard childern="데이터를 불러오는 중입니다." />
   return (
     <article className="bg-[#e3dddd12] max-w-[730px] mx-auto rounded-[10px] shadow-[inset_-2px_-2px_5px_0_rgba(0,0,0,0.5)] mt-[1.5em] p-[20px] hover:cursor-pointer">
       <div className="border-b-[2px] border-[white] flex items-center justify-between text-white">

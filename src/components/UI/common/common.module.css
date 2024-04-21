@@ -1,0 +1,30 @@
+/* 페이지 로더 */
+.loader_wrapper {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+}
+
+.loader_dot {
+    display: inline-block;
+    width: 25px;
+    border-radius: 50%;
+    margin: 0 1em;
+    height: 25px;
+    background: white;
+}
+
+.loader_dot:nth-of-type(1) {
+
+    animation-delay: 1s;
+}
+
+.loader_dot:nth-of-type(2) {
+    animation-delay: 2s;
+}
+
+.loader_dot:last-child {
+    animation-delay: 3s;
+}
+

@@ -8,8 +8,9 @@ export const metadata: Metadata = {
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <section className="w-full">
-      {children} <BackMoveButton />
+    <section className="w-full max-w-[1230px] mx-auto h-[100vh]">
+      {children} 
+      <BackMoveButton />
     </section>
   )
 }

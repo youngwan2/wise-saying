@@ -4,7 +4,7 @@ import styles from './layout.module.css'
 import { useRef, useState } from "react";
 
 
-const FooterStyle = ' bg-[transparent] pt-[3em] min-h-[200px] text-[#bebebe] font-sans font-thin mx-auto shadow-[0_-1px_0_white] text-[0.95em]'
+
 export default function Footer() {
     const [isHide, setIsHide] = useState(false)
 
@@ -16,12 +16,13 @@ export default function Footer() {
             document.body.scrollTo({ top: 100000000000 })
         }
     }
-
-
     return (
         <>
-            <button className={`${isHide ? 'text-[1.03em] text-white' : 'text-[1.03em] text-white '} border-t border-x rounded-t-[5px] hover:bg-[#ffffff19] min-w-[100px] p-[3px] ml-[2em] relative left-[50%] translate-x-[-50%] mt-[6em]`} onClick={onClickSetHide}>{isHide ? '푸터 보기' : '푸터 숨기기'}</button>
-            <footer ref={footerRef} className={` ${styles.footer} ${isHide ? 'hidden' : 'block bg-center bg-cover'}` + FooterStyle} >
+            <button
+                className={`${isHide ? 'text-[1.03em] text-white' : 'text-[1.03em] text-white '} border-t border-t-[rgba(255,255,255,0.1)] border-x border-x-[rgba(255,255,255,0.1)] rounded-t-[5px] hover:bg-[#ffffff19] min-w-[100px] p-[3px] ml-[2em] relative left-[50%] translate-x-[-50%] mt-[6em]`}
+                onClick={onClickSetHide}>{isHide ? '푸터 보기' : '푸터 숨기기'}
+            </button>
+            <footer ref={footerRef} className={`${styles.footer} ${isHide ? 'hidden' : 'block bg-center bg-cover'} bg-[transparent] pt-[3em] min-h-[200px] text-[#bebebe] font-sans font-thin mx-auto shadow-[0_-1px_0_rgba(255,255,255,0.1)] text-[0.95em]`} >
                 <div className="max-w-[1300px] flex justify-around mx-auto px-[4em]">
                     <div className="min-w-[130px]">
                         <h5 className="w-[20%] font-bold">Wise Sayings</h5>

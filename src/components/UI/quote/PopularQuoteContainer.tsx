@@ -1,15 +1,16 @@
 "use client"
+import styles from './Quotes.module.css'
 
+import { useCardZoomInOutStore } from "@/store/store";
 import { useSwrFetch } from "@/utils/swr";
-import ReplaceMessageCard from "../common/ReplaceMessageCard";
-import PopularQuoteList from "./PopularQuoteList";
+
 import toast from "react-hot-toast";
+
 import { HiRefresh } from "react-icons/hi";
 import ZommInQuoteCard from "./ZoomInQuoteCard";
-import { useCardZoomInOutStore } from "@/store/store";
-import styles from './Quotes.module.css'
 import Title from "../common/Title";
-
+import ReplaceMessageCard from "../common/ReplaceMessageCard";
+import PopularQuoteList from "./PopularQuoteList";
 
 export default function PopularQuoteContainer() {
 
@@ -24,14 +25,9 @@ export default function PopularQuoteContainer() {
             error: '서버 문제로 데이터 조회에 실패하였습니다.'
         })
     }
-
-
     const cardIndex = useCardZoomInOutStore((state) => state.cardIndex)
 
-    if (!quotes) return <ReplaceMessageCard childern='데이터를 조회중 입니다..' />
-
-
-
+    if (!quotes) return <ReplaceMessageCard childern='데이터를 불러오는 입니다..' />
     return (
         <>
             <Title title={`실시간 인기명언`} current={quotes.length||0} total={quotes.length||0} />

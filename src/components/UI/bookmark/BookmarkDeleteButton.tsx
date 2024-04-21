@@ -6,7 +6,6 @@ interface PropsType {
   onClickDelete: () => void
 }
 export default function BookmarkDeleteButton({
-  id,
   isDeleting,
   onClickDelete,
 }: PropsType) {

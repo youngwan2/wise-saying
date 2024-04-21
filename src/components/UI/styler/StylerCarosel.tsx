@@ -3,7 +3,6 @@
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 import Image from 'next/image'
-import StylerImageUploadForm from './StylerImageUploadForm'
 import CarouselControlButtons from './CarouselControlButtons'
 import { HiInformationCircle } from 'react-icons/hi2'
 import { TbTrash } from 'react-icons/tb'

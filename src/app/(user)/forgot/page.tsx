@@ -7,7 +7,7 @@ import BackMoveButton from '@/components/UI/common/BackMoveButton'
 import { Method, defaultConfig } from '@/configs/config.api'
 import useDraggable from '@/custom/useDraggable'
 import { defaultFetch } from '@/utils/fetcher'
-import { useId, useRef, useState } from 'react'
+import { Suspense, useId, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 
 export default function ForgotPage() {
@@ -57,11 +57,13 @@ export default function ForgotPage() {
         className="absolute left-[50%] translate-x-[-50%] top-[30%] max-w-[490px] w-full text-center bg-transparent px-[20px] py-[2em] pb-[4em] rounded-[10px] shadow-[inset_0_0_0_2px_white]"
       >
         <ForgotTaps tapNum={tapNum} onClickSetTap={onClickSetTap} />
-        {tapNum === 0 ? (
-          <ForgotEmail uId={uId} action={findEmailAction} />
-        ) : (
-          <ForgotPassword uId={uId} action={findPasswordAction} />
-        )}
+        <Suspense>
+          {tapNum === 0 ? (
+            <ForgotEmail uId={uId} action={findEmailAction} />
+          ) : (
+            <ForgotPassword uId={uId} action={findPasswordAction} />
+          )}
+        </Suspense>
       </section>
       <BackMoveButton />
     </>

@@ -102,8 +102,9 @@ export default function MypageMyQuote({
     categoryCreator()
   }, [categoryCreator])
 
-  if (!userQuotes || categories.length < 1)
-    return <ReplaceMessageCard childern="데이터가 존재하지 않습니다." />
+  if (!userQuotes)
+    return <ReplaceMessageCard childern="데이터를 불러오는 중입니다." />
+  if(userQuotes.length< 1) return <ReplaceMessageCard childern='데이터가 존재하지 않습니다.'/>
   return (
     <>
       <MypageMyQuotesCategoryList

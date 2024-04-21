@@ -1,6 +1,5 @@
 import { ReplyInfoType } from '@/types/items.types'
 import ReplaceMessageCard from '../common/ReplaceMessageCard'
-import type {MouseEventHandler} from 'react'
 import ReplyCard from './ReplyCard'
 
 interface PropsType {

@@ -78,7 +78,7 @@ export default function MypageProfileForm({ userInfo, session }: PropsType) {
     <>
       {userInfo !== undefined ? (
         <form
-          className="border-[1px] border-[rgba(255,255,255,0.1)] p-[2em] rounded-[5px] max-w-[600px] flex flex-col mx-auto mt-[3em] items-center  transition-all "
+          className="p-[2em] flex flex-col mx-auto items-center w-full "
           action={profileUpdate}
         >
           {/* 이미지 업로드 */}

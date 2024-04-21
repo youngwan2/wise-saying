@@ -37,11 +37,8 @@ export default function AuthorPage({ params }: PropsType) {
 
   if (!items)
     return (
-      <ReplaceMessageCard
-        childern={<p>아이템을 조회중입니다. 잠시만 기다려 주세요.</p>}
-      />
+      <ReplaceMessageCard/>
     )
-
 
   return (
     <>
