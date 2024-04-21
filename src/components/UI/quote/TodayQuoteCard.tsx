@@ -14,14 +14,12 @@ type QuoteType = {
 
 interface PropsType {
     quoteInfo : QuoteType
-    onPrefetch: MouseEventHandler<HTMLButtonElement>
     onPush: MouseEventHandler<HTMLElement>
     onSetText: MouseEventHandler<HTMLButtonElement>
 }
 
 export default function TodayQuoteCard({
     quoteInfo,
-    onPrefetch,
     onPush,
     onSetText,
 }: PropsType) {
@@ -52,7 +50,6 @@ export default function TodayQuoteCard({
 
             {/* 저자 */}
             <strong
-                onMouseEnter={onPrefetch}
                 onClick={onPush}
                 className="inline-block mt-[2em] mr-[1em] text-white text-right w-full hover:text-[tomato] hover:cursor-pointer"
             >

@@ -47,10 +47,6 @@ export default function TodayQuotelist({ quotes }: PropsType) {
     })
   }, [quotes])
 
-  // 페이지 사전로드
-  function onMouseEnterPrefetch(author: string) {
-    router.prefetch(`/quotes/authors/${author}`)
-  }
   // 페이지 이동
   function onClickPush(author: string) {
     router.push(`/quotes/authors/${author}`)
@@ -74,7 +70,6 @@ export default function TodayQuotelist({ quotes }: PropsType) {
             <TodayQuoteCard
               key={quote.quote_id}
               quoteInfo={quote}
-              onPrefetch={() => onMouseEnterPrefetch(quote.author)}
               onPush={() => onClickPush(quote.author)}
               onSetText={() => onClickSetText(quote.quote)}
             />
