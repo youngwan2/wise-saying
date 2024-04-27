@@ -42,8 +42,12 @@ export default function QuotesCategoryList({ category }: PropsType) {
     getCategoryCount()
   }, [getCategoryCount])
 
-  if (isLoading) return <ReplaceMessageCard childern="데이터를 불러오는 중입니다..." />
-  if (!items) return <ReplaceMessageCard childern="조회된 데이터가 존재하지 않습니다." />
+  if (isLoading) return <ReplaceMessageCard childern="데이터를 불러오는 중입니다..." isFull />
+ 
+  if (!items || totalCategoryCount<1)
+    return (
+      <ReplaceMessageCard childern='데이터를 불러오는 중입니다.' isFull/>
+    )
   return (
     <>
       <Title title={`${topick} 카테고리`} current={currentCount} total={totalCategoryCount} />

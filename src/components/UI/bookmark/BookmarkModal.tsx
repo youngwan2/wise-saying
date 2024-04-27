@@ -94,7 +94,7 @@ export default function BookmarkModal() {
     <article
       aria-hidden={!toggleState}
       className={
-        'z-40 fixed left-0 right-0 top-0 bottom-0 bg-[#000000a4] block'
+        'z-[100000000000000000] fixed left-0 right-0 top-0 bottom-0 bg-[#000000a4] block'
       }
     >
       <ModalTitle total={total} />

@@ -26,7 +26,7 @@ export default function SearchResultAll({ items }: PropsType) {
   const router = useRouter()
 
   if (!items)
-    return <ReplaceMessageCard childern="데이터를 불러오는 중입니다." />
+    return <ReplaceMessageCard childern="데이터를 불러오는 중입니다." isFull />
 
   const ItemsbyAuthorName = items.byAuthor ?? []
   const ItemsbyKeyword = items.byKeyword ?? []

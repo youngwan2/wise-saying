@@ -33,7 +33,7 @@ export default function MypageMain() {
   const { quotes: userQuotes, count: quotesCount } = userQuotesAndCount || {}
 
   if (hasLogin)
-    return <ReplaceMessageCard childern={'로그인 후 이용해주세요.'} />
+    return <ReplaceMessageCard childern={'로그인 후 이용해주세요.'} isFull/>
 
   async function onClickQuotesUpdate() {
     const data = await mutate()

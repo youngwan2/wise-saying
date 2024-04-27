@@ -28,3 +28,26 @@
     animation-delay: 3s;
 }
 
+/* 뒤로가기 버튼 */
+
+
+.back_btn::after {
+    content: '';
+    position: absolute;
+}
+
+.back_btn:hover::after {
+    content: '뒤로가기';
+    height: 25px;
+    color:white;
+    font-weight: 500;
+    font-size: 15px;
+    width: 80px;
+    padding:0 0 0 5px;
+    border-radius: 5px;
+    left: 3em;
+    top: 0;
+    background-color:black;
+}
+
+
