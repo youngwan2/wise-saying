@@ -3,7 +3,6 @@
 import { useRef } from 'react'
 import ZommInQuoteCard from './ZoomInQuoteCard'
 import { useCardZoomInOutStore } from '@/store/store'
-import ReplaceMessageCard from '../common/ReplaceMessageCard'
 import CardTheme from '../theme/CardTheme'
 import UserQuoteCard from './UserQuoteCard'
 

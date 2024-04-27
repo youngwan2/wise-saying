@@ -35,9 +35,9 @@ export default function AuthorPage({ params }: PropsType) {
     'authors',
   )
 
-  if (!items)
+  if (!items || totalCount<1)
     return (
-      <ReplaceMessageCard/>
+      <ReplaceMessageCard childern='데이터를 불러오는 중입니다.' isFull/>
     )
 
   return (

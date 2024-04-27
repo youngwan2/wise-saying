@@ -64,10 +64,10 @@ export default async function DetailPage({
 
 
   const item = await getQuoteDetail(id)
-  const recommandItems = await getRecommandQuote()
+  const recommandItems = await getRecommandQuote() || []
 
 
-  if (!item || !recommandItems) return <ReplaceMessageCard childern="데이터를 조회중 입니다.." />
+  if (!item || !recommandItems) return <ReplaceMessageCard childern="데이터를 불러오는 중입니다." />
 
 
   return (

@@ -42,7 +42,7 @@ export default function SearchForm() {
       ref={formRef}
       action={searchAction}
       className={`
-      rounded-[10px] my-[2em] max-w-[450px] min-w-[150px] w-full bg-[transparent]  z-[1000]
+      rounded-[10px] my-[2em] max-w-[450px] min-w-[150px] w-full bg-[transparent]  z-[200000000000]
       right-[1.3em]  fixed p-[15px] shadow-[0_0_20px_5px_rgba(0,0,0,0.4)] backdrop-blur-[10px] 
       transition-all duration-75
       ${isDisplay

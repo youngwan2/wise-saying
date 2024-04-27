@@ -3,7 +3,6 @@
 import gsap from 'gsap'
 import TextPlugin from 'gsap/TextPlugin'
 import useTTS from '@/custom/useTTS'
-import ReplaceMessageCard from '../common/ReplaceMessageCard'
 import { useRouter } from 'next/navigation'
 import { HiCalendarDays } from 'react-icons/hi2'
 import { useGSAP } from '@gsap/react'
@@ -57,8 +56,7 @@ export default function TodayQuotelist({ quotes }: PropsType) {
     setText(quote)
   }
 
-  if (!quotes)
-    return <ReplaceMessageCard childern="데이터를 불러오는 중입니다.." />
+
   return (
     <>
       <h2 className="sm:text-[1.5em] text-[1.35em] pl-[8px] flex items-center text-white max-w-[600px] mx-auto  mt-[5em] ">
