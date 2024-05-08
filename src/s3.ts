@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand, S3ClientConfigType, GetObjectAclCommand } from "@aws-sdk/client-s3"; // ES Modules import
+import { S3Client, PutObjectCommand, S3ClientConfigType } from "@aws-sdk/client-s3"; // ES Modules import
 
 
 const config:S3ClientConfigType = {

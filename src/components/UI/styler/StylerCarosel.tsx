@@ -21,7 +21,6 @@ interface PropsType {
 export default function StylerCarosel({ imagesSrc, onClickDeleteBackgroundImage, onClickSetBackgroundImage, onChangeImageUploader }: PropsType) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay()])
 
-
   return (
     <>
       <p className='sm:text-[1em] text-[0.85em] relative mt-[2em] mb-[1em] text-white flex items-center'><HiInformationCircle className='mt-[1.5px] mr-[2.5px]' /> {'현재 ' + imagesSrc.length + '개의 이미지가 업로드 되었습니다. 필요에 따라 별도의 이미지를 업로드하여 추가할 수 있습니다.'}</p>
