@@ -239,12 +239,12 @@
 }
 
 .canvas_buttons:hover::after {
-    content: '다운로드 / 명언전시관 출품';
+    content: '다운로드';
     height: 25px;
     color:white;
     font-weight: 500;
     font-size: 15px;
-    width: 180px;
+    width: 70px;
     padding:0 0 0 5px;
     border-radius: 5px;
     right: -0.5em;
@@ -255,8 +255,8 @@
 
 .canvas_buttons:hover::before {
     content: ' ';
-    top: -0.4em;
-    left: 2.8em;
+    top: -0.5em;
+    left: 1em;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     border-top: 10px solid black;

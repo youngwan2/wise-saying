@@ -1,6 +1,6 @@
 'use client'
 import styles from './styler.module.css'
-import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import {
   useBackgroundColorStore,
   useImageElementStore,
@@ -14,7 +14,6 @@ import {
 import toast from 'react-hot-toast'
 import wrap from 'word-wrap'
 import DownloadButton from './DownloadButton'
-import QuoteImgUploadButton from './QuoteImgUploadButton'
 
 interface QuoteType {
   quote: string
@@ -35,26 +34,6 @@ export default function Canvas() {
   // 배경이미지
   const bgImageSrc = useImageElementStore((state) => state.imageSrc)
 
-  async function onSaveUserGeneratedCardToDd(e: MouseEvent<HTMLButtonElement>) {
-    return alert('현재 개발중인 기능입니다.')
-
-    const base64ImgUrl = canvasRef.current?.toDataURL() ||''
-    const url = '/api/aws/s3'
-    toast.loading("등록중",{id:'add'})
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(base64ImgUrl)
-      })
-      const { success, meg } = await response.json()
-      if (success) toast.success(meg)
-      else { toast.error(meg) }
-      toast.remove('add')
-    } catch (error) {
-      console.error('작품 등록 실패')
-    }
-    
-  }
 
 
   function onClickDownload() {
@@ -203,7 +182,6 @@ export default function Canvas() {
         <DownloadButton
           onClick={onClickDownload}
         />
-        <QuoteImgUploadButton onClick={onSaveUserGeneratedCardToDd} />
       </div>
     </>
   )
