@@ -3,7 +3,6 @@
 import { requestNewAccessToken } from '@/services/user/post'
 import { getLoginExp } from '@/utils/session-storage'
 import { useCallback, useEffect, useState } from 'react'
-import { HiClock } from 'react-icons/hi2'
 
 const MINUTE_TO_SEC = 60
 export default function Timer() {

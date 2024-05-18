@@ -3,15 +3,6 @@
 @tailwind utilities;
 
 
-
-
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-  --default-color-white: white
-}
-
 body {
   min-height: 100vh;
   overflow: hidden auto;
@@ -47,3 +38,4 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #2A54AE;
 }
+

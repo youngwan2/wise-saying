@@ -63,7 +63,7 @@ export default function TodayQuotelist({ quotes }: PropsType) {
         <HiCalendarDays className="mr-[5px]" /> 오늘의 명언
       </h2>
       <ul className="overflow-hidden mx-[10px]">
-        {quotes.slice(0, 1).map((quote, i) => {
+        {quotes.slice(0, 1).map((quote) => {
           return (
             <TodayQuoteCard
               key={quote.quote_id}

@@ -1,18 +1,21 @@
 'use client'
-import useSWR from 'swr'
-import { getBookmarkListFetcher } from '@/services/data/get'
-import { useBookmarkStore, useBookmarkUpdate } from '@/store/store'
 
 import { useCallback, useEffect, useState } from 'react'
-import { HiBookmarkSquare } from 'react-icons/hi2'
+import { useBookmarkStore, useBookmarkUpdate } from '@/store/store'
+import { useSession } from 'next-auth/react'
+import useHasToken from '@/custom/useHasToken'
+import useSWR from 'swr'
 
 import BookmarkCloseButton from './BookmarkCloseButton'
 import BookmarkPagination from './BookmarkPagination'
 import BookmarkList from './BookmarkList'
+
+import { getBookmarkListFetcher } from '@/services/data/get'
 import { deleteBookmark } from '@/services/user/delete'
+
 import { toast } from 'react-toastify'
-import useHasToken from '@/custom/useHasToken'
-import { useSession } from 'next-auth/react'
+import { HiBookmarkSquare } from 'react-icons/hi2'
+
 
 export interface BookmarkListType {
   id: number
