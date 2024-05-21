@@ -1,5 +1,5 @@
 
-import PopularQuoteContainer from "@/components/UI/quote/PopularQuoteContainer"
+import PopularQuoteContainer from "@/components/UI/quote/container/PopularQuoteContainer"
 import { Metadata } from "next"
 
 export const metadata:Metadata= {

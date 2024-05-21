@@ -1,4 +1,4 @@
-import BackMoveButton from '@/components/UI/common/BackMoveButton'
+import BackMoveButton from '@/components/UI/common/button/BackMoveButton'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {

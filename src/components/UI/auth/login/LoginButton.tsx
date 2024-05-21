@@ -1,14 +1,17 @@
 'use client'
 
-import useHasToken from '@/custom/useHasToken'
-import { HiUser } from 'react-icons/hi2'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
+import useHasToken from '@/custom/useHasToken'
+
+import { HiUser } from 'react-icons/hi2'
 
 export default function LoginButton() {
   const router = useRouter()
   const hasToken = useHasToken()
+  
   const { data: session } = useSession()
+
   if (hasToken || session) return <></>
   return (
     <button

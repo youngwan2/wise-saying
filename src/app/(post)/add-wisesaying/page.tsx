@@ -1,4 +1,4 @@
-import BackMoveButton from '@/components/UI/common/BackMoveButton'
+import BackMoveButton from '@/components/UI/common/button/BackMoveButton'
 import QuoteWriteForm from '@/components/UI/quote-editor/QuoteWriteForm'
 import type { Metadata } from 'next'
 

@@ -1,9 +1,7 @@
 'use client'
 import { useCallback, useEffect } from 'react'
 
-/**
- * @param elementRefs 해당 요소에 인터섹션 옵저버를 적용
- */
+/** @param elementRefs 해당 요소에 인터섹션 옵저버를 적용 */
 export default function useIntersectionObserver(elementRefs: any) {
   const intersectionObserverActive = useCallback(() => {
     // 타겟

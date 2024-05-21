@@ -1,18 +1,21 @@
 'use client'
-import useSWR from 'swr'
-import { getBookmarkListFetcher } from '@/services/data/get'
-import { useBookmarkStore, useBookmarkUpdate } from '@/store/store'
 
 import { useCallback, useEffect, useState } from 'react'
-import { HiBookmarkSquare } from 'react-icons/hi2'
+import { useBookmarkStore, useBookmarkUpdate } from '@/store/store'
+import { useSession } from 'next-auth/react'
+import useHasToken from '@/custom/useHasToken'
+import useSWR from 'swr'
 
-import BookmarkCloseButton from './BookmarkCloseButton'
+import BookmarkCloseButton from './button/BookmarkCloseButton'
 import BookmarkPagination from './BookmarkPagination'
 import BookmarkList from './BookmarkList'
+
+import { getBookmarkListFetcher } from '@/services/data/get'
 import { deleteBookmark } from '@/services/user/delete'
+
 import { toast } from 'react-toastify'
-import useHasToken from '@/custom/useHasToken'
-import { useSession } from 'next-auth/react'
+import { HiBookmarkSquare } from 'react-icons/hi2'
+
 
 export interface BookmarkListType {
   id: number
@@ -79,14 +82,12 @@ export default function BookmarkModal() {
   )
 
   useEffect(() => {
-    if (!hasData) return
-    setBookmarkListCount(total)
+    if (hasData) setBookmarkListCount(total)
   }, [setBookmarkListCount, total, hasData])
 
+  // 북마크 목록에 변동이 생기면 갱신
   useEffect(() => {
-    if (isUpdate) {
-      mutate().then(() => setIsUpdate(false))
-    }
+    if (isUpdate) mutate().then(() => setIsUpdate(false))
   }, [isUpdate, setIsUpdate, mutate])
 
   if (!toggleState) return <></>

@@ -8,11 +8,7 @@ import { JWT_TOKEN_REGEX } from '@/constants'
 export const getUserEmail = () => {
   if(typeof window !== 'object') return 
   try {
-    const user =
-      (sessionStorage &&
-        sessionStorage?.getItem &&
-        sessionStorage?.getItem('user')) ||
-      '{"dbEmail":""}'
+    const user = sessionStorage.getItem('user') || '' as string
     const { dbEmail: userEmail } = JSON.parse(user)
 
     return userEmail

@@ -122,27 +122,27 @@ export async function POST(req: NextRequest) {
 
 
   const selectQuery = type === 'no-user' ? `
-SELECT A.user_id AS user_id, A.quote_id AS quote_id, B.email AS email 
-FROM bookmarks A 
-JOIN users B ON A.user_id = B.user_id
-WHERE email = $1 AND quote_id = $2
-` : `
+  SELECT A.user_id AS user_id, A.quote_id AS quote_id, B.email AS email 
+  FROM bookmarks A 
+  JOIN users B ON A.user_id = B.user_id
+  WHERE email = $1 AND quote_id = $2
+  ` : `
 
-SELECT A.user_id AS user_id, A.user_quote_id AS quote_id, B.email AS email
-FROM user_bookmarks A
-JOIN users B ON A.user_id = B.user_id
-WHERE email = $1 AND A.user_quote_id = $2
+  SELECT A.user_id AS user_id, A.user_quote_id AS quote_id, B.email AS email
+  FROM user_bookmarks A
+  JOIN users B ON A.user_id = B.user_id
+  WHERE email = $1 AND A.user_quote_id = $2
 
 `
 
   const insertQuery = type === 'no-user' ? `
-INSERT INTO bookmarks(user_id, quote_id , quote_url)
-VALUES ($1, $2, $3)
-` : `
+  INSERT INTO bookmarks(user_id, quote_id , quote_url)
+  VALUES ($1, $2, $3)
+  ` : `
 
-INSERT INTO user_bookmarks(user_id, user_quote_id, quote_url)
-VALUES ($1, $2, $3)
-`
+  INSERT INTO user_bookmarks(user_id, user_quote_id, quote_url)
+  VALUES ($1, $2, $3)
+  `
 
 
 

@@ -1,13 +1,16 @@
 "use client"
-
-import { useQuotesTextOptions } from "@/store/store";
 import styles from './styler.module.css'
-import TextLineHeightStyler from "./TextLineHeightStyler";
-import TextPositionStyler from "./TextPositionStyler";
+
 import { ChangeEvent, useState } from "react";
-import { HiAdjustmentsHorizontal, HiXMark } from "react-icons/hi2";
+import { useQuotesTextOptions } from "@/store/store";
+
+import TextLineHeightStyler from "./styler/text-styler/TextLineHeightStyler";
+import TextPositionStyler from "./styler/text-styler/TextPositionStyler";
+import TextLengthStyler from "./styler/text-styler/TextLengthStyler";
+
 import { debounceCloser } from "@/utils/common-func";
-import TextLengthStyler from "./TextLengthStyler";
+
+import { HiAdjustmentsHorizontal, HiXMark } from "react-icons/hi2";
 
 export default function TextSettingOptions() {
     const [isShowOptions, setIsShowOptions] = useState(false)

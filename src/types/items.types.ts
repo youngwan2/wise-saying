@@ -6,18 +6,21 @@ export interface ItemsType {
   intro?: string
   birth?: string
   email?: string
-  created_at?:string
-  profile_img?:string
-  category?:string
+  created_at?: string
+  profile_img?: string
+  category?: string
 }
 
 export interface QuoteType {
   quote_id: number
   author: string
+  job?: string
   intro?: string
   birth?: string
   quote: string
 }
+
+
 
 export interface WeekDayCategoryType {
   category_id: number
@@ -62,3 +65,11 @@ export interface ConsentsType {
 }
 
 
+
+export interface UserQuotesType {
+  quote_id: number
+  quote: string
+  author: string
+  category: string
+  email:string
+}

@@ -1,21 +1,34 @@
-import ReplaceMessageCard from '../common/ReplaceMessageCard'
-import { HiDotsVertical, HiOutlineX } from 'react-icons/hi'
 import { MouseEventHandler, useRef, useState } from 'react'
-import CommentEditDeleteMenu from './CommentEditDeleteMenu'
-import CommentEditForm from './CommentEditForm'
-import { getUserEmail } from '@/utils/session-storage'
-import CommentProfileImage from './CommentProfileImage'
-import CommentContent from './CommentContent'
-import { postReply } from '@/services/user/post'
-import ReplyList from '../reply/ReplyList'
-import ReplyForm from '../reply/ReplyForm'
-import { CommentType, ReplyInfoType } from '@/types/items.types'
-import { deleteComment } from '@/services/user/delete'
+import { useCommentUpdate } from '@/store/store'
 import { useSwrFetch } from '@/utils/swr'
 import { useSWRConfig } from 'swr'
-import ReplyButtons from '../reply/ReplyButtons'
+
+import CommentEditDeleteMenu from './CommentEditDeleteMenu'
+import CommentEditForm from './form/CommentEditForm'
+import CommentProfileImage from './CommentProfileImage'
+import CommentContent from './CommentContent'
+import ReplyList from '../reply/ReplyList'
+import ReplyForm from '../reply/form/ReplyForm'
+import ReplyButtons from '../reply/button/ReplyButtons'
+import ReplaceMessageCard from '../common/card/ReplaceMessageCard'
+
 import { clearTextarea } from '@/utils/textarea'
-import { useCommentUpdate } from '@/store/store'
+
+import { postReply } from '@/services/user/post'
+import { deleteComment } from '@/services/user/delete'
+import { getUserEmail } from '@/utils/session-storage'
+
+
+import { HiDotsVertical, HiOutlineX } from 'react-icons/hi'
+
+import { CommentType, ReplyInfoType } from '@/types/items.types'
+
+
+type DataType = {
+  data: ReplyInfoType
+  isLoading: boolean
+  error: Error
+}
 
 interface PropsType extends CommentType { }
 
@@ -50,6 +63,11 @@ export default function CommentCard({ comment }: PropsType) {
     setIsShowReplies(!isShowReplies)
   }
 
+  function onMenuDisplay(){
+    setIsShow(old=>!old)
+
+  }
+
   // Action : 대댓글 등록 액션
   async function addReplyAction(formData: FormData) {
     const content = formData.get('reply-content')?.valueOf().toString() || ''
@@ -62,11 +80,6 @@ export default function CommentCard({ comment }: PropsType) {
     }
   }
 
-  type DataType = {
-    data: ReplyInfoType
-    isLoading: boolean
-    error: Error
-  }
 
   // MEMO : 대댓글 수정 및 삭제는 ReplyCard 컴포넌트에 위치.
   // SWR + GET | 대댓글 정보 요청
@@ -84,24 +97,23 @@ export default function CommentCard({ comment }: PropsType) {
   return (
     <>
       <li className="bg-white  min-h-[50px] rounded-[5px] first:mt-[2em] mt-[1em] flex justify-start items-center w-full mx-auto relative">
-        <CommentProfileImage comment={comment} />
-        <CommentContent comment={comment} />
+        <CommentProfileImage comment={comment} /> {/* 프로필 이미지 */}
+        <CommentContent comment={comment} /> {/* 댓글 내용 */}
         <CommentMenuDropdownButton
           isShow={isShow}
-          onClick={() => setIsShow(!isShow)}
-        />
+          onClick={onMenuDisplay }
+        />  {/* 댓글 드롭다운 */}
 
         {/* 글쓴이라면 편집 버튼 활성화 */}
         <CommentEditDeleteMenu
           emailInfo={emailInfo}
           isShow={isShow}
-          onLeaveMenuHide={() => {
-            setIsShow(false)
-          }}
+          onLeaveMenuHide={onMenuDisplay}
           onClickDeleteComment={() => deleteComment(commentId).then(()=> setIsUpdateComment(true))}
           onClickFormDisplay={onClickFormDisplay}
         />
 
+        {/* 대댓글 컨트롤 버튼  */}
         <ReplyButtons
           totalCount={replyInfo.totalCount || 0}
           onClickIsShowReplies ={onClickIsShowReplies}
@@ -115,6 +127,7 @@ export default function CommentCard({ comment }: PropsType) {
         onClickEditCancel={onClickEditCancel}
       />
       <li>
+        {/* 대댓글 목록 및 등록 폼 */}
         <ReplyList
           isShowReplies={isShowReplies}
           commentId={commentId}

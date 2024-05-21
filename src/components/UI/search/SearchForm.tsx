@@ -1,23 +1,23 @@
 'use client'
 
-import useDraggable from '@/custom/useDraggable'
-import { useHeaderSearchFormStateStore } from '@/store/store'
-import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { useHeaderSearchFormStateStore } from '@/store/store'
+import useDraggable from '@/custom/useDraggable'
+
 import SearchInput from './SearchInput'
 import SearchHeader from './SearchHeader'
+
 import { resizeCheck } from '@/utils/common-func'
 
 export default function SearchForm() {
   const router = useRouter()
   const formRef = useRef<HTMLFormElement>(null)
   const [isActive, setIsActive] = useState(false)
-  const isDisplay = useHeaderSearchFormStateStore((state) => state.isDisplay)
-  const setIsDisplay = useHeaderSearchFormStateStore(
-    (state) => state.setIsDisplay,
-  )
+  const {isDisplay, setIsDisplay} = useHeaderSearchFormStateStore()
 
   const searchAction = async (formData: FormData) => {
+    console.log(formData)
     const value = formData.get('search') || ''
     router.push(`/search?type=all&searchText=${value}`)
   }
@@ -31,7 +31,7 @@ export default function SearchForm() {
     }
   }, [])
 
-  const onClickDisplay = () => {
+  const onClickSetDisplay = () => {
     setIsDisplay(false) // 검색창을 닫는 로직
   }
 
@@ -50,7 +50,7 @@ export default function SearchForm() {
           : 'invisible opacity-0 top-0'
         }`}
     >
-      <SearchHeader onClickDisplay={onClickDisplay} />
+      <SearchHeader onClickSetDisplay={onClickSetDisplay} />
       <SearchInput />
     </form>
   )

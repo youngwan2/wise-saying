@@ -1,11 +1,9 @@
-import Link from 'next/link'
-import BookmarkDeleteButton from './BookmarkDeleteButton'
-import { HiLink } from 'react-icons/hi2'
+import BookmarkDeleteButton from './button/BookmarkDeleteButton'
+import BookmarkContent from './BookmarkContent'
+import BookmarkLink from './BookmarkLink'
 
-interface ContentPropsType {
-  bookmark: BookmarkType
-}
-interface BookmarkType {
+
+export interface BookmarkType {
   id: number
   quote: string
   author: string
@@ -39,22 +37,6 @@ export default function BookmarkCard({
   )
 }
 
-function BookmarkContent({ bookmark }: ContentPropsType) {
-  const { id, author, quote } = bookmark
 
-  return (
-    <li className="mx-[5px] font-bold p-[7px] border border-[#454444a0] ">
-      {id} / {author||'사용자'}/{quote.slice(0, 25)}...
-    </li>
-  )
-}
 
-function BookmarkLink({ url }: { url: string }) {
-  return (
-    <li className="text-[#f77b65] text-[1.5em] absolute right-[2em] top-[3px] hover:shadow-[0_0_1px_1px_tomato] ">
-      <Link href={`${url}`}>
-        <HiLink />
-      </Link>
-    </li>
-  )
-}
+

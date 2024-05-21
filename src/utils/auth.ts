@@ -69,7 +69,7 @@ export const tokenVerify = (req: NextRequest, isAccessToken: boolean) => {
 
     return { user }
   } catch (error) {
-    console.error('/utis/validation.ts')
+    console.error('/utis/validation.ts',error)
     return HTTP_CODE.UNAUTHORIZED
     
   }

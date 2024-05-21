@@ -247,18 +247,7 @@
     width: 70px;
     padding:0 0 0 5px;
     border-radius: 5px;
-    right: -0.5em;
-    top: -2em;
+    left: -4.5em;
+    top: 0em;
     background-color:black;
-}
-
-
-.canvas_buttons:hover::before {
-    content: ' ';
-    top: -0.5em;
-    left: 1em;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 10px solid black;
-    border-bottom: 10px solid transparent;
 }

@@ -1,21 +1,29 @@
 'use client'
+
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
-import SignInEmailInput from './SignInEmailInput'
-import SignInPasswordInput from './SignInPasswordInput'
-import SignInPasswordReConfirmInput from './SignInPwReConfirmInput'
-import SignInSubmitButton from './SignInSubmitButton'
-import { onSubmit } from '@/utils/common-func'
 import useDraggable from '@/custom/useDraggable'
-import { reqSingIn } from '@/services/user/post'
+
+import SignInEmailInput from './Input/SignInEmailInput'
+import SignInPasswordInput from './Input/SignInPasswordInput'
+import SignInPasswordReConfirmInput from './Input/SignInPwReConfirmInput'
+import SignInSubmitButton from './button/SignInSubmitButton'
+import EmailAuthInput from './Input/EmailAuthInput'
 import BackButton from '../common/BackButton'
 import FormTitle from '../common/FormTitle'
 import Consent from './Consent'
-import toast from 'react-hot-toast'
-import { ConsentsType } from '@/types/items.types'
-import EmailAuthInput from './EmailAuthInput'
 
+import { reqSingIn } from '@/services/user/post'
+import { onSubmit } from '@/utils/common-func'
+
+import toast from 'react-hot-toast'
+
+import { ConsentsType } from '@/types/items.types'
+
+// todo:  추후 action 으로 대체하여 불필요한 리렌더링을 촉발하는 state 를 최대한 줄여야 함.
 export default function SignInForm() {
+  const router = useRouter()
+
   const [isEmail, setIsEmail] = useState(false)
   const [isPassword, setIsPassword] = useState(false)
   const [isReconfirmPassword, setIsReconfirmPassword] = useState(false)
@@ -26,20 +34,18 @@ export default function SignInForm() {
     private: false,
     child: false,
     event: false
-
-
   })
+
   const [existsEmail, setExistsEmail] = useState(false)
   const [isAuthEmail, setIsAuthEmail] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [reConfirmPw, setReConfirmPw] = useState('')
 
-  const router = useRouter()
-  const formRef = useRef<HTMLFormElement>(null)
-  const isVaildForm = isEmail && isPassword && isReconfirmPassword
 
-  const [isShowModal, setIsShowModal] = useState(true)
+  const formRef = useRef<HTMLFormElement>(null)
+
+  const isVaildForm = isEmail && isPassword && isReconfirmPassword
 
   useDraggable(formRef, null)
 
@@ -63,7 +69,7 @@ export default function SignInForm() {
       body: JSON.stringify({email, value})
     })
 
-    const { success, meg } = await response.json()
+    const { success } = await response.json()
     if (!success) return toast.error('인증번호가 일치하지 않습니다.')
     if (success) { toast.success('인증 되었습니다.'); return setIsAuthEmail(true)}
 
@@ -77,10 +83,13 @@ export default function SignInForm() {
     const isSuccess = await reqSingIn({ email, password, reConfirmPw }, consents)
 
     if (isSuccess) {
+      toast.success('승인되었습니다.')
+
       setExistsEmail(false)
       setisSuccess(true)
+      
       router.push('/')
-      toast.success('승인되었습니다.')
+
     }
   }
 
@@ -96,10 +105,6 @@ export default function SignInForm() {
     router.push('/login')
   }
 
-  function onClickModalClose() {
-    setIsShowModal(false)
-  }
-
   useDraggable(formRef, 'free')
 
   return (
@@ -112,39 +117,20 @@ export default function SignInForm() {
       <BackButton onClickBack={onClickBack} />
 
       {/* 이메일 */}
-      <SignInEmailInput
-        email={email}
-        isEmail={isEmail}
-        setEmail={setEmail}
-        setIsEmail={setIsEmail}
-        setExistsEmail={setExistsEmail}
-      />
+      <SignInEmailInput email={email} isEmail={isEmail} setEmail={setEmail} setIsEmail={setIsEmail} setExistsEmail={setExistsEmail} />
       <EmailAuthInput isShowEmailAuthForm={existsEmail} reqEmailAuth={reqEmailAuth} onClickCloseInput={onClickCloseInput} isComplete={isAuthEmail} />
 
       {/* 패스워드 */}
-      <SignInPasswordInput
-        isPassword={isPassword}
-        setPassword={setPassword}
-        setIsPassword={setIsPassword}
-      />
+      <SignInPasswordInput isPassword={isPassword} setPassword={setPassword} setIsPassword={setIsPassword}/>
 
       {/* 패스워드 재검증 */}
-      <SignInPasswordReConfirmInput
-        isReconfirmPassword={isReconfirmPassword}
-        password={password}
-        setIsReconfirmPassword={setIsReconfirmPassword}
-        setReConfirmPw={setReConfirmPw}
-      />
+      <SignInPasswordReConfirmInput isReconfirmPassword={isReconfirmPassword} password={password} setIsReconfirmPassword={setIsReconfirmPassword} setReConfirmPw={setReConfirmPw}/>
 
       {/* 약관 동의 */}
       <Consent consents={consents} setConsents={setConsents} />
 
       {/* 전송버튼 */}
-      <SignInSubmitButton
-        isDisabled={isSuccess}
-        isPass={checkTransmissionAvailability(isVaildForm, existsEmail, isAuthEmail)}
-
-        onClick={onClickReqSingin}
+      <SignInSubmitButton isDisabled={isSuccess} isPass={checkTransmissionAvailability(isVaildForm, existsEmail, isAuthEmail)} onClick={onClickReqSingin}
       />
     </form>
   )

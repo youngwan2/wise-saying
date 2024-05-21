@@ -6,7 +6,7 @@ import {toast} from 'react-toastify'
 export const useSwrFetch = (url: string, refreshTimer:number|undefined, isActRefresh?:boolean) => {
   const { data, isLoading, error, mutate } = useSWR(url, getFetcher, {
     errorRetryCount: 2,
-    refreshInterval: refreshTimer || 60000,
+    refreshInterval: isActRefresh? (refreshTimer || 60000) : 60000,
     onError: (error) => {
       toast.error('데이터 가져오기 실패:', error.message)
     },

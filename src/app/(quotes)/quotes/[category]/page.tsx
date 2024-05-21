@@ -1,7 +1,7 @@
 export const dynamic = 'force-dynamic'
 
 import type { Metadata } from 'next'
-import CategoryList from '@/components/UI/quote/QuotesCategoryList'
+import QuoteCategoryContainer from '@/components/UI/quote/container/QuoteCategoryContainer'
 
 export const metadata: Metadata = {
   title: '카테고리',
@@ -15,5 +15,5 @@ export default async function CategoryPage({
 }) {
   const { category } = params
 
-  return <CategoryList category={category} />
+  return <QuoteCategoryContainer category={category} />
 }

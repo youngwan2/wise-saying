@@ -1,5 +1,5 @@
-import Title from '@/components/UI/common/Title'
-import MyPageContainer from '@/components/UI/mypage/MypageContainer'
+import Title from '@/components/UI/common/Title/Title'
+import MyPageContainer from '@/components/UI/mypage/container/MypageContainer'
 
 export default function Mypage() {
   return (

@@ -1,5 +1,8 @@
-import useFocus from '@/custom/useFocus'
 import { useRef } from 'react'
+import useFocus from '@/custom/useFocus'
+
+import Label from '../../common/Label'
+import Input from '../../common/Input'
 
 interface PropsType {
   uId: string
@@ -10,10 +13,10 @@ export default function EmailInput({ uId }: PropsType) {
 
   return (
     <div className="mb-4">
-      <label htmlFor="email " className="hidden">
+      <Label htmlFor="email " className="hidden">
         이메일 주소
-      </label>
-      <input
+      </Label>
+      <Input
         ref={inputRef}
         type="email"
         id="email"
