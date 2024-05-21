@@ -29,6 +29,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "connect.ts"
-  ],
+, "src/components/UI/quote/icon/QuoteViewIcon.tsx"  ],
   "exclude": ["node_modules"]
 }

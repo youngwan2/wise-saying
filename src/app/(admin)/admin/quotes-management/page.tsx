@@ -1,7 +1,7 @@
 "use client"
 
 import AdminWriteForm from '@/components/UI/admin/AdminWriteForm';
-import ReplaceMessageCard from '@/components/UI/common/ReplaceMessageCard';
+import ReplaceMessageCard from '@/components/UI/common/card/ReplaceMessageCard';
 import { Method, getDefaultConfig } from '@/configs/config.api';
 import { defaultFetch, postFetcher } from '@/utils/fetcher';
 import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';

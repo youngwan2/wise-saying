@@ -1,14 +1,16 @@
 'use client'
 
-import { useMypageTapsStore } from '@/store/store'
-import MypageProfileForm from './MypageProfileForm'
 import { useState } from 'react'
-import ReplaceMessageCard from '../common/ReplaceMessageCard'
-import MypageUserInfoForm from './MypageUserInfoForm'
+import { useMypageTapsStore } from '@/store/store'
 import { useSwrFetchWithToken } from '@/utils/swr'
 import useHasToken from '@/custom/useHasToken'
-import MypageMyQuote from './MypageMyQuote'
 import { useSession } from 'next-auth/react'
+
+import MypageProfileForm from './form/MypageProfileForm'
+import MypageUserInfoForm from './form/MypageUserInfoForm'
+import ReplaceMessageCard from '../common/card/ReplaceMessageCard'
+import MypageMyQuote from './MypageMyQuote'
+
 import { toast } from 'react-toastify'
 
 export default function MypageMain() {

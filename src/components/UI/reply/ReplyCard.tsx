@@ -1,12 +1,17 @@
 import { MouseEventHandler, useState } from 'react'
-import { HiDotsVertical, HiOutlineX } from 'react-icons/hi'
-import ReplyEditDeleteMenu from './ReplyEditDeleteMenu'
-import ReplyEditForm from './ReplyEditForm'
 import { useSWRConfig } from 'swr'
-import { deleteFetcher, patchFetcher } from '@/utils/fetcher'
+
 import ReplyContent from './ReplyContent'
-import { ReplyType } from '@/types/items.types'
+import ReplyEditDeleteMenu from './button/ReplyEditDeleteButtons'
+import ReplyEditForm from './form/ReplyEditForm'
+
+import { deleteFetcher, patchFetcher } from '@/utils/fetcher'
+
+import { HiDotsVertical, HiOutlineX } from 'react-icons/hi'
+
 import { toast } from 'react-toastify'
+
+import { ReplyType } from '@/types/items.types'
 
 interface PropsType extends ReplyType {
   commentId: number
@@ -40,14 +45,28 @@ export default function ReplyCard({ commentId, userEmail, reply }: PropsType) {
     setIsShowMenu(false)
   }
 
+  function revalidate(url: string) {
+    mutate(url)
+  }
+
+  function setSuccessToast(text: string) {
+    toast.success(text)
+
+  }
+
+  function handleSucessResponse(isSuccess: boolean, text: string, url: string ) {
+    if (isSuccess) {
+      revalidate(url)
+      setSuccessToast(text)
+    }
+  }
+
   // DELETE | 대댓글 삭제
   async function deleteReply() {
     const url = `/api/quotes/0/comments/reply?comment-id=${commentId}&reply-id=${reply.id}`
     const isSuccess: boolean = await deleteFetcher(url)
-    if (isSuccess) {
-      toast.success('삭제 되었습니다.')
-      mutate(`/api/quotes/0/comments/reply?comment-id=${commentId}`)
-    }
+
+    handleSucessResponse(isSuccess, '삭제 되었습니다.', `/api/quotes/0/comments/reply?comment-id=${commentId}`)
   }
 
   // PATCH |  대댓글 수정
@@ -55,14 +74,10 @@ export default function ReplyCard({ commentId, userEmail, reply }: PropsType) {
     const url = `/api/quotes/0/comments/reply?reply-id=${replyId}`
     const result = await patchFetcher(url, content) || { meg: '', success: false }
     if (!(typeof result === 'object')) return
-    if (result.success) {
-      toast.success('수정 되었습니다.')
-      mutate(`/api/quotes/0/comments/reply?comment-id=${commentId}`)
-    } else {
-      toast.error(result.meg)
-    }
+    handleSucessResponse(result.success, '삭제 되었습니다.', `/api/quotes/0/comments/reply?comment-id=${commentId}`)
   }
 
+  // action | 대댓글 수정 액션
   async function updateReplyAtion(formData: FormData) {
     const content = formData.get('comment-reply')?.valueOf().toString() || ''
     const replyId = reply.id

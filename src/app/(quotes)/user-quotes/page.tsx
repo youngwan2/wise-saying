@@ -1,11 +1,12 @@
 'use client'
 
-import UserCategoryList from '@/components/UI/quote/UserQuotesCategoryList'
-import ReplaceMessageCard from '@/components/UI/common/ReplaceMessageCard'
-import useInfiniteScroll from '@/custom/useInfiniteScroll'
-import ListLoadMoreButton from '@/components/UI/common/ListLoadMoreButton'
 import { useItemMetadataFetch } from '@/custom/useItemMetadataFetch'
-import Title from '@/components/UI/common/Title'
+
+import UserCategoryList from '@/components/UI/quote/list/UserQuotesCategoryList'
+import ReplaceMessageCard from '@/components/UI/common/card/ReplaceMessageCard'
+import useInfiniteScroll from '@/custom/useInfiniteScroll'
+import ListLoadMoreButton from '@/components/UI/common/button/ListLoadMoreButton'
+import Title from '@/components/UI/common/Title/Title'
 
 export default function UserPage() {
   const { maxPage, totalCount } = useItemMetadataFetch(
@@ -23,10 +24,10 @@ export default function UserPage() {
 
   if (!categories)
     return (
-      <ReplaceMessageCard childern="데이터를 불러오는 중입니다." />
+      <ReplaceMessageCard childern="데이터가 존재하지 않습니다." />
     )
   if (categories.length < 1)
-    return <ReplaceMessageCard childern="데이터가 존재하지 않습니다." />
+    return <ReplaceMessageCard childern="데이터를 불러오는 중 입니다." />
   return (
     <>
       <Title current={itemCount} total={totalCount} title='사용자 명언' />

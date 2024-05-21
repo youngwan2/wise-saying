@@ -1,13 +1,15 @@
 'use client'
 
-import { getCommentsFormDb } from '@/services/data/get'
-import CommentForm from './CommentForm'
 import { useEffect, useState } from 'react'
+import { useCommentUpdate } from '@/store/store'
 import useSWR from 'swr'
-import CommentLoadMoreButtons from './CommentSwitchButtons'
+
+import CommentForm from './form/CommentForm'
+import CommentPaginationContainer from './CommentPaginationContainer'
 import CommentSortSelect from './CommentSortSelect'
 import CommentList from './CommentList'
-import { useCommentUpdate } from '@/store/store'
+
+import { getCommentsFormDb } from '@/services/data/get'
 
 export interface CommentsInfoType {
   comments: {
@@ -29,8 +31,8 @@ const MIN_PAGE = 0
 export default function Comment({ id }: PropsType) {
   const [page, setPage] = useState(0)
   const [sort, setSort] = useState('')
-  const isUpdateComment = useCommentUpdate((state) => (state.isUpdate))
-  const setIsUpdateComment = useCommentUpdate((state) => (state.setIsUpdate))
+  const {isUpdate,setIsUpdate} = useCommentUpdate()
+
   const { data: commentsInfo, isLoading, mutate } = useSWR<CommentsInfoType>(
     `/api/quotes/${id}/comments?page=${page}&sort=${sort}`,
     getCommentsFormDb,
@@ -39,15 +41,17 @@ export default function Comment({ id }: PropsType) {
     },
   )
 
-  useEffect(() => {
-    if (isUpdateComment) {
-      mutate().then(() => setIsUpdateComment(false))
-    }
-  }, [isUpdateComment, mutate, setIsUpdateComment])
-
   const comments = (commentsInfo && commentsInfo.comments) || []
   const totalCount = (commentsInfo && commentsInfo.totalCount) || 1
   const MAX_PAGE = Math.ceil(totalCount / 5)
+
+  useEffect(() => {
+    if (isUpdate) {
+      mutate().then(() => setIsUpdate(false))
+    }
+  }, [isUpdate, mutate, setIsUpdate])
+
+
 
   return (
     <section className="py-[1em] ">
@@ -57,7 +61,7 @@ export default function Comment({ id }: PropsType) {
       <CommentForm mutate={mutate} />
       <CommentSortSelect setSort={setSort} />
       <CommentList comments={comments} />
-      <CommentLoadMoreButtons
+      <CommentPaginationContainer
         page={page}
         minPage={MIN_PAGE}
         maxPage={MAX_PAGE}

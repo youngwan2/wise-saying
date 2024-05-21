@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 }
 
 import UpdateForm from '@/components/UI/quote-editor/QuoteEditForm'
-import BackMoveButton from '@/components/UI/common/BackMoveButton'
+import BackMoveButton from '@/components/UI/common/button/BackMoveButton'
 
 export default function UpdatePage() {
   return (

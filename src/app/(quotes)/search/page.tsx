@@ -1,12 +1,17 @@
 'use client'
 
-import SearchResultAll from '@/components/UI/search/SearchResultAll'
-import SearchResults from '@/components/UI/search/SearchResults'
-import SearchTaps from '@/components/UI/search/SearchTaps'
-import { QuoteType } from '@/types/items.types'
-import { useRouter, useSearchParams } from 'next/navigation'
+
 import { MouseEvent, useCallback, useEffect, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+
+import SearchResultAll from '@/components/UI/search/SearchResultAll'
+import SearchResultContainer from '@/components/UI/search/container/SearchResultContainer'
+import SearchTapButtons from '@/components/UI/search/SearchTapButtons'
+
 import { HiSearch } from 'react-icons/hi'
+
+import { QuoteType } from '@/types/items.types'
+import { toast } from 'react-toastify'
 
 interface TotalCountsType {
   byAuthorCount: number
@@ -18,12 +23,14 @@ export default function SearchPage() {
   const type = useSearchParams().get('type') || ''
 
   const [isSearch, setIsSearch] = useState(false)
+  // memo : any 타입은 임시적으로 지정해둔 것으로 향후 수정할 것
   const [items, setItems] = useState<any>('')
 
   const router = useRouter()
 
-  const onClick = (e: MouseEvent<HTMLButtonElement>) => {
-    const type = e.currentTarget.dataset.type
+  const onClickSetResultType = (e: MouseEvent<HTMLButtonElement>) => {
+    const { type } = e.currentTarget.dataset
+    if (!type) return toast.error('알 수 없는 문제로 요청이 전달되지 않았습니다. 해당 문제가 계속 발생하는 경우, 구글폼을 통해서 신고해주세요.')
     router.push(`/search?type=${type}&searchText=${searchText}`)
   }
 
@@ -33,7 +40,7 @@ export default function SearchPage() {
    * @param totalCounts 인물별 AND 키워드별 전체 검색 결과 항목 수를 저장하고 있는 객체
    * @param totalCount 인물별 OR 키워드별 개별 검색 결과 항목 수를 저장하고 있는 객체
    */
-  const processByType = useCallback(
+  const sortByType = useCallback(
     (
       type: string,
       items: QuoteType[],
@@ -43,34 +50,37 @@ export default function SearchPage() {
       switch (type) {
         // 전체 검색 결과에 검색된 항목수를 결합
         case 'all': {
-          const mergeItems = { ...items, ...totalCounts }
-          setItems(mergeItems)
+          setItems({ ...items, ...totalCounts })
           break
         }
         // 개별 검색 결과에 검색된 항목수를 결합
         case 'keyword':
         case 'author': {
-          const mergeItems = { quotes: items, totalCount }
-          setItems(mergeItems)
+          setItems({ quotes: items, totalCount })
         }
       }
     },
     [],
   )
 
+
   const getSearchDataFromDb = useCallback(
     async (type: string | null, searchText: string | null) => {
       if (!(type && searchText)) return
 
       const url = `/api/quotes/search?type=${type}&searchText=${searchText}`
-      const response = await fetch(url)
-      const { status, items, totalCounts, totalCount } = await response.json()
 
-      if (status !== 200) throw new Error('요청 처리에 문제가 발생하였습니다.')
+      try {
+        const response = await fetch(url)
+        const { status, items, totalCounts, totalCount } = await response.json()
 
-      processByType(type, items, totalCounts, totalCount)
+        if (status !== 200) throw new Error('요청 처리에 문제가 발생하였습니다.')
+        sortByType(type, items, totalCounts, totalCount)
+      } catch (error) {
+        console.error('검색 요청 실패:', error)
+      }
     },
-    [processByType],
+    [sortByType],
   )
 
   useEffect(() => {
@@ -84,7 +94,7 @@ export default function SearchPage() {
 
   return (
     <>
-      <h2 className="flex justify-center items-center text-[1.5em] p-[10px]  text-center text-white max-w-[250px] mx-auto bg-gradient-to-b from-[transparent] to-[#00000033]  shadow-[0_9px_2px_0_rgba(0,0,0,0.5)] rounded-[5px] my-[2em] perspective-500  ">
+      <h2 className="flex justify-center items-center text-[1.5em] p-[10px] font-sans  text-center text-white max-w-[280px] mx-auto  border-b-[2px] mt-[4em] mb-[3em] ">
         검색 결과
         <br />
       </h2>
@@ -95,13 +105,11 @@ export default function SearchPage() {
         </p>
       </div>
 
-      <SearchTaps onClick={onClick} />
+      <SearchTapButtons onClick={onClickSetResultType} />
 
       {type === 'all' ? <SearchResultAll items={items} /> : null}
-      {type === 'author' ? <SearchResults key="author" items={items} /> : null}
-      {type === 'keyword' ? (
-        <SearchResults key="keyword" items={items} />
-      ) : null}
+      {type === 'author' ? <SearchResultContainer key="author" items={items} /> : null}
+      {type === 'keyword' ? <SearchResultContainer key="keyword" items={items} /> : null}
     </>
   )
 }

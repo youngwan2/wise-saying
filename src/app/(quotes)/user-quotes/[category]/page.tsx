@@ -1,10 +1,12 @@
 'use client'
-import LoadMoreButton from '@/components/UI/common/ListLoadMoreButton'
-import useInfiniteScroll from '@/custom/useInfiniteScroll'
-import ReplaceMessageCard from '@/components/UI/common/ReplaceMessageCard'
+
 import { useItemMetadataFetch } from '@/custom/useItemMetadataFetch'
-import UserQuoteList from '@/components/UI/quote/UserQuoteList'
-import Title from '@/components/UI/common/Title'
+import useInfiniteScroll from '@/custom/useInfiniteScroll'
+
+import ReplaceMessageCard from '@/components/UI/common/card/ReplaceMessageCard'
+import LoadMoreButton from '@/components/UI/common/button/ListLoadMoreButton'
+import UserQuoteContainer from '@/components/UI/quote/container/UserQuoteContainer'
+import Title from '@/components/UI/common/Title/Title'
 
 interface PropsType {
   params: { category: string }
@@ -32,8 +34,8 @@ export default function UsersPage({ params }: PropsType) {
     return <ReplaceMessageCard childern="데이터가 존재하지 않습니다." />
   return (
     <>
-      <Title current={itemCount} total={totalCount} title={pathName+' 명언'} />
-      <UserQuoteList items={items} />
+      <Title current={itemCount} total={totalCount} title={pathName + ' 명언'} />
+      <UserQuoteContainer items={items} />
       <LoadMoreButton
         size={size}
         onClick={() => setSize(size + 1)}

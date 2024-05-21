@@ -13,9 +13,7 @@ export async function GET(
     const type = req.nextUrl.searchParams.get('type') || ''
     const db = await openDB()
 
-    /**
-     * * 저자별 명언 목록 정보를 반환
-     */
+    /** 명언 목록  */
 
     // 타입이 meta인 경우 조회된 목록의 총 갯수와 최대 페이지를 구하여 반환
     if (category !== 'category-all') {
@@ -56,9 +54,8 @@ export async function GET(
       return NextResponse.json(items)
     }
 
-    /**
-     * * * * * 저자 카테고리 목록 반환
-     */
+    /** 명언 카테고리 목록  */
+
     if (category === 'category-all') {
       const type = req.nextUrl.searchParams.get('type') || ''
 

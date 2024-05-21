@@ -1,15 +1,36 @@
 import EmailInput from './EmailInput'
-import SubmitButton from './SubmitButton'
+
+import { defaultFetch } from '@/utils/fetcher'
+import { Method, defaultConfig } from '@/configs/config.api'
+import { toast } from 'react-toastify'
+import ForgotForm from './ForgotForm'
+import ControlButton from '../../common/button/ControlButton'
 
 interface PropsType {
   uId: string
-  action: (formData: FormData) => void
 }
-export default function ForgotEmail({ uId, action }: PropsType) {
+export default function ForgotEmail({ uId}: PropsType) {
+
+    // Action : 이메일 찾기
+    async function findEmailAction(formData: FormData) {
+      const email =
+        formData
+          .get(uId + 'email')
+          ?.valueOf()
+          .toString() || ''
+      const config = defaultConfig(Method.POST, email)
+      const url = '/api/auth/general-auth/forgot/email'
+      const { success, meg } = await defaultFetch(url, config)
+      if (success) toast.success(meg)
+      else toast.error(meg)
+    }
+  
   return (
-    <form action={action} className="mt-[2em] w-full">
+    <ForgotForm action={findEmailAction} className='mt-[2em] w-full'>
       <EmailInput uId={uId} />
-      <SubmitButton>이메일 찾기</SubmitButton>
-    </form>
+      <ControlButton type='submit' ariaLabel='전송 버튼' className='w-full bg-white text-black font-bold p-[0.7em] mt-[1em] rounded-[5px] focus:outline-none focus:bg-blue-700 hover:bg-gradient-to-br from-[white] to-[#acaaaa]  transition-all'>
+        이메일 찾기
+      </ControlButton>
+    </ForgotForm>
   )
 }

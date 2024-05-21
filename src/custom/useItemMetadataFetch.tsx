@@ -17,6 +17,9 @@ export const useItemMetadataFetch = (
     maxPage: 1,
   })
 
+  const { totalCount, maxPage } = meta
+
+
   async function setMetadata(
     mainCategory: string,
     subCategory: string,
@@ -35,7 +38,6 @@ export const useItemMetadataFetch = (
     setMetadata(mainCategory, subCategory, type)
   }, [mainCategory, subCategory, type])
 
-  const { totalCount, maxPage } = meta
 
   return { totalCount, maxPage }
 }

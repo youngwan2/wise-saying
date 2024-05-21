@@ -1,4 +1,5 @@
 import styles from './common.module.css'
+
 export default function PageLoader({text, isFull}:{text?:string, isFull?:boolean}) {
     return (
         <div className={`${isFull? 'bg-[#1E2F6A]':''} w-full h-[100vh] fixed top-0 left-0 right-0 bottom-0 z-[100000]`}>

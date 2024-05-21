@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Gowun_Dodum } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/layout/Header'
-import ScrollAndNavButtons from '@/components/UI/common/ScrollAndNavButtons'
+import ScrollAndNavButtons from '@/components/UI/common/button/ScrollAndNavButtons'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import Timer from '@/components/UI/common/Timer'

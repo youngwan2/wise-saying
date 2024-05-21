@@ -1,14 +1,15 @@
-
-import ReplaceMessageCard from '@/components/UI/common/ReplaceMessageCard'
-import DetailPageControlButtons from '@/components/UI/detail-quote/DetailPageControlButtons'
-import Comment from '@/components/UI/comment/Comment'
-import { openDB } from '@/utils/connect'
-import ShareButtons from '@/components/UI/detail-quote/ShareButtons'
 import { headers } from 'next/headers'
-import DetailQuote from '@/components/UI/quote/DetailQuote'
-import QuoteLikeBox from '@/components/UI/detail-quote/QuoteLikeBox'
+
+import Comment from '@/components/UI/comment/Comment'
+import ReplaceMessageCard from '@/components/UI/common/card/ReplaceMessageCard'
+import DetailPageControlButtons from '@/components/UI/detail-quote/button/DetailPageControlButtons'
+import DetailQuoteContent from '@/components/UI/quote/content/DetailQuoteContent'
+import QuoteLikeButton from '@/components/UI/detail-quote/button/QuoteLikeButton'
+import ShareContainer from '@/components/UI/detail-quote/ShareContainer'
+import RecommandQuoteList from '@/components/UI/detail-quote/RecommandQuoteList'
+
 import { config } from '@/configs/config.url'
-import RecommandQuote from '@/components/UI/detail-quote/RecommandQuote'
+import { openDB } from '@/utils/connect'
 
 
 const userCardSelectQuery = `
@@ -36,6 +37,7 @@ export default async function DetailPage({
   const type = headers()?.get('x-path-type') || ''
   const query = type !== 'no-user' ? userCardSelectQuery : adminCardSelectQuery
 
+  /** GET | 명언 조회 */
   async function getQuoteDetail(id: string) {
     'use server'
     try {
@@ -46,48 +48,51 @@ export default async function DetailPage({
       return item
     } catch (error) {
       console.error(
-        '/app/(quotes)/quotes/[category]/[name]/[id]/page.tsx',
+        '명언 정보를 읽어오지 못함:',
         error,
       )
       return false
     }
   }
 
+  /** GET | 추천명언 조회 */
   async function getRecommandQuote() {
     const url = `${config.apiPrefix}${config.apiHost}/api/quotes/today?random-count=10`
-    const response = await fetch(url)
-    const { items, success } = await response.json()
+    try {
+      const response = await fetch(url)
+      const { items, success } = await response.json()
+      if (success) return items
 
-    if (success) return items
-    return false
+    } catch (error) {
+      console.error('추천명언을 가져오지 못함:', error)
+      return false
+    }
   }
-
 
   const item = await getQuoteDetail(id)
   const recommandItems = await getRecommandQuote() || []
 
 
   if (!item || !recommandItems) return <ReplaceMessageCard childern="데이터를 불러오는 중입니다." />
-
-
   return (
     <article className="sm:p-[4em] p-[1em]  min-h-[100vh] h-full  mx-auto my-[3em]  perspective-500 flex flex-col max-w-[1300px] relative">
 
       {/* 명언 텍스트 영역 */}
-      <DetailQuote item={item} />
-      <QuoteLikeBox id={id} textColor={'text-black'} />
+      <DetailQuoteContent item={item} />
+      {/* 좋아요 버튼 */}
+      <QuoteLikeButton id={id} textColor={'text-black'} />
       <div className="flex">
         {/* 컨트롤 버튼 */}
         <DetailPageControlButtons item={item} isUserQuote={type === 'user' ? true : false} />
-        {/* 공유 버튼 */}
-        <ShareButtons />
+        {/* 공유 */}
+        <ShareContainer />
       </div>
 
       {/* 댓글 영역 */}
       <Comment id={id} />
 
       {/* 추천 명언 */}
-      <RecommandQuote recommandItems={recommandItems} />
+      <RecommandQuoteList recommandItems={recommandItems} />
 
     </article>
   )

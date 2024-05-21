@@ -1,6 +1,7 @@
-import { ReplyInfoType } from '@/types/items.types'
-import ReplaceMessageCard from '../common/ReplaceMessageCard'
+import ReplaceMessageCard from '../common/card/ReplaceMessageCard'
 import ReplyCard from './ReplyCard'
+
+import { ReplyInfoType } from '@/types/items.types'
 
 interface PropsType {
   isShowReplies:boolean

@@ -1,25 +1,24 @@
-import { useCallback, useEffect, useState } from 'react'
-import MypageMyQuotesCategoryList from './MypageMyQuotesCategoryList'
-import MypageMyQuotesList from './MypageMyQuotesList'
+import { Fragment, useCallback, useEffect, useState } from 'react'
+
+import MypageMyQuotesCategoryList from './list/MypageMyQuotesCategoryList'
+import MypageMyQuotesList from './list/MypageMyQuotesList'
 import Pagination from '../common/Pagination'
-import ReplaceMessageCard from '../common/ReplaceMessageCard'
+import ReplaceMessageCard from '../common/card/ReplaceMessageCard'
+
 import { HiRefresh } from 'react-icons/hi'
+import { UserQuotesType } from '@/types/items.types'
+import ControlButton from '../common/button/ControlButton'
+import Container from '../common/container/Container'
 
 interface PropsType {
   page: number
   setPage: (p: number) => void
   userQuotes: UserQuotesType[]
   count: number
-  onClickQuoteUpdate:()=>void
+  onClickQuoteUpdate: () => void
 }
 
-export interface UserQuotesType {
-  quote_id: number
-  quote: string
-  author: string
-  category: string
-  email:string
-}
+
 
 const MAX_SIZE = 5
 
@@ -104,14 +103,21 @@ export default function MypageMyQuote({
 
   if (!userQuotes)
     return <ReplaceMessageCard childern="데이터를 불러오는 중입니다." />
-  if(userQuotes.length< 1) return <ReplaceMessageCard childern='데이터가 존재하지 않습니다.'/>
+  if (userQuotes.length < 1) return <ReplaceMessageCard childern='데이터가 존재하지 않습니다.' />
   return (
-    <>
+    <Container elementName={Fragment}>
       <MypageMyQuotesCategoryList
         categories={categories}
         onClickCategoryFilter={onClickQuotesFilter}
       />
-      <button aria-label="목록 갱신하기" className='absolute border p-[5px] text-white right-[5%]' onClick={onClickQuoteUpdate}><HiRefresh/></button>
+
+      <ControlButton
+        ariaLabel='목록 갱신 버튼'
+        className='absolute border p-[5px] text-white right-[5%]'
+        onClick={onClickQuoteUpdate}>
+        <HiRefresh />
+      </ControlButton>
+
       <MypageMyQuotesList
         userQuotes={userQuotes}
         selectedMyQuotes={selectedMyQuotes}
@@ -122,6 +128,6 @@ export default function MypageMyQuote({
         page={page}
         setPage={setPage}
       />
-    </>
+    </Container>
   )
 }

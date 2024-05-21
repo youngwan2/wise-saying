@@ -11,7 +11,7 @@ import { toast } from 'react-toastify'
  * @param path views: 관리자가 관리하는 명언 카드 조회, user-card-views: 사용자가 관리하는 명언카드 조회
  * @returns views
  */
-export async function getQuoteViewsFromDB(quoteId: number, path: 'user-card-views'|'views') {
+export async function getQuoteViewsFromDB(quoteId: number, path: 'user-card-views' | 'views') {
   const url = '/api/quotes/' + quoteId + '/' + path
   try {
     const response = await fetch(url)
@@ -73,21 +73,18 @@ export const getApiMetaDataFromServer = async (
   subCategory: string,
   type: string,
 ) => {
-  switch (type) {
-    case 'users': {
-      const url = `${config.apiPrefix}${config.apiHost}/api/quotes/${mainCategory}/post/categories/${subCategory}?type=meta`
-      return await fetchModule(url)
-    }
-    case 'authors': {
-      const url = `${config.apiPrefix}${config.apiHost}/api/quotes/${mainCategory}/${subCategory}?type=meta`
-      return await fetchModule(url)
-    }
-  }
+
+  const url =
+    type === 'users'
+      ? `${config.apiPrefix}${config.apiHost}/api/quotes/${mainCategory}/post/categories/${subCategory}?type=meta`
+      : type === 'authors'
+        ? `${config.apiPrefix}${config.apiHost}/api/quotes/${mainCategory}/${subCategory}?type=meta`
+        : null
+  if(!url) return alert('형식과 맞지 않습니다. 확인 후 다시 요청 해주세요.')
+  return await fetchModule(url)
 }
 
-/**
- * GET | 랜덤으로 명언 정보 불러오기
- */
+/** GET | 랜덤으로 명언 정보 불러오기 */
 export const getTodayQuotesFromDb = async () => {
   const url = `${config.apiPrefix}${config.apiHost}/api/quotes/today`
   const configs = getDefaultConfig(Method.GET, false)

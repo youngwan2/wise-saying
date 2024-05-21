@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react'
 import useHasToken from '@/custom/useHasToken'
 import useSWR from 'swr'
 
-import BookmarkCloseButton from './BookmarkCloseButton'
+import BookmarkCloseButton from './button/BookmarkCloseButton'
 import BookmarkPagination from './BookmarkPagination'
 import BookmarkList from './BookmarkList'
 
@@ -82,14 +82,12 @@ export default function BookmarkModal() {
   )
 
   useEffect(() => {
-    if (!hasData) return
-    setBookmarkListCount(total)
+    if (hasData) setBookmarkListCount(total)
   }, [setBookmarkListCount, total, hasData])
 
+  // 북마크 목록에 변동이 생기면 갱신
   useEffect(() => {
-    if (isUpdate) {
-      mutate().then(() => setIsUpdate(false))
-    }
+    if (isUpdate) mutate().then(() => setIsUpdate(false))
   }, [isUpdate, setIsUpdate, mutate])
 
   if (!toggleState) return <></>

@@ -1,7 +1,6 @@
 import type { ConsentsType } from "@/types/items.types"
 import { ChangeEvent, MouseEvent, useState } from "react"
 import PolicyModal from "./PolicyModal"
-import { toast } from "react-toastify"
 import { createPortal } from "react-dom"
 
 interface ProsType {
