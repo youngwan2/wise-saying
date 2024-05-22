@@ -18,7 +18,6 @@ export default function SignInPasswordInput({
 
 
   function handlePassword(e: ChangeEvent<HTMLInputElement>) {
-
     const password = e.target.value
     setPassword(password)
     passwordChecker(password)

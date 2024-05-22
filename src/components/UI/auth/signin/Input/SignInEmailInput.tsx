@@ -21,7 +21,6 @@ interface PropsType {
 }
 
 const URL = '/api/auth/general-auth/check-email-duplication'
-
 export default function SignInEmailInput({
   isEmail,
   email,
@@ -39,14 +38,14 @@ export default function SignInEmailInput({
     return setIsEmail(false)
   }
 
+
   // POST | 이메일 중복 및 본인인증 체크
   async function userExists(email: string) {
     setIsLoading(true)
-    const config = defaultConfig(Method.POST, email)
-    const { success, meg } = await defaultFetch(URL, config)
+    const { success, meg } = await postFetch(email)
     if (success) {
       setExistsEmail(true)
-      toast.success(meg + '다음을 진행해 주세요.')
+      toast.success(meg + '이메일 인증을 진행해 주세요. 인증번호는 현재 입력하신 이메일로 전송되므로 확인 후 입력해 주세요.')
     }
     if (!success) {
       setExistsEmail(false)
@@ -62,7 +61,7 @@ export default function SignInEmailInput({
     setEmail(email)
   }
 
-  function onClickCheck() {
+  function onClickDupEmailCheck() {
     userExists(email)
   }
 
@@ -90,7 +89,7 @@ export default function SignInEmailInput({
         />
         <DupEmailCheckButton
           isLoading={isLoading}
-          onClickCheck={onClickCheck}
+          onClickDupEmailCheck={onClickDupEmailCheck}
         />
       </div>
       <ValidityMessage isPass={isEmail}>
@@ -99,3 +98,15 @@ export default function SignInEmailInput({
     </div>
   )
 }
+
+
+
+  /**
+   * 이메일 도메인의 휴효성 및 중복 확인 요청
+   * @param email 이메일 ex. example@domain.com
+   * @returns 성공/실패 유무에 대한 boolean 과 메시지를 {success,meg} 형태로 반환
+   */
+  async function postFetch(email: string) {
+    const config = defaultConfig(Method.POST, email)
+    return await defaultFetch(URL, config)
+  }
