@@ -8,7 +8,7 @@ export default function AdminHeader() {
                 <ul className="flex">
                     {/* <li className="px-[1em]"><Link href={'/admin'}>통계</Link> </li> */}
                     <li className="px-[1em]"><Link href={'/admin/quotes-management'}>명언 등록</Link> </li>
-                    {/* <li className="px-[1em]"><Link href={'/admin/quotes-management'}>인물정보 등록</Link> </li> */}
+                    <li className="px-[1em]"><Link href={'/admin/authors-management'}>인물 등록</Link> </li>
                     <li className=" z-[100000000000000000] px-[1em]"><Link href={'/'}>돌아가기</Link> </li>
                 </ul>
             </nav>
