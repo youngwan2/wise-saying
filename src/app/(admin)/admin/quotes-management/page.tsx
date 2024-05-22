@@ -8,6 +8,28 @@ import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'reac
 
 export default function QuotesManagementPage() {
 
+
+    const fields = [
+        {
+          id: 'category',
+          label: '카테고리',
+          type: 'input',
+          name: 'category',
+        },
+        {
+          id: 'content',
+          label: '내용',
+          type: 'textarea',
+          name: 'content',
+        },
+        {
+          id: 'author',
+          label: '작성자',
+          type: 'input',
+          name: 'author',
+        }
+      ];
+
     const [isPass, setIsPass] = useState(false)
 
     function updateIsPass(success:boolean, setState:Dispatch<SetStateAction<boolean>>){
@@ -39,12 +61,14 @@ export default function QuotesManagementPage() {
             isAdmin: 'TRUE'
         }
         const url = `/api/admin/quotes/create`
-        const result = await postFetcher(url, body)
-        console.log(result)
+        const {meg} = await postFetcher(url, body)
+        
+        alert(meg)
     }
 
     if(!isPass) return <ReplaceMessageCard childern='접근 권한이 없습니다.'/>
     return (
-        <AdminWriteForm addPostAction={addPostAction} />
+        <AdminWriteForm addPostAction={addPostAction} fields={fields} formTitle={'명언 등록'} />
     )
 }
+

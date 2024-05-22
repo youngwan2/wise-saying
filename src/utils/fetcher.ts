@@ -33,7 +33,7 @@ export const getFetcher = async (
 
 export const postFetcher = async (url: string, ...data: any) => {
   const config = defaultConfig(Method.POST, ...data)
-  const isSuccess: boolean = await defaultFetch(url, config)
+  const isSuccess = await defaultFetch(url, config)
   return isSuccess
 }
 
