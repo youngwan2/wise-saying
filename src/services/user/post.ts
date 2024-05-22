@@ -90,22 +90,19 @@ export const reqLogin = async ({ ...userInfo }: UserType) => {
   if (!success) toast.error(meg)
 }
 
-/**
- * POST | 회원가입 요청
- * @param email
- * @param password
- * @param reConfirmPw
- * @returns
- */
-
 interface SignInUserType {
   email: string
   password: string
   reConfirmPw: string
 }
 
-
-export async function reqSingIn({ ...userInfo }: SignInUserType, consents: ConsentsType) {
+/**
+ * POST | 회원가입 요청
+ * @param userInfo  
+ * @param consents 
+ * @returns 로그인 성공 유무 반환(true/false)
+ */
+export async function reqSignIn({ ...userInfo }: SignInUserType, consents: ConsentsType) {
   const body = { ...userInfo, consents }
   const config = defaultConfig(Method.POST, body)
   const url = '/api/auth/general-auth/signin'
