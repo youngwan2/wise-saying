@@ -1,5 +1,5 @@
 import { openDB } from '@/utils/connect'
-import { oauth2UserInfoExtractor, tokenVerify } from '@/utils/auth'
+import { tokenVerify } from '@/utils/auth'
 import { NextRequest, NextResponse } from 'next/server'
 import { HTTP_CODE } from '@/app/http-code'
 import { aiProfanityFilter } from '@/ai'
@@ -77,18 +77,7 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
       meg: '댓글 형식은 공백을 포함하여 2자 이상 입력해야 합니다.',
     })
 
-  const { userId: socialUserId } = (await oauth2UserInfoExtractor()) || {
-    email: '',
-    userId: '',
-  }
-
   try {
-    // 소셜 로그인
-    if (socialUserId) {
-      db.query(insertQuery, [comment, socialUserId, quoteId])
-      db.end()
-      return NextResponse.json(HTTP_CODE.CREATED)
-    }
 
     // 일반 로그인 | 토큰 유효성 검증
     const { user, ...HTTP } = tokenVerify(req, true) as any
@@ -132,20 +121,6 @@ export async function PATCH(req: NextRequest, res: { params: { id: string } }) {
   const db = await openDB()
 
   try {
-    const { userId: socialUserId } = (await oauth2UserInfoExtractor()) || {
-      email: '',
-      userId: '',
-    }
-
-    // 소셜 로그인
-    if (socialUserId) {
-      db.query(updateQuery, [comment, socialUserId, commentId])
-      db.end()
-      return NextResponse.json(
-        HTTP_CODE.CREATED
-      )
-    }
-
     // 일반 로그인 | 토큰 유효성 검증
     const { user, ...HTTP } = tokenVerify(req, true) as any
     if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
@@ -175,17 +150,6 @@ export async function DELETE(
   const commentId = res.params.id || ''
 
   try {
-    // 소셜 로그인
-    const { userId: socialUserId } = (await oauth2UserInfoExtractor()) || {
-      email: '',
-      userId: '',
-    }
-    if (socialUserId) {
-      await db.query(deleteQuery, [commentId])
-      db.end()
-      return NextResponse.json(HTTP_CODE.NO_CONTENT)
-    }
-
     // 일반 로그인 | 토큰 유효성 검증
     const { user, ...HTTP } = tokenVerify(req, true) as any
     if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)

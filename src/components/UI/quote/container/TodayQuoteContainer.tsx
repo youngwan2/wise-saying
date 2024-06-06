@@ -1,13 +1,15 @@
 'use client'
 
 import { Fragment } from 'react'
+
 import Container from '../../common/container/Container'
 import TodayQuoteList from '../list/TodayQuoteList'
 
-import gsap from 'gsap'
 import TextPlugin from 'gsap/TextPlugin'
 
 import { HiCalendarDays } from 'react-icons/hi2'
+
+import gsap from 'gsap'
 
 
 gsap.registerPlugin(TextPlugin)

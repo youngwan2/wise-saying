@@ -1,17 +1,15 @@
-import { Session } from "next-auth"
 import { MouseEventHandler } from "react"
 
 interface PropsType {
     onClick:MouseEventHandler<HTMLButtonElement>
-    session: Session | null
  }
   
-export default function MypageActionButtons({onClick, session}:PropsType) {
+export default function MypageActionButtons({onClick}:PropsType) {
 return (
   <>
          <button
           aria-label="수정하기 버튼으로, 클릭 시 입력된 정보로 패스워드(비밀번호)가 변경"
-          className={`${session ? 'hidden' : ''} bg-white text-black font-bold px-3 py-[8px] hover:bg-[#e6e3e3] rounded-[3px] mr-2`}
+          className={`bg-white text-black font-bold px-3 py-[8px] hover:bg-[#e6e3e3] rounded-[3px] mr-2`}
         >
           수정하기
         </button>

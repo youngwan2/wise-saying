@@ -8,7 +8,7 @@ export async function GET() {
     try {
         const db = await openDB();
 
-          const selectQuery = `
+        const selectQuery = `
         SELECT A.quote_id AS quote_id, quote, author, job, birth, intro, category, views 
         FROM quotes A 
         INNER JOIN views B ON A.quote_id = B.quote_id

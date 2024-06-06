@@ -2,7 +2,6 @@
 
 import { MouseEventHandler, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { useSession } from 'next-auth/react'
 import useHasToken from '@/custom/useHasToken'
 import { useBookmarkUpdate, useCardZoomInOutStore } from '@/store/store'
 
@@ -25,14 +24,9 @@ interface PropsType {
 export default function QuotesCardControlButtons({ item, index, isUserQuote }: PropsType) {
 
   const router = useRouter()
-
   const [isDisplay, setIsDisplay] = useState(false)
-
-  const { data: session } = useSession()
-
   const { setIsZoomIn, setCardIndex } = useCardStore()
   const { setIsUpdate } = useBookmarkUpdate()
-
   const hasToken = useHasToken()
 
   function onDisplayButton(){
@@ -43,7 +37,7 @@ export default function QuotesCardControlButtons({ item, index, isUserQuote }: P
 
   // 북마크 추가
   const onBookmarkAdd = async () => {
-    if (!item && !hasToken && !session) return
+    if (!item && !hasToken) return
     const { quote_id } = item
     const type = isUserQuote ? `?type=user` : `?type=no-user`
     const url = `/quotes/authors/${item.author}/${quote_id}` + type

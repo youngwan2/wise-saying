@@ -3,12 +3,14 @@
 import { useCardZoomInOutStore } from "@/store/store";
 import { useSwrFetch } from "@/utils/swr";
 
-import toast from "react-hot-toast";
 import ZommInQuoteCard from "../card/ZoomInQuoteCard";
 import Title from "../../common/Title/Title";
 import ReplaceMessageCard from "../../common/card/ReplaceMessageCard";
 import PopularQuoteList from "../list/PopularQuoteList";
 import RefreshButton from '../button/RefreshButton';
+
+import toast from "react-hot-toast";
+
 
 export default function PopularQuoteContainer() {
 

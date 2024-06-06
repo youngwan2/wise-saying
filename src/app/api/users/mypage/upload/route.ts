@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { openDB } from '@/utils/connect'
-import { oauth2UserInfoExtractor, tokenVerify } from '@/utils/auth'
+import { tokenVerify } from '@/utils/auth'
 import { HTTP_CODE } from '@/app/http-code'
 
 const query = `
@@ -16,15 +16,6 @@ export async function PATCH(req: NextRequest) {
     const { '0': body } = await req.json()
     const { nickname, profile_image } = body
 
-    const { userId: socialUserId, email } =
-      (await oauth2UserInfoExtractor()) || { userId: '', email: '' }
-
-    if (socialUserId) {
-      db.query(query, [nickname, profile_image, email, socialUserId])
-      db.end()
-
-      return NextResponse.json(HTTP_CODE.NO_CONTENT)
-    }
 
     // 토큰 유효성 검증
     const { user, ...HTTP } = tokenVerify(req, true) as any

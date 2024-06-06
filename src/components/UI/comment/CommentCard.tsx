@@ -93,7 +93,9 @@ export default function CommentCard({ comment }: PropsType) {
   const emailInfo = {
     userEmail,
     commentEmail: comment.email,
+
   }
+
   return (
     <>
       <li className="bg-white  min-h-[50px] rounded-[5px] first:mt-[2em] mt-[1em] flex justify-start items-center w-full mx-auto relative">

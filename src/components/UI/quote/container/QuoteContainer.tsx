@@ -2,7 +2,6 @@
 
 import { useCardZoomInOutStore } from '@/store/store'
 
-
 import ZommInQuoteCard from '../card/ZoomInQuoteCard'
 import CardTheme from '../../theme/CardTheme'
 import QuoteList from '../list/QuoteList'

@@ -1,8 +1,10 @@
 "use client"
-import { ItemsType } from '@/types/items.types'
+
 import styles from '../Quotes.module.css'
 
 import { hoverAnimation } from '@/utils/common-func'
+
+import { ItemsType } from '@/types/items.types'
 
 type EmailType = {
     email:string

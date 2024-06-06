@@ -5,13 +5,13 @@ import useHasToken from '@/custom/useHasToken'
 import EmailField from '../field/EmailField'
 import PasswordFields from '../field/PasswordFields'
 import MypageActionButtons from '../button/MypageActionButtons'
+import FormTitle from '../../common/Title/FormTitle'
 
 import { deleteUserInfo } from '@/services/user/delete'
 import { updateUserPassword } from '@/services/user/patch'
 
-import { Session } from 'next-auth'
 import toast from 'react-hot-toast'
-import FormTitle from '../../common/Title/FormTitle'
+
 
 
 interface PropsType {
@@ -21,10 +21,9 @@ interface PropsType {
     profile_image: string
     user_id: number
   }
-  session: Session | null
 }
 
-export default function MypageUserInfoForm({ userInfo, session }: PropsType) {
+export default function MypageUserInfoForm({ userInfo }: PropsType) {
 
   const hasToken = useHasToken()
 
@@ -57,12 +56,10 @@ export default function MypageUserInfoForm({ userInfo, session }: PropsType) {
         비밀번호 변경/ 회원 탈퇴
       </FormTitle>
       <EmailField email={userInfo.email} />
-      <div className={session ? 'hidden' : ''}>
-        <PasswordFields />
-      </div>
+      <PasswordFields />
       {/* 수정 및 탈퇴 버튼 */}
       <div className="mt-[2em]">
-        <MypageActionButtons onClick={onDeleteUserInfo} session={session} />
+        <MypageActionButtons onClick={onDeleteUserInfo} />
       </div>
     </form>
   )

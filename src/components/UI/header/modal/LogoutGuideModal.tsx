@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react'
 import useHasToken from '@/custom/useHasToken'
 import { useRouter } from 'next/navigation'
-import { useSession } from 'next-auth/react'
 
 import Overlay from '../../common/Overlay'
 import ReplaceMessageCard from '../../common/card/ReplaceMessageCard'
@@ -15,7 +14,6 @@ import { logoutUser } from '@/utils/common-func'
 export default function LogoutGuideModal() {
   const {push} = useRouter()
   const hasToken = useHasToken()
-  const { data: session } = useSession()
   const [nickname, setNickname] = useState('')
 
   function onClickLogout() {
@@ -36,7 +34,7 @@ export default function LogoutGuideModal() {
     setNickname(nickname)
   }, [push])
 
-  if (!hasToken && !session) return <ReplaceMessageCard childern='로그아웃 처리 중입니다.' />
+  if (!hasToken) return <ReplaceMessageCard childern='로그아웃 처리 중입니다.' />
   if (hasToken) {
     return (
       <>

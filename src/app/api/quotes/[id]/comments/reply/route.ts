@@ -1,6 +1,6 @@
 import { aiProfanityFilter } from '@/ai'
 import { HTTP_CODE } from '@/app/http-code'
-import { oauth2UserInfoExtractor, tokenVerify } from '@/utils/auth'
+import { tokenVerify } from '@/utils/auth'
 import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -66,24 +66,6 @@ export async function POST(req: NextRequest) {
     })
 
   try {
-    const { userId: soicalUserId } = (await oauth2UserInfoExtractor()) || {
-      email: '',
-      userId: '',
-    }
-
-    // 소셜 로그인
-    if (soicalUserId) {
-      await db.query(insertQuery, [commentId, soicalUserId, content])
-      const selectResult = await db.query(selectQuery, [commentId])
-      const totalCount = selectResult.rowCount
-      const replies = selectResult.rows
-
-      return NextResponse.json({
-        ...HTTP_CODE.CREATED,
-        replies,
-        totalCount,
-      })
-    }
 
     // 일반 로그인
     const { user, ...HTTP } = tokenVerify(req, true) as any
@@ -130,24 +112,12 @@ export async function PATCH(req: NextRequest) {
     })
   }
 
-  const filterJson = await aiProfanityFilter([content]) || '{"judgment": false, "reason": "" }'
-  const { judgment, reason } = JSON.parse(filterJson)
-
-  if (judgment) {
-    return NextResponse.json({ ...HTTP_CODE.BAD_REQUEST, meg: reason })
-  }
-
-
   try {
-    const { userId: soicalUserId } = (await oauth2UserInfoExtractor()) || {
-      email: '',
-      userId: '',
-    }
+    const filterJson = await aiProfanityFilter([content]) || '{"judgment": false, "reason": "" }'
+    const { judgment, reason } = JSON.parse(filterJson)
 
-    // 소셜 로그인
-    if (soicalUserId) {
-      await db.query(updateQuery, [content, replyId])
-      return NextResponse.json(HTTP_CODE.CREATED)
+    if (judgment) {
+      return NextResponse.json({ ...HTTP_CODE.BAD_REQUEST, meg: reason })
     }
 
     // 일반 로그인
@@ -175,17 +145,6 @@ export async function DELETE(req: NextRequest) {
   const db = await openDB()
 
   try {
-    const { userId: soicalUserId } = (await oauth2UserInfoExtractor()) || {
-      email: '',
-      userId: '',
-    }
-
-    // 소셜 로그인
-    if (soicalUserId) {
-      await db.query(deleteQuery, [replyId])
-      return NextResponse.json(HTTP_CODE.CREATED)
-    }
-
     // 일반 로그인
     const { user, ...HTTP } = tokenVerify(req, true) as any
     if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)

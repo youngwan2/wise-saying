@@ -12,7 +12,6 @@ import ReqLoginInput from '../signin/Input/ReqLoginInput'
 import SignInGuideLink from '../signin/SignInGuideLink'
 import ForgotLink from '../forgot/ForgotLink'
 
-import LoginSocial from './LoginSocial'
 import LoginDefault from './LoginDefault'
 
 
@@ -57,7 +56,6 @@ export default function LoginForm() {
     >
       <FormTitle>로그인</FormTitle>
       <BackButton onClickBack={onClickBackMove} />
-      <LoginSocial />
       <LoginDefault />
       <ReqLoginInput isLoading={isLoading} />
       <div className="flex items-center justify-center my-[2em]">

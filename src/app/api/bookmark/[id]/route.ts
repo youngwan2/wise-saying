@@ -1,6 +1,6 @@
 import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
-import { oauth2UserInfoExtractor, tokenVerify } from '@/utils/auth'
+import { tokenVerify } from '@/utils/auth'
 import { HTTP_CODE } from '@/app/http-code'
 
 const deleteQuery = `
@@ -24,22 +24,10 @@ export async function DELETE(
   const { id: quoteId } = res.params
   const type = req.nextUrl.searchParams.get('type')
 
-
   const selectedQuery = type === 'no-user' ? deleteQuery : userBookmarkDeleteQuery
-
 
   const db = await openDB()
   try {
-    const { userId: socialUserId, email } = (await oauth2UserInfoExtractor()) || {
-      userId: '',
-    }
-    // 소셜 로그인
-    if (socialUserId) {
-      await db.query(selectedQuery, [quoteId, email])
-      db.end()
-      return NextResponse.json(HTTP_CODE.NO_CONTENT)
-
-    }
 
     // 일반 로그인 | 토큰 유효성 검증
     const { user, ...HTTP } = tokenVerify(req, true) as any

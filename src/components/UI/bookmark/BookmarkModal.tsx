@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import { useBookmarkStore, useBookmarkUpdate } from '@/store/store'
-import { useSession } from 'next-auth/react'
 import useHasToken from '@/custom/useHasToken'
 import useSWR from 'swr'
 
@@ -34,7 +33,6 @@ export default function BookmarkModal() {
   const { toggleState, setListCount } = useBookmark()
 
   const hasToken = useHasToken()
-  const { data: session } = useSession()
 
   // SWR | 북마크 리스트 조회
   const {
@@ -42,7 +40,7 @@ export default function BookmarkModal() {
     isLoading,
     mutate,
   } = useSWR(
-    !hasToken || !session ? `/api/bookmark?page=${page}&limit=5` : null,
+    !hasToken ? `/api/bookmark?page=${page}&limit=5` : null,
     getBookmarkListFetcher,
     {
       refreshInterval: 300000,
@@ -64,8 +62,9 @@ export default function BookmarkModal() {
   // DELETE | 북마크 삭제
   const onClickDeleteBookmark = async (bookmarkId: number, type: string) => {
     const isUserQuote = type === undefined ? true : false
-    if (!hasToken && !session) return toast.error('로그인 후 이용해주세요.')
+    if (!hasToken) return toast.error('로그인 후 이용해주세요.')
     setIsDeleting(true)
+  
     const success = await deleteBookmark(bookmarkId, isUserQuote)
     if (success) {
       setIsDeleting(false)

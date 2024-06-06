@@ -1,5 +1,3 @@
-
-
 import SearchQuoteList from "../SearchQuoteList";
 import SearchResultMegContainer from "../container/SearchResultMegContainer";
 import SearchNotFoundMessage from "../message/SearchNotFoundMeg";

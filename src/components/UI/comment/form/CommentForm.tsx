@@ -1,19 +1,21 @@
 'use client'
 
 import { useRef } from 'react'
-import { useSession } from 'next-auth/react'
 import { useParams } from 'next/navigation'
 import useHasToken from '@/custom/useHasToken'
+
 import { KeyedMutator } from 'swr'
 
-import { CommentsInfoType } from '../Comment'
+import TextArea from '../../common/TextArea'
+import ControlButton from '../../common/button/ControlButton'
+import ButtonContainer from '../../common/container/ButtonContainer'
 
 import { postComment } from '@/services/user/post'
 import { textareaAutoResize, clearTextarea } from '@/utils/textarea'
 import { toast } from 'react-toastify'
-import TextArea from '../../common/TextArea'
-import ControlButton from '../../common/button/ControlButton'
-import ButtonContainer from '../../common/container/ButtonContainer'
+
+import { CommentsInfoType } from '../Comment'
+
 
 interface PropsType {
   mutate: KeyedMutator<CommentsInfoType>
@@ -22,10 +24,9 @@ export default function CommentForm({ mutate }: PropsType) {
   const { id } = useParams()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const hasToken = useHasToken()
-  const { data: session } = useSession()
 
   async function addComment(formData: FormData) {
-    if (!hasToken && !session) return toast.error('로그인 후 등록 가능합니다.')
+    if (!hasToken) return toast.error('로그인 후 등록 가능합니다.')
     const comment = formData.get('comment')?.valueOf().toString() || ''
     await postComment(comment, id)
     clearTextarea(textareaRef)

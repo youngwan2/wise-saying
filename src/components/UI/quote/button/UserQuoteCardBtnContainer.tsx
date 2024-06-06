@@ -12,7 +12,6 @@ import { deleteUserQuote } from '@/services/data/delete'
 import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi2'
 
 import { ItemsType } from '@/types/items.types'
-import { Fragment } from 'react'
 
 interface PropsType {
   item: ItemsType

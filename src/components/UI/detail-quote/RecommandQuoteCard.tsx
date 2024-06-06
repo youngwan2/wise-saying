@@ -1,6 +1,6 @@
 import styles from './Quotes.module.css'
 
-import { ItemsType, QuoteType } from "@/types/items.types"
+import { ItemsType } from "@/types/items.types"
 import { hoverAnimation } from "@/utils/common-func"
 import { MouseEventHandler } from "react"
 

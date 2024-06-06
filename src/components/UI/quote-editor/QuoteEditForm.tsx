@@ -12,6 +12,7 @@ import QuoteContentInputContainer from './QuoteContentTextareaContainer'
 import QuoteAuthorInputContainer from './QuoteAuthorInputContainer'
 import QuoteFormButtons from './QuoteFormButtons'
 import ReplaceMessageCard from '../common/card/ReplaceMessageCard'
+import FormTitle from '../common/Title/FormTitle'
 
 import { mutate } from 'swr'
 
@@ -19,8 +20,6 @@ import { updateUserPost } from '@/services/user/patch'
 
 import { hoverAnimation } from '@/utils/common-func'
 import { toast } from 'react-toastify'
-import FormTitle from '../common/Title/FormTitle'
-
 
 
 export type PostType = {

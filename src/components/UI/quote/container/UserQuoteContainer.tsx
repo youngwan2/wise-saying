@@ -1,12 +1,13 @@
 'use client'
 
+import { Fragment } from 'react'
+import { useCardZoomInOutStore } from '@/store/store'
 
 import ZommInQuoteCard from '../card/ZoomInQuoteCard'
-import { useCardZoomInOutStore } from '@/store/store'
 import CardTheme from '../../theme/CardTheme'
 import UserQuoteList from '../list/UserQuoteList'
 import Container from '../../common/container/Container'
-import { Fragment } from 'react'
+
 
 interface PropsType {
   items: {

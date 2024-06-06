@@ -9,11 +9,7 @@ export async function GET(req: NextRequest, res: { params: { id: string } }) {
   try {
     const db = await openDB();
 
-    const selectQuery = `
-    SELECT views
-    FROM views
-    WHERE quote_id = $1 
-    `
+    const selectQuery = ` SELECT views FROM views WHERE quote_id = $1 `
     const selectResult = await db.query(selectQuery, [id])
     const views = selectResult.rows[0]?.views || 0
 
@@ -35,20 +31,10 @@ export async function PATCH(req: NextRequest, res: { params: { id: string } }) {
   try {
     const db = await openDB();
 
-    const selectQuery = `
-    SELECT views
-    FROM views
-    WHERE quote_id = $1 
-    `
-    const insertQuery = `
-    INSERT INTO views(quote_id)
-    VALUES ($1)
-    `
-    const updateQuery = `
-    UPDATE views
-    SET views = $1
-    WHERE quote_id =  $2
-    `
+    const selectQuery = `SELECT views FROM views WHERE quote_id = $1`
+    const insertQuery = `INSERT INTO views(quote_id) VALUES ($1)`
+    const updateQuery = `UPDATE views SET views = $1 WHERE quote_id = $2`
+    
     const selectResult = await db.query(selectQuery, [id])
     const isViews = (selectResult.rowCount || 0) > 0
     const views = isViews ?selectResult.rows[0].views : 0

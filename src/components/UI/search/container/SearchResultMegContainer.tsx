@@ -1,5 +1,3 @@
-
-
 import { ReactNode } from "react";
 import SearchResultMeg from "../message/SearchResultMeg";
 import SearchTapTitle from "../SearchTapTitle";

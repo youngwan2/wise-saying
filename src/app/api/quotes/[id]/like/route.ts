@@ -1,5 +1,5 @@
 import { HTTP_CODE } from '@/app/http-code'
-import { oauth2UserInfoExtractor, tokenVerify } from '@/utils/auth'
+import { tokenVerify } from '@/utils/auth'
 import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -49,47 +49,6 @@ export async function POST(req: NextRequest, res: { params: { id: string } }) {
   try {
     const db = await openDB()
     const quoteId = res.params.id
-
-    // 소셜 로그인
-    const { email: socialEmail, userId: socialUserId } =
-      (await oauth2UserInfoExtractor()) || { email: '', userId: '' }
-
-
-    // 좋아요 중복 체크
-    if (socialUserId) {
-      const checkResult = await db.query(checkSelectQuery, [
-        socialEmail,
-        quoteId,
-      ])
-      const isLiked = checkResult.rows[0].count
-
-      if (Number(isLiked) > 0) {
-        await db.query(deleteQuery, [socialEmail, quoteId])
-        const result = await db.query(likeCountSelectQuery, [quoteId])
-        const likeCount = result.rows[0].count
-        db.end()
-        return NextResponse.json({
-          ...HTTP_CODE.CREATED,
-          meg: '평가를 취소하였습니다.',
-          likeCount,
-          quoteId,
-        })
-      }
-
-      if (Number(isLiked) < 1) {
-        await db.query(insertQuery, [socialUserId, quoteId])
-
-        const result = await db.query(likeCountSelectQuery, [quoteId])
-        const likeCount = result.rows[0].count
-        db.end()
-        return NextResponse.json({
-          ...HTTP_CODE.CREATED,
-          meg: '평가를 반영하였습니다',
-          likeCount,
-          quoteId,
-        })
-      }
-    }
 
     // 일반 로그인
     const { user, ...HTTP } = tokenVerify(req, true) as any

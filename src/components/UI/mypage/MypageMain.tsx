@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { useMypageTapsStore } from '@/store/store'
 import { useSwrFetchWithToken } from '@/utils/swr'
 import useHasToken from '@/custom/useHasToken'
-import { useSession } from 'next-auth/react'
 
 import MypageProfileForm from './form/MypageProfileForm'
 import MypageUserInfoForm from './form/MypageUserInfoForm'
@@ -17,9 +16,8 @@ export default function MypageMain() {
   const tapId = useMypageTapsStore((state) => state.tapId)
   const [page, setPage] = useState(0)
   const hasToken = useHasToken()
-  const { data: session } = useSession()
 
-  const hasLogin = !hasToken && !session
+  const hasLogin = !hasToken
 
   // 유저 정보
   const { data } = useSwrFetchWithToken('/api/users/', true)
@@ -27,7 +25,7 @@ export default function MypageMain() {
 
   // 유저 명언 목록
   const url =
-    (hasToken || session) && tapId === 1
+    (hasToken) && tapId === 1
       ? '/api/users/mypage/posts?userId=' + userInfo.user_id + '&page=' + page
       : null
 
@@ -35,7 +33,7 @@ export default function MypageMain() {
   const { quotes: userQuotes, count: quotesCount } = userQuotesAndCount || {}
 
   if (hasLogin)
-    return <ReplaceMessageCard childern={'로그인 후 이용해주세요.'} isFull/>
+    return <ReplaceMessageCard childern={'로그인 후 이용해주세요.'} isFull />
 
   async function onClickQuotesUpdate() {
     const data = await mutate()
@@ -46,7 +44,7 @@ export default function MypageMain() {
     <article className='border-[1px] border-[rgba(255,255,255,0.1)] w-full'>
       {!userInfo && <ReplaceMessageCard childern='조회할 데이터가 없습니다.' />}
       {tapId === 0 && (
-        <MypageProfileForm userInfo={userInfo} session={session} />
+        <MypageProfileForm userInfo={userInfo} />
       )}
 
       {tapId === 1 && (
@@ -59,7 +57,7 @@ export default function MypageMain() {
         />
       )}
       {tapId === 2 && (
-        <MypageUserInfoForm userInfo={userInfo} session={session} />
+        <MypageUserInfoForm userInfo={userInfo} />
       )}
     </article>
   )

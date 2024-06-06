@@ -1,6 +1,8 @@
-import { hoverAnimation } from '@/utils/common-func'
 import styles from '../UserQuotes.module.css'
+
 import UserQuotesCardControlButtons from '../../quote/button/UserQuoteCardBtnContainer'
+
+import { hoverAnimation } from '@/utils/common-func'
 
 interface PropsType {
   item: {
