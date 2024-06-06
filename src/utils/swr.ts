@@ -14,7 +14,11 @@ export const useSwrFetch = (url: string, refreshTimer:number|undefined, isActRef
   return { data, isLoading, error, mutate }
 }
 
-// accessToken 검증으로 데이터 페치
+/**
+ * 토큰 인증 유무에 따른 GET 분기처리 Fetch
+ * @param url 요청 주소
+ * @param isTokenVertify 토큰 인증 필요 유무
+ */
 export const useSwrFetchWithToken = (
   url: string | null,
   isTokenVertify: boolean,
