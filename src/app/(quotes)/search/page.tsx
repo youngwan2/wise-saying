@@ -108,8 +108,8 @@ export default function SearchPage() {
       <SearchTapButtons onClick={onClickSetResultType} />
 
       {type === 'all' ? <SearchResultAll items={items} /> : null}
-      {type === 'author' ? <SearchResultContainer key="author" items={items} /> : null}
-      {type === 'keyword' ? <SearchResultContainer key="keyword" items={items} /> : null}
+      {type === 'author' ? <SearchResultContainer key="author" title='인물별' items={items} /> : null}
+      {type === 'keyword' ? <SearchResultContainer key="keyword" title='키워드별' items={items} /> : null}
     </>
   )
 }

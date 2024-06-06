@@ -20,26 +20,13 @@ export default function MypageMain() {
   const hasLogin = !hasToken
 
   // 유저 정보
-  const { data } = useSwrFetchWithToken('/api/users/', true)
+  const { data, isLoading, error } = useSwrFetchWithToken('/api/users/', true)
   const { userInfo } = data || {}
 
-  // 유저 명언 목록
-  const url =
-    (hasToken) && tapId === 1
-      ? '/api/users/mypage/posts?userId=' + userInfo.user_id + '&page=' + page
-      : null
+  const isReuest = (hasToken) && tapId === 1
 
-  const { data: userQuotesAndCount, mutate } = useSwrFetchWithToken(url, false)
-  const { quotes: userQuotes, count: quotesCount } = userQuotesAndCount || {}
-
-  if (hasLogin)
-    return <ReplaceMessageCard childern={'로그인 후 이용해주세요.'} isFull />
-
-  async function onClickQuotesUpdate() {
-    const data = await mutate()
-    toast.info(`현재 총 ${data.count} 개의 목록이 갱신되었습니다.`)
-  }
-
+  if (hasLogin) return <ReplaceMessageCard childern='로그인 후 이용 가능합니다.' isFull /> 
+  if (isLoading) return <ReplaceMessageCard childern='유저 정보를 불러오는 중입니다.' />
   return (
     <article className='border-[1px] border-[rgba(255,255,255,0.1)] w-full'>
       {!userInfo && <ReplaceMessageCard childern='조회할 데이터가 없습니다.' />}
@@ -49,11 +36,11 @@ export default function MypageMain() {
 
       {tapId === 1 && (
         <MypageMyQuote
-          userQuotes={userQuotes}
           setPage={setPage}
           page={page}
-          onClickQuoteUpdate={onClickQuotesUpdate}
-          count={quotesCount}
+          userInfo={userInfo}
+          isRequest={isReuest}
+
         />
       )}
       {tapId === 2 && (

@@ -17,6 +17,7 @@ interface PropsType {
     }[]
     totalCount: number
   }
+  title:string
 }
 
 export interface QuoteType {
@@ -24,7 +25,7 @@ export interface QuoteType {
   quote: string
   author: string
 }
-export default function SearchResultContainer({ items }: PropsType) {
+export default function SearchResultContainer({ items,title }: PropsType) {
   const searchText = useSearchParams().get('searchText')
   const router = useRouter()
 
@@ -46,7 +47,7 @@ export default function SearchResultContainer({ items }: PropsType) {
   return (
     <section className="bg-[#e3dddd12] max-w-[730px] mx-auto rounded-[10px] shadow-[inset_-2px_-2px_5px_0_rgba(0,0,0,0.5)] mt-[1.5em] p-[20px] hover:cursor-pointer">
       <SearchResultMegContainer
-                messageInfo={{ title: '인물별', searchText: searchText || '', resultCurrentCount: totalCount }}
+                messageInfo={{ title, searchText: searchText || '', resultTotal:totalCount, resultCurrentCount: totalCount }}
                 containerClassName='border-b-[2px] border-[white] flex items-center justify-between text-white'
       >
       </SearchResultMegContainer>

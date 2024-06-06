@@ -17,7 +17,6 @@ export default function SearchForm() {
   const {isDisplay, setIsDisplay} = useHeaderSearchFormStateStore()
 
   const searchAction = async (formData: FormData) => {
-    console.log(formData)
     const value = formData.get('search') || ''
     router.push(`/search?type=all&searchText=${value}`)
   }

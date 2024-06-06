@@ -66,9 +66,7 @@ export function quotesSelector(item: ItemsType) {
   localStorage.setItem('selectedItem', JSON.stringify(item))
 }
 
-/**
- * * 로그아웃
- */
+/** 로그아웃 */
 export const logoutUser = async () => {
   const url = '/api/auth/general-auth/clear-token'
   const config = getDefaultConfig(Method.GET, false)

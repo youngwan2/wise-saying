@@ -1,21 +1,23 @@
 import { Fragment, useCallback, useEffect, useState } from 'react'
+import { useSwrFetchWithToken } from '@/utils/swr'
 
 import MypageMyQuotesCategoryList from './list/MypageMyQuotesCategoryList'
 import MypageMyQuotesList from './list/MypageMyQuotesList'
 import Pagination from '../common/Pagination'
 import ReplaceMessageCard from '../common/card/ReplaceMessageCard'
-
-import { HiRefresh } from 'react-icons/hi'
-import { UserQuotesType } from '@/types/items.types'
 import ControlButton from '../common/button/ControlButton'
 import Container from '../common/container/Container'
+
+import { toast } from 'react-toastify'
+import { HiRefresh } from 'react-icons/hi'
+
+import { UserQuotesType } from '@/types/items.types'
 
 interface PropsType {
   page: number
   setPage: (p: number) => void
-  userQuotes: UserQuotesType[]
-  count: number
-  onClickQuoteUpdate: () => void
+  userInfo:any
+  isRequest:boolean
 }
 
 
@@ -23,14 +25,29 @@ interface PropsType {
 const MAX_SIZE = 5
 
 export default function MypageMyQuote({
-  userQuotes,
   setPage,
   page,
-  count,
-  onClickQuoteUpdate
+  userInfo,
+  isRequest
 }: PropsType) {
   const [categories, setCategories] = useState<string[]>([''])
   const [selectedMyQuotes, setSelectedMyQuotes] = useState<UserQuotesType[]>([])
+
+  // 유저 명언 목록
+  const url =
+    isRequest
+      ? '/api/users/mypage/posts?userId=' + userInfo.user_id + '&page=' + page
+      : null
+
+  const { data: userQuotesAndCount, mutate } = useSwrFetchWithToken(url, false)
+  const { quotes, count } = userQuotesAndCount || {}
+
+  const userQuotes:UserQuotesType[] = quotes
+
+  async function onClickQuoteUpdate() {
+    const data = await mutate()
+    toast.info(`현재 총 ${data.count} 개의 목록이 갱신되었습니다.`)
+  }
 
   // 명언 필터
   const onClickQuotesFilter = (category: string = 'all') => {
@@ -103,9 +120,10 @@ export default function MypageMyQuote({
 
   if (!userQuotes)
     return <ReplaceMessageCard childern="데이터를 불러오는 중입니다." />
-  if (userQuotes.length < 1) return <ReplaceMessageCard childern='데이터가 존재하지 않습니다.' />
+ if (userQuotes.length<1) return <p className='min-h-[30vh] text-center mt-[8em] text-white'>현재 작성하신 명언정보가 없습니다.</p>
   return (
     <Container elementName={Fragment}>
+
       <MypageMyQuotesCategoryList
         categories={categories}
         onClickCategoryFilter={onClickQuotesFilter}
@@ -117,6 +135,7 @@ export default function MypageMyQuote({
         onClick={onClickQuoteUpdate}>
         <HiRefresh />
       </ControlButton>
+
 
       <MypageMyQuotesList
         userQuotes={userQuotes}
