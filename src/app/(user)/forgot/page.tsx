@@ -23,7 +23,7 @@ export default function ForgotPage() {
     <>
       <section
         ref={sectionRef}
-        className="absolute left-[50%] translate-x-[-50%] top-[30%] max-w-[490px] w-full text-center bg-transparent px-[20px] py-[2em] pb-[4em] rounded-[10px] shadow-[inset_0_0_0_2px_white]"
+        className="absolute left-[50%] translate-x-[-50%] top-[30%] max-w-[490px] w-full text-center bg-transparent px-[20px] py-[2em] pb-[4em] rounded-[10px] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.2)]"
       >
         <ForgotTapButtons tapNum={tapNum} onClickSetTap={onClickSetTap} />
         <Suspense>

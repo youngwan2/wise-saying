@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { useRouter, redirect } from 'next/navigation'
-import { useSession } from 'next-auth/react'
 import useHasToken from '@/custom/useHasToken'
 import useDraggable from '@/custom/useDraggable'
 
@@ -22,16 +21,15 @@ export default function LoginForm() {
 
   const router = useRouter()
   const hasToken = useHasToken()
-  const { data: session } = useSession()
 
   const [isLoading, setIsLoading] = useState(false)
 
   // 토큰 존재 시 리디렉트
   useEffect(() => {
-    if (hasToken || session) {
+    if (hasToken) {
       redirect('/')
     }
-  }, [hasToken, session])
+  }, [hasToken])
 
   // 드래그어블 적용
   useDraggable(loginFormRef, 'free')

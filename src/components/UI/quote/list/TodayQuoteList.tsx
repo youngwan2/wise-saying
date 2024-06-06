@@ -64,7 +64,6 @@ export default function TodayQuoteList({ items }: PropsType) {
                     <TodayQuoteCard
                         key={item.quote_id}
                         quoteInfo={item}
-                        onPush={() => onClickPush(item.author)}
                         onSetText={() => onClickSetText(item.quote)}
                     />
                 )

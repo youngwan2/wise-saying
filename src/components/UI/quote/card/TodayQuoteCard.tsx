@@ -12,13 +12,11 @@ import { QuoteType } from '@/types/items.types'
 
 interface PropsType {
     quoteInfo: QuoteType
-    onPush: MouseEventHandler<HTMLElement>
     onSetText: MouseEventHandler<HTMLButtonElement>
 }
 
 export default function TodayQuoteCard({
     quoteInfo,
-    onPush,
     onSetText,
 }: PropsType) {
 
@@ -46,7 +44,6 @@ export default function TodayQuoteCard({
                 birth={birth}
                 job={job}
                 quote={quote}
-                onPush={onPush}
             />
         </li>
     )

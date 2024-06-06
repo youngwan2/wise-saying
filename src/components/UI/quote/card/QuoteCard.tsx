@@ -4,11 +4,11 @@ import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react'
 import { useCardTheme, useCardZoomInOutStore } from '@/store/store'
 import { useRouter } from 'next/navigation'
 import useTTS from '@/custom/useTTS'
+import useIntersectionObserver from '@/custom/useIntersectionObserver'
 
 import ReplaceMessageCard from '../../common/card/ReplaceMessageCard'
 import QuotesCardControlButtons from '../button/QuoteCardControlButtons'
 import TtsButton from '../../common/button/TtsButton'
-import useIntersectionObserver from '@/custom/useIntersectionObserver'
 import QuoteViewIcon from '../icon/QuoteViewIcon'
 import QuoteProgress from '../progress/QuoteProgress'
 import QuoteDetailMoveButton from '../button/QuoteDetailMoveButton'
@@ -131,7 +131,7 @@ export default function QuoteCard({ item, index }: PropsType) {
        ${isCardTheme
           ? styles.card_theme_on
           : 'rounded-[5px] '} 
-        border border-[rgba(255,255,255,0.1)] px-[15px] py-[35px] w-[95%] my-[1em] max-w-[500px] mx-auto invisible relative   `}
+        border border-[rgba(255,255,255,0.1)] px-[15px] py-[35px] w-[95%] my-[1em] max-w-[500px] mx-auto invisible relative`}
     >
 
       <QuoteProgress progress={progress} />
@@ -144,7 +144,7 @@ export default function QuoteCard({ item, index }: PropsType) {
 
       {/* 프로그래스 숫자형 ex 1/100 */}
       <p>{isPlaying
-        ? <span className='text-[1.05em] animate-pulse absolute bottom-2 left-2 text-white rounded-[10px] p-[2px] px-[7px] flex items-center'><HiSpeakerphone color='gold' className='mr-[5px]' /> {progress || '현재 환경에서는 지원하지 않습니다.'}/100</span>
+        ? <span className='text-[1.05em] animate-pulse absolute bottom-2 left-2 text-white rounded-[10px] p-[2px] px-[7px] flex items-center'><HiSpeakerphone color='gold' className='mr-[5px]' /> {progress+'/100' || '현재 환경에서는 지원하지 않습니다.'}</span>
         : <span className='text-[1.05em] animate-none absolute bottom-2 left-2 text-white rounded-[10px] p-[2px] px-[7px]'></span>}</p>
 
       <QuoteViewIcon viewCount={viewCount} />

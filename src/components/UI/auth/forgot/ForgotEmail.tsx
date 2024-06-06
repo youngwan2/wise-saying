@@ -26,7 +26,7 @@ export default function ForgotEmail({ uId}: PropsType) {
     }
   
   return (
-    <ForgotForm action={findEmailAction} className='mt-[2em] w-full'>
+    <ForgotForm action={findEmailAction} className='mt-[2em] w-full '>
       <EmailInput uId={uId} />
       <ControlButton type='submit' ariaLabel='전송 버튼' className='w-full bg-white text-black font-bold p-[0.7em] mt-[1em] rounded-[5px] focus:outline-none focus:bg-blue-700 hover:bg-gradient-to-br from-[white] to-[#acaaaa]  transition-all'>
         이메일 찾기
