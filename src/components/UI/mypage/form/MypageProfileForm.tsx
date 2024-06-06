@@ -10,7 +10,6 @@ import MypageProfileUpdateButton from '../MypageProfileUpdataButton'
 import { updateUserInfo } from '@/services/user/patch'
 import { imagePreviewReader } from '@/utils/imageloader'
 
-import { Session } from 'next-auth'
 import toast from 'react-hot-toast'
 import { storage } from '@/configs/firebase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
@@ -24,10 +23,9 @@ interface PropsType {
     profile_image: string
     user_id: number
   }
-  session: Session | null
 }
 
-export default function MypageProfileForm({ userInfo, session }: PropsType) {
+export default function MypageProfileForm({ userInfo }: PropsType) {
   const hasToken = useHasToken()
   const [src, setSrc] = useState('')
   const [imageUrl, setImageUrl] = useState('')
@@ -64,7 +62,7 @@ export default function MypageProfileForm({ userInfo, session }: PropsType) {
 
   // 프로필 업데이트
   function profileUpdateAction(form: FormData) {
-    if (!hasToken && !session) return toast.error('접근 권한이 없습니다.')
+    if (!hasToken) return toast.error('접근 권한이 없습니다.')
     const profileUrl = imageUrl
     const nickname = form.get('nickname') || ''
     updateUserInfo(nickname, profileUrl)

@@ -1,6 +1,6 @@
 import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
-import { oauth2UserInfoExtractor, tokenVerify } from '@/utils/auth'
+import { tokenVerify } from '@/utils/auth'
 import { HTTP_CODE } from '@/app/http-code'
 import { Pool } from 'pg'
 
@@ -63,8 +63,6 @@ async function dbQueryModule(db: Pool, email: string = '', pageInfo: { limit: nu
 }
 
 
-/** memo : 조회 시 에는 유저 이메일 기준으로, 추가 시에는 유저id 기준으로
- * (why? 소셜로그인 이메일과 일반 유저 이메일이 동일한 경우 공유하기 위함 -> 물론 회원가입 시 중복가입 자체는 차단) */
 //  GET | 북마크 조회 처리
 export async function GET(req: NextRequest) {
   const page = req.nextUrl.searchParams.get('page') || 0
@@ -75,22 +73,6 @@ export async function GET(req: NextRequest) {
 
   try {
     const db = await openDB()
-    const { userId: socialUserId, email: socialEmail } =
-      (await oauth2UserInfoExtractor()) || { userId: '', email: '' }
-
-    if (socialUserId) {
-
-      const [concatBookmarks, sumTotal] = await dbQueryModule(db, socialEmail as string, { limit, pageNum, limitNum }) || [null, null]
-
-      // 존재하는 경우
-      return NextResponse.json({
-        ...HTTP_CODE.OK,
-        bookmarks: {
-          bookmarks: concatBookmarks,
-          totalCount: sumTotal,
-        },
-      })
-    }
 
     const { user, ...HTTP } = tokenVerify(req, true) as any
     if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
@@ -148,32 +130,6 @@ export async function POST(req: NextRequest) {
 
   try {
     const db = await openDB()
-    const { userId: socialUserId, email: socialEmail } =
-      (await oauth2UserInfoExtractor()) || { userId: '', email: '' }
-
-    if (socialUserId) {
-      // (북마크 목록에 이미 존재하는 경우) 북마크 목록에 추가하지 않기
-      const bookmarkResults = await db.query(selectQuery, [
-        socialEmail,
-        quoteId,
-      ])
-      const isExistingItem = bookmarkResults.rows[0]
-
-      if (isExistingItem) {
-        return NextResponse.json({
-          ...HTTP_CODE.BAD_REQUEST,
-          meg: '이미 북마크 목록에 추가된 카드입니다.',
-        })
-      }
-
-      // (북마크 목록에 없는 경우) 북마크 목록에 추가하기
-      await db.query(insertQuery, [socialUserId, quoteId, url])
-      db.end()
-      return NextResponse.json({
-        ...HTTP_CODE.CREATED,
-        meg: '북마크에 추가되었습니다.',
-      })
-    }
 
     // 토큰 유효성 검증
     const { user, ...HTTP } = tokenVerify(req, true) as any

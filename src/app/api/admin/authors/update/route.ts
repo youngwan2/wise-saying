@@ -32,12 +32,12 @@ export async function POST(req: NextRequest) {
         const schema = Joi.object({
             author: Joi.string()
                 .min(2)
-                .max(15)
+                .max(20)
                 .required(),
 
             job: Joi.string()
                 .min(1)
-                .max(10)
+                .max(20)
                 .required(),
 
             birth: Joi.string()
@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
 
             intro: Joi.string()
                 .min(6)
-                .max(200)
+                .max(500)
                 .required()
         })
 

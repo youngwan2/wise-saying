@@ -22,7 +22,7 @@ export default function CommentEditDeleteMenu({
 }: PropsType) {
   const { userEmail, commentEmail } = emailInfo
 
-  if (userEmail! == commentEmail) return <></>
+  if (userEmail!== commentEmail) return <></>
 
   if (isShow) {
     return (

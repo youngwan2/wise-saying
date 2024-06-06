@@ -7,11 +7,12 @@ import useInfiniteScroll from '@/custom/useInfiniteScroll'
 import Title from '../../common/Title/Title'
 import ReplaceMessageCard from '../../common/card/ReplaceMessageCard'
 import LoadMoreButton from '../../common/button/ListLoadMoreButton'
+import QuoteCategoryList from '../list/QuoteCategoryList'
 
 import { getCategoryCountFromDb } from '@/services/data/get'
 
 import { categoryClassifier } from '@/utils/common-func'
-import QuoteCategoryList from '../list/QuoteCategoryList'
+
 
 
 interface PropsType {

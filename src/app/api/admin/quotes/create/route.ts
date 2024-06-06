@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
                 .max(500)
                 .required(),
             category: Joi.string()
-                .min(4)
+                .min(2)
                 .max(10),
         })
 

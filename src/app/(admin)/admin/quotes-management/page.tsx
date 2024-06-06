@@ -57,8 +57,7 @@ export default function QuotesManagementPage() {
         const body = {
             quote,
             category,
-            author,
-            isAdmin: 'TRUE'
+            author
         }
         const url = `/api/admin/quotes/create`
         const {meg} = await postFetcher(url, body)

@@ -1,7 +1,10 @@
-import { hoverAnimation } from '@/utils/common-func'
 import styles from '../Quotes.module.css'
+
 import { useRouter } from 'next/navigation'
 import { KeyboardEvent } from 'react'
+
+import { hoverAnimation } from '@/utils/common-func'
+
 
 interface PropsType {
   category: string

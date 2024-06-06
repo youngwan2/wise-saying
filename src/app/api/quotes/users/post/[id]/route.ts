@@ -1,6 +1,6 @@
 import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
-import { oauth2UserInfoExtractor, tokenVerify } from '@/utils/auth'
+import { tokenVerify } from '@/utils/auth'
 import { HTTP_CODE } from '@/app/http-code'
 import { aiProfanityFilter } from '@/ai'
 
@@ -53,19 +53,7 @@ export async function PATCH(req: NextRequest, res: { params: { id: number } }) {
     return NextResponse.json({ ...HTTP_CODE.BAD_REQUEST, meg: reason })
   }
 
-  const { userId: socialUserId } = (await oauth2UserInfoExtractor()) || {
-    userId: '',
-    email: '',
-  }
-
   try {
-    // 소셜 로그인 ⭕
-    if (socialUserId) {
-      await db.query(updateQuery, [quote, category, author, postId])
-      await db.end()
-      return NextResponse.json(HTTP_CODE.NO_CONTENT)
-    }
-
     // 일반로그인 |  접근 토큰 검증
     const { user, ...HTTP } = tokenVerify(req, true) as any
     if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
@@ -93,21 +81,6 @@ export async function DELETE(
 
   try {
     const db = await openDB()
-    const { userId: socialUserId } = (await oauth2UserInfoExtractor()) || {
-      userId: '',
-      email: '',
-    }
-
-    // 소셜 로그인 ⭕
-    if (socialUserId) {
-      db.query(deleteQuery, [id])
-
-      return NextResponse.json({
-        status: 201,
-        success: true,
-        meg: '성공적으로 처리 되었습니다.',
-      })
-    }
 
     // 일반 로그인 | 토큰 검증 및 에러 처리
     const { user, ...HTTP } = tokenVerify(req, true) as any

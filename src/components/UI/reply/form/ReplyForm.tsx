@@ -1,9 +1,7 @@
 import { MouseEventHandler, RefObject, useId } from 'react'
 
 import { textareaAutoResize } from '@/utils/textarea'
-import { forwardRef } from 'react'
 import ReplyFormButtons from '../button/ReplyFormButtons'
-import TextArea from '../../common/TextArea'
 import ReplyTextArea from '../textarea/ReplyTextArea'
 
 

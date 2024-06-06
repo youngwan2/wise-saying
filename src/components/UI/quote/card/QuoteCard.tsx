@@ -1,7 +1,5 @@
 import styles from '../Quotes.module.css'
 
-import type { ItemsType } from '@/types/items.types'
-
 import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react'
 import { useCardTheme, useCardZoomInOutStore } from '@/store/store'
 import { useRouter } from 'next/navigation'
@@ -23,6 +21,8 @@ import { viewCounter } from '@/services/data/patch'
 
 import gsap from 'gsap/all'
 import { HiSpeakerphone } from 'react-icons/hi'
+
+import type { ItemsType } from '@/types/items.types'
 
 interface PropsType {
   item: ItemsType

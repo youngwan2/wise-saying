@@ -4,7 +4,6 @@ import styles from './eidtor.module.css'
 import { useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import useHasToken from '@/custom/useHasToken'
-import { useSession } from 'next-auth/react'
 import useDraggable from '@/custom/useDraggable'
 
 import ReplaceMessageCard from '../common/card/ReplaceMessageCard'
@@ -25,13 +24,12 @@ export default function QuoteWriteForm() {
   const formRef = useRef<HTMLFormElement>(null)
   const hasToken = useHasToken()
   const router = useRouter()
-  const { data: session } = useSession()
 
   useDraggable(formRef, null)
 
   // 포스트 요청
   const postQuoteAction = async (form: FormData) => {
-    if (hasToken || session) {
+    if (hasToken) {
       const category = form.get('category')?.valueOf().toString() || ''
       const content = form.get('content')?.valueOf().toString() || ''
       const author = form.get('author')?.valueOf().toString() || ''
@@ -53,7 +51,7 @@ export default function QuoteWriteForm() {
     router.push('/user-quotes')
   }
 
-  if (!hasToken && !session)
+  if (!hasToken)
     return <ReplaceMessageCard childern="로그인 후 이용해주세요." />
   return (
     <form

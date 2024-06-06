@@ -1,5 +1,5 @@
 import { openDB } from '@/utils/connect'
-import { oauth2UserInfoExtractor, tokenVerify } from '@/utils/auth'
+import { tokenVerify } from '@/utils/auth'
 import { NextRequest, NextResponse } from 'next/server'
 import bcrpt from 'bcrypt'
 import joi from 'joi'
@@ -42,11 +42,7 @@ export async function PATCH(req: NextRequest) {
     const db = await openDB()
 
     bcrpt.hash(validPs, SALT, async function (_, hash) {
-      const query = `
-            UPDATE users
-            SET password = $1
-            WHERE user_id = $2
-        `
+      const query = `UPDATE users SET password = $1 WHERE user_id = $2`
       await db.query(query, [hash, userId])
       await db.end()
     })
@@ -58,35 +54,19 @@ export async function PATCH(req: NextRequest) {
   }
 }
 
-const query = `
-DELETE FROM users
-WHERE email = $1 AND user_id = $2
-`
+
 
 // DELETE | 회원탈퇴
 export async function DELETE(req: NextRequest) {
   try {
     const db = await openDB()
 
-    const { email: socialEmail, userId: socialUserId } =
-      (await oauth2UserInfoExtractor()) || { email: '', userId: '' }
-
-    // 소셜 로그인
-    if (socialUserId) {
-      await db.query(query, [socialEmail, socialUserId])
-      await db.end()
-      return NextResponse.json({
-        ...HTTP_CODE.NO_CONTENT,
-        meg: '회원탈퇴 처리가 완료 되었습니다. 그 동안 이용해 주셔서 감사합니다. 회원 관련 서비스 이외에는 정상 이용 가능하니 생각나실 때 한 번씩 이용 해주세요.',
-      })
-    }
-
     // 토큰 검증
     const { user, ...HTTP } = tokenVerify(req, true) as any
     if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
 
     const { email: dbEmail, sub: userId } = user
-
+    const query = `DELETE FROM users WHERE email = $1 AND user_id = $2`
     await db.query(query, [dbEmail, userId])
     await db.end()
     return NextResponse.json({

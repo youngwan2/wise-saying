@@ -4,18 +4,17 @@ import { useRouter } from 'next/navigation'
 import useHasToken from '@/custom/useHasToken'
 import useTTS from '@/custom/useTTS'
 import { useBookmarkUpdate } from '@/store/store'
-import { useSession } from 'next-auth/react'
 
 import ControlButton from '../../common/button/ControlButton'
+import ButtonContainer from '../../common/container/ButtonContainer'
 
 import { addBookmarkItem } from '@/services/data/post'
-
 import { pageSwitch, quotesSelector } from '@/utils/common-func'
 
 import { SlEarphones } from 'react-icons/sl'
 import { HiOutlineBookmark, HiScissors } from 'react-icons/hi2'
 import { toast } from 'react-toastify'
-import ButtonContainer from '../../common/container/ButtonContainer'
+
 
 
 interface PropsType {
@@ -32,14 +31,13 @@ interface PropsType {
 
 export default function DetailPageControlButtons({ item, isUserQuote }: PropsType) {
   const hasToken = useHasToken()
-  const { data: session } = useSession()
   const router = useRouter()
   const setIsUpdate = useBookmarkUpdate((state) => state.setIsUpdate)
 
   const { setText } = useTTS()
 
   const onClickAddBookmark = async () => {
-    if (!item && !hasToken && !session)
+    if (!item && !hasToken)
       return toast.error('로그인 후 이용 가능합니다.')
 
     const { quote_id: quoteId } = item

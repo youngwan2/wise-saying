@@ -1,13 +1,17 @@
 'use client'
 
-import { Method, getDefaultConfig } from '@/configs/config.api'
+import { useCallback, useEffect, useState } from 'react'
 import useHasToken from '@/custom/useHasToken'
+
+import ControlButton from '../../common/button/ControlButton'
+
 import { postLike } from '@/services/user/post'
 import { defaultFetch } from '@/utils/fetcher'
-import { useSession } from 'next-auth/react'
-import { useCallback, useEffect, useState } from 'react'
+import { Method, getDefaultConfig } from '@/configs/config.api'
+
 import { toast } from 'react-toastify'
-import ControlButton from '../../common/button/ControlButton'
+
+
 
 interface PropsType {
   id: string
@@ -19,7 +23,6 @@ export default function QuoteLikeButton({ id, textColor }: PropsType) {
   const [quoteId, setQuoteId] = useState(0)
 
   const hasToken = useHasToken()
-  const { data: session } = useSession()
 
 
   function updateLikeCount(results: { likeCount: number, quoteId: number }) {
@@ -29,7 +32,7 @@ export default function QuoteLikeButton({ id, textColor }: PropsType) {
   }
 
   const handleLikeClick = async () => {
-    if (!hasToken && !session) return toast.error('로그인 후 이용 가능 합니다.')
+    if (!hasToken) return toast.error('로그인 후 이용 가능 합니다.')
     const { isSuccess = false, likeCount = 0 } = (await postLike(Number(id))) || {}
 
     if (isSuccess) updateLikeCount({ likeCount, quoteId })
