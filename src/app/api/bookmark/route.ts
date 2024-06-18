@@ -52,6 +52,7 @@ async function dbQueryModule(db: Pool, email: string = '', pageInfo: { limit: nu
 
   const countResults1 = await db.query(countSelectQuery, [email])
   const countResults2 = await db.query(userBookmarksCountSelectQuery, [email])
+
   const bookmarks1 = itemResults1.rows
   const bookmarks2 = itemResults2.rows
   const concatBookmarks = bookmarks1.concat(bookmarks2)

@@ -172,7 +172,7 @@ export default function Canvas() {
 
   return (
     <>
-      <article className={`mt-[2em] min-h-[500px] w-[100%] shadow-[0_0_0_1px_white] p-[5px] rounded-[5px]  bg-[#1E306A] z-[1] hover:bg-[rgba(255,255,255,0.1)]`} >
+      <article className={`mt-[2em] min-h-[500px] w-[100%] shadow-[0_0_0_1px_rgba(255,255,255,0.3)] p-[5px] rounded-[5px]  bg-[#1E306A] z-[1] hover:bg-[rgba(255,255,255,0.1)]`} >
         <span className="text-white inline-block mb-[1em]">
           {width} X {height}
         </span>
