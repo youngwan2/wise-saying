@@ -65,11 +65,13 @@ export const getLoginExp = () => {
   try {
     const exp = sessionStorage.getItem('exp')
     if (exp) {
-      return Number(exp)
+      return Number(exp || 0)
+    } else {
+      throw new Error('만료 시간 설정실패')
     }
   } catch (error) {
     console.error('exp 가져오기 실패:', error)
-    return false
+    return 0
   }
 }
 

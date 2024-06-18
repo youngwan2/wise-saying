@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react'
 
 import { requestNewAccessToken } from '@/services/user/post'
-import { getLoginExp, setLoginExp } from '@/utils/session-storage'
+import { getLoginExp } from '@/utils/session-storage'
 
 import { HiRefresh } from 'react-icons/hi'
 import { HiClock } from 'react-icons/hi2'
@@ -18,8 +18,8 @@ export default function Timer() {
   const [isExpire, setIsExpire] = useState(false)
 
   /** 토큰 만료 시간 측정 */
-  const checkTokenExp = useCallback(async (exp: number | false | undefined) => {
-    if (typeof exp !== 'number') return
+  const checkTokenExp = useCallback(async (exp: number) => {
+    if (timeScale < 1 ) return 
 
     const currentTime = Math.floor(Date.now() / 1000) // 현재 시간
     const expired60SecondsAgo = exp - (currentTime - MINUTE_TO_SEC) //  현재(sec) - 60(sec) = 1분 전 토큰 만료
@@ -52,7 +52,7 @@ export default function Timer() {
   }
 
   useEffect(() => {
-    const exp = getLoginExp()
+    const exp = getLoginExp() || 0
     const timeId = setInterval(() => checkTokenExp(exp), 1000)
     return () => {
       clearTimeout(timeId)
