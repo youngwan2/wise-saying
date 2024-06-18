@@ -76,10 +76,11 @@ export const tokenVerify = (req: NextRequest, isAccessToken: boolean) => {
 }
 
 /**
+ * memo: isAccessToken 은 현재 사용되지 않으나 refreshToken 관련 처리 로직이 추가된다면 사용될 여지가 있으므로 남겨둠
  * 토큰의 만료시간(exp) 추출
  * @param token 토큰
  * @param isAccessToken accessToken 여부(false 인 경우 refreshToken)
- * @returns
+ * @returns exp : 토큰 만료시간 반환
  */
 export function tokenExpCalculator(token: string, isAccessToken: boolean) {
   const decode = jwt.decode(token) as JwtPayload
@@ -87,31 +88,4 @@ export function tokenExpCalculator(token: string, isAccessToken: boolean) {
   const exp = decode.exp || 0
 
   return exp
-}
-
-export async function oauth2UserInfoExtractor() {
-  try {
-    const session = await auth()
-
-    if (!session) return { userId: 0, email: '' }
-
-    const { email } = session.user || { user: { email: '' } }
-
-    const db = await openDB()
-    const selectQuery = `
-    SELECT user_id FROM users
-    WHERE email = $1 AND provider = $2
-    `
-
-    const results = await db.query(selectQuery, [email, 'social'])
-    const count = results.rowCount || 0
-    const userId = results.rows[0].user_id
-
-    if (count < 1) return { userId: 0, email: '' }
-
-    return { userId, email }
-  } catch (error) {
-    console.error('utils/auth.ts : 소셜 로그인 유저정보 추출 실패:', error)
-    return { userId: '', email: '' }
-  }
 }
