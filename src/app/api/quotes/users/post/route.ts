@@ -1,6 +1,6 @@
 import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
-import { oauth2UserInfoExtractor, tokenVerify } from '@/utils/auth'
+import {  tokenVerify } from '@/utils/auth'
 import { HTTP_CODE } from '@/app/http-code'
 import { aiProfanityFilter } from '@/ai'
 
@@ -25,27 +25,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ...HTTP_CODE.BAD_REQUEST, meg: reason })
   }
 
-  const { userId: socialUserId } = (await oauth2UserInfoExtractor()) || {
-    userId: '',
-    email: '',
-  }
 
   try {
-    // 소셜 로그인 ⭕
-    if (socialUserId) {
-
-      await db.query(insertQuery, [
-        quote,
-        category.trim(),
-        author,
-        socialUserId,
-      ])
-
-      await db.end()
-      return NextResponse.json(HTTP_CODE.NO_CONTENT)
-    }
-
-    // 소셜 로그인 ❌ |  토큰 유효성 검증
     const { user, ...HTTP } = tokenVerify(req, true) as any
     if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
 
