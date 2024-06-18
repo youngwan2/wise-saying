@@ -28,7 +28,7 @@ wise sayings (위대한 말)
 - ※ 프로젝트를 진행하면서 만나게된 다양한 이슈와 개선과정을 블로그에 목차별로 정리 하였습니다.
 - [트러블 슈팅 1 ~ 6](https://duklook.tistory.com/417)
 - [트러블 슈팅 7 ~ 13](https://duklook.tistory.com/432)
-- [트러블 슈팅 14 ~ ] (https://duklook.tistory.com/561)
+- [트러블 슈팅 14 ~ ](https://duklook.tistory.com/561)
 
 
 ## 🧰 프레임워크 / 라이브러리 / 그 외 도구
