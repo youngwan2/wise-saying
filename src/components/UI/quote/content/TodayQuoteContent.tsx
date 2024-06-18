@@ -14,7 +14,7 @@ export default function TodayQuoteContent({ quote, author }: PropsType) {
             <div className="pb-[1em]"> 
                 {/* 명언 */}
                 {quote.split('').map((text, i) => {
-                    return <span key={i} className=" today-quote opacity-100 relative sm:text-[1.25em] text-[1.1em] mt-[0.5em] text-white">{text}</span>
+                    return <span key={i} className=" today-quote opacity-0 relative sm:text-[1.25em] text-[1.1em] mt-[0.5em] text-white">{text}</span>
                 })}
             </div>
 
