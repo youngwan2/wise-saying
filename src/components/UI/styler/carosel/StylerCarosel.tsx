@@ -22,7 +22,7 @@ export default function StylerCarosel({ imagesSrc, onClickDeleteBackgroundImage,
     <>
       <p className='sm:text-[1em] text-[0.85em] relative mt-[2em] mb-[1em] text-white flex items-center'><HiInformationCircle className='mt-[1.5px] mr-[2.5px]' /> {'현재 ' + imagesSrc.length + '개의 이미지가 업로드 되었습니다. 필요에 따라 별도의 이미지를 업로드하여 추가할 수 있습니다.'}</p>
       <article
-        className=" mb-[2em] w-full overflow-hidden px-[3em]  shadow-[0_0_0_1px_white] rounded-[5px]  hover:bg-[#ffffff0e] "
+        className=" mb-[2em] w-full overflow-hidden px-[3em]  shadow-[0_0_0_1px_rgba(255,255,255,0.3)] rounded-[5px]  hover:bg-[#ffffff0e] "
         ref={emblaRef}
       >
         {/*캐러셀 카드 */}

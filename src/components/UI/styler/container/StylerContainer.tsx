@@ -10,11 +10,12 @@ import StylerCarosel from '../carosel/StylerCarosel'
 import BackMoveButton from '../../common/button/BackMoveButton'
 import HideButton from '../button/HideButton'
 import StylerImageUploadForm from '../form/StylerImageUploadForm'
+import CanvasContainer from './CanvasContainer'
 
 import { imagePreviewReader } from '@/utils/imageloader'
 
 import { toast } from 'react-toastify'
-import CanvasContainer from './CanvasContainer'
+
 
 
 export default function StylerContainer() {

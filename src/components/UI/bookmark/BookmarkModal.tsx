@@ -40,7 +40,7 @@ export default function BookmarkModal() {
     isLoading,
     mutate,
   } = useSWR(
-    !hasToken ? `/api/bookmark?page=${page}&limit=5` : null,
+    hasToken ? `/api/bookmark?page=${page}&limit=5` : null,
     getBookmarkListFetcher,
     {
       refreshInterval: 300000,
@@ -48,7 +48,7 @@ export default function BookmarkModal() {
       revalidateIfStale: false,
       revalidateOnFocus: true,
       onErrorRetry: ({ retryCount }) => {
-        if (retryCount >= 5) return
+        if (retryCount >= 3) return
       },
     },
   )
@@ -70,6 +70,12 @@ export default function BookmarkModal() {
       setIsDeleting(false)
       mutate()
     }
+  }
+
+  const onClickPageSwitch=(page:number)=>{
+    setPage(page)
+    mutate()
+
   }
 
   // MEMO : 북마크 갯수를 전역으로 관리하여 아이콘 상단에 표기
@@ -111,12 +117,10 @@ export default function BookmarkModal() {
         maxPageSize={maxPage}
         page={page}
         onClickPrevSwitch={() => {
-          setPage(Math.max(0, page - 1))
-          mutate()
+          onClickPageSwitch(Math.max(0, page - 1))
         }}
         onClickNextSwitch={() => {
-          setPage(Math.min(maxPage, page + 1))
-          mutate()
+          onClickPageSwitch(Math.min(maxPage, page + 1))
         }}
       />
     </article>
