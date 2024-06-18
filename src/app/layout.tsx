@@ -6,13 +6,12 @@ import { Gowun_Dodum } from 'next/font/google'
 
 import Header from '@/components/layout/Header'
 import ScrollAndNavButtons from '@/components/UI/common/button/ScrollAndNavButtons'
-
-
-import Timer from '@/components/UI/common/Timer'
+import TimerContainer from '@/components/UI/common/TimerContainer';
 import Footer from '@/components/layout/Footer'
 
 import { Toaster } from 'react-hot-toast'
 import { ToastContainer } from 'react-toastify'
+
 
 const gowunDodum = Gowun_Dodum({ weight: '400', subsets: ['latin'] })
 
@@ -45,7 +44,7 @@ export default function RootLayout({
     <html lang="ko" className=" bg-gradient-to-tr from-[#23346d] to-[#1b2d69]">
       <body className={`${gowunDodum.className}`} suppressHydrationWarning>
           <Header />
-          <Timer />
+          <TimerContainer />
           <main className="min-h-[100vh] w-full mx-auto max-w-[1700px] relative">
             <ToastContainer pauseOnFocusLoss={false} toastStyle={{top:50}}/>
             <Toaster containerStyle={{height:200, top:50}} />
