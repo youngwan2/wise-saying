@@ -70,6 +70,7 @@ jobs:
         run: |
           zip -r project.zip . -x "node_modules/*"
 
+      # AWS S3 접근에 대한 자격증명 확인
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -77,5 +78,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{env.REGION}}
 
+     # S3 에 업로드
+     # --delete : 동일한 파일이 존재하면 제거 
       - name: Upload to S3
-        run: aws s3 sync build/ s3://my-bucket/build/
+        run: aws s3 sync --delete ${{env.DIST}} s3://${{env.BUCKET}}/
