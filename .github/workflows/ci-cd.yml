@@ -1,0 +1,85 @@
+name: CI and Deploy
+
+on:
+  push:
+    branches:
+      - deploy
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    env:
+      BUCKET: wisesayings-build-buket # 버켓이름
+      DIST: project.zip # 빌드 파일 경로
+      REGION: ap-northeast-2 # S3 배포 지역이름
+      
+      # 환경변수
+      AUTH_SECRET: ${{secrets.AUTH_SECRET}} 
+      JWT_SCREPT: ${{secrets.JWT_SCREPT}}
+      DB_SCREPT: ${{secrets.DB_SCREPT}}
+      OPEN_AI: ${{secrets.OPEN_AI}}
+      NEXT_PUBLIC_FIRE_API_KEY: ${{secrets.NEXT_PUBLIC_FIRE_API_KEY}}
+      NEXT_PUBLIC_FIRE_AUTH_DOMAIN: ${{secrets.NEXT_PUBLIC_FIRE_AUTH_DOMAIN}}
+      NEXT_PUBLIC_FIRE_PROJECT_ID: ${{secrets.NEXT_PUBLIC_FIRE_PROJECT_ID}}
+      NEXT_PUBLIC_FIRE_STORAGE_BUCKET: ${{secrets.NEXT_PUBLIC_FIRE_STORAGE_BUCKET}}
+      NEXT_PUBLIC_FIRE_MESSAGING_SENDER_ID: ${{secrets.NEXT_PUBLIC_FIRE_MESSAGING_SENDER_ID}}
+      NEXT_PUBLIC_FIRE_APP_ID: ${{secrets.NEXT_PUBLIC_FIRE_APP_ID}}
+      NEXT_PUBLIC_FIRE_MEASUREMENT_ID: ${{secrets.NEXT_PUBLIC_FIRE_MEASUREMENT_ID}}
+      POSTGRES_USER: ${{secrets.POSTGRES_USER}}
+      POSTGRES_PW: ${{secrets.POSTGRES_PW}}
+      POSTGRES_HOST: ${{secrets.POSTGRES_HOST}}
+      POSTGRES_PORT: ${{secrets.POSTGRES_HOST}}
+      POSTGRES_DB: ${{secrets.POSTGRES_DB}}
+      MAIL_SERVICE: ${{secrets.MAIL_SERVICE}}
+      USER: ${{secrets.USER}}
+      PASS: ${{secrets.PASS}}
+      FORGOT_AUTH_SCRPET: ${{secrets.FORGOT_AUTH_SCRPET}}
+      AWS_SES_ACCESS_KEY: ${{secrets.AWS_SES_ACCESS_KEY}}
+      AWS_SES_ACCESS_SECRET: ${{secrets.AWS_SES_ACCESS_SECRET}}
+      AWS_SES_REGION: ${{secrets.AWS_SES_REGION}}
+      AWS_SES_SENDER: ${{secrets.AWS_SES_SENDER}}
+      REDIS_HOST: ${{secrets.REDIS_HOST}}
+      REDIS_PORT: ${{secrets.REDIS_PORT}}
+      REDIS_USER: ${{secrets.REDIS_USER}}
+      REDIS_PW: ${{secrets.REDIS_PW}}
+      AWS_S3_BUCKET_NAME: ${{secrets.AWS_S3_BUCKET_NAME}}
+      AWS_S3_BUCKET_REGION: ${{secrets.AWS_S3_BUCKET_REGION}}
+      AWS_S3_ACCESS_KEY: ${{secrets.AWS_S3_ACCESS_KEY}}
+      AWS_S3_ACCESS_SECRET: ${{secrets.AWS_S3_ACCESS_SECRET}}
+        
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm run test
+
+      - name: Build project
+        run: npm run build
+       
+      - name: Archive files # 노드 모듈 제외한 모든 파일들 재귀적으로 압축하여 project.zip 로 변환
+        run: |
+          zip -r project.zip . -x "node_modules/*"
+      - name: Verify project.zip
+        run: ls -l project.zip
+    
+      # AWS S3 접근에 대한 자격증명 확인
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{env.REGION}}
+
+     # S3 에 업로드
+      - name: Upload to S3
+        run: aws s3 cp ${{env.DIST}} s3://${{env.BUCKET}}/project.zip

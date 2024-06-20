@@ -34,8 +34,8 @@ export default function QuoteCard({ item, index }: PropsType) {
   const router = useRouter()
 
   const [viewCount, setViewCount] = useState(0)
-  const { setText, readText, progress, isPlaying } = useTTS()
 
+  const { setText, readText, progress, isPlaying } = useTTS()
   const {isZoomIn, cardIndex} = useCardZoomInOutStore()
   const isCardTheme = useCardTheme((state) => state.isCardTheme)
 

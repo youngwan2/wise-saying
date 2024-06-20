@@ -26,7 +26,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Access-Control-Allow-Origin',
-            value: process.env.NEXT_PUBLIC_PROD_URL, // 배포 주소 호스팅 가능하게
+            value: process.env.NEXT_PUBLIC_PROD_URL || 'https://wise-sayings.com', // 배포 주소 호스팅 가능하게
           },
           {
             key: 'Access-Control-Allow-Origin',
