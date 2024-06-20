@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BUCKET: wisesayings-build-buket # 버켓이름
-      DIST: project.zip # 빌드 파일 이름
+      DIST: ./project.zip # 빌드 파일 경로
       REGION: ap-northeast-2 # S3 배포 지역이름
       
       # 환경변수
