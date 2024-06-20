@@ -6,13 +6,15 @@ interface PropsType {
     type?: "submit" | "reset" | "button"
     dataType?:string |number
     children?: ReactNode
+    title?:string
     onClick?: (MouseEventHandler<HTMLButtonElement>) | (() => void)
 
 }
 
-export default function ControlButton({ onClick, ariaLabel,  dataType, className, type, children }: PropsType) {
+export default function ControlButton({ title,onClick, ariaLabel,  dataType, className, type, children }: PropsType) {
     return (
         <button
+            title={title}
             type={type}
             data-type={dataType}
             onClick={onClick}

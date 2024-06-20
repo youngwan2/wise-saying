@@ -10,6 +10,7 @@ export default function TtsButton({ onClickSetText, className, quote }: PropsTyp
 
     return (
         <button
+            title="명언 듣기"
             aria-label="명언 듣기 버튼"
             className={className}
             onClick={()=>{onClickSetText(quote)}}
