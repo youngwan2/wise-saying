@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BUCKET: wisesayings-build-buket # 버켓이름
-      DIST: ./project.zip # 빌드 파일 경로
+      DIST: project.zip # 빌드 파일 경로
       REGION: ap-northeast-2 # S3 배포 지역이름
       
       # 환경변수
@@ -72,12 +72,6 @@ jobs:
       - name: Verify project.zip
         run: ls -l project.zip
     
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: project-zip
-          path: project.zip
-
       # AWS S3 접근에 대한 자격증명 확인
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -87,6 +81,5 @@ jobs:
           aws-region: ${{env.REGION}}
 
      # S3 에 업로드
-     # --delete : 동일한 파일이 존재하면 제거 
       - name: Upload to S3
-        run: aws s3 sync --delete ${{env.DIST}} s3://${{env.BUCKET}}/
+        run: aws s3 cp ${{env.DIST}} s3://${{env.BUCKET}}/project.zip
