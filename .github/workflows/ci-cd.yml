@@ -69,6 +69,14 @@ jobs:
       - name: Archive files # 노드 모듈 제외한 모든 파일들 재귀적으로 압축하여 project.zip 로 변환
         run: |
           zip -r project.zip . -x "node_modules/*"
+      - name: Verify project.zip
+        run: ls -l project.zip
+    
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: project-zip
+          path: project.zip
 
       # AWS S3 접근에 대한 자격증명 확인
       - name: Configure AWS credentials
