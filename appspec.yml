@@ -10,7 +10,7 @@ permissions:
   - object: /home/ec2-user/awsbeginer-bucket-deploy
     owner: root
     group: root
-    mode: 755
+    mode: 775
 
 hooks:
   AfterInstall:
