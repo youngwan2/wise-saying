@@ -15,13 +15,12 @@ wise sayings (위대한 말)
 - (유지보수) 2024년 4월 15일 ~
 
 ## 🔥 배포
-- AWS EC2, NGINX 리버스 프록시 기반으로 구축되어 배포되었습니다.
-- 비고: 2024.06.19 ~ 2024.06.20 배포 방식을 CI/CD 방식으로 바꾸기 위해 작업 중입니다(#65).
 - 배포: [https://wise-sayings.com](https://wise-sayings.com/)
+- 2024.06.21 경에 구축한 CI/CD 배포 아키텍처 참고용 입니다. EC2 는 내부적으로 Nginx의 리버스 프록시 기능을 적용해서 HTTP 80 포트에 대한 연결을 HTTPS 443 포트로 리디렉트 하는 형식으로 이루어지고 있습니다.
+![image](https://github.com/youngwan2/wise-saying/assets/107159871/6244ae37-837a-420f-80ce-45c3180abced)
 
 
 ## 🛠️ 트러블 슈팅
-- ※ 프로젝트를 진행하면서 만나게된 다양한 이슈와 개선과정을 블로그에 목차별로 정리 하였습니다.
 - [트러블 슈팅 1 ~ 6](https://duklook.tistory.com/417)
 - [트러블 슈팅 7 ~ 13](https://duklook.tistory.com/432)
 - [트러블 슈팅 14 ~ ](https://duklook.tistory.com/561)
