@@ -66,12 +66,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
        
-      - name: Archive files # 노드 모듈 제외한 모든 파일들 재귀적으로 압축하여 project.zip 로 변환
-        run: |
-          zip -r project.zip . -x "node_modules/*"
-      - name: Verify project.zip
-        run: ls -l project.zip
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
