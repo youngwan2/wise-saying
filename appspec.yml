@@ -1,9 +1,16 @@
 version: 0.0
 os: linux
-files: 
-  - source: / 
-    destination: /home/ec2-user/
+# source 가 현재 경로에 있으면  /home/ec2-user/project  경로에 압축 풀기를 실시합니다.
+  - source: /  # 현재 경로에 있는 소스
+    destination: /home/ec2-user/project  # 이 경로로 복사 합니다.
     overwrite: yes
+
+permissions:
+  - object: /home/ec2-user/project
+    owner: root
+    group: root
+    mode: 755
+
 hooks:
   AfterInstall: 
     - location: scripts/deploy.sh
