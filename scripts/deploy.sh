@@ -1,16 +1,14 @@
 #!/bin/bash
-# project.zip 설치 후 해당 파일이 있는 경로로 이동합니다.
-cd /home/ec2-user
 
-# project.zip 의 압축을 현재 경로에 풉니다.
-# -o : 압축을 푸는 경우 기존 동일한 파일을 새로운 파일로 덮어쓰기 합니다.
-unzip -o project.zip -d project
+# project.zip 압축풀기가 완료된 소스파일들이 모인 경로로 이동합니다.
+cd /home/ec2-user/project
 
-# project 폴더로 들어갑니다.
-cd project
+# 패키지가 설치된 경로의 환경변수 추가
+export PATH=$PATH:/home/ec2-user/.nvm/versions/node/v20.11.0/bin
 
 # 종속성이 있으면 설치합니다.
 npm install
 
-# 서버를 재시작 합니다.
-pm2 restart 'start'
+# 서버를 재시작 합니다 -> 여기서 'start'는 사용자 작명입니다. 
+# pm2 에 대한 자세한 부분은 npm pm2 를 찾아보세요. 
+pm2 start ecosystem.config.js --env production --only start
