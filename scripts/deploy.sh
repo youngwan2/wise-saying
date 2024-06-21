@@ -11,4 +11,4 @@ npm install
 
 # 서버를 재시작 합니다 -> 여기서 'start'는 사용자 작명입니다. 
 # pm2 에 대한 자세한 부분은 npm pm2 를 찾아보세요. 
-pm2 restart 'start'
+pm2 start ecosystem.config.js --env production --only start
