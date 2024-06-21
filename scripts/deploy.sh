@@ -3,7 +3,8 @@
 cd /home/ec2-user
 
 # project.zip 의 압축을 현재 경로에 풉니다.
-unzip project.zip -d project
+# -o : 압축을 푸는 경우 기존 동일한 파일을 새로운 파일로 덮어쓰기 합니다.
+unzip -o project.zip -d project
 
 # project 폴더로 들어갑니다.
 cd project
