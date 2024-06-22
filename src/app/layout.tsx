@@ -5,12 +5,12 @@ import type { Metadata } from 'next'
 import { Gowun_Dodum } from 'next/font/google'
 
 import Header from '@/components/layout/Header'
-import ScrollAndNavButtons from '@/components/UI/common/button/ScrollAndNavButtons'
 import TimerContainer from '@/components/UI/common/TimerContainer';
 import Footer from '@/components/layout/Footer'
 
 import { Toaster } from 'react-hot-toast'
 import { ToastContainer } from 'react-toastify'
+import Script from 'next/script';
 
 
 const gowunDodum = Gowun_Dodum({ weight: '400', subsets: ['latin'] })
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   keywords: '명언, 명언 커스텀, quotes, wise sayings, 명언 검색',
   description:
     '당신의 말이 명언이 될 수 있습니다. 단순한 말이 누군가에게는 인생의 전환점이 될 수 있습니다. 명언의 주인공이 되어 주세요.',
-  openGraph : {
+  openGraph: {
     type: "website",
     url: "https://wise-sayings.com",
     title: "Wise Sayings:: 위대한 말",
@@ -42,16 +42,28 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko" className=" bg-gradient-to-tr from-[#23346d] to-[#1b2d69]">
+      {/* 상담 챗 봇 */}
+      <Script id="show_chat_service">
+        {`var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+          (function(){
+          var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+          s1.async=true;
+          s1.src='https://embed.tawk.to/6670d4f4981b6c56477e4b5b/1i0kbvneu';
+          s1.charset='UTF-8';
+          s1.setAttribute('crossorigin','*');
+          s0.parentNode.insertBefore(s1,s0);
+          })();`}
+      </Script>
+
       <body className={`${gowunDodum.className}`} suppressHydrationWarning>
-          <Header />
-          <TimerContainer />
-          <main className="min-h-[100vh] w-full mx-auto max-w-[1700px] relative">
-            <ToastContainer pauseOnFocusLoss={false} toastStyle={{top:50}}/>
-            <Toaster containerStyle={{height:200, top:50}} />
-            {children}
-            <ScrollAndNavButtons />
-          </main>
-        <Footer/>
+        <Header />
+        <TimerContainer />
+        <main className="min-h-[100vh] w-full mx-auto max-w-[1700px] relative">
+          <ToastContainer pauseOnFocusLoss={false} toastStyle={{ top: 50 }} />
+          <Toaster containerStyle={{ height: 200, top: 50 }} />
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   )
