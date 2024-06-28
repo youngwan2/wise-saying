@@ -79,6 +79,8 @@ export default function AiQuotePage() {
 
 
   async function generateAiQuoteBy(prompt: string) {
+    setIsLoading(true)
+
     const userConversation = {
       quote: prompt,
       category: '',
@@ -88,7 +90,7 @@ export default function AiQuotePage() {
     setConversationList([...conversationList, userConversation])
 
     if (!textAreaRef.current) return
-    setIsLoading(true)
+    
     const config = defaultConfig(Method.POST, prompt)
     const url = '/api/quotes/ai'
     const { success: isSuccess, results } = await defaultFetch(url, config)
@@ -99,6 +101,7 @@ export default function AiQuotePage() {
     if (!isSuccess) return toast.error('요청을 처리하던 중 서버에서 문제가 발생하였습니다. 나중에 다시시도 해주세요.')
 
     setIsLoading(false)
+    
     textAreaRef.current.value = ''
   }
 

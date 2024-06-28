@@ -1,4 +1,12 @@
 User-Agent: *
 Allow: /
+Disallow: /mypage/
+Disallow: /admin/
+Disallow: /add-wisesaying/
+Disallow: /login/
+Disallow: /logout/
+Disallow: /forgot/
+Disallow: /signin/
+
 
 Sitemap: https://wise-sayings.com/sitemap.xml

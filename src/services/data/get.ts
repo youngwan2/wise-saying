@@ -84,6 +84,17 @@ export const getApiMetaDataFromServer = async (
   return await fetchModule(url)
 }
 
+//  fetch module
+async function fetchModule(url: string) {
+  const response = await fetch(url)
+  if (!response.ok)
+    throw new Error('명언 카테고리 목록를 가져오지 못 했습니다.')
+
+  const result = await response.json()
+  return result
+}
+
+
 /** GET | 랜덤으로 명언 정보 불러오기 */
 export const getTodayQuotesFromDb = async () => {
   const url = `${config.apiPrefix}${config.apiHost}/api/quotes/today`
@@ -104,15 +115,7 @@ export const getCommentsFormDb = async (url: string) => {
   return { comments, totalCount }
 }
 
-//  fetch module
-async function fetchModule(url: string) {
-  const response = await fetch(url)
-  if (!response.ok)
-    throw new Error('명언 카테고리 목록를 가져오지 못 했습니다.')
 
-  const result = await response.json()
-  return result
-}
 
 /**
  * 사이트 맵 | 카테고리 목록

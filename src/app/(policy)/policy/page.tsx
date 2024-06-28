@@ -1,11 +1,13 @@
 "use client"
 
+import { usePolicyTaps } from "@/store/store";
+
 import BackMoveButton from "@/components/UI/common/button/BackMoveButton";
 import PolicyTaps from "@/components/UI/policy/PolicyTaps";
 import PrivacyPolicy from "@/components/UI/policy/PrivacyPolicy";
 import PrivacyPolicyConsent from "@/components/UI/policy/PrivatePolicyConsent";
 import TermsConditions from "@/components/UI/policy/TermsConditions";
-import { usePolicyTaps } from "@/store/store";
+
 
 export default function PolicyPage() {
 

@@ -1,8 +1,11 @@
-import { forwardRef, type MouseEventHandler } from 'react'
+import { forwardRef } from 'react'
+
+import ControlButton from '../common/button/ControlButton'
+
 import {IoSend}  from 'react-icons/io5'
-interface PropsType {
-  generateAction: (form: FormData) => Promise<string | void>
-}
+
+
+interface PropsType { generateAction: (form: FormData) => Promise<string | void> }
 const Form = forwardRef<HTMLTextAreaElement, PropsType>(
   function Form(props, textAreaRef) {
     const { generateAction} = props
@@ -16,9 +19,9 @@ const Form = forwardRef<HTMLTextAreaElement, PropsType>(
           id="prompt"
           className="p-[10px] w-full resize-none focus:outline-none bg-transparent   min-h-[30px]"
         ></textarea>
-          <button className="hover:text-[#bcbbbb]  mx-[1em] text-[1.25em]">
+          <ControlButton className='hover:text-[#bcbbbb]  mx-[1em] text-[1.25em]' ariaLabel='명언 생성 요청 버튼' title='명언 생성 요청 버튼'>
             <IoSend/>
-          </button>
+          </ControlButton>
       </form>
     )
   },
