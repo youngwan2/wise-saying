@@ -8,7 +8,7 @@ import gsap from 'gsap'
 import { TextPlugin } from 'gsap/all'
 import toast from 'react-hot-toast'
 
-import Conversation from '@/components/UI/ai-quote/Conversation'
+import Conversation from '@/components/UI/ai-quote/ConversationList'
 import Form from '@/components/UI/ai-quote/Form'
 
 export type ConversationType = {
