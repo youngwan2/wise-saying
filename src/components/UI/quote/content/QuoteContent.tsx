@@ -10,7 +10,7 @@ export default function QuoteContent({ readText, author, quote }: PropsType) {
                 <span className="text-[1.11em]">{readText.length > MIN_TEXT_LENGTH ? readText : quote}</span>
             </p>
 
-            <span className="block font-bold mt-[1em] text-right bg-[rgba(255,255,255,0.2)] px-2">
+            <span className="block font-bold mt-[1em] text-right bg-gradient-to-r from-[rgba(255,255,255,0.15)] from-35% to-[rgba(255,255,255,0.05)] px-2">
                 - {author} -
             </span>
         </blockquote>
