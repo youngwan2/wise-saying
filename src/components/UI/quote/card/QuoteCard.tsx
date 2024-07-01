@@ -103,6 +103,7 @@ export default function QuoteCard({ item, index, ttsInfos, eventHandlerGroup, ch
   if (!item) return <ReplaceMessageCard childern="게시글이 존재하지 않습니다." />
   return (
     <li
+      key={quoteId}
       onTouchMove={hoverAnimationMobile}
       onMouseMove={hoverAnimation}
       onMouseEnter={eventHandlerGroup.onPrefetch}
@@ -111,7 +112,7 @@ export default function QuoteCard({ item, index, ttsInfos, eventHandlerGroup, ch
           setLiRefs(index, element)
         }
       }}
-      key={quoteId}
+
       className={`
       ${styles.card}
        ${isCardTheme

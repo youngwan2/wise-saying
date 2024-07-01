@@ -1,11 +1,10 @@
+"use client"
 
+import ReplaceMessageCard from "@/components/UI/common/card/ReplaceMessageCard"
 import PopularQuoteContainer from "@/components/UI/quote/container/PopularQuoteContainer"
-import { Metadata } from "next"
+import { useSwrFetch } from "@/utils/swr"
+import { toast } from "react-toastify"
 
-export const metadata:Metadata= {
-    title:'실시간 인기명언',
-    description:'조회수가 높은 명언목록 100개를 실시간으로 조회하여 보여주는 페이지입니다.'
-}
 
 export interface QuoteType {
     quote_id: number
@@ -17,8 +16,21 @@ export interface QuoteType {
 }
 export default function PopularQuotesPage() {
 
-    return (
-            <PopularQuoteContainer />
+    const url = '/api/quotes/populars'
+    const { data, mutate,isLoading, error } = useSwrFetch(url, 15000)
+    const { quotes } = data || { quotes: null }
 
+    async function onReload() {
+        toast.promise(mutate(), {
+            pending: '새로운 데이터를 불러오는 중입니다.',
+            success: '최신 데이터로 갱신되었습니다.',
+            error: '서버 문제로 데이터 조회에 실패하였습니다.'
+        })
+    }
+    if(isLoading) return <ReplaceMessageCard childern="데이터를 불러오는 중입니다."/>
+    if(error) return <ReplaceMessageCard childern="데이터를 불러오는 중 문제가 발생하였습니다."/>
+    if(quotes?.lengt<1) return <ReplaceMessageCard childern="조회된 데이터가 존재하지 않습니다."/>
+    return (
+            <PopularQuoteContainer onReload={onReload} quotes={quotes}/>
     )
 }

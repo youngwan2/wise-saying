@@ -12,7 +12,7 @@ export default function RefreshButton({ onClickReload }: PropsType) {
   return (
     <ControlButton
       ariaLabel="새로고침"
-      className={`${styles.refresh_btn} top-[11em] border p-[8px] text-[1.15em] absolute flex items-center right-[4%] text-white hover:cursor-pointer z-[20] hover:text-[#e3e3e0] `}
+      className={`${styles.refresh_btn} top-[12.25em]  left-[50%] translate-x-[-50%] border p-[5.8px] text-[1.15em] absolute flex items-center text-white hover:cursor-pointer z-[20] hover:text-[#e3e3e0] `}
       onClick={onClickReload}>
       <HiRefresh />
     </ControlButton>

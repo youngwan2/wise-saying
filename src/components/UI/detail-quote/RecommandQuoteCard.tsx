@@ -1,11 +1,11 @@
 import styles from './Quotes.module.css'
 
-import { ItemsType } from "@/types/items.types"
+import { QuoteType } from "@/types/items.types"
 import { hoverAnimation } from "@/utils/common-func"
 import { MouseEventHandler } from "react"
 
 interface PropsType {
-    quoteInfo : ItemsType
+    quoteInfo : QuoteType
     onClick: MouseEventHandler<HTMLLIElement>
 
  }

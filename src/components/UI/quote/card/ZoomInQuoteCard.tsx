@@ -9,11 +9,11 @@ import Overlay from '../overlay/Overlay'
 import { gsap } from 'gsap/all'
 import { Draggable } from 'gsap/Draggable'
 
-import { ItemsType } from '@/types/items.types'
+import { type QuoteType } from '@/types/items.types'
 
 
 interface PropsType {
-  item: ItemsType
+  item: QuoteType
 }
 export default function ZommInQuoteCard({ item }: PropsType) {
   gsap.registerPlugin(Draggable)
