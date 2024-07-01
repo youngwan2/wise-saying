@@ -19,17 +19,10 @@ import gsap from 'gsap/all'
 import { HiSpeakerphone } from 'react-icons/hi'
 
 import type { QuoteType } from '@/types/items.types'
-import QuoteCommentationButton from '../button/QuoteCommentationButton'
-import { Handlers } from '../list/QuoteList'
+import { Handlers, TtsType } from '../container/QuoteContainer'
 
 
 
-interface TtsType {
-  setText: (text: string) => void
-  readText: string
-  progress: number
-  isPlaying: boolean
-}
 
 interface PropsType {
   item: QuoteType
@@ -42,25 +35,25 @@ interface PropsType {
 
 export default function QuoteCard({ item, index, ttsInfos, eventHandlerGroup, children }: PropsType) {
 
-  const [viewCount, setViewCount] = useState(0)
-  const { isZoomIn, cardIndex } = useCardZoomInOutStore()
+  const liRefs = useRef<HTMLLIElement[]>([])
 
+  const [viewCount, setViewCount] = useState(0)
+
+  const { isZoomIn, cardIndex } = useCardZoomInOutStore()
   const isCardTheme = useCardTheme((state) => state.isCardTheme)
 
-  const liRefs = useRef<HTMLLIElement[]>([])
+  const { isPlaying, progress, readText } = ttsInfos
+  const { quote_id: quoteId, author, quote } = item || { quote_id: 0, author: '', quote: '' }
+
+
   const setLiRefs = (index: number, element: HTMLLIElement | null) => {
     element instanceof HTMLLIElement && (liRefs.current[index] = element)
   }
-
-  const { isPlaying, progress, readText } = ttsInfos
-  const { quote_id: quoteId, author, quote } = item || { quote_id: 0, author: '일시적 조회 불가', quote: '' }
 
   const setViews = useCallback(async () => {
     const views = await getQuoteViewsFromDB(quoteId, "views")
     setViewCount(views)
   }, [quoteId])
-
-
 
 
   const cardZoomInoutSwitch = useCallback(
@@ -87,8 +80,6 @@ export default function QuoteCard({ item, index, ttsInfos, eventHandlerGroup, ch
     },
     [isZoomIn],
   )
-
-
 
 
   // 인터섹션 옵저버 적용하는 커스텀 훅
@@ -133,7 +124,6 @@ export default function QuoteCard({ item, index, ttsInfos, eventHandlerGroup, ch
       <TtsButton onClickSetText={eventHandlerGroup.onClickSetText} className='absolute right-[3.3em] top-[0.429em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-[white]' quote={null} />
       <QuoteDetailMoveButton onClickDetailMove={eventHandlerGroup.onClickPageChange} />
       {children}
-
 
       {/* 명언 정보 */}
       <QuoteContent readText={readText} author={author} quote={quote} />
