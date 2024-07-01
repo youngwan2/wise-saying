@@ -67,3 +67,24 @@ export async function aiProfanityFilter(content: string[]) {
 
 
 }
+
+// 명언 해석 
+export async function  generateAiCommentation(content: string) {
+  const response = await openai.chat.completions.create({
+    model: 'gpt-3.5-turbo-0125',
+    messages: [
+      {
+        role: 'system',
+        content:
+          'You are an expert in interpreting quotes, providing explanations for the meaning of quotes given by users. Your responses must be in Korean. Please explain in three lines or fewer',
+      },
+      {
+        role: 'user',
+        content: content,
+      },
+    ],
+    temperature: 0.5,
+    top_p: 1,
+  })
+  return response.choices[0].message.content
+}

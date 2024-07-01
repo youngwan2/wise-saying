@@ -52,42 +52,32 @@ const defaultImagsSrc = [
 ]
 
 
-/**
- * * Zustand| 유저 로그인 상태를 저장
- */
+/** 유저 로그인 상태를 저장 */
 export const useLoginStateStore = create<LoginState>((set) => ({
   loginState: false,
   setLoginState: (loginState) => set(() => ({ loginState: loginState })),
 }))
 
-/**
- * * Zustand |  유저 게시글의 식별자를 저장
- */
+/** 유저 게시글의 식별자를 저장 */
 export const useUserPostIdStore = create<PostIdState>((set) => ({
   postId: 0,
   setPostId: (id) => set(() => ({ postId: id })),
 }))
 
-/**
- * * Zustand |  유저가 선택한 배경 색을 저장
- */
+/** 유저가 선택한 배경 색을 저장 */
 export const useBackgroundColorStore = create<BgColorState>((set) => ({
   bgColor: 'white',
   setBgColor: (bg) => set(() => ({ bgColor: bg })),
 }))
 
-/**
- * * Zustand |  명언 편집기의 카드 사이즈 저장
- */
+/** 명언 편집기의 카드 사이즈 저장 */
 export const useQuotesCardSizeStore = create<CardSizeState>((set) => ({
   width: 300,
   height: 400,
   setSize: (size) => set(() => ({ width: size.width, height: size.height })),
 }))
 
-/**
- * * Zustand |  명언 편집기의 카드 글자 스타일 정보 저장
- */
+/** 명언 편집기의 카드 글자 스타일 정보 저장 */
 export const useQuotesTextStyleStore = create<TextStyleState>((set) => ({
   color: 'black',
   size: 14.3,
@@ -104,9 +94,7 @@ export const useQuotesTextStyleStore = create<TextStyleState>((set) => ({
     })),
 }))
 
-/**
- * * Zustand |  텍스트 옵션
- */
+/** 텍스트 옵션 */
 export const useQuotesTextOptions = create<TextOptionState>((set) => ({
 
   lineHeight: 3,
@@ -116,9 +104,7 @@ export const useQuotesTextOptions = create<TextOptionState>((set) => ({
   setTextOption: (state) => set(() => ({ lineHeight: state.lineHeight, textPositionY: state.textPositionY, textPositionX: state.textPositionX, textLength: state.textLength }))
 }))
 
-/**
- * * Zustand |  텍스트 외곽선 스타일
- */
+/** 텍스트 외곽선 스타일 */
 export const useQuotesStrokeStyleStore = create<StorkeState>((set) => ({
   thickness: 1,
   color: 'black',
@@ -127,16 +113,14 @@ export const useQuotesStrokeStyleStore = create<StorkeState>((set) => ({
 }))
 
 
-
+/** 텍스트 정렬 */
 export const useQuotesTextAlign = create<AlignState>((set) => ({
   align: 'center',
   setAlign: (align) => set(() => ({ align }))
 }))
 
 
-/**
- * * Zustand |  이미지 요소 저장
- */
+/** 이미지 요소 저장 */
 export const useImageElementStore = create<ImageElState>((set) => ({
   imageSrc: '/images/image0.png',
   isClear: false,
@@ -144,17 +128,13 @@ export const useImageElementStore = create<ImageElState>((set) => ({
   setImageReset: (state) => set(() => ({ isClear: state })),
 }))
 
-/**
- * *  Zustand | 마이페이지 메뉴 탭의 id 저장
- */
+/**  이페이지 메뉴 탭의 id 저장 */
 export const useMypageTapsStore = create<MypageTapsState>((set) => ({
   tapId: 0,
   setTapId: (tapId) => set(() => ({ tapId })),
 }))
 
-/**
- * *  Zustand | 로그인한 유저 정보를 저장
- */
+/**  그인한 유저 정보를 저장 */
 export const useUserInfoStore = create<UserInfoState>((set) => ({
   userId: 0,
   email: 'example@text.com',
@@ -171,9 +151,7 @@ export const useUserInfoStore = create<UserInfoState>((set) => ({
     })),
 }))
 
-/**
- * * Zustand |  명언 카드 확대(클로즈 업) 관련 상태 저장
- */
+/** 명언 카드 확대(클로즈 업) 관련 상태 저장 */
 export const useCardZoomInOutStore = create<CardZoomInOutState>((set) => ({
   isZoomIn: false,
   cardIndex: 0,
@@ -181,34 +159,26 @@ export const useCardZoomInOutStore = create<CardZoomInOutState>((set) => ({
   setCardIndex: (cardIndex) => set(() => ({ cardIndex })),
 }))
 
-/**
- * * Zustand |  네비게이션 메뉴 온오프 상태 저장
- */
+/** 네비게이션 메뉴 온오프 상태 저장 */
 export const useNavDisplayStateStore = create<NavDisplayState>((set) => ({
   isDisplay: false,
   setIsDisplay: (display) => set(() => ({ isDisplay: display })),
 }))
 
-/**
- * * Zustand |  헤더 검색창 온오프 상태 저장
- */
+/** 헤더 검색창 온오프 상태 저장 */
 export const useHeaderSearchFormStateStore =
   create<HeaderSearchFormDisplayState>((set) => ({
     isDisplay: false,
     setIsDisplay: (display) => set(() => ({ isDisplay: display })),
   }))
 
-/**
- * * Zustand | 바디 객체의 오버플로우 옵션 활성화 상태 저장
- */
+/** body 태그 오버플로우 속성 활성화 상태 저장 */
 export const useBodyOverflowStore = create<BodyOverflowState>((set) => ({
   isHidden: false,
   setIsHidden: (isHidden) => set(() => ({ isHidden })),
 }))
 
-/**
- * * Zustand | 북마크 활성화 상태 및 리스트 저장
- */
+/** 마크 활성화 상태 및 리스트 저장 */
 export const useBookmarkStore = create<BookmarkToggleState>((set) => ({
   toggleState: false,
   bookmarkList: [],
@@ -218,35 +188,26 @@ export const useBookmarkStore = create<BookmarkToggleState>((set) => ({
   setListCount: (count) => set(() => ({ count })),
 }))
 
-/**
- * * Zustand | 북마크 리스트 목록 갱신 트리거 상태 저장
- */
+/** 마크 리스트 목록 갱신 트리거 상태 저장 */
 export const useBookmarkUpdate = create<UpdateState>((set) => ({
   isUpdate: false,
   setIsUpdate: (isUpdate) => set(() => ({ isUpdate })),
 }))
 
-/**
- * * Zustand | 댓글목록  갱신 트리거 상태 저장
- */
+/** 글목록  갱신 트리거 상태 저장 */
 export const useCommentUpdate = create<UpdateState>((set) => ({
   isUpdate: false,
   setIsUpdate: (isUpdate) => set(() => ({ isUpdate }))
 }))
 
-/**
- * Zustand | 사이트 정책 탭 식별자 저장
- */
+/** 이트 정책 탭 식별자 저장 */
 export const usePolicyTaps = create<PolicyTapState>((set) => ({
   tapNum: 0,
   setTapNum: (tapNum) => set(() => ({ tapNum }))
 }))
 
 
-/**
- * Zustand | 카드 디자인 테마 설정
- */
-
+/** 드 디자인 테마 설정 */
 export const useCardTheme = create<CardThemeState>((set) => ({
   isCardTheme: false,
   setIsCardTheme: (isCardTheme) => set(() => ({ isCardTheme }))

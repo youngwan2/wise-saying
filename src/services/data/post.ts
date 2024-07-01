@@ -8,7 +8,6 @@ import {toast as hotToast} from 'react-hot-toast'
  */
 export const addBookmarkItem = async (itemId: number, path: string) => {
   const quoteUrl = location.origin + `${path}`
-  console.log(quoteUrl)
   const postData = {
     quoteId: itemId,
     url: quoteUrl,

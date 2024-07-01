@@ -59,7 +59,7 @@ export default function RootLayout({
         <Header />
         <TimerContainer />
         <main className="min-h-[100vh] w-full mx-auto max-w-[1700px] relative">
-          <ToastContainer pauseOnFocusLoss={false} toastStyle={{ top: 50 }} />
+          <ToastContainer draggable draggablePercent={60} pauseOnFocusLoss={false} toastStyle={{ top: 50 }} />
           <Toaster containerStyle={{ height: 200, top: 50 }} />
           {children}
         </main>

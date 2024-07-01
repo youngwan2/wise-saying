@@ -5,8 +5,8 @@ import useInfiniteScroll from '@/custom/useInfiniteScroll'
 
 import ReplaceMessageCard from '@/components/UI/common/card/ReplaceMessageCard'
 import LoadMoreButton from '@/components/UI/common/button/ListLoadMoreButton'
-import UserQuoteContainer from '@/components/UI/quote/container/UserQuoteContainer'
 import Title from '@/components/UI/common/Title/Title'
+import QuoteContainer from '@/components/UI/quote/container/QuoteContainer'
 
 interface PropsType {
   params: { category: string }
@@ -35,7 +35,7 @@ export default function UsersPage({ params }: PropsType) {
   return (
     <>
       <Title current={itemCount} total={totalCount} title={pathName + ' 명언'} />
-      <UserQuoteContainer items={items} />
+      <QuoteContainer items={items} />
       <LoadMoreButton
         size={size}
         onClick={() => setSize(size + 1)}

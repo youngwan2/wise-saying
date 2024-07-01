@@ -69,12 +69,14 @@ export async function POST(req: NextRequest) {
 
         // 우선, 현재 author 가 존재한다면 바로 내용 업데이트 후 응답
         if (hasAuthor) {
+            console.log(hasAuthor)
             await db.query(authorUpdateQuery, [author,job, birth, intro])
             db.end()
-            return NextResponse.json(HTTP_CODE.CREATED)
+            return NextResponse.json({...HTTP_CODE.CREATED,meg:'수정 되었습니다.'})
 
             // 존재하지 않으면 새로운 author 추가
         } else {
+            console.log("추가")
             await db.query(authorInsertQuery, [author, job, birth, intro])
             db.end()
             return NextResponse.json(HTTP_CODE.CREATED)

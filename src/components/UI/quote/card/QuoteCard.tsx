@@ -1,13 +1,10 @@
 import styles from '../Quotes.module.css'
 
-import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react'
+import { ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 import { useCardTheme, useCardZoomInOutStore } from '@/store/store'
-import { useRouter } from 'next/navigation'
-import useTTS from '@/custom/useTTS'
 import useIntersectionObserver from '@/custom/useIntersectionObserver'
 
 import ReplaceMessageCard from '../../common/card/ReplaceMessageCard'
-import QuotesCardControlButtons from '../button/QuoteCardControlButtons'
 import TtsButton from '../../common/button/TtsButton'
 import QuoteViewIcon from '../icon/QuoteViewIcon'
 import QuoteProgress from '../progress/QuoteProgress'
@@ -17,26 +14,37 @@ import QuoteContent from '../content/QuoteContent'
 import { hoverAnimation, hoverAnimationMobile } from '@/utils/common-func'
 
 import { getQuoteViewsFromDB } from '@/services/data/get'
-import { viewCounter } from '@/services/data/patch'
 
 import gsap from 'gsap/all'
 import { HiSpeakerphone } from 'react-icons/hi'
 
-import type { ItemsType } from '@/types/items.types'
+import type { QuoteType } from '@/types/items.types'
+import QuoteCommentationButton from '../button/QuoteCommentationButton'
+import { Handlers } from '../list/QuoteList'
 
-interface PropsType {
-  item: ItemsType
-  items: ItemsType[]
-  index: number
+
+
+interface TtsType {
+  setText: (text: string) => void
+  readText: string
+  progress: number
+  isPlaying: boolean
 }
 
-export default function QuoteCard({ item, index }: PropsType) {
-  const router = useRouter()
+interface PropsType {
+  item: QuoteType
+  items: QuoteType[]
+  index: number
+  ttsInfos: TtsType
+  eventHandlerGroup: Handlers
+  children: ReactNode
+}
+
+export default function QuoteCard({ item, index, ttsInfos, eventHandlerGroup, children }: PropsType) {
 
   const [viewCount, setViewCount] = useState(0)
+  const { isZoomIn, cardIndex } = useCardZoomInOutStore()
 
-  const { setText, readText, progress, isPlaying } = useTTS()
-  const {isZoomIn, cardIndex} = useCardZoomInOutStore()
   const isCardTheme = useCardTheme((state) => state.isCardTheme)
 
   const liRefs = useRef<HTMLLIElement[]>([])
@@ -44,6 +52,7 @@ export default function QuoteCard({ item, index }: PropsType) {
     element instanceof HTMLLIElement && (liRefs.current[index] = element)
   }
 
+  const { isPlaying, progress, readText } = ttsInfos
   const { quote_id: quoteId, author, quote } = item || { quote_id: 0, author: '일시적 조회 불가', quote: '' }
 
   const setViews = useCallback(async () => {
@@ -53,11 +62,6 @@ export default function QuoteCard({ item, index }: PropsType) {
 
 
 
-
-  // 페이지 사전 로드
-  function onPrefetch() {
-    router.prefetch(`/quotes/authors/${author}/${quoteId}?type=no-user`)
-  }
 
   const cardZoomInoutSwitch = useCallback(
     (target: HTMLLIElement) => {
@@ -84,15 +88,7 @@ export default function QuoteCard({ item, index }: PropsType) {
     [isZoomIn],
   )
 
-  // 상세 페이지 이동
-  const onClickPushAnimation = (e: MouseEvent<HTMLButtonElement>) => {
-    viewCounter(quoteId, "views")
-    router.push(`/quotes/authors/${author}/${quoteId}?type=no-user`)
-  }
 
-  const onClickSetText = () => {
-    setText(quote)
-  }
 
 
   // 인터섹션 옵저버 적용하는 커스텀 훅
@@ -106,20 +102,19 @@ export default function QuoteCard({ item, index }: PropsType) {
       cardZoomInoutSwitch(liEl)
     }
   }, [cardIndex, cardZoomInoutSwitch])
-  
+
   useEffect(() => {
     setViews()
 
   }, [setViews])
 
 
-  if (!item)
-    return <ReplaceMessageCard childern="게시글이 존재하지 않습니다." />
+  if (!item) return <ReplaceMessageCard childern="게시글이 존재하지 않습니다." />
   return (
     <li
       onTouchMove={hoverAnimationMobile}
       onMouseMove={hoverAnimation}
-      onMouseEnter={onPrefetch}
+      onMouseEnter={eventHandlerGroup.onPrefetch}
       ref={(element) => {
         if (typeof index === 'number' && element instanceof HTMLLIElement) {
           setLiRefs(index, element)
@@ -135,17 +130,19 @@ export default function QuoteCard({ item, index }: PropsType) {
     >
 
       <QuoteProgress progress={progress} />
-      <TtsButton onClickSetText={onClickSetText} className='absolute right-[3.3em] top-[0.429em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-[white]' quote={null} />
-      <QuoteDetailMoveButton onClickDetailMove={onClickPushAnimation} />
-      <QuotesCardControlButtons index={index} item={item} />
+      <TtsButton onClickSetText={eventHandlerGroup.onClickSetText} className='absolute right-[3.3em] top-[0.429em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-[white]' quote={null} />
+      <QuoteDetailMoveButton onClickDetailMove={eventHandlerGroup.onClickPageChange} />
+      {children}
+
 
       {/* 명언 정보 */}
       <QuoteContent readText={readText} author={author} quote={quote} />
 
       {/* 프로그래스 숫자형 ex 1/100 */}
       <p>{isPlaying
-        ? <span className='text-[1.05em] animate-pulse absolute bottom-2 left-2 text-white rounded-[10px] p-[2px] px-[7px] flex items-center'><HiSpeakerphone color='gold' className='mr-[5px]' /> {progress+'/100' || '현재 환경에서는 지원하지 않습니다.'}</span>
-        : <span className='text-[1.05em] animate-none absolute bottom-2 left-2 text-white rounded-[10px] p-[2px] px-[7px]'></span>}</p>
+        ? <span className='text-[1.05em] animate-pulse absolute bottom-2 left-2 text-white rounded-[10px] p-[2px] px-[7px] flex items-center'><HiSpeakerphone color='gold' className='mr-[5px]' /> {progress + '/100' || '현재 환경에서는 지원하지 않습니다.'}</span>
+        : <span className='text-[1.05em] animate-none absolute bottom-2 left-2 text-white rounded-[10px] p-[2px] px-[7px]'></span>}
+      </p>
 
       <QuoteViewIcon viewCount={viewCount} />
     </li>

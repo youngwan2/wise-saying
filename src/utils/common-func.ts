@@ -1,35 +1,8 @@
 import { Method, getDefaultConfig } from '@/configs/config.api'
-import { ItemsType } from '@/types/items.types'
+import { QuoteType } from '@/types/items.types'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 import { Dispatch, FormEvent, SetStateAction } from 'react'
 import { toast } from 'react-toastify'
-
-
-export function hoverAnimation(e: any) {
-  const { currentTarget: target } = e
-
-  const rect = target.getBoundingClientRect();
-  const { left, top } = rect;
-  const x = e.clientX - left;
-  const y = e.clientY - top;
-
-  target.style.setProperty("--mouse-x",`${x}px`)
-  target.style.setProperty("--mouse-y",`${y}px`)
-}
-
-
-export function hoverAnimationMobile(e:any) {
-  const { currentTarget: target } = e
-
-  const rect = target.getBoundingClientRect();
-  const { left, top } = rect;
-  const x = e.clientX - left;
-  const y = e.clientY - top;
-
-  target.style.setProperty("--mouse-x",`${x}px`)
-  target.style.setProperty("--mouse-y",`${y}px`)
-
-}
 
 
 
@@ -62,7 +35,7 @@ export const pageSwitch = (router: AppRouterInstance, id: number) => {
  * * 명언 선택 함수
  * @param item - 아이템
  */
-export function quotesSelector(item: ItemsType) {
+export function quotesSelector(item: QuoteType) {
   localStorage.setItem('selectedItem', JSON.stringify(item))
 }
 
@@ -150,3 +123,30 @@ function resizeChecker(delay: number, width: number, setIsActive: Dispatch<SetSt
 }
 export const resizeCheck = resizeChecker
 
+
+/** 마우스 호버 애니메이션 */
+export function hoverAnimation(e: any) {
+  const { currentTarget: target } = e
+
+  const rect = target.getBoundingClientRect();
+  const { left, top } = rect;
+  const x = e.clientX - left;
+  const y = e.clientY - top;
+
+  target.style.setProperty("--mouse-x",`${x}px`)
+  target.style.setProperty("--mouse-y",`${y}px`)
+}
+
+
+export function hoverAnimationMobile(e:any) {
+  const { currentTarget: target } = e
+
+  const rect = target.getBoundingClientRect();
+  const { left, top } = rect;
+  const x = e.clientX - left;
+  const y = e.clientY - top;
+
+  target.style.setProperty("--mouse-x",`${x}px`)
+  target.style.setProperty("--mouse-y",`${y}px`)
+
+}

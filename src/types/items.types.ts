@@ -1,4 +1,5 @@
-export interface ItemsType {
+
+export interface QuoteType {
   quote_id: number
   author: string
   quote: string
@@ -10,16 +11,6 @@ export interface ItemsType {
   profile_img?: string
   category?: string
 }
-
-export interface QuoteType {
-  quote_id: number
-  author: string
-  job?: string
-  intro?: string
-  birth?: string
-  quote: string
-}
-
 
 
 export interface WeekDayCategoryType {
@@ -63,7 +54,6 @@ export interface ReplyType {
 export interface ConsentsType {
   [key: string]: boolean
 }
-
 
 
 export interface UserQuotesType {
