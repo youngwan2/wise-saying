@@ -6,8 +6,8 @@ import QuoteCategoryCard from "../card/QuoteCategoryCard";
 
 interface Item {
     category: string;
-    birth: string;
-    job: string;
+    birth?: string;
+    job?: string;
 }
 
 interface PropsType {

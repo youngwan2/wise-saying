@@ -29,6 +29,7 @@ export default function ConversationList({ isLoading, conversationList }: PropsT
         {conversationList.map((conversation) => {
           return (
             <ConversationCard
+              key={conversation.created_at}
               profileImage={profileImage}
               conversation={conversation}
               onLoadScrollEnd={onScrollEnd}

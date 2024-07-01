@@ -10,6 +10,7 @@ import QuoteList from '../list/QuoteList'
 
 import { viewCounter } from '@/services/data/patch'
 import { toast } from 'react-toastify'
+import { QuoteType } from '@/types/items.types'
 
 
 export interface TtsType {
@@ -29,15 +30,7 @@ export interface Handlers {
 
 
 interface PropsType {
-  items: {
-    quote_id: number
-    author: string
-    views: number
-    quote: string
-    job: string
-    birth: string
-    intro: string
-  }[]
+  items: QuoteType[]
 }
 
 

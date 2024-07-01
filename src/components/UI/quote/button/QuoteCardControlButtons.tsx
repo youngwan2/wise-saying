@@ -13,10 +13,10 @@ import { pageSwitch, quotesSelector } from '@/utils/common-func'
 import { HiDotsVertical, HiOutlineZoomIn } from 'react-icons/hi'
 import { HiOutlineBookmark, HiScissors, HiXMark } from 'react-icons/hi2'
 
-import type { ItemsType } from '@/types/items.types'
+import type {QuoteType } from '@/types/items.types'
 
 interface PropsType {
-  item: ItemsType
+  item: QuoteType
   index: number | 0
   isUserQuote?: boolean
 }

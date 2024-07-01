@@ -11,10 +11,10 @@ import { getUserEmail } from '@/utils/session-storage'
 import { deleteUserQuote } from '@/services/data/delete'
 import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi2'
 
-import { ItemsType } from '@/types/items.types'
+import { type QuoteType } from '@/types/items.types'
 
 interface PropsType {
-  item: ItemsType
+  item: QuoteType
   index: number
   isMypage?: boolean
 }

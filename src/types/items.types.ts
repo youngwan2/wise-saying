@@ -3,6 +3,7 @@ export interface QuoteType {
   quote_id: number
   author: string
   quote: string
+  views?:number
   job?: string
   intro?: string
   birth?: string

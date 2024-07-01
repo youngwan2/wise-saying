@@ -1,12 +1,12 @@
 'use client'
 
 import { useItemMetadataFetch } from '@/custom/useItemMetadataFetch'
-
-import UserCategoryList from '@/components/UI/quote/list/UserQuotesCategoryList'
-import ReplaceMessageCard from '@/components/UI/common/card/ReplaceMessageCard'
 import useInfiniteScroll from '@/custom/useInfiniteScroll'
+
+import ReplaceMessageCard from '@/components/UI/common/card/ReplaceMessageCard'
 import ListLoadMoreButton from '@/components/UI/common/button/ListLoadMoreButton'
 import Title from '@/components/UI/common/Title/Title'
+import QuoteCategoryList from '@/components/UI/quote/list/QuoteCategoryList'
 
 export default function UserPage() {
   const { maxPage, totalCount } = useItemMetadataFetch(
@@ -31,7 +31,7 @@ export default function UserPage() {
   return (
     <>
       <Title current={itemCount} total={totalCount} title='사용자 명언' />
-      <UserCategoryList categories={categories} />
+      <QuoteCategoryList items ={categories} />
       <ListLoadMoreButton
         size={size}
         maxPage={maxPage}
