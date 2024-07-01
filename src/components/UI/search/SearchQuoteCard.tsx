@@ -1,9 +1,8 @@
-import { ItemsType } from "@/types/items.types"
+import { QuoteType } from "@/types/items.types"
 import { MouseEventHandler } from "react"
 
 interface PropsType {
-
-    item:ItemsType
+    item:QuoteType
     onClick:MouseEventHandler<HTMLLIElement>
  }
 
