@@ -20,9 +20,11 @@ import wrap from 'word-wrap'
 
 interface QuoteType {
   quote: string
+  author:string
 }
 
 const DEFALT_LINE_HEIGHT = 9
+
 export default function Canvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [imageEl, setImageEl] = useState<HTMLImageElement | null>(null)
@@ -35,6 +37,7 @@ export default function Canvas() {
 
   // 명언(텍스트)
   const [quote, setQuote] = useState('')
+  const [author, setAuthor] = useState('')
 
   // 배경이미지
   const bgImageSrc = useImageElementStore((state) => state.imageSrc)
@@ -45,7 +48,7 @@ export default function Canvas() {
     const imageURL = canvasRef.current?.toDataURL() || ''
     const link = document.createElement('a')
     link.href = imageURL
-    link.download = '내가 만든 카드'
+    link.download = `${author}의 명언`
     link.click()
     toast.success('다운로드 되었습니다. 이용해 주셔서 감사합니다.')
 
@@ -167,6 +170,7 @@ export default function Canvas() {
       const jsonQuote = localStorage.getItem('selectedItem')!
       const item: QuoteType = JSON.parse(jsonQuote)
       setQuote(item.quote)
+      setAuthor(item.author)
     }
   }, [])
 
