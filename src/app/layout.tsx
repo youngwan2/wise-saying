@@ -54,6 +54,7 @@ export default function RootLayout({
           s0.parentNode.insertBefore(s1,s0);
           })();`}
       </Script>
+      <Script src="http://localhost:8097"></Script>
 
       <body className={`${gowunDodum.className}`} suppressHydrationWarning>
         <Header />

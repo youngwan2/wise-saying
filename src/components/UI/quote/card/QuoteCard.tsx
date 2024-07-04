@@ -124,6 +124,7 @@ export default function QuoteCard({ item, index, ttsInfos, eventHandlerGroup, ch
       <QuoteProgress progress={progress} />
       <TtsButton onClickSetText={eventHandlerGroup.onClickSetText} className='absolute right-[3.3em] top-[0.429em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-[white]' quote={null} />
       <QuoteDetailMoveButton onClickDetailMove={eventHandlerGroup.onClickPageChange} />
+      
       {children}
 
       {/* 명언 정보 */}
