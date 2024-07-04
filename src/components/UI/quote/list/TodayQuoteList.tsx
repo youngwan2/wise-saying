@@ -10,8 +10,9 @@ import { QuoteType } from "@/types/items.types"
 
 interface PropsType {
     items: QuoteType[]
+    onClick:(quoteId:number, isUser:boolean)=>void
 }
-export default function TodayQuoteList({ items }: PropsType) {
+export default function TodayQuoteList({ items, onClick }: PropsType) {
 
     const { setText } = useTTS()
 
@@ -59,6 +60,7 @@ export default function TodayQuoteList({ items }: PropsType) {
                         key={item.quote_id}
                         quoteInfo={item}
                         onSetText={() => onClickSetText(item.quote)}
+                        onClickGetCommentationInfo={onClick}
                     />
                 )
             })}

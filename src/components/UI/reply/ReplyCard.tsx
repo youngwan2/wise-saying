@@ -12,16 +12,13 @@ import { HiDotsVertical, HiOutlineX } from 'react-icons/hi'
 import { toast } from 'react-toastify'
 
 import { ReplyType } from '@/types/items.types'
+import { ReplyMenuDropdownButton } from './button/ReplyMenuDropdownButton'
 
 interface PropsType extends ReplyType {
   commentId: number
   userEmail: string
 }
 
-interface MenuButtonPropsType {
-  isShow: boolean
-  onClick: MouseEventHandler<HTMLButtonElement>
-}
 
 export default function ReplyCard({ commentId, userEmail, reply }: PropsType) {
   const { mutate } = useSWRConfig()
@@ -113,14 +110,3 @@ export default function ReplyCard({ commentId, userEmail, reply }: PropsType) {
   )
 }
 
-// 드롭다운 버튼
-function ReplyMenuDropdownButton({ isShow, onClick }: MenuButtonPropsType) {
-  return (
-    <button
-      onClick={onClick}
-      className="absolute right-[5px] top-[0.5em]  hover:shadow-[0_0_0_1px_tomato] rounded-[50%] p-[5px]"
-    >
-      {isShow ? <HiOutlineX /> : <HiDotsVertical />}{' '}
-    </button>
-  )
-}

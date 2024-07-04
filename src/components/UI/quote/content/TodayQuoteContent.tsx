@@ -10,7 +10,7 @@ interface PropsType {
 export default function TodayQuoteContent({ quote, author }: PropsType) {
 
     return (
-        <blockquote>
+        <blockquote className="mt-[0.5em]">
             <div className="pb-[1em]"> 
                 {/* 명언 */}
                 {quote.split('').map((text, i) => {

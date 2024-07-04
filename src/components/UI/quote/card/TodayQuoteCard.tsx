@@ -13,11 +13,13 @@ import { QuoteType } from '@/types/items.types'
 interface PropsType {
     quoteInfo: QuoteType
     onSetText: MouseEventHandler<HTMLButtonElement>
+    onClickGetCommentationInfo: (quoteId: number, isUser: boolean) => void
 }
 
 export default function TodayQuoteCard({
     quoteInfo,
     onSetText,
+    onClickGetCommentationInfo
 }: PropsType) {
 
     const { author, birth, job, quote, quote_id } = quoteInfo
@@ -30,6 +32,14 @@ export default function TodayQuoteCard({
              rounded-[10px]  my-[1em] max-w-[600px] bg-transparent  px-[15px] py-[35px] mx-auto relative`}
             key={quote_id}
         >
+            <ControlButton
+                ariaLabel='AI 명언 해설'
+                title='AI가 명언의 의미를 해석합니다.'
+                onClick={() => onClickGetCommentationInfo(quote_id, false)}
+                className='absolute top-[5px] left-3 hover:border hover:border-[tomato] text-white p-[2px]'
+            >
+                AI 해설
+            </ControlButton>
             {/* 명언 듣기 버튼 */}
             <ControlButton
                 ariaLabel='명언 듣기'
