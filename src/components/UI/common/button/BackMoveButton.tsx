@@ -11,7 +11,7 @@ export default function BackMoveButton() {
       onClick={() => {
         router.back()
       }}
-      className={`${styles.back_btn} text-[1.5em] top-[3em] left-5 flex items-center text-white fixed z-[100000]`}
+      className={`${styles.back_btn} text-[1.5em] top-[3em] left-5 flex items-center text-white fixed z-[10000000000000]`}
     >
       <HiBackspace className="animate-bounce-x-2" />{' '}
     </button>

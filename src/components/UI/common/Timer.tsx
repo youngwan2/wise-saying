@@ -9,8 +9,6 @@ import { HiRefresh } from 'react-icons/hi'
 import { HiClock } from 'react-icons/hi2'
 
 
-
-
 const MINUTE_TO_SEC = 60
 
 export default function Timer() {

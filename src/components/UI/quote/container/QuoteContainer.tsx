@@ -45,33 +45,37 @@ export default function QuoteContainer({ items }: PropsType) {
   const ttsInfos = { setText, readText, progress, isPlaying }
 
   /** 이벤트 핸들러 그룹 */
-  const eventHandlerGroup = (author: string, quote: string, quoteId: number): Handlers => {
+  const eventHandlerGroup = (author: string, quote: string, quoteId: number, isUser?: boolean): Handlers => {
+    console.log(isUser)
     const handlers = {
-      onClickPageChange: () => onClickPageChange(quoteId, author),
+      onClickPageChange: () => onClickPageChange(quoteId, author, isUser),
       onPrefetch: () => onPrefetch(quoteId, author),
       onClickSetText: () => onClickSetText(quote),
-      onClickGetCommentationInfo: () => onClickGetCommentationInfo(quoteId)
+      onClickGetCommentationInfo: () => onClickGetCommentationInfo(quoteId, isUser)
     }
     return { ...handlers }
   }
 
 
   /** 상세 페이지 이동 */
-  const onClickPageChange = (quoteId: number, author: string) => {
+  const onClickPageChange = (quoteId: number, author: string, isUser?: boolean) => {
+    console.log(isUser)
     viewCounter(quoteId, "views")
-    router.push(`/quotes/authors/${author}/${quoteId}?type=no-user`)
+    const url = !isUser ? `/quotes/authors/${author}/${quoteId}?type=no-user` : `/quotes/authors/${author}/${quoteId}`
+    router.push(url)
   }
   /** 페이지 사전 로드 */
-  function onPrefetch(quoteId: number, author: string) {
-    router.prefetch(`/quotes/authors/${author}/${quoteId}?type=no-user`)
+  function onPrefetch(quoteId: number, author: string, isUser?: boolean) {
+    const url = !isUser ? `/quotes/authors/${author}/${quoteId}?type=no-user` : `/quotes/authors/${author}/${quoteId}`
+    router.prefetch(url)
   }
 
   /** TTS 텍스트 설정 */
   const onClickSetText = (quote: string) => { setText(quote) }
 
   /** AI 명언 해석 요청 */
-  const onClickGetCommentationInfo = async (quoteId: number) => {
-    const response = await toast.promise(fetchData(quoteId), {
+  const onClickGetCommentationInfo = async (quoteId: number, isUser: boolean = false) => {
+    const response = await toast.promise(fetchData(quoteId, isUser), {
       pending: '데이터를 요청 중입니다.',
       success: '성공적으로 불러왔습니다.',
       error: '데이터 요청에 실패하였습니다.'
@@ -101,11 +105,11 @@ export default function QuoteContainer({ items }: PropsType) {
 
 
 /** POST |  명언 해석 정보 생성 요청 */
-async function fetchData(quoteId: number) {
+async function fetchData(quoteId: number, isUser: boolean = false) {
   const url = `/api/quotes/ai/commentation`
   const configs = {
     method: 'POST',
-    body: JSON.stringify(quoteId)
+    body: JSON.stringify({ quoteId, isUser })
   }
   try {
     const response = await fetch(url, configs)

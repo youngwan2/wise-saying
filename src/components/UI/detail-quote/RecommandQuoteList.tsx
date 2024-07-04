@@ -30,6 +30,5 @@ export default function RecommandQuoteList({ recommandItems }: PropsType) {
           />)}
       </ul>
     </article>
-
   )
 }
