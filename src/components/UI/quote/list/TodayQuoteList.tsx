@@ -6,13 +6,14 @@ import TodayQuoteCard from "../card/TodayQuoteCard"
 import gsap from "gsap/all"
 
 import { QuoteType } from "@/types/items.types"
+import ReplaceMessageCard from "../../common/card/ReplaceMessageCard"
 
 
 interface PropsType {
     items: QuoteType[]
     onClick:(quoteId:number, isUser:boolean)=>void
 }
-export default function TodayQuoteList({ items, onClick }: PropsType) {
+export default function TodayQuoteList({ items=[], onClick }: PropsType) {
 
     const { setText } = useTTS()
 
@@ -52,9 +53,10 @@ export default function TodayQuoteList({ items, onClick }: PropsType) {
         playSplitAnimation(textSplit)
     }, [items])
 
+    if(!items || items.length <  1) return <ReplaceMessageCard isFull={false} childern="TTS를 적용할 명언이 존재하지 않습니다."/>
     return (
         <ul className="overflow-hidden mx-[10px]">
-            {items.slice(0, 1).map((item) => {
+             {items.slice(0, 1).map((item) => {
                 return (
                     <TodayQuoteCard
                         key={item.quote_id}

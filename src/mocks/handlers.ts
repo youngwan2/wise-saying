@@ -1,8 +1,14 @@
-import {mockToday} from './mockData'
+import {mockAiCommentation, mockToday} from './mockData'
 import { http, HttpResponse } from 'msw';
-//  quote_id, quote, author, job, birth
+
 export const handlers = [
-    http.get('http://localhost:3000/api/quote/today', () => {
+    // 오늘의 명언
+    http.get('/api/quotes/today', () => {
         return HttpResponse.json(mockToday)
+    }),
+    // AI 명언 해석
+    http.post('/api/quotes/ai/commentation', () => {
+        return HttpResponse.json(mockAiCommentation)
     })
 ]
+

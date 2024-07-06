@@ -80,7 +80,7 @@ export const getApiMetaDataFromServer = async (
       : type === 'authors'
         ? `${config.apiPrefix}${config.apiHost}/api/quotes/${mainCategory}/${subCategory}?type=meta`
         : null
-  if(!url) return alert('형식과 맞지 않습니다. 확인 후 다시 요청 해주세요.')
+  if (!url) return alert('형식과 맞지 않습니다. 확인 후 다시 요청 해주세요.')
   return await fetchModule(url)
 }
 
@@ -96,12 +96,14 @@ async function fetchModule(url: string) {
 
 
 /** GET | 랜덤으로 명언 정보 불러오기 */
-export const getTodayQuotesFromDb = async () => {
-  const url = `${config.apiPrefix}${config.apiHost}/api/quotes/today`
+export const getTodayQuotesFromDb = async (url: string = `${config.apiPrefix}${config.apiHost}/api/quotes/today`) => {
   const configs = getDefaultConfig(Method.GET, false)
   const { success, items, meg } = await defaultFetch(url, configs)
   if (success) return items
-  else { return toast.error(meg) }
+  else {
+    toast.error(meg)
+    return meg
+  }
 }
 
 /**

@@ -64,5 +64,6 @@ export const defaultFetch = async (url: string, config: any) => {
     else return { success, meg }
   } catch (error) {
     console.error('데이터 처리 실패:', error)
+    if(error instanceof Error)  return  { success: false, items: [], meg: '데이터 처리 실패' }
   }
 }

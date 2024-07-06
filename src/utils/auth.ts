@@ -1,10 +1,6 @@
-
-
 import jwt, { JwtPayload } from 'jsonwebtoken'
 import { cookies } from 'next/headers'
 import { NextRequest } from 'next/server'
-import { auth } from '@/configs/config.auth'
-import { openDB } from './connect'
 import { HTTP_CODE } from '@/app/http-code'
 
 

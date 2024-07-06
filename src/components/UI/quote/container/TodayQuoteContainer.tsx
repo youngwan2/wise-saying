@@ -24,45 +24,44 @@ export interface PropsType {
     birth: string
     intro: string
   }[]
+  onClick?: () => void
 }
 
-export default function TodayQuotelist({ quotes }: PropsType) {
-
-  /** AI 명언 해석 요청 */
-  const onClickGetCommentationInfo = async (quoteId: number, isUser: boolean = false) => {
-    const response = await toast.promise(fetchData(quoteId, isUser), {
-      pending: '데이터를 요청 중입니다.',
-      success: '성공적으로 불러왔습니다.',
-      error: '데이터 요청에 실패하였습니다.'
-    })
-    const { success, commentationInfo, meg } = response
-
-    if (success) {
-      const { commentation } = commentationInfo
-      toast.info(commentation, {
-        autoClose: false,
-        position: 'top-center'
-      })
-    } else {
-      toast.error(meg)
-    }
-  }
-
-
+export default function TodayQuoteContainer({ quotes = [], onClick }: PropsType) {
 
   return (
     <Container elementName={Fragment}>
-      <h2 className="sm:text-[1.5em] text-[1.35em] pl-[8px] flex items-center text-white max-w-[600px] mx-auto  mt-[5em] ">
+      <h2 data-testid="today-quote" className="sm:text-[1.5em] text-[1.35em] pl-[8px] flex items-center text-white max-w-[600px] mx-auto  mt-[5em] ">
         <HiCalendarDays className="mr-[5px]" /> 오늘의 명언
       </h2>
-      <TodayQuoteList items={quotes} onClick={onClickGetCommentationInfo}/>
+      <TodayQuoteList items={quotes} onClick={onClick ?? onClickGetCommentationInfo} />
     </Container>
   )
 }
 
+/** AI 명언 해석 요청 */
+const onClickGetCommentationInfo = async (quoteId: number, isUser: boolean = false) => {
+  const response = await toast.promise(fetchData(quoteId, isUser), {
+    pending: '데이터를 요청 중입니다.',
+    success: '성공적으로 불러왔습니다.',
+    error: '데이터 요청에 실패하였습니다.'
+  })
+  const { success, commentationInfo, meg } = response
+
+  if (success) {
+    const { commentation } = commentationInfo
+    toast.info(commentation, {
+      autoClose: false,
+      position: 'top-center'
+    })
+  } else {
+    toast.error(meg)
+  }
+}
+
 
 /** POST |  명언 해석 정보 생성 요청 */
-async function fetchData(quoteId: number, isUser: boolean = false) {
+export async function fetchData(quoteId: number, isUser: boolean = false) {
   const url = `/api/quotes/ai/commentation`
   const configs = {
     method: 'POST',
