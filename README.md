@@ -92,7 +92,7 @@ wise sayings (위대한 말)
 | 명언 TTS 프로그래스| 사용자가 명언듣기 버튼을 클릭하면, 현재 어느 위치까지 진행되었는지를 표시할 수 있는 프로그래스 기능을 구현. |
 
 
-#### 기능정리 정리본
+#### 기능구현 정리본
 - [기능구현 정리본 1](https://duklook.tistory.com/421)
 - [기능구현 정리본 2](https://duklook.tistory.com/427)
 - [기능구현 정리본 3](https://duklook.tistory.com/439)
