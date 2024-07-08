@@ -3,6 +3,7 @@ import styles from '../Quotes.module.css'
 import { ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 import { useCardTheme, useCardZoomInOutStore } from '@/store/store'
 import useIntersectionObserver from '@/custom/useIntersectionObserver'
+import useTTS from '@/custom/useTTS'
 
 import ReplaceMessageCard from '../../common/card/ReplaceMessageCard'
 import TtsButton from '../../common/button/TtsButton'
@@ -19,8 +20,7 @@ import gsap from 'gsap/all'
 import { HiSpeakerphone } from 'react-icons/hi'
 
 import type { QuoteType } from '@/types/items.types'
-import { Handlers, TtsType } from '../container/QuoteContainer'
-
+import type { Handlers } from '../container/QuoteContainer'
 
 
 
@@ -28,12 +28,11 @@ interface PropsType {
   item: QuoteType
   items: QuoteType[]
   index: number
-  ttsInfos: TtsType
   eventHandlerGroup: Handlers
   children: ReactNode
 }
 
-export default function QuoteCard({ item, index, ttsInfos, eventHandlerGroup, children }: PropsType) {
+export default function QuoteCard({ item, index, eventHandlerGroup, children }: PropsType) {
 
   const liRefs = useRef<HTMLLIElement[]>([])
 
@@ -42,9 +41,9 @@ export default function QuoteCard({ item, index, ttsInfos, eventHandlerGroup, ch
   const { isZoomIn, cardIndex } = useCardZoomInOutStore()
   const isCardTheme = useCardTheme((state) => state.isCardTheme)
 
-  const { isPlaying, progress, readText } = ttsInfos
   const { quote_id: quoteId, author, quote } = item || { quote_id: 0, author: '', quote: '' }
 
+  const { setText, readText, progress, isPlaying } = useTTS()
 
   const setLiRefs = (index: number, element: HTMLLIElement | null) => {
     element instanceof HTMLLIElement && (liRefs.current[index] = element)
@@ -122,7 +121,7 @@ export default function QuoteCard({ item, index, ttsInfos, eventHandlerGroup, ch
     >
 
       <QuoteProgress progress={progress} />
-      <TtsButton onClickSetText={eventHandlerGroup.onClickSetText} className='absolute right-[3.3em] top-[0.429em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-[white]' quote={null} />
+      <TtsButton onClickSetText={()=>setText(quote)} className='absolute right-[3.3em] top-[0.429em]  decoration-wavy decoration-[tomato] underline text-[1.1em] hover:shadow-[inset_0_0_0_1px_tomato]  p-[4px] py-[5px] text-[white]' quote={null} />
       <QuoteDetailMoveButton onClickDetailMove={eventHandlerGroup.onClickPageChange} />
       
       {children}

@@ -1,4 +1,3 @@
-import Joi from 'joi'
 import{consentSchema, emailShema, userSchema} from '../schema'
 
 
