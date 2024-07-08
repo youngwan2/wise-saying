@@ -4,16 +4,15 @@ import QuoteCommentationButton from '../button/QuoteCommentationButton'
 import QuoteCard from '../card/QuoteCard'
 
 import type { QuoteType } from '@/types/items.types'
-import { Handlers, TtsType } from '../container/QuoteContainer'
+import { Handlers} from '../container/QuoteContainer'
 
 interface PropsType {
     items: QuoteType[]
     eventHandlerGroup: (author: string, quote: string, quoteId: number, isUser?:boolean) => Handlers
-    ttsInfos: TtsType
     hasUserQuotePage: boolean
 }
 
-export default function QuoteList({ items, eventHandlerGroup, ttsInfos, hasUserQuotePage }: PropsType) {
+export default function QuoteList({ items, eventHandlerGroup,  hasUserQuotePage }: PropsType) {
 
     return (
         <ul
@@ -29,7 +28,6 @@ export default function QuoteList({ items, eventHandlerGroup, ttsInfos, hasUserQ
                         item={item}
                         items={items}
                         eventHandlerGroup={eventHandlerGroup(author, quote, quoteId, hasUserQuotePage)}
-                        ttsInfos={ttsInfos}
                     >
 
                         <QuoteCommentationButton onClick={eventHandlerGroup(author, quote, quoteId, hasUserQuotePage).onClickGetCommentationInfo} />

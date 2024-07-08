@@ -2,7 +2,6 @@
 
 import { useCardZoomInOutStore } from '@/store/store'
 import { usePathname, useRouter } from 'next/navigation'
-import useTTS from '@/custom/useTTS'
 
 import ZommInQuoteCard from '../card/ZoomInQuoteCard'
 import CardTheme from '../../theme/CardTheme'
@@ -13,18 +12,9 @@ import { toast } from 'react-toastify'
 import { QuoteType } from '@/types/items.types'
 
 
-export interface TtsType {
-  setText: (text: string) => void
-  readText: string
-  progress: number
-  isPlaying: boolean
-}
-
-
 export interface Handlers {
   onClickPageChange: () => void;
   onPrefetch: () => void;
-  onClickSetText: () => void;
   onClickGetCommentationInfo: () => Promise<void>
 }
 
@@ -40,9 +30,7 @@ export default function QuoteContainer({ items }: PropsType) {
   const cardIndex = useCardZoomInOutStore((state) => state.cardIndex)
   const pathName = usePathname()
   const hasUserQuotePage = pathName.startsWith('/user-quotes')
-  const { setText, readText, progress, isPlaying } = useTTS()
 
-  const ttsInfos = { setText, readText, progress, isPlaying }
 
   /** 이벤트 핸들러 그룹 */
   const eventHandlerGroup = (author: string, quote: string, quoteId: number, isUser?: boolean): Handlers => {
@@ -50,7 +38,6 @@ export default function QuoteContainer({ items }: PropsType) {
     const handlers = {
       onClickPageChange: () => onClickPageChange(quoteId, author, isUser),
       onPrefetch: () => onPrefetch(quoteId, author),
-      onClickSetText: () => onClickSetText(quote),
       onClickGetCommentationInfo: () => onClickGetCommentationInfo(quoteId, isUser)
     }
     return { ...handlers }
@@ -69,9 +56,6 @@ export default function QuoteContainer({ items }: PropsType) {
     const url = !isUser ? `/quotes/authors/${author}/${quoteId}?type=no-user` : `/quotes/authors/${author}/${quoteId}`
     router.prefetch(url)
   }
-
-  /** TTS 텍스트 설정 */
-  const onClickSetText = (quote: string) => { setText(quote) }
 
   /** AI 명언 해석 요청 */
   const onClickGetCommentationInfo = async (quoteId: number, isUser: boolean = false) => {
@@ -97,7 +81,7 @@ export default function QuoteContainer({ items }: PropsType) {
   return (
     <>
       <CardTheme />
-      <QuoteList hasUserQuotePage={hasUserQuotePage} items={items} eventHandlerGroup={eventHandlerGroup} ttsInfos={ttsInfos} />
+      <QuoteList hasUserQuotePage={hasUserQuotePage} items={items} eventHandlerGroup={eventHandlerGroup}  />
       <ZommInQuoteCard item={items[cardIndex || 0]} />
     </>
   )
