@@ -14,7 +14,6 @@ wise sayings (위대한 말)
 - (유지보수) 2024년 4월 15일 ~
 
 ## 🔥 배포
-※ 명언 TTS 기능 실행 시 관련 없는 다른 명언카드도 실행되는 문제가 2024.07.07 21:45 경 발견되었습니다. 8일 오전 중으로 처리 후 반영할 예정이므로 이용 시 참고해주세요.
 - 배포: [https://wise-sayings.com](https://wise-sayings.com/)
 - 2024.06.21 경에 구축한 CI/CD 배포 아키텍처 참고용 입니다. EC2 는 내부적으로 Nginx의 리버스 프록시 기능을 적용해서 HTTP 80 포트에 대한 연결을 HTTPS 443 포트로 리디렉트 하는 형식으로 이루어지고 있습니다.
 ![image](https://github.com/youngwan2/wise-saying/assets/107159871/6244ae37-837a-420f-80ce-45c3180abced)
