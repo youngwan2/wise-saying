@@ -34,7 +34,6 @@ export default function QuoteContainer({ items }: PropsType) {
 
   /** 이벤트 핸들러 그룹 */
   const eventHandlerGroup = (author: string, quote: string, quoteId: number, isUser?: boolean): Handlers => {
-    console.log(isUser)
     const handlers = {
       onClickPageChange: () => onClickPageChange(quoteId, author, isUser),
       onPrefetch: () => onPrefetch(quoteId, author),
@@ -46,7 +45,6 @@ export default function QuoteContainer({ items }: PropsType) {
 
   /** 상세 페이지 이동 */
   const onClickPageChange = (quoteId: number, author: string, isUser?: boolean) => {
-    console.log(isUser)
     viewCounter(quoteId, "views")
     const url = !isUser ? `/quotes/authors/${author}/${quoteId}?type=no-user` : `/quotes/authors/${author}/${quoteId}`
     router.push(url)
