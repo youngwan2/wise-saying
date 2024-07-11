@@ -4,7 +4,7 @@ import { useMypageTapsStore } from '@/store/store'
 
 import ButtonContainer from '../common/container/ButtonContainer'
 
-const tapNameList = ['프로필', '작성한 명언', '개인정보']
+const tapNameList = ['프로필', '작성한 명언', '수정/탈퇴']
 export default function MypageTaps() {
 
   const { tapId, setTapId } = useMypageTapsStore()
@@ -14,7 +14,7 @@ export default function MypageTaps() {
   }
 
   return (
-    <ButtonContainer elementName='article' className="md:flex-col md:w-[40%] flex-row w-full border-[1px] border-[rgba(255,255,255,0.1)] text-start flex  ">
+    <ButtonContainer elementName='article' className="md:flex-col md:w-[40%] flex-row w-full text-start flex  ">
       {tapNameList.map((tapName, i) => {
         return (
           <button

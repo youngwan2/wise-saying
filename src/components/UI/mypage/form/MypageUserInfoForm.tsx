@@ -50,11 +50,8 @@ export default function MypageUserInfoForm({ userInfo }: PropsType) {
   return (
     <form
       action={updateUserInfo}
-      className=" mx-auto m-2 mt-[1em] p-6 rounded-[5px] max-w-[600px] text-white "
+      className=" mx-auto m-2 px-6 rounded-[5px] max-w-[600px] text-white "
     >
-      <FormTitle elementName='h2' className="text-[1.25em] mb-[1.5em]">
-        비밀번호 변경/ 회원 탈퇴
-      </FormTitle>
       <EmailField email={userInfo.email} />
       <PasswordFields />
       {/* 수정 및 탈퇴 버튼 */}

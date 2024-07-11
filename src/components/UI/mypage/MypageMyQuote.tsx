@@ -1,7 +1,6 @@
 import { Fragment, useCallback, useEffect, useState } from 'react'
 import { useSwrFetchWithToken } from '@/utils/swr'
 
-import MypageMyQuotesCategoryList from './list/MypageMyQuotesCategoryList'
 import MypageMyQuotesList from './list/MypageMyQuotesList'
 import Pagination from '../common/Pagination'
 import ReplaceMessageCard from '../common/card/ReplaceMessageCard'
@@ -16,8 +15,8 @@ import { UserQuotesType } from '@/types/items.types'
 interface PropsType {
   page: number
   setPage: (p: number) => void
-  userInfo:any
-  isRequest:boolean
+  userInfo: any
+  isRequest: boolean
 }
 
 
@@ -30,8 +29,6 @@ export default function MypageMyQuote({
   userInfo,
   isRequest
 }: PropsType) {
-  const [categories, setCategories] = useState<string[]>([''])
-  const [selectedMyQuotes, setSelectedMyQuotes] = useState<UserQuotesType[]>([])
 
   // 유저 명언 목록
   const url =
@@ -42,29 +39,13 @@ export default function MypageMyQuote({
   const { data: userQuotesAndCount, mutate } = useSwrFetchWithToken(url, false)
   const { quotes, count } = userQuotesAndCount || {}
 
-  const userQuotes:UserQuotesType[] = quotes
+  const userQuotes: UserQuotesType[] = quotes
 
   async function onClickQuoteUpdate() {
     const data = await mutate()
     toast.info(`현재 총 ${data.count} 개의 목록이 갱신되었습니다.`)
   }
 
-  // 명언 필터
-  const onClickQuotesFilter = (category: string = 'all') => {
-    const result = userQuotes.filter((userQuote) => {
-      if (category === 'all') return userQuote
-      return userQuote.category === category
-    })
-    setSelectedMyQuotes(result)
-  }
-
-  // 명언 카테고리를 필터해서 카테고리 목록을 상태에 저장
-  const categoryCreator = useCallback(() => {
-    const tempCategories: string[] = []
-    userQuotes?.forEach((item) => tempCategories.push(item.category))
-    const dedupeCategories = [...new Set(tempCategories)]
-    setCategories(dedupeCategories)
-  }, [userQuotes])
 
   const [limit, setLimit] = useState(0)
   const [firstPage, setFirstPage] = useState(1)
@@ -114,32 +95,22 @@ export default function MypageMyQuote({
     }
   }, [page, count, lastPage, render])
 
-  useEffect(() => {
-    categoryCreator()
-  }, [categoryCreator])
+
 
   if (!userQuotes)
     return <ReplaceMessageCard childern="데이터를 불러오는 중입니다." />
- if (userQuotes.length<1) return <p className='min-h-[30vh] text-center mt-[8em] text-white'>현재 작성하신 명언정보가 없습니다.</p>
+  if (userQuotes.length < 1) return <p className='min-h-[30vh] text-center mt-[8em] text-white'>현재 작성하신 명언정보가 없습니다.</p>
   return (
     <Container elementName={Fragment}>
-
-      <MypageMyQuotesCategoryList
-        categories={categories}
-        onClickCategoryFilter={onClickQuotesFilter}
-      />
-
       <ControlButton
         ariaLabel='목록 갱신 버튼'
-        className='absolute border p-[5px] text-white right-[5%]'
+        className='border border-[rgba(255,255,255,0.2)] rounded-md p-[5px] text-white relative left-[50%] translate-x-[-50%] flex items-center justify-between'
         onClick={onClickQuoteUpdate}>
-        <HiRefresh />
+        <HiRefresh /><span className='left-8'>갱신하기</span>
       </ControlButton>
-
 
       <MypageMyQuotesList
         userQuotes={userQuotes}
-        selectedMyQuotes={selectedMyQuotes}
       />
       <Pagination
         limit={limit}
