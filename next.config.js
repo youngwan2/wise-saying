@@ -47,12 +47,17 @@ const nextConfig = {
             key: 'Access-Control-Allow-Headers',
             value: 'Content-Type, Authorization',
           },
+        ],
+      },
+      {
+        source: '/(.*)',
+        headers: [
           {
             key: 'Content-Security-Policy',
             value: ContentSecurityPolicy.replace(/\n/g, ''),
           }
-        ],
-      },
+        ]
+      }
     ]
   },
 }
