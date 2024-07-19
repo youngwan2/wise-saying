@@ -15,8 +15,8 @@ wise sayings (위대한 말)
 
 ## 🔥 배포
 - 배포: [https://wise-sayings.com](https://wise-sayings.com/)
-- 2024.06.21 경에 구축한 CI/CD 배포 아키텍처 참고용 입니다. EC2 는 내부적으로 Nginx의 리버스 프록시 기능을 적용해서 HTTP 80 포트에 대한 연결을 HTTPS 443 포트로 리디렉트 하는 형식으로 이루어지고 있습니다.
-![image](https://github.com/youngwan2/wise-saying/assets/107159871/6244ae37-837a-420f-80ce-45c3180abced)
+- 배포 아키텍처
+![Untitled diagram-2024-07-19-110521](https://github.com/user-attachments/assets/cefde7c6-9df5-41f2-a851-61f2ceb79ca7)
 
 
 ## 🛠️ 트러블 슈팅
