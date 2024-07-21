@@ -75,7 +75,7 @@ export default function QuoteContainer({ items }: PropsType) {
     }
   }
 
-
+      
   return (
     <>
       <CardTheme />

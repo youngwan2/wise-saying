@@ -2,7 +2,7 @@
 
 const ContentSecurityPolicy = `
 default-src 'self'; 
-script-src 'self' 'unsafe-eval' 'unsafe-inline' https://embed.tawk.to http://localhost:8097; 
+script-src 'self' 'unsafe-eval' 'unsafe-inline'; 
 style-src 'self' 'unsafe-inline'; 
 img-src 'self'; 
 font-src 'self'; 
@@ -59,10 +59,10 @@ const nextConfig = {
       {
         source: '/(.*)',
         headers: [
-          {
-            key: 'Content-Security-Policy',
-            value: ContentSecurityPolicy.replace(/\n/g, ''),
-          },
+          // {
+          //   key: 'Content-Security-Policy',
+          //   value: ContentSecurityPolicy.replace(/\n/g, ''),
+          // },
           {
             key:'Strict-Transport-Security',
             value: 'max-age=31536000; includeSubDomains; preload',
