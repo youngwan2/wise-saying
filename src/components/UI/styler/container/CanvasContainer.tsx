@@ -20,7 +20,7 @@ import wrap from 'word-wrap'
 
 interface QuoteType {
   quote: string
-  author:string
+  author: string
 }
 
 const DEFALT_LINE_HEIGHT = 9
@@ -68,6 +68,18 @@ export default function Canvas() {
     [bgColor],
   )
 
+
+  async function fontLoad() {
+    const fontFile = new FontFace(
+      font,
+      `url(/fonts/${font}.woff2)`
+    )
+    const isLoaded = await fontFile.load()
+    document.fonts.add(fontFile)
+    return isLoaded
+
+  }
+
   // 텍스트 그리기
   const draw = useCallback(
     async (
@@ -80,13 +92,8 @@ export default function Canvas() {
       ctx.lineWidth = strokeThickness
       ctx.strokeStyle = strokeColor
 
-      const fontFile = new FontFace(
-        font,
-        `url(/fonts/${font}.ttf)`
-      )
-      document.fonts.add(fontFile)
-
-      const isLoaded = await fontFile.load()
+      // 폰트 로드
+      const isLoaded = await fontLoad()
 
       if (!imageEl && !isLoaded) return
       ctx.font = `${size}${unit} ${font}`
