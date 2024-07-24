@@ -14,6 +14,7 @@ wise sayings (위대한 말)
 - (유지보수) 2024년 4월 15일 ~
 
 ## 🔥 배포
+- 배포 과정 : https://duklook.tistory.com/563
 - 배포: [https://wise-sayings.com](https://wise-sayings.com/)
 - 배포 아키텍처
 ![Untitled diagram-2024-07-19-110521](https://github.com/user-attachments/assets/cefde7c6-9df5-41f2-a851-61f2ceb79ca7)
