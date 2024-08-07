@@ -10,43 +10,40 @@ import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses'
  */
 function setHtml(path: string, userEmail: string, type: "signin"|"forgot") {
   const html = `
-    <html>
-    <head>
-        <style>
-            /* CSS 스타일 설정 */
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f4f4f4;
-                margin: 0;
-                padding: 20px;
-            }
-            .container {
-                max-width: 600px;
-                margin: 0 auto;
-                background-color: #fff;
-                padding: 20px;
-                border-radius: 8px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            }
-            h1 {
-                color: #333;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <h2>반갑습니다. ${userEmail} 님! Wise Sayings 에서 보냈습니다.</h2>
-            <br/>
-            <h3> 보안!) 본인이 인증 요청을 하지 않았음에도 해당 이메일 주소로 해당 메일이나 개인정보를 요구하는 메일이 전송되었다면, 응답하지 마시고 qodna25@gmail.com 으로 신고해주세요.</h3>
-            <br/>
-            <h3>해당 인증은 ${new Date().toLocaleTimeString()} 부터 7분 동안 유효합니다.</h3>
-            <br/>
-            ${type === 'signin' ? `<h2>${path}</h2>` : `<h2>[비밀번호 재설정 페이지] <a href="${path}"><span>비밀번호 재설정 페이지로 이동하기</span></a></h2>`}
-            
-           
-        </div>
-    </body>
-    </html>
+  <html lang="ko">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Wise Sayings 인증 이메일</title>
+  </head>
+  <body style="font-family: 'Arial', sans-serif; line-height: 1.6; color: #333; background-color: #f4f4f4; margin: 0; padding: 0;">
+      <div style="max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);">
+          <div style="background-color: #4a90e2; color: #ffffff; padding: 20px; text-align: center;">
+              <h1 style="margin: 0; font-size: 24px; font-weight: 700;">Wise Sayings</h1>
+          </div>
+          <div style="padding: 30px;">
+              <h2 style="font-size: 20px; color: #2c3e50; margin-top: 0;">반갑습니다, ${userEmail} 님!</h2>
+              
+              <div style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin-bottom: 20px;">
+                  <h3 style="font-size: 16px; color: #34495e; margin-top: 0;">보안 주의사항</h3>
+                  <p style="margin-bottom: 0;">본인이 인증 요청을 하지 않았음에도 해당 이메일 주소로 개인정보를 요구하는 메일이 전송되었다면, 응답하지 마시고 <strong>qodna25@gmail.com</strong>으로 신고해주세요.</p>
+              </div>
+              
+              <h3 style="font-size: 16px; color: #34495e;">인증 유효 시간</h3>
+              <p>해당 인증은 ${new Date().toLocaleTimeString()} 부터 <strong>7분</strong> 동안 유효합니다.</p>
+              
+              ${type === 'signin' 
+                  ? `<h2 style="font-size: 20px; color: #2c3e50;">${path}</h2>` 
+                  : `<h2 style="font-size: 20px; color: #2c3e50;">비밀번호 재설정</h2>
+                     <a href="${path}" style="display: inline-block; background-color: #4a90e2; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 5px; font-weight: bold; margin-top: 20px;">비밀번호 재설정 페이지로 이동</a>`
+              }
+          </div>
+          <div style="background-color: #f8f9fa; padding: 15px; text-align: center; font-size: 14px; color: #6c757d;">
+              © 2024 Wise Sayings. All rights reserved.
+          </div>
+      </div>
+  </body>
+  </html>
 `
 
   return html
