@@ -17,7 +17,27 @@ wise sayings (위대한 말)
 - 배포 과정 : https://duklook.tistory.com/563
 - 배포: [https://wise-sayings.com](https://wise-sayings.com/)
 - 배포 아키텍처
-![Untitled diagram-2024-07-19-110521](https://github.com/user-attachments/assets/cefde7c6-9df5-41f2-a851-61f2ceb79ca7)
+```mermaid
+sequenceDiagram
+    participant Dev as Developer
+    participant GH as GitHub
+    participant GHA as GitHub Actions
+    participant S3
+    participant CP as CodePipeline
+    participant CD as CodeDeploy
+    participant EC2
+
+    Dev->>GH: Push code
+    GH->>GHA: Trigger workflow
+    GHA->>GHA: Build Next.js app
+    GHA->>S3: Upload build artifacts
+    S3->>CP: Trigger pipeline
+    CP->>S3: Fetch artifacts
+    CP->>CD: Start deployment
+    CD->>EC2: Deploy application
+    EC2->>EC2: Start Next.js server
+    Dev->>EC2: Access application
+ ```
 
 
 ## 🛠️ 트러블 슈팅
