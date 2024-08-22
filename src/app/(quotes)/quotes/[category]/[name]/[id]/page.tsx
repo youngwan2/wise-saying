@@ -73,7 +73,7 @@ export default async function DetailPage({
   const recommendItems = await getRecommendQuote() || []
 
 
-  if (!item || !recommendItems) return <ReplaceMessageCard children="데이터를 불러오는 중입니다." />
+  if (!item || !recommendItems) return <ReplaceMessageCard>데이터를 불러오는 중입니다.</ReplaceMessageCard>
   return (
     <section className="sm:p-[4em] p-[1em]  min-h-[100vh] h-full  mx-auto my-[3em]  perspective-500 flex flex-col max-w-[1300px] relative">
       <DetailQuoteContent item={item} />  {/** 명언 콘텐츠 */}

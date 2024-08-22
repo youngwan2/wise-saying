@@ -31,7 +31,7 @@ export default function UserQuotePageContainer({ metadata, params }: PropsType) 
         error } = useInfiniteScroll({mainPath:'users', subPath: pathName, type: 'quote' })
 
     if (error) return <ErrorMessage />
-    if (isLoading || !items) return <ReplaceMessageCard children="데이터를 불러오는 중입니다.." />
+    if (isLoading || !items) return <ReplaceMessageCard>데이터를 불러오는 중입니다..</ReplaceMessageCard>
     return (
         <>
             <Title current={itemCount} total={metadata.totalCount} title={pathName + ' 명언'} />

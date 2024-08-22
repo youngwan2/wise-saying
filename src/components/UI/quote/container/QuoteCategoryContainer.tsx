@@ -36,7 +36,7 @@ export default function QuotesCategoryContainer({ category, metadata }: PropsTyp
   } = useInfiniteScroll({ mainPath, type: 'category' })
 
   if (error) return <ErrorMessage />
-  if (isLoading || !items) return <ReplaceMessageCard children='데이터를 불러오는 중입니다...' />
+  if (isLoading || !items) return <ReplaceMessageCard>데이터를 불러오는 중입니다...</ReplaceMessageCard>
   return (
     <>
       <Title title={`${topic} 카테고리`} current={currentCount} total={metadata.totalCount} />

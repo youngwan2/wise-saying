@@ -88,7 +88,7 @@ export default function CommentCard({ comment }: PropsType) {
   )
 
   if (isLoading || !(comment && replyInfo))
-    return <ReplaceMessageCard children="데이터를 가져오는 중입니다." />
+    return <ReplaceMessageCard>데이터를 불러오는 중입니다...</ReplaceMessageCard>
 
   const emailInfo = {
     userEmail,

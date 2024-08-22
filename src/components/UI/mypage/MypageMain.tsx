@@ -18,16 +18,16 @@ export default function MypageMain() {
   const hasLogin = !hasToken
 
   // 유저 정보
-  const { data, isLoading} = useSwrFetchWithToken('/api/users/', true)
+  const { data, isLoading } = useSwrFetchWithToken('/api/users/', true)
   const { userInfo } = data || {}
 
   const isReuest = (hasToken) && tapId === 1
 
-  if (hasLogin) return <ReplaceMessageCard children='로그인 후 이용 가능합니다.' isFull /> 
-  if (isLoading) return <ReplaceMessageCard children='유저 정보를 불러오는 중입니다.' />
+  if (hasLogin) return <ReplaceMessageCard isFull>로그인 후 이용 가능합니다.</ReplaceMessageCard>
+  if (isLoading) return <ReplaceMessageCard>유저 정보를 불러오는 중입니다.</ReplaceMessageCard>
   return (
     <article className='w-full relative'>
-      {!userInfo && <ReplaceMessageCard children='조회할 데이터가 없습니다.' />}
+      {!userInfo && <ReplaceMessageCard>조회할 데이터가 없습니다</ReplaceMessageCard>}
       {tapId === 0 && (
         <MypageProfileForm userInfo={userInfo} />
       )}

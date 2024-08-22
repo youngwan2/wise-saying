@@ -29,9 +29,9 @@ export default function PopularQuotesPage() {
         })
     }
 
-    if(error) return <ReplaceMessageCard children="데이터를 불러오는 중 문제가 발생하였습니다."/>
-    if(isLoading) return <ReplaceMessageCard children="데이터를 불러오는 중입니다."/>
-    if(quotes?.length<1) return <ReplaceMessageCard children="조회된 데이터가 존재하지 않습니다."/>
+    if(error) return <ReplaceMessageCard>데이터를 불러오는 중 문제가 발생하였습니다.</ReplaceMessageCard>
+    if(isLoading) return <ReplaceMessageCard>데이터를 불러오는 중입니다.</ReplaceMessageCard>
+    if(quotes?.length<1) return <ReplaceMessageCard>조회된 데이터가 존재하지 않습니다.</ReplaceMessageCard>
     return (
             <PopularQuoteContainer onReload={onReload} quotes={quotes}/>
     )

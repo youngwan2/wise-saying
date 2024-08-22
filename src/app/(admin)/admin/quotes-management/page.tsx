@@ -65,7 +65,7 @@ export default function QuotesManagementPage() {
         alert(meg)
     }
 
-    if(!isPass) return <ReplaceMessageCard children='접근 권한이 없습니다.'/>
+    if(!isPass) return <ReplaceMessageCard>접근 권한이 없습니다...</ReplaceMessageCard>
     return (
         <AdminWriteForm addPostAction={addPostAction} fields={fields} formTitle={'명언 등록'} />
     )

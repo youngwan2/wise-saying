@@ -38,7 +38,7 @@ export default function AuthorQuotePageContainer({ params, metadata }: PropsType
 
 
   if (error) return <ErrorMessage />
-  if (isLoading || !items) return <ReplaceMessageCard children='데이터를 조회중 입니다...' />
+  if (isLoading || !items) return <ReplaceMessageCard>데이터를 조회중 입니다...</ReplaceMessageCard>
   return (
     <>
       <Title title={`${decodeURIComponent(subPath)} 명언`} current={currentItemCount} total={metadata.totalCount} />
