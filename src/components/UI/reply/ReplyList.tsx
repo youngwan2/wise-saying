@@ -17,7 +17,7 @@ export default function ReplyList({
   replyInfo,
 }: PropsType) {
   if (!replyInfo)
-    return <ReplaceMessageCard childern="데이터를 불러오는 중입니다." />
+    return <ReplaceMessageCard children="데이터를 불러오는 중입니다." />
 
   const replies = replyInfo.replies || []
   if(!isShowReplies) return <></>

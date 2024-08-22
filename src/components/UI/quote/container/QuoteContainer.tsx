@@ -3,13 +3,13 @@
 import { useCardZoomInOutStore } from '@/store/store'
 import { usePathname, useRouter } from 'next/navigation'
 
-import ZommInQuoteCard from '../card/ZoomInQuoteCard'
+import ZoomInQuoteCard from '../card/ZoomInQuoteCard'
 import CardTheme from '../../theme/CardTheme'
 import QuoteList from '../list/QuoteList'
 
 import { viewCounter } from '@/services/data/patch'
 import { toast } from 'react-toastify'
-import { QuoteType } from '@/types/items.types'
+import type { QuoteType } from '@/types/items.types'
 
 
 export interface Handlers {
@@ -33,7 +33,7 @@ export default function QuoteContainer({ items }: PropsType) {
 
 
   /** 이벤트 핸들러 그룹 */
-  const eventHandlerGroup = (author: string, quote: string, quoteId: number, isUser?: boolean): Handlers => {
+  const eventHandlerGroup = (author: string, quoteId: number, isUser?: boolean): Handlers => {
     const handlers = {
       onClickPageChange: () => onClickPageChange(quoteId, author, isUser),
       onPrefetch: () => onPrefetch(quoteId, author),
@@ -46,12 +46,16 @@ export default function QuoteContainer({ items }: PropsType) {
   /** 상세 페이지 이동 */
   const onClickPageChange = (quoteId: number, author: string, isUser?: boolean) => {
     viewCounter(quoteId, "views")
-    const url = !isUser ? `/quotes/authors/${author}/${quoteId}?type=no-user` : `/quotes/authors/${author}/${quoteId}`
+    const url = !isUser
+      ? `/quotes/authors/${author}/${quoteId}?type=no-user`
+      : `/quotes/authors/${author}/${quoteId}`
     router.push(url)
   }
   /** 페이지 사전 로드 */
   function onPrefetch(quoteId: number, author: string, isUser?: boolean) {
-    const url = !isUser ? `/quotes/authors/${author}/${quoteId}?type=no-user` : `/quotes/authors/${author}/${quoteId}`
+    const url = !isUser
+      ? `/quotes/authors/${author}/${quoteId}?type=no-user`
+      : `/quotes/authors/${author}/${quoteId}`
     router.prefetch(url)
   }
 
@@ -75,12 +79,12 @@ export default function QuoteContainer({ items }: PropsType) {
     }
   }
 
-      
+
   return (
     <>
       <CardTheme />
-      <QuoteList hasUserQuotePage={hasUserQuotePage} items={items} eventHandlerGroup={eventHandlerGroup}  />
-      <ZommInQuoteCard item={items[cardIndex || 0]} />
+      <QuoteList hasUserQuotePage={hasUserQuotePage} items={items} eventHandlerGroup={eventHandlerGroup} />
+      <ZoomInQuoteCard item={items[cardIndex || 0]} />
     </>
   )
 }

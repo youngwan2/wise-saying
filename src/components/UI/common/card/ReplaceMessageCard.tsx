@@ -3,13 +3,13 @@
 import PageLoader from '../PageLoader'
 
 export default function ReplaceMessageCard({
-  childern,
+  children,
   isFull
 }: {
-  childern?: string
+  children?: string
   isFull?:boolean
 }) {
   return (
-      <PageLoader text={childern||"열심히 불러오는 중입니다.."} isFull={isFull}/>
+      <PageLoader text={children||"열심히 불러오는 중입니다.."} isFull={isFull}/>
   )
 }

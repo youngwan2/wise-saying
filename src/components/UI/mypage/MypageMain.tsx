@@ -23,11 +23,11 @@ export default function MypageMain() {
 
   const isReuest = (hasToken) && tapId === 1
 
-  if (hasLogin) return <ReplaceMessageCard childern='로그인 후 이용 가능합니다.' isFull /> 
-  if (isLoading) return <ReplaceMessageCard childern='유저 정보를 불러오는 중입니다.' />
+  if (hasLogin) return <ReplaceMessageCard children='로그인 후 이용 가능합니다.' isFull /> 
+  if (isLoading) return <ReplaceMessageCard children='유저 정보를 불러오는 중입니다.' />
   return (
     <article className='w-full relative'>
-      {!userInfo && <ReplaceMessageCard childern='조회할 데이터가 없습니다.' />}
+      {!userInfo && <ReplaceMessageCard children='조회할 데이터가 없습니다.' />}
       {tapId === 0 && (
         <MypageProfileForm userInfo={userInfo} />
       )}
