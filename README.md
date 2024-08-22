@@ -1,5 +1,5 @@
 ```
-코드 리팩터링 중입니다.(24.08.21 ~ 24.08.24)
+코드 리팩터링 중입니다.(24.08.21 ~ 24.08.24): https://github.com/youngwan2/wise-saying/issues/76
 ```
 ## 📓 프로젝트 명
 wise sayings (위대한 말)
