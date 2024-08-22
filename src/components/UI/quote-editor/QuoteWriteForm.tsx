@@ -52,7 +52,7 @@ export default function QuoteWriteForm() {
   }
 
   if (!hasToken)
-    return <ReplaceMessageCard childern="로그인 후 이용해주세요." />
+    return <ReplaceMessageCard>로그인 후 이용해주세요.</ReplaceMessageCard>
   return (
     <form
       ref={formRef}

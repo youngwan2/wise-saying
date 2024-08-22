@@ -4,21 +4,25 @@ import { NextRequest, NextResponse } from "next/server";
 
 
 // GET | 명언 조회수 가져오기
-export async function GET(req: NextRequest, res: { params: { id: string } }) { 
-  const { id } = res.params || {id:0}
-  try {
-    const db = await openDB();
+export async function GET(req: NextRequest, res: { params: { id: string } }) {
+  const { id } = res.params || { id: 0 }
+  const db = await openDB();
 
+  try {
     const selectQuery = ` SELECT views FROM views WHERE quote_id = $1 `
     const selectResult = await db.query(selectQuery, [id])
     const views = selectResult.rows[0]?.views || 0
+    
+    return NextResponse.json({ ...HTTP_CODE.OK, views })
 
-    db.end()
-
-    return NextResponse.json({...HTTP_CODE.OK, views})
   } catch (error) {
+    
     console.error('/api/quotes/[id]/views/route.ts', error)
+    
     return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
+
+  } finally {
+    db.end()
   }
 }
 
@@ -34,12 +38,12 @@ export async function PATCH(req: NextRequest, res: { params: { id: string } }) {
     const selectQuery = `SELECT views FROM views WHERE quote_id = $1`
     const insertQuery = `INSERT INTO views(quote_id) VALUES ($1)`
     const updateQuery = `UPDATE views SET views = $1 WHERE quote_id = $2`
-    
+
     const selectResult = await db.query(selectQuery, [id])
     const isViews = (selectResult.rowCount || 0) > 0
-    const views = isViews ?selectResult.rows[0].views : 0
+    const views = isViews ? selectResult.rows[0].views : 0
     let viewsTypeToNum = Number(views)
-    
+
 
     // 게시글을 1번이라도 조회하여 테이블에 등록된 경우
     if (isViews) {

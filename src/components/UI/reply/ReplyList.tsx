@@ -4,7 +4,7 @@ import ReplyCard from './ReplyCard'
 import { ReplyInfoType } from '@/types/items.types'
 
 interface PropsType {
-  isShowReplies:boolean
+  isShowReplies: boolean
   commentId: number
   userEmail: string
   replyInfo?: ReplyInfoType
@@ -17,10 +17,10 @@ export default function ReplyList({
   replyInfo,
 }: PropsType) {
   if (!replyInfo)
-    return <ReplaceMessageCard childern="데이터를 불러오는 중입니다." />
+    return <ReplaceMessageCard>데이터를 불러오는 중입니다.</ReplaceMessageCard>
 
   const replies = replyInfo.replies || []
-  if(!isShowReplies) return <></>
+  if (!isShowReplies) return <></>
   return (
     <ul className="flex flex-col items-end">
       {replies.map((reply) => {

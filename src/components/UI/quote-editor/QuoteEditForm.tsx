@@ -87,9 +87,9 @@ export default function QuoteEditForm() {
   }
 
   if (loading)
-    return <ReplaceMessageCard childern="데이터를 불러오는 중입니다..." />
+    return <ReplaceMessageCard>데이터를 불러오는 중입니다...</ReplaceMessageCard>
   if (!post)
-    return <ReplaceMessageCard childern="포스트가 존재하지 않습니다..." />
+  return <ReplaceMessageCard>포스트가 존재하지 않습니다...</ReplaceMessageCard>
 
 
   return (

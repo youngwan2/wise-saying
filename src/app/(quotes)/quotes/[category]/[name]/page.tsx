@@ -1,56 +1,28 @@
-'use client'
+import AuthorQuotePageContainer from "../../_components/AuthorQuotePageContainer"
+import ErrorMessage from "@/components/UI/message/ErrorMessage"
 
-import useInfiniteScroll from '@/custom/useInfiniteScroll'
-import { useItemMetadataFetch } from '@/custom/useItemMetadataFetch'
-
-import QuoteContainer from '@/components/UI/quote/container/QuoteContainer'
-import LoadMoreButton from '@/components/UI/common/button/ListLoadMoreButton'
-import ReplaceMessageCard from '@/components/UI/common/card/ReplaceMessageCard'
-import Title from '@/components/UI/common/Title/Title'
+import { Target, getQuoteMetadata } from "@/services/data/metadata/metadata"
 
 
 interface PropsType {
   params: {
+    category:  "users" | "topics" | "authors"
     name: string
-    category: string
     birth: string
     intro: string
   }
 }
 
-export default function AuthorPage({ params }: PropsType) {
+export default async function AuthorPage({ params }: PropsType) {
 
-  const { category: mainCategory, name: subCategory } = params
+  const { name, category } = params
 
-  const {
-    items,
-    size,
-    setSize,
-    isLoadingMore,
-    itemCount: currnetItemCount,
-  } = useInfiniteScroll(mainCategory, subCategory)
+  const type = category === 'topics'
+    ? Target.QUOTE_TOPIC
+    : Target.QUOTE_AUTHOR
 
-  const { totalCount, maxPage } = useItemMetadataFetch(
-    mainCategory,
-    subCategory,
-    'authors',
-  )
+  const metadata = await getQuoteMetadata({ type, category: name, totalLimit: 30 })
 
-  if (!items || totalCount < 1)
-    return (
-      <ReplaceMessageCard childern='데이터를 불러오는 중입니다.' isFull />
-    )
-
-  return (
-    <>
-      <Title title={`${decodeURIComponent(subCategory)} 명언`} current={currnetItemCount} total={totalCount} />
-      <QuoteContainer items={items} />
-      <LoadMoreButton
-        size={size}
-        onClick={() => setSize(size + 1)}
-        maxPage={maxPage}
-        isLoadingMore={isLoadingMore}
-      />
-    </>
-  )
+  if (!metadata) return <ErrorMessage title='카테고리 메타데이터 조회 실패' message='카테고리 메타데이터 조회에 실패하였습니다. 일시적인 문제일 수 있으므로 나중에 다시시도 해주세요.' />
+  return <AuthorQuotePageContainer params={params} metadata={metadata} />
 }

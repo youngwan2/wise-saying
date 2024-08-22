@@ -77,7 +77,7 @@ export default function AuthorsManagementPage() {
         userFetch()
     }, [userFetch])
 
-    if(!isPass) return <ReplaceMessageCard childern='접근 권한이 없습니다.'/>
+    if(!isPass) return <ReplaceMessageCard>접근 권한이 없습니다...</ReplaceMessageCard>
     return (
         <AdminWriteForm addPostAction={addPostAction} fields={fields} formTitle='인물정보 등록' />
     )

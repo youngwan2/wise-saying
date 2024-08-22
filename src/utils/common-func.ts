@@ -7,13 +7,13 @@ import { toast } from 'react-toastify'
 
 
 interface MapType {
-  [topick: string]: string
+  [topic: string]: string
 }
-export function categoryClassifier(category: string): string {
+export function categoryClassifier(category:'authors'|'topics'|'jobs') {
   const categoryMap: MapType = {
     authors: '인물별',
     topics: '주제별',
-    job: '직업별',
+    jobs: '직업별',
   }
 
   const target = categoryMap[category]

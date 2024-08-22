@@ -5,6 +5,7 @@ import { Method, getDefaultConfig } from '@/configs/config.api'
 import { toast } from 'react-toastify'
 
 
+
 /**
  * * GET | 명언 카드 세부 페이지 조회수 불러오기
  * @param quoteId 명언 아이디
@@ -138,3 +139,5 @@ export async function getQuoteCategoryFromDb(mainCategory: string) {
 
   }
 }
+
+

@@ -1,67 +1,51 @@
 'use client'
 
-
-import { useCallback, useEffect, useState } from 'react'
 import useInfiniteScroll from '@/custom/useInfiniteScroll'
 
 import Title from '../../common/Title/Title'
 import ReplaceMessageCard from '../../common/card/ReplaceMessageCard'
 import LoadMoreButton from '../../common/button/ListLoadMoreButton'
 import QuoteCategoryList from '../list/QuoteCategoryList'
-
-import { getCategoryCountFromDb } from '@/services/data/get'
+import ErrorMessage from '../../message/ErrorMessage'
 
 import { categoryClassifier } from '@/utils/common-func'
 
 
-
 interface PropsType {
-  category: string
+  category: "authors" | "topics" | "jobs"
+  metadata: {
+    maxPage: number
+    totalCount: number
+    totalLimit?: number
+  }
 }
-export default function QuotesCategoryContainer({ category }: PropsType) {
-  const [totalCategoryCount, setTotalCategoryCount] = useState(0)
+export default function QuotesCategoryContainer({ category, metadata }: PropsType) {
 
-  const topick = categoryClassifier(category)
-
-  const getCategoryCount = useCallback(async () => {
-    const count =
-      (await getCategoryCountFromDb(
-        `/api/quotes/${category}/category-all?type=meta`,
-      )) || 0
-    setTotalCategoryCount(count)
-  }, [category])
+  const topic = categoryClassifier(category) // 메인 카테고리 분류(저자, 주제, 직업)
+  const mainPath = topic === '주제별' ? 'topics' : 'authors'
 
   //SWR INFINITE | 저자 목록을 가져온다.
   const {
     items,
     size,
     setSize,
-    isLoading,
     isLoadingMore,
     itemCount: currentCount,
-  } = useInfiniteScroll(`${category}`, 'category-all')
+    isLoading,
+    error,
+  } = useInfiniteScroll({ mainPath, type: 'category' })
 
-  const MAX_PAGE = Math.ceil(totalCategoryCount / 30)
-
-  useEffect(() => {
-    getCategoryCount()
-  }, [getCategoryCount])
-
-  if (isLoading) return <ReplaceMessageCard childern="데이터를 불러오는 중입니다..." isFull />
- 
-  if (!items || totalCategoryCount<1)
-    return (
-      <ReplaceMessageCard childern='데이터를 불러오는 중입니다.' isFull/>
-    )
+  if (error) return <ErrorMessage />
+  if (isLoading || !items) return <ReplaceMessageCard>데이터를 불러오는 중입니다...</ReplaceMessageCard>
   return (
     <>
-      <Title title={`${topick} 카테고리`} current={currentCount} total={totalCategoryCount} />
-      <QuoteCategoryList items={items}/>
+      <Title title={`${topic} 카테고리`} current={currentCount} total={metadata.totalCount} />
+      <QuoteCategoryList items={items} />
       <LoadMoreButton
         onClick={() => setSize(size + 1)}
         size={size}
         isLoadingMore={isLoadingMore}
-        maxPage={MAX_PAGE}
+        maxPage={metadata.maxPage}
       />
     </>
   )

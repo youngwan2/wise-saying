@@ -30,7 +30,7 @@ export default function SearchResultAll({ items }: PropsType) {
     router.push(`/quotes/authors/${author}/${id}?type=no-user`)
   }
 
-  if (!items) return <ReplaceMessageCard childern="데이터를 불러오는 중입니다." isFull />
+  if (!items) return <ReplaceMessageCard isFull>데이터를 불러오는 중입니다.</ReplaceMessageCard>
   return (
     <div className="bg-[#e3dddd12] max-w-[730px] mx-auto rounded-[10px] shadow-[inset_-2px_-2px_5px_0_rgba(0,0,0,0.5)] p-[2px] px-[1em] mt-[1.5em]">
       {/* 인물별 */}

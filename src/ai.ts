@@ -7,7 +7,7 @@ const openai = new OpenAI({
 // 명언 생성 AI
 export async function generateQuoteBy(content: string) {
   const response = await openai.chat.completions.create({
-    model: 'gpt-3.5-turbo-0125',
+    model: 'gpt-4o-mini',
     response_format: { "type": 'json_object' },
     messages: [
       {
@@ -21,7 +21,7 @@ export async function generateQuoteBy(content: string) {
       },
     ],
     temperature: 0.5,
-    max_tokens: 120,
+    max_tokens: 360,
     top_p: 1,
   })
 
@@ -46,7 +46,7 @@ export async function generateQuoteImageBy(content: string) {
 export async function aiProfanityFilter(content: string[]) {
 
   const response = await openai.chat.completions.create({
-    model: 'gpt-3.5-turbo-0125',
+    model: 'gpt-4o-mini',
     response_format: { "type": 'json_object' },
     messages: [
       {
@@ -71,7 +71,7 @@ export async function aiProfanityFilter(content: string[]) {
 // 명언 해석 
 export async function  generateAiCommentation(content: string) {
   const response = await openai.chat.completions.create({
-    model: 'gpt-3.5-turbo-0125',
+    model: 'gpt-4o-mini',
     messages: [
       {
         role: 'system',

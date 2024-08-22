@@ -53,7 +53,7 @@ export default function TodayQuoteList({ items=[], onClick }: PropsType) {
         playSplitAnimation(textSplit)
     }, [items])
 
-    if(!items || items.length <  1) return <ReplaceMessageCard isFull={false} childern="TTS를 적용할 명언이 존재하지 않습니다."/>
+    if(!items || items.length <  1) return <ReplaceMessageCard isFull={false}>TTS를 적용할 명언이 존재하지 않습니다.</ReplaceMessageCard>
     return (
         <ul className="overflow-hidden mx-[10px]">
              {items.slice(0, 1).map((item) => {

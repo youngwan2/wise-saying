@@ -7,9 +7,8 @@ import { NextResponse } from "next/server"
 export async function GET() {
     try {
         const db = await openDB();
-
         const selectQuery = `
-        SELECT A.quote_id AS quote_id, quote, author, job, birth, intro, category, views 
+        SELECT A.quote_id AS quote_id, quote, author, job, birth, intro, category, views AS view
         FROM quotes A 
         INNER JOIN views B ON A.quote_id = B.quote_id
         INNER JOIN authors C ON A.author_id = C.author_id

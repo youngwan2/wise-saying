@@ -32,7 +32,7 @@ export default function LogoutGuideModal() {
     setNickname(nickname)
   }, [push])
 
-  if (!hasToken) return <ReplaceMessageCard childern='로그아웃 처리 중입니다.' />
+  if (!hasToken) return <ReplaceMessageCard>로그아웃 처리 중입니다...</ReplaceMessageCard>
   if (hasToken) {
     return (
       <>

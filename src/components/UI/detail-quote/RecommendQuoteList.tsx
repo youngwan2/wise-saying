@@ -2,15 +2,15 @@
 
 import { useRouter } from 'next/navigation'
 
-import RecommandQuoteCard from './RecommandQuoteCard'
+import RecommendQuoteCard from './RecommendQuoteCard'
 
 import { QuoteType } from "@/types/items.types"
 
 
 interface PropsType {
-  recommandItems: QuoteType[]
+  recommendItems: QuoteType[]
 }
-export default function RecommandQuoteList({ recommandItems }: PropsType) {
+export default function RecommendQuoteList({ recommendItems }: PropsType) {
   const { push } = useRouter()
 
   function onClickPageSwitchHandle(name: string, quoteId: number) {
@@ -22,8 +22,8 @@ export default function RecommandQuoteList({ recommandItems }: PropsType) {
       <h3 className="text-white sm:text-[1.5em] text-[1.25em] mt-[2em]  bg-[rgba(255,255,255,0.05)]">
         추천 명언(TOP 10)</h3>
       <ul className=' pt-[2em] flex flex-wrap w-full'>
-        {recommandItems.map((item: QuoteType) =>
-          <RecommandQuoteCard
+        {recommendItems.map((item: QuoteType) =>
+          <RecommendQuoteCard
             onClick={() => onClickPageSwitchHandle(item.author, item.quote_id)}
             quoteInfo={item}
             key={item.quote_id}

@@ -14,8 +14,6 @@ import QuoteContent from '../content/QuoteContent'
 
 import { hoverAnimation, hoverAnimationMobile } from '@/utils/common-func'
 
-import { getQuoteViewsFromDB } from '@/services/data/get'
-
 import gsap from 'gsap/all'
 import { HiSpeakerphone } from 'react-icons/hi'
 
@@ -36,8 +34,6 @@ export default function QuoteCard({ item, index, eventHandlerGroup, children }: 
 
   const liRefs = useRef<HTMLLIElement[]>([])
 
-  const [viewCount, setViewCount] = useState(0)
-
   const { isZoomIn, cardIndex } = useCardZoomInOutStore()
   const isCardTheme = useCardTheme((state) => state.isCardTheme)
 
@@ -48,11 +44,6 @@ export default function QuoteCard({ item, index, eventHandlerGroup, children }: 
   const setLiRefs = (index: number, element: HTMLLIElement | null) => {
     element instanceof HTMLLIElement && (liRefs.current[index] = element)
   }
-
-  const setViews = useCallback(async () => {
-    const views = await getQuoteViewsFromDB(quoteId, "views")
-    setViewCount(views)
-  }, [quoteId])
 
 
   const cardZoomInoutSwitch = useCallback(
@@ -93,13 +84,8 @@ export default function QuoteCard({ item, index, eventHandlerGroup, children }: 
     }
   }, [cardIndex, cardZoomInoutSwitch])
 
-  useEffect(() => {
-    setViews()
 
-  }, [setViews])
-
-
-  if (!item) return <ReplaceMessageCard childern="게시글이 존재하지 않습니다." />
+  if (!item) return <ReplaceMessageCard children="게시글이 존재하지 않습니다." />
   return (
     <li
       key={quoteId}
@@ -135,7 +121,7 @@ export default function QuoteCard({ item, index, eventHandlerGroup, children }: 
         : <span className='text-[1.05em] animate-none absolute bottom-2 left-2 text-white rounded-[10px] p-[2px] px-[7px]'></span>}
       </p>
 
-      <QuoteViewIcon viewCount={viewCount} />
+      <QuoteViewIcon viewCount={item.view} />
     </li>
   )
 }

@@ -1,45 +1,12 @@
-'use client'
+import ErrorMessage from '@/components/UI/message/ErrorMessage'
+import UserQuoteCategoryContainer from './_components/UserQuoteCategoryContainer'
 
-import { useItemMetadataFetch } from '@/custom/useItemMetadataFetch'
-import useInfiniteScroll from '@/custom/useInfiniteScroll'
+import { Target, getQuoteMetadata } from '@/services/data/metadata/metadata'
 
-import ReplaceMessageCard from '@/components/UI/common/card/ReplaceMessageCard'
-import ListLoadMoreButton from '@/components/UI/common/button/ListLoadMoreButton'
-import Title from '@/components/UI/common/Title/Title'
-import QuoteCategoryList from '@/components/UI/quote/list/QuoteCategoryList'
+export default async function UserPage() {
 
-export default function UserPage() {
-  const { maxPage, totalCount } = useItemMetadataFetch(
-    'users',
-    'category-all',
-    'users',
-  )
-  const {
-    items: categories,
-    itemCount,
-    size,
-    isLoadingMore,
-    setSize,
-  } = useInfiniteScroll('users', 'category-all')
-
-  if (!categories)
-    return (
-      <ReplaceMessageCard childern="데이터가 존재하지 않습니다." />
-    )
-  if (categories.length < 1)
-    return <ReplaceMessageCard childern="데이터를 불러오는 중 입니다." />
-  return (
-    <>
-      <Title current={itemCount} total={totalCount} title='사용자 명언' />
-      <QuoteCategoryList items ={categories} />
-      <ListLoadMoreButton
-        size={size}
-        maxPage={maxPage}
-        isLoadingMore={isLoadingMore}
-        onClick={() => {
-          setSize(size + 1)
-        }}
-      />
-    </>
-  )
+  const metadata = await getQuoteMetadata({ type: Target.USER_QUOTE_CATEGORY_ALL })
+  
+  if (!metadata) return <ErrorMessage title='카테고리 메타데이터 조회 실패' message='카테고리 메타데이터 조회에 실패하였습니다. 일시적인 문제일 수 있으므로 나중에 다시시도 해주세요.' />
+  return <UserQuoteCategoryContainer metadata={metadata} />
 }

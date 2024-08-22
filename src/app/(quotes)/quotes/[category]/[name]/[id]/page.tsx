@@ -6,7 +6,7 @@ import DetailPageControlButtons from '@/components/UI/detail-quote/button/Detail
 import DetailQuoteContent from '@/components/UI/quote/content/DetailQuoteContent'
 import QuoteLikeButton from '@/components/UI/detail-quote/button/QuoteLikeButton'
 import ShareContainer from '@/components/UI/detail-quote/ShareContainer'
-import RecommandQuoteList from '@/components/UI/detail-quote/RecommandQuoteList'
+import RecommendQuoteList from '@/components/UI/detail-quote/RecommendQuoteList'
 
 import { config } from '@/configs/config.url'
 import { openDB } from '@/utils/connect'
@@ -56,7 +56,7 @@ export default async function DetailPage({
   }
 
   /** GET | 추천명언 조회 */
-  async function getRecommandQuote() {
+  async function getRecommendQuote() {
     const url = `${config.apiPrefix}${config.apiHost}/api/quotes/today?random-count=10`
     try {
       const response = await fetch(url)
@@ -70,31 +70,23 @@ export default async function DetailPage({
   }
 
   const item = await getQuoteDetail(id)
-  const recommandItems = await getRecommandQuote() || []
+  const recommendItems = await getRecommendQuote() || []
 
 
-  if (!item || !recommandItems) return <ReplaceMessageCard childern="데이터를 불러오는 중입니다." />
+  if (!item || !recommendItems) return <ReplaceMessageCard>데이터를 불러오는 중입니다.</ReplaceMessageCard>
   return (
-    <article className="sm:p-[4em] p-[1em]  min-h-[100vh] h-full  mx-auto my-[3em]  perspective-500 flex flex-col max-w-[1300px] relative">
-
-      {/* 명언 텍스트 영역 */}
-      <DetailQuoteContent item={item} />
-      {/* 좋아요 버튼 */}
-      <QuoteLikeButton id={id} textColor={'text-black'} />
+    <section className="sm:p-[4em] p-[1em]  min-h-[100vh] h-full  mx-auto my-[3em]  perspective-500 flex flex-col max-w-[1300px] relative">
+      <DetailQuoteContent item={item} />  {/** 명언 콘텐츠 */}
+      <QuoteLikeButton id={id} textColor={'text-black'} />  {/** 좋아요 버튼 */}
       <div className="flex">
-        {/* 컨트롤 버튼 */}
-        <DetailPageControlButtons item={item} isUserQuote={type === 'user' ? true : false} />
-        {/* 공유 */}
-        <ShareContainer />
+        <DetailPageControlButtons item={item} isUserQuote={type === 'user' ? true : false} />  {/** 듣기, 확대, 꾸미기 버튼*/}
+        <ShareContainer /> {/** 공유 버튼 */}
       </div>
 
-      {/* 댓글 영역 */}
-      <Comment id={id} />
+      <Comment id={id} /> {/** 댓글 */}
+      <RecommendQuoteList recommendItems={recommendItems} /> {/** 추천 명언 목록 */}
 
-      {/* 추천 명언 */}
-      <RecommandQuoteList recommandItems={recommandItems} />
-
-    </article>
+    </section>
   )
 }
 

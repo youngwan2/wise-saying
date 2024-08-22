@@ -200,20 +200,21 @@ export const useCommentUpdate = create<UpdateState>((set) => ({
   setIsUpdate: (isUpdate) => set(() => ({ isUpdate }))
 }))
 
-/** 이트 정책 탭 식별자 저장 */
+/** 사이트 정책 탭 식별자 저장 */
 export const usePolicyTaps = create<PolicyTapState>((set) => ({
   tapNum: 0,
   setTapNum: (tapNum) => set(() => ({ tapNum }))
 }))
 
 
-/** 드 디자인 테마 설정 */
+/** 카드 디자인 테마 설정 */
 export const useCardTheme = create<CardThemeState>((set) => ({
   isCardTheme: false,
   setIsCardTheme: (isCardTheme) => set(() => ({ isCardTheme }))
 }))
 
 
+/** 명언 카드 이미지 초기 설정 및 추가 */
 export const useImagesSrcStore = create<ImageSrcType>((set) => ({
   imagesSrc: defaultImagsSrc,
   setImagesSrc: (imagesSrc) => set(() => ({ imagesSrc: imagesSrc })),
