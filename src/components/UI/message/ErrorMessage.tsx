@@ -11,7 +11,7 @@ export default function ErrorMessage({ title='네트워크 문제', message='현
     const { back, refresh } = useRouter()
 
     return (
-        <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg absolute top-[25%] left-[50%] translate-x-[-50%] w-full max-w-[612px] min-w-[250px]">
+        <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg fixed top-[25%] left-[50%] translate-x-[-50%] w-full max-w-[612px] min-w-[250px]">
             <div className="flex items-center justify-between">
                 <div className="flex items-center">
                     <svg className="w-6 h-6 mr-3 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

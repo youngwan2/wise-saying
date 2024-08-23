@@ -1,10 +1,9 @@
 'use client'
 import styles from './eidtor.module.css'
 
-import {  useRef } from 'react'
+import {  useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import useHasToken from '@/custom/useHasToken'
-import useDraggable from '@/custom/useDraggable'
 
 import ReplaceMessageCard from '../common/card/ReplaceMessageCard'
 import QuoteFormButtons from './QuoteFormButtons'
@@ -17,6 +16,7 @@ import { hoverAnimation } from '@/utils/common-func'
 import { postQuoteAction } from '@/actions/add-quote.action'
 import { getAccessToken } from '@/utils/session-storage'
 import { useFormState } from 'react-dom'
+import useFormStateToaster from '@/custom/useFormStateToaster'
 
 
 export default function QuoteWriteForm() {
@@ -26,11 +26,14 @@ export default function QuoteWriteForm() {
   const router = useRouter()
 
   // 포스트 추가 액션
-  const [state, formAction] = useFormState(postQuoteAction, { message: '명언을 추가중입니다.', success: false })
+  const [state, formAction] = useFormState(postQuoteAction, { message: '', success: false })
   
-  // 폼 드래그
-  useDraggable(formRef, null)
-
+  useFormStateToaster(state)
+  useEffect(()=>{
+    if(state.success === true) {
+      router.push('/user-quotes')
+    }
+  },[state.success])
 
   function onClickCancel() {
     router.push('/user-quotes')

@@ -10,8 +10,8 @@ export default function useFormStateToaster(state: { message: string, success?: 
         if (!state) return
         if (state.message === '') return
 
-        if (state.message && state.message.length > 0) {
-            if (state.success) {
+        if (state.message && state.message.length > 1) {
+            if (state.success === true) {
                 toast.success(state.message);
             } else {
                 toast.error(state.message);

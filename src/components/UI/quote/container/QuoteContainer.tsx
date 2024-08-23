@@ -10,6 +10,7 @@ import QuoteList from '../list/QuoteList'
 import { viewCounter } from '@/services/data/patch'
 import { toast } from 'react-toastify'
 import type { QuoteType } from '@/types/items.types'
+import EmptyMessage from '../../message/EmptyMessage'
 
 
 export interface Handlers {
@@ -78,8 +79,7 @@ export default function QuoteContainer({ items }: PropsType) {
       toast.error(meg)
     }
   }
-
-
+  
   return (
     <>
       <CardTheme />

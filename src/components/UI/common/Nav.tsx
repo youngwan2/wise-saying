@@ -34,7 +34,7 @@ export default function Nav() {
   const aiServiceItems = [
     { icon: <HiHome />, label: '마이페이지', href: '/mypage' },
     { icon: nextAuthLoginState || generalLoginState ? <HiLogout /> : <HiLogin />, label: nextAuthLoginState || generalLoginState ? '로그아웃' : '로그인', href: nextAuthLoginState || generalLoginState ? '/logout' : '/login' },
-    { icon: <HiPencil />, label: '명언등록', href: '/add-wisesaying' },
+    { icon: <HiPencil />, label: '명언등록', href: '/add-quote' },
     { icon: <HiOutlineCog />, label: '환경설정', href: '/system' },
   ];
 
