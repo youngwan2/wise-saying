@@ -8,12 +8,14 @@ interface PropsType {
     children?: ReactNode
     title?:string
     onClick?: (MouseEventHandler<HTMLButtonElement>) | (() => void)
+    disabled?: boolean
 
 }
 
-export default function ControlButton({ title,onClick, ariaLabel,  dataType, className, type, children }: PropsType) {
+export default function ControlButton({ title,onClick, ariaLabel,  dataType, className, type, disabled,children }: PropsType) {
     return (
         <button
+            disabled={disabled}
             title={title}
             type={type}
             data-type={dataType}

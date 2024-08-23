@@ -4,10 +4,9 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const LIMIT = 30
 export async function GET(req: NextRequest) {
-
+    const page = req.nextUrl.searchParams.get('page') || 0
     const db = await openDB()
     try {
-        const page = req.nextUrl.searchParams.get('page') || 0
         const pageNum = Number(page)
         const query = `
         SELECT DISTINCT B.author AS category, job, intro, birth

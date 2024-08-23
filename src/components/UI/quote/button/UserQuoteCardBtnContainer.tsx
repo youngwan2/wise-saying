@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useUserPostIdStore } from '@/store/store'
+import { useUserPostWithIdStore} from '@/store/userPostStore'
 
 import QuoteCardControlButtons from './QuoteCardControlButtons'
 import ButtonContainer from '../../common/container/ButtonContainer'
@@ -25,7 +25,7 @@ export default function UserQuoteCardBtnContainer({
 }: PropsType) {
   const userEmail = getUserEmail()
   const router = useRouter()
-  const setPostId = useUserPostIdStore((state) => state.setPostId)
+  const setUserPost = useUserPostWithIdStore().setPost
 
   // 삭제버튼
   const onClickDelete = async () => {
@@ -37,7 +37,7 @@ export default function UserQuoteCardBtnContainer({
 
   // 수정버튼
   const onClickUpdate = () => {
-    setPostId(Number(item.quote_id))
+    setUserPost(item)
     router.push('/update-wisesaying')
   }
 

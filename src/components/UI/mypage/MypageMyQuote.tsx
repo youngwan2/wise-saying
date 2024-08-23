@@ -98,7 +98,7 @@ export default function MypageMyQuote({
 
 
   if (!userQuotes)
-    return <ReplaceMessageCard children="데이터를 불러오는 중입니다." />
+    return <ReplaceMessageCard>데이터를 불러오는 중입니다.</ReplaceMessageCard>
   if (userQuotes.length < 1) return <p className='min-h-[30vh] text-center mt-[8em] text-white'>현재 작성하신 명언정보가 없습니다.</p>
   return (
     <Container elementName={Fragment}>

@@ -1,10 +1,8 @@
 import Label from '../common/Label'
 import Input from '../common/Input'
-
-
 import Container from '../common/container/Container'
 
-import { PostType } from './QuoteEditForm'
+import type { PostType } from './QuoteEditForm'
 
 interface PropsType {
   post?: PostType

@@ -10,8 +10,8 @@ export default async function Home() {
   
   const items = (await getTodayQuotesFromDb()) || []
 
-  if (!items) return <ReplaceMessageCard isFull />
-  if(items.length<1) return <ReplaceMessageCard children='데이터를 불러오는 중입니다.' isFull />
+  if (!items) return <ReplaceMessageCard isFull></ReplaceMessageCard>
+  if(items.length<1) return <ReplaceMessageCard isFull>데이터를 불러오는 중입니다.</ReplaceMessageCard>
   return (
     <>
       <TodayQuoteContainer quotes={items} />

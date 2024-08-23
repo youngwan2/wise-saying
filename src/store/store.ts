@@ -1,7 +1,6 @@
 import { create } from 'zustand'
 import type {
   LoginState,
-  PostIdState,
   BgColorState,
   CardSizeState,
   TextStyleState,
@@ -58,11 +57,6 @@ export const useLoginStateStore = create<LoginState>((set) => ({
   setLoginState: (loginState) => set(() => ({ loginState: loginState })),
 }))
 
-/** 유저 게시글의 식별자를 저장 */
-export const useUserPostIdStore = create<PostIdState>((set) => ({
-  postId: 0,
-  setPostId: (id) => set(() => ({ postId: id })),
-}))
 
 /** 유저가 선택한 배경 색을 저장 */
 export const useBackgroundColorStore = create<BgColorState>((set) => ({
@@ -134,7 +128,7 @@ export const useMypageTapsStore = create<MypageTapsState>((set) => ({
   setTapId: (tapId) => set(() => ({ tapId })),
 }))
 
-/**  그인한 유저 정보를 저장 */
+/**  로그인한 유저 정보를 저장 */
 export const useUserInfoStore = create<UserInfoState>((set) => ({
   userId: 0,
   email: 'example@text.com',

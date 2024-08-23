@@ -5,10 +5,11 @@ import { NextRequest, NextResponse } from 'next/server';
 const LIMIT = 30
 export async function GET(req: NextRequest) {
 
+    const page = req.nextUrl.searchParams.get('page') || 0
+    const pageNum = Number(page)
     const db = await openDB()
+
     try {
-        const page = req.nextUrl.searchParams.get('page') || 0
-        const pageNum = Number(page)
         const query = `
           SELECT DISTINCT category FROM quotes
           LIMIT $1 OFFSET $2

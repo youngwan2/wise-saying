@@ -31,42 +31,7 @@ export async function GET(req: NextRequest, res: { params: { id: number } }) {
   }
 }
 
-const updateQuery = `
-UPDATE user_quotes
-SET quote = $1, category = $2, author = $3
-WHERE user_quote_id = $4
-`
 
-// PATCH | 단일 포스트 수정
-export async function PATCH(req: NextRequest, res: { params: { id: number } }) {
-  const db = await openDB()
-  const postId = res.params.id
-  const { '0': body } = await req.json()
-  const { content: quote, category, author } = body
-
-
-  const filterJson = await aiProfanityFilter([category, quote, author]) || '{"judgment": false, "reason": "" }'
-
-  const { judgment, reason } = JSON.parse(filterJson)
-
-  if (judgment) {
-    return NextResponse.json({ ...HTTP_CODE.BAD_REQUEST, meg: reason })
-  }
-
-  try {
-    // 일반로그인 |  접근 토큰 검증
-    const { user, ...HTTP } = tokenVerify(req, true) as any
-    if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
-    await db.query(updateQuery, [quote, category, author, postId])
-
-    await db.end()
-    return NextResponse.json(HTTP_CODE.NO_CONTENT)
-  } catch (error) {
-    console.error('/api/users/post/route.ts', error)
-
-    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
-  }
-}
 
 const deleteQuery = `
 DELETE FROM user_quotes

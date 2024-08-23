@@ -28,8 +28,8 @@ export const createToken = (
   const token = jwt.sign(
     {
       exp: isAccessToken
-        ? Math.floor(Date.now() / 1000) + 60 * 5
-        : Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30, // 1달 = 30일
+        ? Math.floor(Date.now() / 1000) + 60 * 15 // 15분, 액세스 토큰
+        : Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30, // 1달 = 30일, 리프레쉬 토큰
       data: payload,
     },
     scrept,
