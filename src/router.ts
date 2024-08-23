@@ -13,7 +13,7 @@ const navList = [
   { path: '/quotes/topics', label: '주제별 명언', icon: HiNewspaper },
   { path: '/quotes/authors', label: '인물별 명언', icon: HiOutlineUserGroup },
   { path: '/user-quotes', label: '유저 명언', icon: HiOutlineHandThumbUp },
-  { path: '/add-wisesaying', label: '명언 쓰기', icon: HiOutlinePencil },
+  { path: '/add-quote', label: '명언 쓰기', icon: HiOutlinePencil },
   { path: '/mypage', label: '마이페이지', icon: HiHomeModern },
   { path: '/ai-quote', label: 'AI 명언 챗봇', icon: BsRobot },
 ]

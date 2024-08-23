@@ -2,7 +2,6 @@ import './globals.css'
 import 'react-toastify/dist/ReactToastify.css';
 
 import type { Metadata } from 'next'
-import { Gowun_Dodum } from 'next/font/google'
 
 import Header from '@/components/layout/Header'
 import TimerContainer from '@/components/UI/common/TimerContainer';
@@ -12,8 +11,8 @@ import { Toaster } from 'react-hot-toast'
 import { ToastContainer } from 'react-toastify'
 import Script from 'next/script';
 
+import localFont from "next/font/local";
 
-const gowunDodum = Gowun_Dodum({ weight: '400', subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: {
@@ -35,13 +34,22 @@ export const metadata: Metadata = {
   }
 }
 
+const pretendard = localFont({
+  src: "../assets/fonts/PretendardVariable.woff2",
+  display: "swap",
+  weight: "45 920",
+  variable: "--font-pretendard",
+});
+
+
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode
-}) {
+}>
+) {
   return (
-    <html lang="ko" className=" bg-gradient-to-tr from-[#23346d] to-[#1b2d69]">
+    <html lang="ko" className={`${pretendard.className} bg-gradient-to-tr from-[#23346d] to-[#1b2d69]`}>
       {/* 상담 챗 봇 */}
       <Script id="show_chat_service">
         {`var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
@@ -55,7 +63,7 @@ export default function RootLayout({
           })();`}
       </Script>
 
-      <body className={`${gowunDodum.className}`} suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <Header />
         <TimerContainer />
         <main className="min-h-[100vh] w-full mx-auto max-w-[1700px] relative">

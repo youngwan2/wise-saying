@@ -2,6 +2,7 @@
 
 import jwt, { JwtPayload } from "jsonwebtoken"
 import { openDB } from "@/utils/connect"
+import { revalidatePath } from "next/cache"
 
 
 const insertQuery = `
@@ -35,12 +36,13 @@ export const postQuoteAction = async (prevState: { message: string }, form: Form
         const db = await openDB()
         await db.query(insertQuery, [content, category, author, userId])
 
-
-        return { message: '추가', success: true }
+        return { message: '성공적으로 추가 하였습니다.', success: true }
 
 
     } catch (error) {
         return { message: '데이터베이스 에러: 유저 명언을 추가하지 못 했습니다.', success: false }
+    } finally {
+        revalidatePath('/user-quotes')
     }
 
 } 

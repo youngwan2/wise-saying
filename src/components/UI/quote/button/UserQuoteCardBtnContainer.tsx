@@ -1,17 +1,18 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
-import { useUserPostWithIdStore} from '@/store/userPostStore'
+import { redirect, useRouter } from 'next/navigation'
+import { useUserPostWithIdStore } from '@/store/userPostStore'
 
 import QuoteCardControlButtons from './QuoteCardControlButtons'
 import ButtonContainer from '../../common/container/ButtonContainer'
 import ControlButton from '../../common/button/ControlButton'
 
-import { getUserEmail } from '@/utils/session-storage'
-import { deleteUserQuote } from '@/services/data/delete'
+import { getAccessToken, getUserEmail } from '@/utils/session-storage'
 import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi2'
 
 import { type QuoteType } from '@/types/items.types'
+import { deleteUserQuoteAction } from '@/actions/delete-quote.action'
+import { toast } from 'react-toastify'
 
 interface PropsType {
   item: QuoteType
@@ -26,19 +27,24 @@ export default function UserQuoteCardBtnContainer({
   const userEmail = getUserEmail()
   const router = useRouter()
   const setUserPost = useUserPostWithIdStore().setPost
+  const token = getAccessToken() || ''
 
-  // 삭제버튼
+  // 명언 삭제
   const onClickDelete = async () => {
-    const isSuccess = await deleteUserQuote(item.quote_id)
-    if (isSuccess && !isMypage) {
+    const state = await deleteUserQuoteAction(item.quote_id, token)
+    if (state.success) {
+      toast.success(state.message)
       router.push('/user-quotes')
+    } else {
+      toast.error(state.message)
     }
+
   }
 
-  // 수정버튼
+  // 명언 수정
   const onClickUpdate = () => {
     setUserPost(item)
-    router.push('/update-wisesaying')
+    router.push('/update-quote')
   }
 
   return (

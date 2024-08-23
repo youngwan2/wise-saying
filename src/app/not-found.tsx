@@ -1,18 +1,16 @@
-import Link from 'next/link'
+import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <article className=" text-center animate-bounce-y-2 pl-[10px] max-w-[500px] w-full fixed left-[50%] top-[30%] translate-x-[-50%] translate-y-[-50%] bg-white shadow-[inset_-2px_-2px_5px_0_rgba(0,0,0,0.8)] p-[15px] rounded-[10px]">
-      <h2 className="text-[#162557] text-[3em]">Not Found(404)💦</h2>
-      <p className="text-[black] mt-[0.5em] mb-[1.3em] text-[1.25em]">
-        요청한 자료(경로)를 찾을 수 없습니다.
-      </p>
+    <div className="bg-[#234491]  fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col items-center justify-center min-h-screen w-full">
+      <h1 className="text-6xl font-bold text-[#ffc700] mb-4">404</h1>
+      <p className="text-xl  text-[white] mb-8">페이지를 찾을 수 없습니다</p>
       <Link
-        href="/"
-        className="bg-[#162557] px-[10px] p-[5px] mt-[2em] text-white hover:bg-[tomato] hover:text-[white] rounded-[10px]"
+        href={'/'}
+        className="px-4 py-2 bg-white text-[#234491] rounded transition-colors active:bg-slate-50"
       >
-        홈(Hone)으로
+        홈으로 돌아가기
       </Link>
-    </article>
-  )
-}
+    </div>
+  );
+};
