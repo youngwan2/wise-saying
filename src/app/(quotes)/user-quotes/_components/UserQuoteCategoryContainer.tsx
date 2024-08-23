@@ -30,7 +30,7 @@ export default function UserQuoteCategoryContainer({ metadata }: PropsType) {
     if (error)
         return <ErrorMessage />
     if (isLoading || !categories)
-        return <ReplaceMessageCard children="데이터를 불러오는 중 입니다." />
+        return <ReplaceMessageCard>데이터를 불러오는 중 입니다.</ReplaceMessageCard>
     return (
         <>
             <Title current={itemCount} total={metadata.totalCount} title='사용자 명언' />

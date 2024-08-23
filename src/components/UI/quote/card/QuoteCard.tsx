@@ -1,6 +1,6 @@
 import styles from '../Quotes.module.css'
 
-import { ReactNode, useCallback, useEffect, useRef, useState } from 'react'
+import { ReactNode, useCallback, useEffect, useRef} from 'react'
 import { useCardTheme, useCardZoomInOutStore } from '@/store/store'
 import useIntersectionObserver from '@/custom/useIntersectionObserver'
 import useTTS from '@/custom/useTTS'
@@ -85,7 +85,7 @@ export default function QuoteCard({ item, index, eventHandlerGroup, children }: 
   }, [cardIndex, cardZoomInoutSwitch])
 
 
-  if (!item) return <ReplaceMessageCard children="게시글이 존재하지 않습니다." />
+  if (!item) return <ReplaceMessageCard>게시글이 존재하지 않습니다.</ReplaceMessageCard>
   return (
     <li
       key={quoteId}

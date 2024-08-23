@@ -34,8 +34,7 @@ export default function AuthorQuotePageContainer({ params, metadata }: PropsType
     itemCount: currentItemCount,
     isLoading,
     error
-  } = useInfiniteScroll({ mainPath, subPath,type:'quote' })
-
+  } = useInfiniteScroll({ mainPath, subPath:decodeURIComponent(subPath),type:'quote' })
 
   if (error) return <ErrorMessage />
   if (isLoading || !items) return <ReplaceMessageCard>데이터를 조회중 입니다...</ReplaceMessageCard>

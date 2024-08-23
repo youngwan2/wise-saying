@@ -4,12 +4,14 @@ import ButtonContainer from '../common/container/ButtonContainer'
 
 interface PropsType {
   onClickCancel: MouseEventHandler<HTMLButtonElement>
+  disabled?: boolean
 }
-export default function QuoteFormButtons({ onClickCancel }: PropsType) {
+export default function QuoteFormButtons({ onClickCancel, disabled }: PropsType) {
   return (
     <ButtonContainer elementName='div' className="p-[2em]">
       {/* 전송버튼 */}
       <ControlButton
+        disabled={disabled}
         ariaLabel='등록 버튼'
         className='shadow-[inset_0_0_0_1px_white] p-[10px] mr-[1em] bg-[white] text-black font-bold hover:bg-[#e1dfdf] rounded-[5px]'>
         등록하기

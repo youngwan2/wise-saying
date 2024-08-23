@@ -9,7 +9,7 @@ import { HiRefresh } from 'react-icons/hi'
 import { HiClock } from 'react-icons/hi2'
 
 
-const MINUTE_TO_SEC = 60
+const MINUTE_TO_SEC = 120
 
 export default function Timer() {
 
@@ -20,7 +20,7 @@ export default function Timer() {
   /** 토큰 만료 시간 측정 */
   const checkTokenExp = useCallback(async (exp: number) => {
     const currentTime = Math.floor(Date.now() / 1000) // 현재 시간
-    const expired60SecondsAgo = exp - (currentTime - MINUTE_TO_SEC) //  현재(sec) - 60(sec) = 1분 전 토큰 만료
+    const expired60SecondsAgo = exp - (currentTime - MINUTE_TO_SEC) //  현재(sec) - 120(sec) = 2분 전 토큰 만료
 
     setTimeScale(Math.max(0,Number(expired60SecondsAgo))) // 만료 시간 추적
     if (expired60SecondsAgo < 1) setIsExpire(true)
