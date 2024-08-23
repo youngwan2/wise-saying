@@ -7,7 +7,6 @@ export async function GET(req: NextRequest) {
     const page = req.nextUrl.searchParams.get('page') || 0
     const db = await openDB()
     try {
-        
         const pageNum = Number(page)
         const query = `
         SELECT DISTINCT B.author AS category, job, intro, birth
