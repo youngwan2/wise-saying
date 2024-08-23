@@ -14,14 +14,14 @@ export default function TodayQuoteContent({ quote, author }: PropsType) {
             <div className="pb-[1em]"> 
                 {/* 명언 */}
                 {quote.split('').map((text, i) => {
-                    return <span data-testid={'today-quote-split'} key={i} className=" today-quote opacity-0 relative sm:text-[1.25em] text-[1.1em] mt-[0.5em] text-white">{text}</span>
+                    return <span data-testid={'today-quote-split'} key={i} className=" today-quote opacity-0 relative sm:text-[1.15em] text-[1.05em] mt-[0.5em] text-white">{text}</span>
                 })}
             </div>
 
 
             {/* 저자 */}
             <strong
-                className=" w-[130px] inline-block mt-[2em] mr-[1em] text-white text-right hover:text-[tomato] hover:cursor-pointer z-[1000000]"
+                className="w-[130px] inline-block mt-[2em] mr-[1em] text-white text-right hover:text-[tomato] hover:cursor-pointer z-[1000000]"
             >
                 <Link title={author+' 명언 더보기'} className="right-4 bottom-4 absolute" href={'/quotes/authors/' + author}>-{author}-</Link>
             </strong>

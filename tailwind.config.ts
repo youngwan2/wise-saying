@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        pretendard: ["var(--font-pretendard)"]
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
@@ -19,5 +22,6 @@ const config: Config = {
     },
   },
   plugins: [require('tailwindcss-3d')],
+  
 }
 export default config

@@ -10,6 +10,8 @@ import CommentSortSelect from './CommentSortSelect'
 import CommentList from './CommentList'
 
 import { getCommentsFormDb } from '@/services/data/get'
+import ErrorMessage from '../message/ErrorMessage'
+import CommentSkeleton from '@/components/skeleton/CommentSkeleton'
 
 export interface CommentsInfoType {
   comments: {
@@ -31,9 +33,9 @@ const MIN_PAGE = 0
 export default function Comment({ id }: PropsType) {
   const [page, setPage] = useState(0)
   const [sort, setSort] = useState('')
-  const {isUpdate,setIsUpdate} = useCommentUpdate()
+  const { isUpdate, setIsUpdate } = useCommentUpdate()
 
-  const { data: commentsInfo, isLoading, mutate } = useSWR<CommentsInfoType>(
+  const { data: commentsInfo, isLoading, mutate, error } = useSWR<CommentsInfoType>(
     `/api/quotes/${id}/comments?page=${page}&sort=${sort}`,
     getCommentsFormDb,
     {
@@ -52,15 +54,18 @@ export default function Comment({ id }: PropsType) {
   }, [isUpdate, mutate, setIsUpdate])
 
 
-
+  if (error) return <ErrorMessage />
   return (
     <section className="py-[1em] ">
-      <h3 className="text-white sm:text-[1.5em] text-[1.25em] mt-[2em]  bg-[rgba(255,255,255,0.05)]">
+      <h3 className="sm:text-[1.35em] text-[1.15em] p-1 text-white  mt-[2em]  bg-[rgba(255,255,255,0.05)]">
         댓글({!isLoading ? comments.length : 0})
       </h3>
       <CommentForm mutate={mutate} />
       <CommentSortSelect setSort={setSort} />
-      <CommentList comments={comments} />
+      {isLoading
+        ? <CommentSkeleton/>
+        : <CommentList comments={comments} />}
+
       <CommentPaginationContainer
         page={page}
         minPage={MIN_PAGE}

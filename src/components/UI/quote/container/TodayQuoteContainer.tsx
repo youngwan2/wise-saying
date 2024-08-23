@@ -11,6 +11,7 @@ import { HiCalendarDays } from 'react-icons/hi2'
 
 import gsap from 'gsap'
 import { toast } from 'react-toastify'
+import Title from '../../common/Title/Title'
 
 
 gsap.registerPlugin(TextPlugin)
@@ -31,7 +32,7 @@ export default function TodayQuoteContainer({ quotes = [], onClick }: PropsType)
 
   return (
     <Container elementName={Fragment}>
-      <h2 data-testid="today-quote" className="sm:text-[1.5em] text-[1.35em] pl-[8px] flex items-center text-white max-w-[600px] mx-auto  mt-[5em] ">
+      <h2  data-testid="today-quote" className="sm:text-[1.45em] text-[1.35em] pl-[8px] flex items-center text-white max-w-[600px] mx-auto  mt-[5em] ">
         <HiCalendarDays className="mr-[5px]" /> 오늘의 명언
       </h2>
       <TodayQuoteList items={quotes} onClick={onClick ?? onClickGetCommentationInfo} />
