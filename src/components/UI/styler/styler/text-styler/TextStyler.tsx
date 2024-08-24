@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { useQuotesTextStyleStore } from '@/store/store'
+import { useQuotesTextStyleStore } from '@/store/stylerStore'
 
 import TextSizeStyler from './TextSizeStyler'
 import TextFontStyler from './TextFontStyler'
@@ -8,6 +8,7 @@ import TextColorStyler from './TextColorStyler'
 import TextStrokeStyler from './TextStrokeStyler'
 import TextSettingOptions from '../../TextSettingOptions'
 import TextAlignStyler from './TextAlignStyler'
+
 
 interface PropsType {
   selectTapNum: number

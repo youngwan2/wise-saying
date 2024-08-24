@@ -2,22 +2,25 @@
 import styles from './styler.module.css'
 
 import { ChangeEvent, useState } from "react";
-import { useQuotesTextOptions } from "@/store/store";
+import { useQuotesTextOptions } from '@/store/stylerStore';
 
 import TextLineHeightStyler from "./styler/text-styler/TextLineHeightStyler";
 import TextPositionStyler from "./styler/text-styler/TextPositionStyler";
 import TextLengthStyler from "./styler/text-styler/TextLengthStyler";
+import { HiAdjustmentsHorizontal, HiXMark } from "react-icons/hi2";
 
 import { debounceCloser } from "@/utils/common-func";
 
-import { HiAdjustmentsHorizontal, HiXMark } from "react-icons/hi2";
+
 
 export default function TextSettingOptions() {
     const [isShowOptions, setIsShowOptions] = useState(false)
+
     const setTextOptions = useQuotesTextOptions((state) => state.setTextOption)
     const textOptions = useQuotesTextOptions((state) => { return { lineHeight: state.lineHeight, textPositionY: state.textPositionY, textPositionX: state.textPositionX, textLength: state.textLength } })
 
-    function onClickSetIsShowOptions() {
+    /** 텍스트 설정 옵션   */
+    function onTextOptionToggle() {
         setIsShowOptions(!isShowOptions)
     }
 
@@ -28,10 +31,10 @@ export default function TextSettingOptions() {
 
     return (
         <>
-            <button onClick={onClickSetIsShowOptions} 
-            className={`${styles.text_option_button}  ${isShowOptions?'bg-[#91909049] rounded-[5px]':''} hover:text-[#d5d4d4] text-white text-[1.48em] pl-0 p-[3px] ml-[0.8em] m-[5px]`}><HiAdjustmentsHorizontal /> </button>
+            <button onClick={onTextOptionToggle}
+                className={`${styles.text_option_button}  ${isShowOptions ? 'bg-[#91909049] rounded-[5px]' : ''} hover:text-[#d5d4d4] text-white text-[1.48em] pl-0 p-[3px] ml-[0.8em] m-[5px]`}><HiAdjustmentsHorizontal /> </button>
             <article className={`${isShowOptions ? 'visible opacity-100' : 'invisible opacity-0'} transition bg-white max-w-[300px] w-full rounded-[10px] shadow-[0_5px_10px_5px_rgba(0,0,0,0.2)] absolute z-[100000] px-[10px] py-[15px]`}>
-                <button onClick={onClickSetIsShowOptions} className="absolute right-1 top-1 text-[1.2em] hover:shadow-[0_0_0_1px_tomato]"><HiXMark /></button>
+                <button onClick={onTextOptionToggle} className="absolute right-1 top-1 text-[1.2em] hover:shadow-[0_0_0_1px_tomato]"><HiXMark /></button>
                 <TextPositionStyler textOptions={textOptions} onSetOption={onSetOptions} />
                 <TextLineHeightStyler textOptions={textOptions} onSetOption={onSetOptions} />
                 <TextLengthStyler textOptions={textOptions} onSetOption={onSetOptions} />

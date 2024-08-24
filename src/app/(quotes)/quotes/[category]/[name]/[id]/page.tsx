@@ -85,7 +85,6 @@ export default async function DetailPage({
 
       <Comment id={id} /> {/** 댓글 */}
       <RecommendQuoteList recommendItems={recommendItems} /> {/** 추천 명언 목록 */}
-
     </section>
   )
 }

@@ -1,13 +1,11 @@
 'use client'
-import { useHeaderSearchFormStateStore } from '@/store/store'
+import { useHeaderSearchFormStateStore } from '@/store/layoutStore'
 import { HiOutlineSearch } from 'react-icons/hi'
 import { HiMiniXMark } from 'react-icons/hi2'
 
 export default function HeaderSearchButton() {
-  const setIsDisplay = useHeaderSearchFormStateStore(
-    (state) => state.setIsDisplay,
-  )
-  const isDisplay = useHeaderSearchFormStateStore((state) => state.isDisplay)
+
+  const { isDisplay, setIsDisplay } = useHeaderSearchFormStateStore()
 
   return (
     <button

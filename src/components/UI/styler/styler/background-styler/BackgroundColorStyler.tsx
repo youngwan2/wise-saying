@@ -1,4 +1,4 @@
-import { useBackgroundColorStore } from "@/store/store"
+import { useBackgroundColorStore } from "@/store/stylerStore"
 import { useEffect, useRef, useState } from "react"
 
 import { PhotoshopPicker } from "react-color"
@@ -7,15 +7,9 @@ export default function BackgroundColorStyler() {
 
     const [displayState, setDisplayState] = useState(false)
     const [previewColor, setPreviewColor] = useState<any>()
+    const {bgColor, setBgColor} = useBackgroundColorStore()
 
-    const setBgColor = useBackgroundColorStore((state) => state.setBgColor)
-
-
-    function onClickSetDisplay() {
-        setDisplayState(!displayState)
-    }
     const previewDivRef = useRef<HTMLDivElement>(null)
-    const bgColor = useBackgroundColorStore((state) => state.bgColor)
 
     useEffect(() => {
         if (previewDivRef.current) {
@@ -25,6 +19,9 @@ export default function BackgroundColorStyler() {
         }
     }, [bgColor])
 
+    function onClickSetDisplay() {
+        setDisplayState(!displayState)
+    }
 
 
     return (

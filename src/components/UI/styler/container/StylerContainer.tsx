@@ -1,7 +1,6 @@
 'use client'
 
 import { ChangeEvent, useState } from 'react'
-import { useImageElementStore, useImagesSrcStore } from '@/store/store'
 
 import TextStyler from '../styler/text-styler/TextStyler'
 import BackgroundStyler from '../styler/background-styler/BackgorundStyler'
@@ -11,10 +10,12 @@ import BackMoveButton from '../../common/button/BackMoveButton'
 import HideButton from '../button/HideButton'
 import StylerImageUploadForm from '../form/StylerImageUploadForm'
 import CanvasContainer from './CanvasContainer'
+import { useImageElementStore, useImagesSrcStore } from '@/store/stylerStore'
 
 import { imagePreviewReader } from '@/utils/imageloader'
 
 import { toast } from 'react-toastify'
+
 
 
 

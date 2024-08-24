@@ -3,17 +3,19 @@
 import { MouseEventHandler, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import useHasToken from '@/custom/useHasToken'
-import { useBookmarkUpdate, useCardZoomInOutStore } from '@/store/store'
+import { useCardZoomInOutStore } from '@/store/store'
+import { useBookmarkUpdate } from '@/store/bookmarkStore'
 
 import ControlButton from '../../common/button/ControlButton'
 import ButtonContainer from '../../common/container/ButtonContainer'
-
-import { addBookmarkItem } from '@/services/data/post'
-import { pageSwitch, quotesSelector } from '@/utils/common-func'
 import { HiDotsVertical, HiOutlineZoomIn } from 'react-icons/hi'
 import { HiOutlineBookmark, HiScissors, HiXMark } from 'react-icons/hi2'
 
+import { addBookmarkItem } from '@/services/data/post'
+import { pageSwitch, quotesSelector } from '@/utils/common-func'
+
 import type {QuoteType } from '@/types/items.types'
+
 
 interface PropsType {
   item: QuoteType

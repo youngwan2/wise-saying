@@ -1,7 +1,6 @@
 'use client'
 
 import { ChangeEvent, MouseEvent, useState } from 'react'
-import { useQuotesCardSizeStore } from '@/store/store'
 
 import SizeInput from '../../input/SizeInput'
 import RecommandSizeList from '../../list/RecommandSizeList'
@@ -10,11 +9,12 @@ import RecommandSizeInfoCard from '../../card/RecommandSizeInfoCard'
 import { debounceCloser } from '@/utils/common-func'
 
 import { HiX } from 'react-icons/hi'
+import { useQuotesCardSizeStore } from '@/store/stylerStore'
 
 
 export default function BackgroundSizeStyler() {
   const [message, setMessage] = useState({ sizes: { width: 300, height: 400 }, meg: '간단하게 소장하기 적합한 사이즈' })
-  const { height, width, setSize } = useQuotesCardSizeStore((state) => state)
+  const { height, width, setSize } = useQuotesCardSizeStore()
   const size = { width, height }
 
 

@@ -1,6 +1,6 @@
+import { useQuotesTextAlign } from '@/store/stylerStore'
 import styles from '../../styler.module.css'
 
-import { useQuotesTextAlign } from "@/store/store"
 import { MouseEvent, useState } from "react"
 
 import { BiAlignLeft, BiAlignMiddle, BiAlignRight } from "react-icons/bi"
@@ -26,7 +26,7 @@ const aligns =
 export default function TextAlignStyler() {
 
     const [isShowOptions, setIsShowOptions] = useState(false)
-    const { align, setAlign } = useQuotesTextAlign((state) => state)
+    const { align, setAlign } = useQuotesTextAlign()
 
     function onClickSetAlign(e: MouseEvent<HTMLButtonElement>) {
         const type = e.currentTarget.dataset.type || null

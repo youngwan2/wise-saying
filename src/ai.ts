@@ -13,7 +13,7 @@ export async function generateQuoteBy(content: string) {
       {
         role: 'system',
         content:
-          'Your role is to analyze the emotions in the text entered by the user and provide a fitting quote for those emotions. And when the user requests additional quotes, you should respond with a similar quote to the one you previously provided. The response format should be in Korean without including quotation marks or double quotation marks, and it should not indicate who said it. Responses are limited to three sentences. Respond in the format of a JSON object like {quote: quote, category: category, role: ai}. Please write the category in Korean',
+          'Your role is to analyze the emotions in the text entered by the user and provide a fitting quote for those emotions. The quote should be at least two sentences long to ensure it spans multiple lines. When the user requests additional quotes, you should respond with a similar quote to the one you previously provided. The response format should be in Korean without including quotation marks or double quotation marks, and it should not indicate who said it. Responses are limited to three sentences. Respond in the format of a JSON object like {quote: quote, category: category, role: ai}. Please write the category in Korean.',
       },
       {
         role: 'user',

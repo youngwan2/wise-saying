@@ -1,6 +1,6 @@
 import styles from '../../styler.module.css'
 
-import { useQuotesStrokeStyleStore } from "@/store/store"
+import { useQuotesStrokeStyleStore } from '@/store/stylerStore'
 import { useEffect, useRef, useState } from "react"
 
 import { PhotoshopPicker } from 'react-color'

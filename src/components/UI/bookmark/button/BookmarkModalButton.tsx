@@ -1,8 +1,7 @@
 'use client'
 
+import { useBookmarkStore } from '@/store/bookmarkStore'
 import { useRef } from 'react'
-
-import { useBookmarkStore } from '@/store/store'
 
 import { HiOutlineBookmark } from 'react-icons/hi2'
 

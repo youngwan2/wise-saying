@@ -1,11 +1,10 @@
 import styles from '../../styler.module.css'
 
 import { useState, useEffect, useRef } from 'react'
-import { useQuotesTextStyleStore } from '@/store/store'
 
 import { TextStyleType } from './TextStyler'
-
 import { PhotoshopPicker} from 'react-color'
+import { useQuotesTextStyleStore } from '@/store/stylerStore'
 
 
 interface PropsType {
@@ -20,7 +19,7 @@ export default function TextColorStyler({
   const [confirmedColor, setConfirmedColor] = useState<any>()
   const previewInputRef = useRef<HTMLInputElement>(null)
 
-  const {size,color,unit} = useQuotesTextStyleStore((state)=>state)
+  const {size,color,unit} = useQuotesTextStyleStore()
 
   useEffect(() => {
     if (previewInputRef.current) {
