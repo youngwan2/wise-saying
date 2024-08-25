@@ -1,16 +1,14 @@
 import './globals.css'
 import 'react-toastify/dist/ReactToastify.css';
 
-import type { Metadata } from 'next'
-
 import Header from '@/components/layout/Header'
 import TimerContainer from '@/components/UI/common/TimerContainer';
 import Footer from '@/components/layout/Footer'
-
+import Script from 'next/script';
 import { Toaster } from 'react-hot-toast'
 import { ToastContainer } from 'react-toastify'
-import Script from 'next/script';
 
+import type { Metadata } from 'next'
 import localFont from "next/font/local";
 
 

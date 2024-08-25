@@ -4,26 +4,32 @@ import { openDB } from "@/utils/connect";
 import { NextRequest, NextResponse } from "next/server";
 
 // GET | 관리자 인지 아닌지 
-export async function GET(req:NextRequest){
+export async function GET(req: NextRequest) {
 
-    const {user} = tokenVerify(req, true) as any
+    const { user } = tokenVerify(req, true) as any
 
-    const userId  = user.sub
-    try {
+    if (!user) return NextResponse.json(HTTP_CODE.UNAUTHORIZED)
+
+    const userId = user.sub
     const db = await openDB()
-    const query = `
+
+    try {
+    
+        const query = `
     SELECT is_admin FROM users
     WHERE user_id = $1
     `
-    const {is_admin:isAdmin} = (await db.query(query, [userId])).rows[0]
-    
-    if(isAdmin !=="TRUE") return NextResponse.json(HTTP_CODE.UNAUTHORIZED)
-    return NextResponse.json(HTTP_CODE.OK)
+        const { is_admin: isAdmin } = (await db.query(query, [userId])).rows[0]
 
-} catch(error){
+        if (isAdmin !== "TRUE") return NextResponse.json(HTTP_CODE.UNAUTHORIZED)
+        return NextResponse.json(HTTP_CODE.OK)
 
-    console.log('admin/auth',error)
-    return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
-}
+    } catch (error) {
+
+        console.log('admin/auth', error)
+        return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
+    } finally {
+        db.end()
+    }
 
 }

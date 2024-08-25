@@ -1,0 +1,137 @@
+"use client"
+
+import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import useAdmin from "@/custom/useAdmin";
+
+import Header from "@editorjs/header";
+import EditorJS, { OutputData } from '@editorjs/editorjs';
+import List from "@editorjs/list";
+
+import type { NoticeType } from "../_types/notice.types";
+
+import { updateNoticeAction } from "@/actions/notice/update-notice.action";
+import { toast } from "react-toastify";
+import { getAccessToken } from "@/utils/session-storage";
+import { deleteNoticeAction } from "@/actions/notice/delete-notice.action";
+
+
+export default function NoticeDetail({ notice }: Pick<NoticeType, 'notice'>) {
+    const token = getAccessToken()
+
+    const [isEdit, setIsEdit] = useState(false)
+    const [post, setPost] = useState<OutputData | undefined>(notice?.content)
+    const [category, setCategory] = useState(notice?.name || '')
+    const isAdmin = useAdmin()
+    const handleBackMove = useRouter().back
+
+    const ejInstance = useRef<EditorJS | null>(); // Editor 인스턴스
+
+    // 에디터 초기화
+    const initEditor = () => {
+        const editor = new EditorJS({
+            readOnly: true,
+            holder: 'editor.js',
+            minHeight: 500,
+            tools: {
+                header: Header,
+                list: List
+
+            },
+            placeholder:'가자데이터',
+            onReady: () => {
+                ejInstance.current = editor
+            },
+            onChange: async (editor) => {
+                setPost(await editor.saver.save())
+            },
+            data: notice?.content,
+
+
+        });
+
+    }
+    useEffect(() => {
+        // 인스턴스가 null 이면 인스턴스 생성
+        if (ejInstance.current === null) {
+            initEditor()
+        }
+
+        // 디마운트 시 에디터 인스턴스를 제거
+        return () => {
+            ejInstance.current?.destroy()
+            ejInstance.current = null
+        }
+    }, [])
+
+    // 공지사항 수정 요청
+    async function handleUpload() {
+        const response = await updateNoticeAction(category, post, token || '', notice?.notice_id)
+        const { message, success } = response
+        if (success) {
+            toast.success(message)
+            handleBackMove()
+        } else {
+            toast.error(message)
+        }
+    }
+
+    // 공지사항 삭제
+    async function handleDelete() {
+        if (confirm('정말로 삭제하시겠습니까? 삭제 시 복구가 불가능합니다')) return toast('삭제 요청을 취소하였습니다.')
+
+        const response = await deleteNoticeAction(token || '', notice?.notice_id)
+        const { message, success } = response
+        if (success) {
+            toast.success(message)
+            handleBackMove()
+        } else {
+            toast.error(message)
+        }
+    }
+
+    // 카테고리 설정
+    function handleSetCategory(e: ChangeEvent<HTMLSelectElement>) {
+        setCategory(e.currentTarget.value || '업데이트')
+    }
+
+    // 편집 기능 온오프
+    async function editToggle() {
+        if (ejInstance.current) {
+            ejInstance.current.readOnly.toggle()
+            setIsEdit(old => !old)
+        }
+    }
+
+    return (
+        <form className='p-5 w-full mt-24 min-h-[100vh] max-w-[768px] bg-white mx-auto rounded-sm shadow-[10px_10px_5px_rgba(0,0,0,0.5)] '>
+            <div className='max-w-[595px] mx-auto'>
+                <div className='flex justify-between items-center mt-5'>
+                    {/* 카테고리 선택 */}
+                    {isEdit
+                        ? <select defaultValue={'업데이트'} onChange={handleSetCategory} >
+                            <option value='업데이트'>업데이트</option>
+                            <option value='이벤트'>이벤트</option>
+                            <option value='점검'>점검</option>
+                            <option value='작업'>작업</option>
+                            <option value='서비스'>서비스</option>
+                        </select>
+                        : <p className="bg-slate-200 px-6">{notice?.name}</p>
+                    }
+
+                    {/* 저장/나가기 */}
+                    <div className='flex justify-end'>
+                        {isAdmin ? <button type="button" onClick={editToggle} className='border-b border-gray-100  hover:bg-gray-200  w-[80px] mx-1'>{!isEdit ? '수정' : '취소'}</button> : null}
+                        {isAdmin && !isEdit ? <button type="button" onClick={handleDelete} className='border-b border-gray-100  hover:bg-gray-200  w-[80px] mx-1'>삭제</button> : null}
+                        {isEdit ? <button type='button' onClick={handleUpload} className='border-b border-gray-100  hover:bg-gray-200  w-[80px] mx-1'>수정</button> : null}
+                        <button type='button' onClick={handleBackMove} className='bg-gray-200 rounded-sm hover:bg-gray-300 w-[80px] text-center'>나가기</button>
+                    </div>
+                </div>
+
+                {/* 에디터:  holder 에 입력된 값과 id 가 동일해야 함 */}
+                <div className='mx-auto w-[100vw] no-tailwind' id='editor.js'></div>
+                <p className="mt-2 w-full  p-1 pl-2 text-right rounded-md">(등록일) {new Date(notice?.created_at || '').toLocaleDateString()}</p>
+            </div>
+        </form>
+    )
+}
