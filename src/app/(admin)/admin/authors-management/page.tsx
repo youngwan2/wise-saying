@@ -1,12 +1,11 @@
 "use client"
 
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
+import useAdmin from '@/custom/useAdmin';
 
 import AdminWriteForm from '@/components/UI/admin/AdminWriteForm';
+import ErrorMessage from '@/components/UI/message/ErrorMessage';
 
-import { Method, getDefaultConfig } from '@/configs/config.api';
-import { defaultFetch, postFetcher } from '@/utils/fetcher';
-import ReplaceMessageCard from '@/components/UI/common/card/ReplaceMessageCard';
+import { postFetcher } from '@/utils/fetcher';
 
 
 export default function AuthorsManagementPage() {
@@ -39,21 +38,7 @@ export default function AuthorsManagementPage() {
 
     ];
 
-
-    const [isPass, setIsPass] = useState(false)
-
-    function updateIsPass(success: boolean, setState: Dispatch<SetStateAction<boolean>>) {
-        setState(success)
-    }
-
-    const userFetch = useCallback(async () => {
-        const url = '/api/admin/auth'
-        const config = getDefaultConfig(Method.GET, true)
-        const { success } = await defaultFetch(url, config)
-
-        updateIsPass(success, setIsPass)
-    }, [])
-
+    const isPass = useAdmin()
 
     // 포스트 작성
     const addPostAction = async (form: FormData) => {
@@ -73,11 +58,7 @@ export default function AuthorsManagementPage() {
         alert(meg)
     }
 
-    useEffect(() => {
-        userFetch()
-    }, [userFetch])
-
-    if(!isPass) return <ReplaceMessageCard>접근 권한이 없습니다...</ReplaceMessageCard>
+    if (!isPass) return <ErrorMessage title='접근 불가' message='관리자만 접근할 수 있습니다.'/>
     return (
         <AdminWriteForm addPostAction={addPostAction} fields={fields} formTitle='인물정보 등록' />
     )

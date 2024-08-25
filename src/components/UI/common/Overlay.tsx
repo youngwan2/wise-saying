@@ -1,6 +1,7 @@
 "use client"
 
-import { useNavDisplayStateStore } from "@/store/store"
+import { useNavDisplayStateStore } from "@/store/layoutStore"
+
 
 interface PropsType {
   isDisplay:boolean

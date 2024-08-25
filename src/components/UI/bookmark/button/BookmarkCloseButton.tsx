@@ -1,4 +1,4 @@
-import { useBookmarkStore } from '@/store/store'
+import { useBookmarkStore } from '@/store/bookmarkStore'
 import { HiXCircle } from 'react-icons/hi2'
 
 export default function BookmarkCloseButton() {

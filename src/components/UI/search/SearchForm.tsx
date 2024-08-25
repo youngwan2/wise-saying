@@ -2,13 +2,14 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { useHeaderSearchFormStateStore } from '@/store/store'
+import { useHeaderSearchFormStateStore } from '@/store/layoutStore'
 import useDraggable from '@/custom/useDraggable'
 
 import SearchInput from './SearchInput'
 import SearchHeader from './SearchHeader'
 
 import { resizeCheck } from '@/utils/common-func'
+
 
 export default function SearchForm() {
   const router = useRouter()

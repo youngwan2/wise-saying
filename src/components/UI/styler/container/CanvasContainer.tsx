@@ -2,20 +2,12 @@
 import styles from '../styler.module.css'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import {
-  useBackgroundColorStore,
-  useImageElementStore,
-  useQuotesCardSizeStore,
-  useQuotesStrokeStyleStore,
-  useQuotesTextAlign,
-  useQuotesTextOptions,
-  useQuotesTextStyleStore,
-} from '@/store/store'
 
 import DownloadButton from '../button/DownloadButton'
 
 import toast from 'react-hot-toast'
 import wrap from 'word-wrap'
+import { useBackgroundColorStore, useImageElementStore, useQuotesCardSizeStore, useQuotesStrokeStyleStore, useQuotesTextAlign, useQuotesTextOptions, useQuotesTextStyleStore } from '@/store/stylerStore'
 
 
 interface QuoteType {
@@ -28,8 +20,9 @@ const DEFALT_LINE_HEIGHT = 9
 export default function Canvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [imageEl, setImageEl] = useState<HTMLImageElement | null>(null)
-  const { color, font, fontStyle, size, unit } = useTextStyle()
-  const { color: strokeColor, thickness: strokeThickness } = useStrokeStyle()
+
+  const { color, font, fontStyle, size, unit } = useQuotesTextStyleStore()
+  const { color: strokeColor, thickness: strokeThickness } = useQuotesStrokeStyleStore()
   const { width, height, bgColor } = useCanvasStyle()
   const { textLength, lineHeight, textPositionY, textPositionX } = useQuotesTextOptions()
 
@@ -204,20 +197,11 @@ export default function Canvas() {
   )
 }
 
-// store hooks
-const useTextStyle = () => {
-  const { color, unit, size, font, fontStyle } = useQuotesTextStyleStore((state) => state)
-  return { color, unit, size, font, fontStyle }
-}
 
 const useCanvasStyle = () => {
-  const { bgColor } = useBackgroundColorStore((state) => state)
-  const { width, height } = useQuotesCardSizeStore((state) => state)
+  const { bgColor } = useBackgroundColorStore()
+  const { width, height } = useQuotesCardSizeStore()
   return { bgColor, width, height }
 }
 
-const useStrokeStyle = () => {
-  const { color, thickness } = useQuotesStrokeStyleStore((state) => state)
-  return { color, thickness }
-}
 

@@ -8,10 +8,11 @@ import CommentForm from './form/CommentForm'
 import CommentPaginationContainer from './CommentPaginationContainer'
 import CommentSortSelect from './CommentSortSelect'
 import CommentList from './CommentList'
-
-import { getCommentsFormDb } from '@/services/data/get'
 import ErrorMessage from '../message/ErrorMessage'
 import CommentSkeleton from '@/components/skeleton/CommentSkeleton'
+
+import { getCommentsFormDb } from '@/services/data/get'
+
 
 export interface CommentsInfoType {
   comments: {

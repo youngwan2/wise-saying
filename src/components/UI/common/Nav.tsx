@@ -1,12 +1,10 @@
 'use client'
-import { useLoginStateStore } from '@/store/store'
 import Link from 'next/link'
 import useHasToken from '@/custom/useHasToken'
 
 import {
   HiUserGroup,
   HiSun,
-  HiOutlineCog,
   HiCalendar,
   HiHeart,
   HiOutlineThumbUp,
@@ -16,6 +14,7 @@ import {
   HiLogin,
   HiOutlineHome,
 } from 'react-icons/hi'
+import { useLoginStateStore } from '@/store/userStore'
 
 export default function Nav() {
   const nextAuthLoginState = useLoginStateStore((state) => state.loginState)
@@ -35,7 +34,6 @@ export default function Nav() {
     { icon: <HiHome />, label: '마이페이지', href: '/mypage' },
     { icon: nextAuthLoginState || generalLoginState ? <HiLogout /> : <HiLogin />, label: nextAuthLoginState || generalLoginState ? '로그아웃' : '로그인', href: nextAuthLoginState || generalLoginState ? '/logout' : '/login' },
     { icon: <HiPencil />, label: '명언등록', href: '/add-quote' },
-    { icon: <HiOutlineCog />, label: '환경설정', href: '/system' },
   ];
 
 

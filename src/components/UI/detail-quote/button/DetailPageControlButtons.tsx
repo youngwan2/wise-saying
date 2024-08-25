@@ -3,17 +3,17 @@
 import { useRouter } from 'next/navigation'
 import useHasToken from '@/custom/useHasToken'
 import useTTS from '@/custom/useTTS'
-import { useBookmarkUpdate } from '@/store/store'
+import { useBookmarkUpdate } from '@/store/bookmarkStore'
 
 import ControlButton from '../../common/button/ControlButton'
 import ButtonContainer from '../../common/container/ButtonContainer'
+import { SlEarphones } from 'react-icons/sl'
+import { HiOutlineBookmark, HiScissors } from 'react-icons/hi2'
 
 import { addBookmarkItem } from '@/services/data/post'
 import { pageSwitch, quotesSelector } from '@/utils/common-func'
-
-import { SlEarphones } from 'react-icons/sl'
-import { HiOutlineBookmark, HiScissors } from 'react-icons/hi2'
 import { toast } from 'react-toastify'
+
 
 
 

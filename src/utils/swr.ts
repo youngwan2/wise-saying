@@ -3,7 +3,7 @@ import { getFetcher } from './fetcher'
 import {toast} from 'react-toastify'
 
 // reference : https://swr.vercel.app/ko/docs/data-fetching
-export const useSwrFetch = (url: string, refreshTimer:number|undefined, isActRefresh?:boolean) => {
+export const useSwrFetch = (url: string, refreshTimer?:number, isActRefresh?:boolean) => {
   const { data, isLoading, error, mutate } = useSWR(url, getFetcher, {
     errorRetryCount: 2,
     refreshInterval: isActRefresh? (refreshTimer || 60000) : 60000,

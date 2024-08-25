@@ -33,6 +33,8 @@ type DataType = {
 interface PropsType extends CommentType { }
 
 export default function CommentCard({ comment }: PropsType) {
+  const { mutate } = useSWRConfig()
+
   const [isShow, setIsShow] = useState(false)
   const [isShowReplies, setIsShowReplies] = useState(false)
   const [editFormDisplay, setEditFormDisplay] = useState(false)
@@ -41,8 +43,8 @@ export default function CommentCard({ comment }: PropsType) {
 
   const commentId = (comment && comment.id) || 0
   const userEmail = getUserEmail()
-  const { mutate } = useSWRConfig()
-  const setIsUpdateComment = useCommentUpdate((state)=>state.setIsUpdate)
+
+  const setIsUpdateComment = useCommentUpdate((state) => state.setIsUpdate)
 
   // 댓글 수정 창 열기
   function onClickFormDisplay() {
@@ -63,8 +65,8 @@ export default function CommentCard({ comment }: PropsType) {
     setIsShowReplies(!isShowReplies)
   }
 
-  function onMenuDisplay(){
-    setIsShow(old=>!old)
+  function onMenuDisplay() {
+    setIsShow(old => !old)
 
   }
 
@@ -101,24 +103,24 @@ export default function CommentCard({ comment }: PropsType) {
       <li className="bg-white  min-h-[50px] rounded-[5px] first:mt-[2em] mt-[1em] flex justify-start items-center w-full mx-auto relative">
         <CommentProfileImage comment={comment} /> {/* 프로필 이미지 */}
         <CommentContent comment={comment} /> {/* 댓글 내용 */}
-        <CommentMenuDropdownButton
+        <CommentMenuDropdownButton  /* 댓글 드롭다운 */
           isShow={isShow}
-          onClick={onMenuDisplay }
-        />  {/* 댓글 드롭다운 */}
+          onClick={onMenuDisplay}
+        />
 
         {/* 글쓴이라면 편집 버튼 활성화 */}
         <CommentEditDeleteMenu
           emailInfo={emailInfo}
           isShow={isShow}
           onLeaveMenuHide={onMenuDisplay}
-          onClickDeleteComment={() => deleteComment(commentId).then(()=> setIsUpdateComment(true))}
+          onClickDeleteComment={() => deleteComment(commentId).then(() => setIsUpdateComment(true))}
           onClickFormDisplay={onClickFormDisplay}
         />
 
         {/* 대댓글 컨트롤 버튼  */}
         <ReplyButtons
           totalCount={replyInfo.totalCount || 0}
-          onClickIsShowReplies ={onClickIsShowReplies}
+          onClickIsShowReplies={onClickIsShowReplies}
           onClickReplyFormDisplay={onClickReplyFormDisplay}
         />
       </li>
@@ -128,8 +130,9 @@ export default function CommentCard({ comment }: PropsType) {
         setEditFormDisplay={setEditFormDisplay}
         onClickEditCancel={onClickEditCancel}
       />
+
+      {/* 대댓글 목록 및 등록 폼 */}
       <li>
-        {/* 대댓글 목록 및 등록 폼 */}
         <ReplyList
           isShowReplies={isShowReplies}
           commentId={commentId}
@@ -152,6 +155,7 @@ interface MenuButtonPropsType {
   onClick: MouseEventHandler<HTMLButtonElement>
 }
 
+/** 댓글 메뉴 드롭다운 */
 function CommentMenuDropdownButton({ isShow, onClick }: MenuButtonPropsType) {
   return (
     <button

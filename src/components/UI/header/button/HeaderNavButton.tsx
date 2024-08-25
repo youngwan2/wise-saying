@@ -1,8 +1,10 @@
 'use client'
+import { useNavDisplayStateStore } from '@/store/layoutStore'
+
 import { HiOutlineMenu } from 'react-icons/hi'
-import { useNavDisplayStateStore } from '@/store/store'
 import { HiOutlineXCircle } from 'react-icons/hi2'
 import ControlButton from '../../common/button/ControlButton'
+
 
 export default function HeaderNavButton() {
 

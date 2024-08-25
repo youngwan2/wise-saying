@@ -1,7 +1,6 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
-import { useBookmarkStore, useBookmarkUpdate } from '@/store/store'
 import useHasToken from '@/custom/useHasToken'
 import useSWR from 'swr'
 
@@ -14,6 +13,7 @@ import { deleteBookmark } from '@/services/user/delete'
 
 import { toast } from 'react-toastify'
 import { HiBookmarkSquare } from 'react-icons/hi2'
+import { useBookmarkStore, useBookmarkUpdate } from '@/store/bookmarkStore'
 
 
 export interface BookmarkListType {

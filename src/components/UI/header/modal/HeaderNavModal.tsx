@@ -1,13 +1,12 @@
 'use client'
 
-import { useNavDisplayStateStore } from '@/store/store'
 import { useGSAP } from '@gsap/react'
+import { useNavDisplayStateStore } from '@/store/layoutStore'
 
 import NavLinkButtonList from '../NavLinkButtonList'
-
 import { HiArrowLeftOnRectangle } from 'react-icons/hi2'
-
 import gsap from 'gsap/all'
+
 
 
 export default function HeaderNavModal() {

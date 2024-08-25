@@ -1,10 +1,12 @@
+import {nextui} from '@nextui-org/theme';
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
   content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/@nextui-org/theme/dist/components/pagination.js"
   ],
   theme: {
     extend: {
@@ -21,7 +23,10 @@ const config: Config = {
       },
     },
   },
-  plugins: [require('tailwindcss-3d')],
+  
+  plugins: [require(`tailwindcss-3d`), nextui(), require('@tailwindcss/typography')({
+    className:'no-tailwind'
+  })],
   
 }
 export default config
