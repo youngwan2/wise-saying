@@ -50,7 +50,7 @@ export default function NoticeDetail({ notice }: Pick<NoticeType, 'notice'>) {
 
     useEffect(() => {
         // 인스턴스가 null 이면 인스턴스 생성
-        if (ejInstance.current === null && ejInstance.current !==undefined) {
+        if (!ejInstance.current) {
             initEditor()
         }
 
