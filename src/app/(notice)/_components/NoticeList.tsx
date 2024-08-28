@@ -4,8 +4,6 @@ import NoticeListItem from './NoticeListItem';
 import type { NoticeType } from '../_types/notice.types';
 
 
-
-
 const NOTICE_TITLE_INDEX = 0
 export default function NoticeList({ notices }: Pick<NoticeType, 'notices'>) {
 
@@ -17,7 +15,7 @@ export default function NoticeList({ notices }: Pick<NoticeType, 'notices'>) {
                 const title = notice.content.blocks[NOTICE_TITLE_INDEX].data.text
                 const { notice_id: id, name } = notice
 
-                return <NoticeListItem id={id} name={name} createdAt={createdAt} title={title} />
+                return <NoticeListItem  key={id} id={id} name={name} createdAt={createdAt} title={title} />
             }
             )}
         </ul>

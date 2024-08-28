@@ -1,19 +1,14 @@
-import NoticeDetailEditor from "../../_components/NoticeDetailEditor";
+import dynamic from 'next/dynamic'
 import ErrorMessage from "@/components/UI/message/ErrorMessage";
-
 import { openDB } from "@/utils/connect";
 
 
-
+const NoticeDetailEditor = dynamic(() => import("../../_components/NoticeDetailEditor").then(mode => mode.default), { ssr: false })
 export default async function NoticeDetailPage({ params }: { params: { id: string } }) {
 
     const notice = await getNoticeWithId(params.id)
-    if(!notice) return <ErrorMessage/>
-    return (
-        <div>
-            <NoticeDetailEditor notice={notice} />
-        </div>
-    )
+    if (!notice) return <ErrorMessage />
+    return   <NoticeDetailEditor notice={notice} />
 }
 
 

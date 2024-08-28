@@ -2,11 +2,12 @@ import useTTS from "@/custom/useTTS"
 import { useGSAP } from "@gsap/react"
 
 import TodayQuoteCard from "../card/TodayQuoteCard"
+import ReplaceMessageCard from "../../common/card/ReplaceMessageCard"
 
 import gsap from "gsap/all"
 
-import { QuoteType } from "@/types/items.types"
-import ReplaceMessageCard from "../../common/card/ReplaceMessageCard"
+import type { QuoteType } from "@/types/items.types"
+
 
 
 interface PropsType {

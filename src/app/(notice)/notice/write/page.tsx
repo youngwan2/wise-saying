@@ -1,9 +1,7 @@
-// interface PropsType { }
+import dynamic from 'next/dynamic'
 
-import NoticeWriteForm from "../../_components/NoticeWriteForm";
+const NoticeEditor = dynamic(() => import("../../_components/NoticeEditor"), { ssr: false })
 
 export default function NoticeWritePage() {
-    return (
-        <NoticeWriteForm/>
-    )
+    return <NoticeEditor/>
 }

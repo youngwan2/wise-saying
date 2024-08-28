@@ -1,6 +1,6 @@
 'use client'
 
-import { useNavDisplayStateStore } from '@/store/store'
+import { useNavDisplayStateStore } from '@/store/layoutStore'
 
 import ButtonContainer from '../../common/container/ButtonContainer'
 import ControlButton from '../../common/button/ControlButton'

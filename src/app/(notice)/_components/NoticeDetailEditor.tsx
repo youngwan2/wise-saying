@@ -1,5 +1,4 @@
 "use client"
-
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import useAdmin from "@/custom/useAdmin";
@@ -14,6 +13,7 @@ import { updateNoticeAction } from "@/actions/notice/update-notice.action";
 import { toast } from "react-toastify";
 import { getAccessToken } from "@/utils/session-storage";
 import { deleteNoticeAction } from "@/actions/notice/delete-notice.action";
+
 
 
 export default function NoticeDetail({ notice }: Pick<NoticeType, 'notice'>) {
@@ -31,14 +31,13 @@ export default function NoticeDetail({ notice }: Pick<NoticeType, 'notice'>) {
     const initEditor = () => {
         const editor = new EditorJS({
             readOnly: true,
-            holder: 'editor.js',
-            minHeight: 500,
+            holder: 'editor',
+            minHeight: 150,
             tools: {
                 header: Header,
                 list: List
 
             },
-            placeholder:'가자데이터',
             onReady: () => {
                 ejInstance.current = editor
             },
@@ -46,14 +45,12 @@ export default function NoticeDetail({ notice }: Pick<NoticeType, 'notice'>) {
                 setPost(await editor.saver.save())
             },
             data: notice?.content,
-
-
         });
-
     }
+
     useEffect(() => {
         // 인스턴스가 null 이면 인스턴스 생성
-        if (ejInstance.current === null) {
+        if (ejInstance.current === null && ejInstance.current !==undefined) {
             initEditor()
         }
 
@@ -78,7 +75,8 @@ export default function NoticeDetail({ notice }: Pick<NoticeType, 'notice'>) {
 
     // 공지사항 삭제
     async function handleDelete() {
-        if (confirm('정말로 삭제하시겠습니까? 삭제 시 복구가 불가능합니다')) return toast('삭제 요청을 취소하였습니다.')
+        const isDelete = confirm('정말로 삭제하시겠습니까? 삭제 시 복구가 불가능합니다')
+        if (!isDelete) return toast('삭제 요청을 취소 하였습니다.')
 
         const response = await deleteNoticeAction(token || '', notice?.notice_id)
         const { message, success } = response
@@ -104,7 +102,7 @@ export default function NoticeDetail({ notice }: Pick<NoticeType, 'notice'>) {
     }
 
     return (
-        <form className='p-5 w-full mt-24 min-h-[100vh] max-w-[768px] bg-white mx-auto rounded-sm shadow-[10px_10px_5px_rgba(0,0,0,0.5)] '>
+        <form className='p-5 w-full mt-24 flex-1 h-full max-w-[768px] bg-white mx-auto rounded-sm shadow-[15px_15px_5px_rgba(0,0,0,0.3)] '>
             <div className='max-w-[595px] mx-auto'>
                 <div className='flex justify-between items-center mt-5'>
                     {/* 카테고리 선택 */}
@@ -129,8 +127,8 @@ export default function NoticeDetail({ notice }: Pick<NoticeType, 'notice'>) {
                 </div>
 
                 {/* 에디터:  holder 에 입력된 값과 id 가 동일해야 함 */}
-                <div className='mx-auto w-[100vw] no-tailwind' id='editor.js'></div>
-                <p className="mt-2 w-full  p-1 pl-2 text-right rounded-md">(등록일) {new Date(notice?.created_at || '').toLocaleDateString()}</p>
+                <div className='mx-auto w-[100vw] no-tailwind' id='editor'></div>
+                <p className="mt-2 w-full  p-1 pl-2 text-right rounded-md overflow-y-auto">(등록일) {new Date(notice?.created_at || '').toLocaleDateString()}</p>
             </div>
         </form>
     )

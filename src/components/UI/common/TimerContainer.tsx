@@ -7,9 +7,5 @@ export default function TimerContainer() {
 
     const isLogin = useHasToken()
     if(!isLogin) return null
-    return (
-        <>
-            <Timer />
-        </>
-    )
+    return  <Timer />
 }

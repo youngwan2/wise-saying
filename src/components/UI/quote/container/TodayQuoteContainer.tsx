@@ -4,14 +4,12 @@ import { Fragment } from 'react'
 
 import Container from '../../common/container/Container'
 import TodayQuoteList from '../list/TodayQuoteList'
-
 import TextPlugin from 'gsap/TextPlugin'
 
 import { HiCalendarDays } from 'react-icons/hi2'
 
 import gsap from 'gsap'
 import { toast } from 'react-toastify'
-import Title from '../../common/Title/Title'
 
 
 gsap.registerPlugin(TextPlugin)

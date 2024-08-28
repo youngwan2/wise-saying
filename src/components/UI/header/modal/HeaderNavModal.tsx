@@ -31,7 +31,7 @@ export default function HeaderNavModal() {
   }, [isDisplay])
 
   return (
-    <article
+    <div
       aria-hidden={!isDisplay}
       aria-label="네비게이션"
       id='header_nav'
@@ -44,8 +44,8 @@ export default function HeaderNavModal() {
         } `}
     >
       <button onClick={onClickClose} aria-label='사이드바 닫기 버튼' className='hover:cursor-pointer hover:text-white absolute right-[1em] top-[0.5em] h-[30px] w-[10px] text-[1.5em]'><HiArrowLeftOnRectangle /> </button>
-      <NavLinkButtonList/>
-    </article>
+      <NavLinkButtonList />
+    </div>
   )
 }
 

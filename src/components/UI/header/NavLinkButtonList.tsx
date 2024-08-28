@@ -1,8 +1,9 @@
 import { usePathname, useRouter } from 'next/navigation'
+import navList from '@/router'
 
 import NavLinkButton from './button/NavLinkButton'
 
-import navList from '@/router'
+
 
 
 export default function NavLinkButtonList() {

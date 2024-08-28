@@ -8,10 +8,10 @@ import {
   HiSpeakerWave,
 } from 'react-icons/hi2'
 import { BsRobot } from "react-icons/bs";
-import { HiHand } from 'react-icons/hi';
+// import { HiHand } from 'react-icons/hi';
 
 const navList = [
-  { path: '/intro', label: '사이트 소개', icon: HiHand },
+  // { path: '/intro', label: '사이트 소개', icon: HiHand },/
   { path: '/notice', label: '공지사항', icon: HiSpeakerWave },
   { path: '/quotes/populars', label: '실시간 인기명언', icon: HiChartBar },
   { path: '/quotes/topics', label: '주제별 명언', icon: HiNewspaper },

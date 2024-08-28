@@ -70,7 +70,7 @@ export default function NoticeEditor() {
     }
     useEffect(() => {
         // 인스턴스가 null 이면 인스턴스 생성
-        if (ejInstance.current === null) {
+        if (ejInstance.current === null && ejInstance.current !== undefined) {
             initEditor()
         }
 
@@ -109,7 +109,7 @@ export default function NoticeEditor() {
     }
 
     return (
-        <form className='p-5 bg-white w-full min-h-[100vh] fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[100000000000000000] '>
+        <form className='p-5 bg-white w-full h-[100vh] fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[100000000000000000] '>
             <div className='max-w-[595px] mx-auto'>
                 <div className='flex justify-between items-center mt-28'>
                     {/* 카테고리 선택 */}
@@ -128,7 +128,7 @@ export default function NoticeEditor() {
                     </div>
                 </div>
                 {/* 에디터:  holder 에 입력된 값과 id 가 동일해야 함 */}
-                <div className='p-3 mx-auto bg-white w-[100vw] no-tailwind' id='editor.js'></div>
+                <div className='p-3 mx-auto bg-white w-[100vw] overflow-y-auto no-tailwind' id='editor.js'></div>
             </div>
         </form>
     )
