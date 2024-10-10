@@ -44,7 +44,6 @@ export async function PATCH(req: NextRequest, res: { params: { id: string } }) {
     const views = isViews ? selectResult.rows[0].views : 0
     let viewsTypeToNum = Number(views)
 
-
     // 게시글을 1번이라도 조회하여 테이블에 등록된 경우
     if (isViews) {
       const newViews = viewsTypeToNum + 1

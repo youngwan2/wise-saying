@@ -17,6 +17,7 @@ export async function GET(req: NextRequest) {
         const results = await db.query(query, [LIMIT, pageNum * LIMIT])
         const items = results.rows
 
+
         return NextResponse.json(items)
 
     } catch (error) {
