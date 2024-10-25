@@ -39,11 +39,6 @@ sequenceDiagram
     EC2->>EC2: Start Next.js server
     Dev->>EC2: Access application
  ```
-## 🛠️ 트러블 슈팅
-- [트러블 슈팅 1 ~ 6](https://duklook.tistory.com/417)
-- [트러블 슈팅 7 ~ 13](https://duklook.tistory.com/432)
-- [트러블 슈팅 14 ~ ](https://duklook.tistory.com/561)
-
 ## ⚙ 구현된 기능
 - #### 공지사항 기능(24.08.25 추가)
   - 일반적인 공지사항 게시판 입니다. Editor.js 를 이용해 편집기를 구현하였습니다. 
