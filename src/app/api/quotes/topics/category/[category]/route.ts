@@ -11,11 +11,12 @@ export async function GET(req: NextRequest, res: { params: { category: string } 
     const pageNum = Number(page)
     try {
 
+
         const query = `
           SELECT A.quote_id, author, quote, job, birth, intro, C.views AS view
           FROM quotes A
           INNER JOIN authors B ON A.author_id = B.author_id
-          INNER JOIN views C ON A.quote_id = C.quote_id
+          LEFT JOIN views C ON A.quote_id = C.quote_id
           WHERE A.category LIKE $1
           ORDER BY A.quote_id DESC
           LIMIT $2 OFFSET $3

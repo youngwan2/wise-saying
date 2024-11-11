@@ -41,6 +41,7 @@ export default function UserQuoteCategoryContainer({ metadata }: PropsType) {
             </>
         )
     } else {
+        
         return (
             <>
                 <Title current={itemCount} total={metadata.totalCount} title='사용자 명언' />

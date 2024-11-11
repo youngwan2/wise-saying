@@ -9,6 +9,7 @@ export interface QuoteType {
   birth?: string
   email?: string
   created_at?: string
+  updated_at?: string
   profile_img?: string
   category?: string
 }

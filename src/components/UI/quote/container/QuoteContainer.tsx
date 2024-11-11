@@ -10,7 +10,6 @@ import QuoteList from '../list/QuoteList'
 import { viewCounter } from '@/services/data/patch'
 import { toast } from 'react-toastify'
 import type { QuoteType } from '@/types/items.types'
-import EmptyMessage from '../../message/EmptyMessage'
 
 
 export interface Handlers {
@@ -27,6 +26,7 @@ interface PropsType {
 
 export default function QuoteContainer({ items }: PropsType) {
   const router = useRouter()
+  const pathname = usePathname()
 
   const cardIndex = useCardZoomInOutStore((state) => state.cardIndex)
   const pathName = usePathname()
@@ -46,7 +46,8 @@ export default function QuoteContainer({ items }: PropsType) {
 
   /** 상세 페이지 이동 */
   const onClickPageChange = (quoteId: number, author: string, isUser?: boolean) => {
-    viewCounter(quoteId, "views")
+    const target = pathname.startsWith("/user-quotes") ? "user-card-views" : "views"
+    viewCounter(quoteId, target)
     const url = !isUser
       ? `/quotes/authors/${author}/${quoteId}?type=no-user`
       : `/quotes/authors/${author}/${quoteId}`
