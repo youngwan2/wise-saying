@@ -8,41 +8,47 @@ import { getLoginExp } from '@/utils/session-storage'
 import { HiRefresh } from 'react-icons/hi'
 import { HiClock } from 'react-icons/hi2'
 
+const TOKEN_BUFFER_TIME_SEC = 120
 
-const MINUTE_TO_SEC = 120
-
+/**
+ * Timer Component
+ * - 사용자 토큰 만료 시간 확인 및 갱신 기능 제공
+ * - 실시간으로 남은 시간을 UI에 표시
+ * - 수동 갱신 버튼 제공
+ */
 export default function Timer() {
-
   const [timeScale, setTimeScale] = useState(0)
   const [isExpire, setIsExpire] = useState(false)
 
-
   /** 토큰 만료 시간 측정 */
-  const checkTokenExp = useCallback(async (exp: number) => {
-    const currentTime = Math.floor(Date.now() / 1000) // 현재 시간
-    const expired60SecondsAgo = exp - (currentTime - MINUTE_TO_SEC) //  현재(sec) - 120(sec) = 2분 전 토큰 만료
+  const checkTokenExp = useCallback((exp: number) => {
+    const currentTime = Math.floor(Date.now() / 1000)
+    const expiredBuffer = exp - (currentTime - TOKEN_BUFFER_TIME_SEC)
 
-    setTimeScale(Math.max(0,Number(expired60SecondsAgo))) // 만료 시간 추적
-    if (expired60SecondsAgo < 1) setIsExpire(true)
-
+    setTimeScale(Math.max(0, expiredBuffer))
+    if (expiredBuffer < 1) setIsExpire(true)
   }, [])
 
   /** 토큰 갱신 */
-  async function updateToken( isExpire: boolean) {
+  async function updateToken(isExpire: boolean) {
     if (isExpire) {
-      const {isSuccess} = await requestNewAccessToken()
-
-      // 토큰 갱신 성공 시
-      if (isSuccess) setIsExpire(false); 
+      try {
+        const { isSuccess } = await requestNewAccessToken()
+        if (isSuccess) setIsExpire(false)
+        else console.error("토큰 갱신 실패")
+      } catch (error) {
+        console.error("토큰 갱신 중 오류 발생", error)
+      }
     }
   }
 
   useEffect(() => {
-    const update = async () => await updateToken( isExpire)
-    update()
+    if (isExpire) {
+      (async () => {
+        await updateToken(isExpire)
+      })()
+    }
   }, [isExpire])
-
-
 
   /** 토큰 강제 갱신을 위한 만료 상태 설정 */
   function handleSetIsExpire() {
@@ -53,20 +59,24 @@ export default function Timer() {
     const exp = getLoginExp() || 0
     const timeId = setInterval(() => checkTokenExp(exp), 1000)
     return () => {
-      clearTimeout(timeId)
+      clearInterval(timeId)
     }
-  }, [checkTokenExp,isExpire])
-
-
+  }, [checkTokenExp])
 
   return (
-    <article className="fixed flex items-start flex-col justify-start right-[2em] top-[3em] text-white bg-[#00000039] rounded-[10px] p-[8px] font-sans text-[0.95em] ">
-      <div title={`재로그인 까지 ${timeScale}초`} className='flex items-center'><HiClock className='mr-[1.8px] mt-1' />{timeScale}</div>
-      <button title={'수동으로 로그인 상태 갱신'} className='hover:text-[rgba(255,255,255,0.6)] flex items-center' onClick={handleSetIsExpire}>
-        <HiRefresh className='mr-[1px]' />갱신
+    <article className="fixed flex items-start flex-col justify-start right-[2em] top-[3em] text-white bg-[#00000039] rounded-[10px] p-[8px] font-sans text-[0.95em]">
+      <div title={`재로그인 까지 ${timeScale}초`} className="flex items-center">
+        <HiClock className="mr-[1.8px] mt-1" />
+        {timeScale}
+      </div>
+      <button
+        title={'수동으로 로그인 상태 갱신'}
+        className="hover:text-[rgba(255,255,255,0.6)] flex items-center"
+        onClick={handleSetIsExpire}
+      >
+        <HiRefresh className="mr-[1px]" />
+        갱신
       </button>
     </article>
   )
 }
-
-
