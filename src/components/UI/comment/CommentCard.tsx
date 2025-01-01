@@ -39,7 +39,7 @@ export default function CommentCard({ comment }: PropsType) {
   const [isShowReplies, setIsShowReplies] = useState(false)
   const [editFormDisplay, setEditFormDisplay] = useState(false)
   const [replyFormDisply, setReplyFormDisplay] = useState(false)
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null)
 
   const commentId = (comment && comment.id) || 0
   const userEmail = getUserEmail()

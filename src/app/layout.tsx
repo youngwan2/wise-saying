@@ -8,29 +8,50 @@ import Script from 'next/script';
 import { Toaster } from 'react-hot-toast'
 import { ToastContainer } from 'react-toastify'
 
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import localFont from "next/font/local";
 
 
+const APP_NAME = "위대한 말";
+const APP_DEFAULT_TITLE = "다양한 명언들로 나만의 명언집을";
+const APP_TITLE_TEMPLATE = "%s - 위대한 말";
+const APP_DESCRIPTION = "다양한 명연의 세계로 빠져 보세요!";
+
 export const metadata: Metadata = {
+  applicationName: APP_NAME,
   title: {
-    template: '%s | Wise Sayings',
-    default: '위대한 말(Wise Sayings)',
+    default: APP_DEFAULT_TITLE,
+    template: APP_TITLE_TEMPLATE,
   },
-  keywords: '명언, 명언 커스텀, quotes, wise sayings, 명언 검색',
-  description:
-    '당신의 말이 명언이 될 수 있습니다. 단순한 말이 누군가에게는 인생의 전환점이 될 수 있습니다. 명언의 주인공이 되어 주세요.',
+  description: APP_DESCRIPTION,
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: APP_DEFAULT_TITLE,
+    // startUpImage: [],
+  },
+  formatDetection: {
+    telephone: false,
+  },
   openGraph: {
     type: "website",
-    url: "https://wise-sayings.com",
-    title: "Wise Sayings:: 위대한 말",
-    description: "800개가 넘는 명언을 조회하고, 원하는 명언을 선택하여 공유 가능한 카드를 직접 만들어 생성할 수 있는 사이트입니다. 여러분의 말이 누군가에게는 명언이 될 수 있습니다. 무수히 많은 명언의 주인이 될 수 있습니다. 누군가에게는 희망을, 또 누군가 에게는 용기를, 또 다른 누군가에게는 영감을 주는 그런 명언을 만들어 보세요!",
-    siteName: "Wise Sayings",
-    // images: [{
-    //   url: "https://이미지경로 : ",
-    // }],
-  }
-}
+    siteName: APP_NAME,
+    title: {
+      default: APP_DEFAULT_TITLE,
+      template: APP_TITLE_TEMPLATE,
+    },
+    description: APP_DESCRIPTION,
+  },
+  twitter: {
+    card: "summary",
+    title: {
+      default: APP_DEFAULT_TITLE,
+      template: APP_TITLE_TEMPLATE,
+    },
+    description: APP_DESCRIPTION,
+  },
+};
 
 const pretendard = localFont({
   src: "../assets/fonts/PretendardVariable.woff2",
@@ -39,6 +60,9 @@ const pretendard = localFont({
   variable: "--font-pretendard",
 });
 
+export const viewport: Viewport = {
+  themeColor: "#FFFFFF",
+};
 
 export default function RootLayout({
   children,

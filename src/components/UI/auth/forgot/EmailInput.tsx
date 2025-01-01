@@ -9,7 +9,7 @@ interface PropsType {
   uId: string
 }
 export default function EmailInput({ uId }: PropsType) {
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLInputElement | null>(null)
   useFocus(inputRef)
 
   return (

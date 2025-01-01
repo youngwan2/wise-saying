@@ -26,7 +26,7 @@ export default function AiQuotePage() {
   const [isLoading, setIsLoading] = useState(false)
 
 
-  const textAreaRef = useRef<HTMLTextAreaElement>(null)
+  const textAreaRef = useRef<HTMLTextAreaElement | null>(null)
 
   gsap.registerPlugin(TextPlugin)
 
@@ -61,7 +61,7 @@ export default function AiQuotePage() {
 
 
   // Action | AI 명언 생성
-  async function generateAction(form: FormData) {
+  async function generateAction(form: FormData): Promise<any> {
     const prompt = form.get('prompt')?.valueOf().toString() || ''
     if (prompt.length < 5) return toast.error('보다 정확한 명언 생성을 위해 5자 이상 입력해주세요.')
     setIsLoading(true)

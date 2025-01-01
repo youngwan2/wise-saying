@@ -64,20 +64,20 @@ export async function POST(req: NextRequest) {
 
     // 2. 유효한 비밀번호 인지 판단
     const vaildPw = await bycrypt.compare(password, userPassword)
-    if (!vaildPw)
+    if (!vaildPw) {
       return NextResponse.json({
         ...HTTP_CODE.BAD_REQUEST,
         meg: '비밀번호가 일치하지 않습니다.',
       })
-
+    }
     // 3. 토큰 발급
     const accessToken = createToken({ userEmail, userId }, true)
     const refreshToken = createToken({ userEmail, userId }, false)
 
     const exp = tokenExpCalculator(accessToken, true)
-
+    const cookie = await cookies()
     // 4. 리프레쉬 토큰 쿠키 저장
-    cookies().set({
+    cookie.set({
       name: 'refreshToken', // 쿠키 이름
       value: 'Bearer ' + refreshToken, // 쿠키에 저장할 값
       httpOnly: true, // 자바스크립트로 접근 불가능(Only HTTP 로만 전송 가능, XSS 공격 방지)

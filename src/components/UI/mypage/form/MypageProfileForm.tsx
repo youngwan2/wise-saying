@@ -61,7 +61,7 @@ export default function MypageProfileForm({ userInfo }: PropsType) {
   }, [userInfo?.profile_image])
 
   // 프로필 업데이트
-  function profileUpdateAction(form: FormData) {
+  function profileUpdateAction(form: FormData):any {
     if (!hasToken) return toast.error('접근 권한이 없습니다.')
     const profileUrl = imageUrl
     const nickname = form.get('nickname') || ''
@@ -69,7 +69,7 @@ export default function MypageProfileForm({ userInfo }: PropsType) {
   }
 
   // 이미지 업로드
-  const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>):Promise<any> => {
     const src = (await imagePreviewReader(e, 'mypage')) || ''
     if (src?.length < 2) return
     setSrc(src)

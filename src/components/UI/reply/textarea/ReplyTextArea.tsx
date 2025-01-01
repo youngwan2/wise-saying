@@ -1,17 +1,24 @@
-import { KeyboardEventHandler, RefObject, TextareaHTMLAttributes } from "react"
+import React, { KeyboardEventHandler, forwardRef, TextareaHTMLAttributes } from 'react';
 
-interface PropsType extends TextareaHTMLAttributes<HTMLElement> {
-    onKeyUp: KeyboardEventHandler<HTMLTextAreaElement>
-    ref: RefObject<HTMLTextAreaElement>
+interface PropsType extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+  onKeyUp: KeyboardEventHandler<HTMLTextAreaElement>;
+  
 }
 
-export default function ReplyTextArea({ onKeyUp, ref, ...props }: PropsType) {
+/** ReplyTextArea 컴포넌트 */
+const ReplyTextArea = forwardRef<HTMLTextAreaElement, PropsType>(
+  ({ onKeyUp, ...props }, ref) => {
     return (
-        <textarea
-            ref={ref}
-            onKeyUp={onKeyUp}
-            {...props}>
+      <textarea
+        ref={ref}
+        onKeyUp={onKeyUp}
+        {...props}
+      />
+    );
+  }
+);
 
-        </textarea>
-    )
-}
+// displayName 설정 (ESLint 경고 방지)
+ReplyTextArea.displayName = 'ReplyTextArea';
+
+export default ReplyTextArea;

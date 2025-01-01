@@ -5,13 +5,11 @@ import { createToken, tokenVerify } from '@/utils/auth'
 export async function POST(req: NextRequest) {
   const { user, ...HTTP } = tokenVerify(req, true) as any
 
-  if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
+  if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP);
 
-  const refreshToken = createToken(user, false)
-
-  cookies().set({
+  (await cookies()).set({
     name: 'refreshToken', // 쿠키 이름
-    value: 'Bearer ' + refreshToken, // 쿠키에 저장할 값
+    value: 'Bearer ' + createToken(user, false), // 쿠키에 저장할 값
     httpOnly: true, // 자바스크립트로 접근 불가능(Only HTTP 로만 전송 가능, XSS 공격 방지)
     secure: true, // 오직 안전한 연결인 HTTPS 에서만 사용가능(로컬 환경에서는 http 허용 해줌)
     path: '/', // 쿠키에 접근할 수 있는 사이트 경로

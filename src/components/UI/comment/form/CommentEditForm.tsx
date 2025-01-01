@@ -29,7 +29,7 @@ export default function CommentEditForm({
   const setIsUpdateComment = useCommentUpdate((state) => state.setIsUpdate)
 
   // PATCH | 유저가 작성한 댓글을 수정하는 요청
-  async function commentUpdateAction(formData: FormData) {
+  async function commentUpdateAction(formData: FormData):Promise<any> {
     if (!hasToken) return toast.error('로그인 후 이용 가능합니다.')
     const comment = formData.get('comment')?.valueOf().toString() || ''
     updateComment(commentId, comment).then(() => setEditFormDisplay(false))

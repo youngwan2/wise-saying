@@ -42,18 +42,18 @@ export const requestNewAccessToken = async () => {
 
   try {
     const respone = await fetch('/api/auth/general-auth/access', config)
-    const { status, accessToken, exp} = await respone.json()
+    const { status, accessToken, exp } = await respone.json()
 
     if (status === 201) {
       setAccessToken(accessToken)
       setLoginExp(exp)
-      return {exp:exp||0, isSuccess:true}
+      return { exp: exp || 0, isSuccess: true }
     } else {
       throw new Error("토큰 갱신 실패")
     }
   } catch (error) {
     console.error('accessToken 발급 실패: ', error)
-    return {exp:0, isSuccess:false}
+    return { exp: 0, isSuccess: false }
   }
 }
 
@@ -156,10 +156,10 @@ export const postUserPost = async (userPost: {
 
 export const postComment = async (
   comment: string,
-  quoteId: string | string[],
+  quoteId?: string | string[],
 ) => {
   if (comment.length < 2) return toast.error('2자 이상 입력해주세요.')
-
+  if (!quoteId) return false
   const url = `/api/quotes/${quoteId}/comments`
   const config = defaultConfig(Method.POST, comment)
 

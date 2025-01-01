@@ -42,10 +42,10 @@ export const createToken = (
  * @param req NextRequest
  * @returns 반환 {meg, status, success, user}
  */
-export const tokenVerify = (req: NextRequest, isAccessToken: boolean) => {
+export const tokenVerify = async (req: NextRequest, isAccessToken: boolean) => {
   const rawToken = isAccessToken
     ? req.headers.get('authorization')?.split(' ') || [] // access
-    : cookies().get('refreshToken')?.value.split(' ') || [] // refresh
+    : (await cookies()).get('refreshToken')?.value.split(' ') || [] // refresh
 
   if (!rawToken)
     return HTTP_CODE.BAD_REQUEST

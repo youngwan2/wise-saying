@@ -25,7 +25,7 @@ export default function CommentForm({ mutate }: PropsType) {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const hasToken = useHasToken()
 
-  async function addComment(formData: FormData) {
+  async function addComment(formData: FormData):Promise<any> {
     if (!hasToken) return toast.error('로그인 후 등록 가능합니다.')
     const comment = formData.get('comment')?.valueOf().toString() || ''
     await postComment(comment, id)

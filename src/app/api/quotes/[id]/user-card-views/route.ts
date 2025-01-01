@@ -4,8 +4,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 
 // GET | 명언 조회수 가져오기
-export async function GET(req: NextRequest, res: { params: { id: string } }) {
-  const { id } = res.params || { id: 0 }
+export async function GET(_req: NextRequest, {params}: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  
   try {
     const db = await openDB();
 
@@ -22,9 +23,9 @@ export async function GET(req: NextRequest, res: { params: { id: string } }) {
 }
 
 // PATCH | 명언 조회수 업데이트
-export async function PATCH(req: NextRequest, res: { params: { id: string } }) {
+export async function PATCH(_req: NextRequest, {params}: { params: Promise<{ id: string }> }) {
 
-  const { id } = res.params
+  const { id } = await params
 
   try {
     const db = await openDB();

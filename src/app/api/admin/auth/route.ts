@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 // GET | 관리자 인지 아닌지 
 export async function GET(req: NextRequest) {
 
-    const { user } = tokenVerify(req, true) as any
+    const { user } = await tokenVerify(req, true) as any
 
     if (!user) return NextResponse.json(HTTP_CODE.UNAUTHORIZED)
 

@@ -19,9 +19,9 @@ WHERE A.user_id = B.user_id AND A.user_quote_id = $1 AND B.email = $2
 // DELETE | 북마크 삭제
 export async function DELETE(
   req: NextRequest,
-  res: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
-  const { id: quoteId } = res.params
+  const { id: quoteId } = await params
   const type = req.nextUrl.searchParams.get('type')
 
   const selectedQuery = type === 'no-user' ? deleteQuery : userBookmarkDeleteQuery

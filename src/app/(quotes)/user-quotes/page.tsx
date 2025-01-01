@@ -1,7 +1,8 @@
 import ErrorMessage from '@/components/UI/message/ErrorMessage'
 import UserQuoteCategoryContainer from './_components/UserQuoteCategoryContainer'
 
-import { Target, getQuoteMetadata } from '@/services/quotes/metadata'
+import { getQuoteMetadata } from '@/services/quotes/metadata'
+import { Target } from '@/types/metadata.types'
 
 export default async function UserPage() {
 

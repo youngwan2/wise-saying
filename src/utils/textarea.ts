@@ -1,6 +1,6 @@
 import { KeyboardEvent, RefObject } from 'react'
 
-export function textareaAutoResize(e: KeyboardEvent<HTMLTextAreaElement>) {
+export function textareaAutoResize(e: KeyboardEvent<HTMLTextAreaElement | null>) {
   const target = e.currentTarget
 
   target.style.height = 'auto'
@@ -10,7 +10,7 @@ export function textareaAutoResize(e: KeyboardEvent<HTMLTextAreaElement>) {
       `
 }
 
-export function clearTextarea(textareaRef: RefObject<HTMLTextAreaElement>) {
+export function clearTextarea(textareaRef: RefObject<HTMLTextAreaElement | null>) {
   if (textareaRef.current) {
     textareaRef.current.value = ''
   }
