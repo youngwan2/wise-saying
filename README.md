@@ -1,4 +1,6 @@
-
+```
+새해를 맞아 모든 코드를 개선합니다(2025 01 )()
+```
 ## 📓 프로젝트 명
 wise sayings (위대한 말)
 ![제목을-입력해주세요_-001](https://github.com/youngwan2/wise-saying/assets/107159871/f08ea653-2f8f-4788-b3b0-25ad7204b403)
