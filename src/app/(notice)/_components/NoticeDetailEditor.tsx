@@ -9,10 +9,9 @@ import List from "@editorjs/list";
 
 import type { NoticeType } from "../_types/notice.types";
 
-import { updateNoticeAction } from "@/actions/notice/update-notice.action";
 import { toast } from "react-toastify";
 import { getAccessToken } from "@/utils/session-storage";
-import { deleteNoticeAction } from "@/actions/notice/delete-notice.action";
+import { noticeDelete, noticeUpload } from "@/services/notices/notices-client.service";
 
 
 
@@ -61,32 +60,28 @@ export default function NoticeDetail({ notice }: Pick<NoticeType, 'notice'>) {
         }
     }, [])
 
-    // 공지사항 수정 요청
-    async function handleUpload() {
-        const response = await updateNoticeAction(category, post, token || '', notice?.notice_id)
-        const { message, success } = response
-        if (success) {
-            toast.success(message)
-            handleBackMove()
-        } else {
-            toast.error(message)
-        }
-    }
-
-    // 공지사항 삭제
     async function handleDelete() {
-        const isDelete = confirm('정말로 삭제하시겠습니까? 삭제 시 복구가 불가능합니다')
-        if (!isDelete) return toast('삭제 요청을 취소 하였습니다.')
-
-        const response = await deleteNoticeAction(token || '', notice?.notice_id)
-        const { message, success } = response
-        if (success) {
+        const { isSuccess, message } = await noticeUpload({category, notice, post, token})
+        if (isSuccess) {
             toast.success(message)
             handleBackMove()
         } else {
             toast.error(message)
         }
     }
+
+    async function handleUpload() {
+        const { isSuccess, message } = await noticeDelete(token, notice)
+        if (isSuccess) {
+            toast.success(message)
+            handleBackMove()
+        } else {
+            toast.error(message)
+        }
+
+    }
+
+
 
     // 카테고리 설정
     function handleSetCategory(e: ChangeEvent<HTMLSelectElement>) {

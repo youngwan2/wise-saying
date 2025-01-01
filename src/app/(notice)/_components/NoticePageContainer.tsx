@@ -16,6 +16,7 @@ import { config } from "@/configs/config.url"
 
 import type { NoticeType } from "../_types/notice.types"
 import { NextUIProvider } from "@nextui-org/system"
+import { useFetchNoticesQuery } from "@/custom/swr/useFetchNotices"
 
 
 
@@ -27,10 +28,8 @@ export default function NoticePageContainer({ categories, notices }: NoticeType)
 
     const isAdmin = useAdmin()
 
-    const url = config.apiPrefix + config.apiHost + '/api/notices?page=' + currentPage + '&category=' + filteredCategoryName
-    
-    const { data, error, isLoading } = useSwrFetch(url)
-    
+    const { data, error, isLoading } = useFetchNoticesQuery(currentPage, filteredCategoryName)
+
     const newNotices = data?.notices || null
     const maxPage = Math.ceil(notices.length / MAX_SIZE)
 
@@ -43,14 +42,14 @@ export default function NoticePageContainer({ categories, notices }: NoticeType)
         const category = e.currentTarget.value
         setFilteredCategoryName(category)
     }
-    
+
     if (error) return <ErrorMessage />
     return (
         <NextUIProvider className="max-w-[1230px] mx-auto px-2">
-            <Title title="공지사항"/>
+            <Title title="공지사항" />
             <div className="flex justify-between items-center">
                 <NoticeFilterList categories={categories} onChange={onCategoryFilter} /> {/* 카테고리 필터*/}
-                {isAdmin? <NoticeWriteLink /> : <div></div> } {/* 글쓰기 페이지 이동*/}
+                {isAdmin ? <NoticeWriteLink /> : <div></div>} {/* 글쓰기 페이지 이동*/}
             </div>
             {isLoading
                 ? <LoadingMessage />

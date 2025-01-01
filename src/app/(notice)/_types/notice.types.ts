@@ -23,3 +23,10 @@ export interface NoticeType {
         notice_category_id: number
     }
 }
+
+export interface DefaultNotice {
+    notice_id: number
+    content: OutputData
+    created_at: Date
+    name: '점검' | '업데이트' | '이벤트' | '작업' | '서비스'
+}
