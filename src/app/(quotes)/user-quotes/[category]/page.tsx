@@ -1,7 +1,7 @@
 import UserQuotePageContainer from '../_components/UserQuotePageContainer'
 import ErrorMessage from '@/components/UI/message/ErrorMessage'
 
-import { Target, getQuoteMetadata } from '@/services/data/metadata/metadata'
+import { Target, getQuoteMetadata } from '@/services/quotes/metadata'
 
 interface PropsType {
   params: { category: string }

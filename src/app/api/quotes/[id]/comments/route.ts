@@ -5,8 +5,8 @@ import { HTTP_CODE } from '@/app/http-code'
 import { aiProfanityFilter } from '@/ai'
 
 // GET | 특정 포스트 댓글 조회
-export async function GET(req: NextRequest, res: { params: { id: string } }) {
-  const quoteId = res.params.id
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const quoteId = (await params).id
   const sort = req.nextUrl.searchParams.get('sort') || 'DESC'
 
   try {
@@ -57,9 +57,9 @@ VALUES ($1,$2,$3)
 `
 
 // POST | 댓글 등록
-export async function POST(req: NextRequest, res: { params: { id: string } }) {
+export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { '0': comment } = await req.json()
-  const quoteId = res.params.id
+  const quoteId = (await params).id
 
   const filterJson = await aiProfanityFilter([comment]) || '{"judgment": false, "reason": "" }'
   const { judgment, reason } = JSON.parse(filterJson)
@@ -100,8 +100,8 @@ SET comment = $1, updated_at = CURRENT_TIMESTAMP
 WHERE user_id = $2 AND comment_id = $3
 `
 // PATCH | 특정 포스트 댓글 수정
-export async function PATCH(req: NextRequest, res: { params: { id: string } }) {
-  const commentId = res.params.id
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const commentId = (await params).id
   const { '0': comment } = await req.json()
 
   // 댓글 유효성 검사
@@ -111,12 +111,12 @@ export async function PATCH(req: NextRequest, res: { params: { id: string } }) {
       meg: '댓글 형식은 공백을 포함하여 2자 이상 입력해야 합니다.',
     })
 
-    const filterJson = await aiProfanityFilter([comment]) || '{"judgment": false, "reason": "" }'
-    const { judgment, reason } = JSON.parse(filterJson)
-  
-    if (judgment) {
-      return NextResponse.json({ ...HTTP_CODE.BAD_REQUEST, meg: reason })
-    }
+  const filterJson = await aiProfanityFilter([comment]) || '{"judgment": false, "reason": "" }'
+  const { judgment, reason } = JSON.parse(filterJson)
+
+  if (judgment) {
+    return NextResponse.json({ ...HTTP_CODE.BAD_REQUEST, meg: reason })
+  }
 
   const db = await openDB()
 
@@ -144,10 +144,11 @@ WHERE comment_id = $1
 // DELECT | 특정 포스트 댓글 삭제
 export async function DELETE(
   req: NextRequest,
-  res: { params: { id: string } },
-) {
+  { params }: { params: Promise<{ id: string }> }) {
+
+  const commentId = (await params).id
   const db = await openDB()
-  const commentId = res.params.id || ''
+
 
   try {
     // 일반 로그인 | 토큰 유효성 검증

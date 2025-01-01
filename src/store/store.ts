@@ -3,7 +3,6 @@ import type {
   MypageTapsState,
   CardZoomInOutState,
   UpdateState,
-  PolicyTapState,
   CardThemeState,
 
 } from '../types/store.type'
@@ -32,12 +31,6 @@ export const useCardZoomInOutStore = create<CardZoomInOutState>((set) => ({
 export const useCommentUpdate = create<UpdateState>((set) => ({
   isUpdate: false,
   setIsUpdate: (isUpdate) => set(() => ({ isUpdate }))
-}))
-
-/** 사이트 정책 탭 식별자 저장 */
-export const usePolicyTaps = create<PolicyTapState>((set) => ({
-  tapNum: 0,
-  setTapNum: (tapNum) => set(() => ({ tapNum }))
 }))
 
 

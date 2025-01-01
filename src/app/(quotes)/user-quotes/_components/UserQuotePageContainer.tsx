@@ -1,6 +1,6 @@
 "use client"
 
-import useInfiniteScroll from "@/custom/useInfiniteScroll"
+import useInfiniteScroll from "@/custom/swr/useInfiniteScroll"
 
 import Title from "@/components/UI/common/Title/Title"
 import ListLoadMoreButton from "@/components/UI/common/button/ListLoadMoreButton"

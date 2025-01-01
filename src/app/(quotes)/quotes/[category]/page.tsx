@@ -2,7 +2,8 @@ export const dynamic = 'force-dynamic'
 
 import QuoteCategoryContainer from '@/components/UI/quote/container/QuoteCategoryContainer'
 
-import { Target, getQuoteMetadata } from '@/services/data/metadata/metadata'
+import { getQuoteMetadata } from '@/services/quotes/metadata'
+import { Target } from '@/types/metadata.types'
 import type { Metadata } from 'next'
 
 
@@ -13,10 +14,10 @@ export const metadata: Metadata = {
 
 
 interface PropsType {
-  params: { category: "authors" | "topics" | "jobs", name?: string }
+  params: Promise<{ category: "authors" | "topics" | "jobs", name?: string }>
 }
 export default async function CategoryPage({ params }: PropsType) {
-  const { category } = params
+  const { category } = await params
   const type = category === 'topics' ? Target.QUOTE_TOPIC_CATEGORY_ALL : Target.QUOTE_AUTHOR_CATEGORY_ALL
   const metadata = await getQuoteMetadata({ type, totalLimit: 30 })
 

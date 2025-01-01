@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
 
 type Props = {
-  params: { name: string }
+  params: Promise<{ name: string }>
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const category = decodeURIComponent(params.name)
+  const category = decodeURIComponent((await params).name)
 
   return {
     title: category,

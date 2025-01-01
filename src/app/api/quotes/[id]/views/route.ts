@@ -4,21 +4,21 @@ import { NextRequest, NextResponse } from "next/server";
 
 
 // GET | 명언 조회수 가져오기
-export async function GET(req: NextRequest, res: { params: { id: string } }) {
-  const { id } = res.params || { id: 0 }
+export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+
   const db = await openDB();
 
   try {
     const selectQuery = ` SELECT views FROM views WHERE quote_id = $1 `
     const selectResult = await db.query(selectQuery, [id])
     const views = selectResult.rows[0]?.views || 0
-    
+
     return NextResponse.json({ ...HTTP_CODE.OK, views })
 
   } catch (error) {
-    
     console.error('/api/quotes/[id]/views/route.ts', error)
-    
+
     return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
 
   } finally {
@@ -28,9 +28,9 @@ export async function GET(req: NextRequest, res: { params: { id: string } }) {
 
 
 // PATCH | 명언 조회수 업데이트
-export async function PATCH(req: NextRequest, res: { params: { id: string } }) {
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
 
-  const { id } = res.params
+  const { id } = await params
 
   try {
     const db = await openDB();

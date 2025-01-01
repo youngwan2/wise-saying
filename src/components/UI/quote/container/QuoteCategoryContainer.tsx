@@ -1,6 +1,6 @@
 'use client'
 
-import useInfiniteScroll from '@/custom/useInfiniteScroll'
+import useInfiniteScroll from '@/custom/swr/useInfiniteScroll'
 
 import Title from '../../common/Title/Title'
 import ReplaceMessageCard from '../../common/card/ReplaceMessageCard'

@@ -5,10 +5,11 @@ import { NextRequest, NextResponse } from 'next/server';
 
 
 const LIMIT = 30
-export async function GET(req: NextRequest, res: { params: { category: string } }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ category: string }> }) {
 
     const db = await openDB()
-    const category = res.params.category
+
+    const { category } = await params
     try {
 
         const page = req.nextUrl.searchParams.get('page') || 0
@@ -22,7 +23,7 @@ export async function GET(req: NextRequest, res: { params: { category: string } 
         ORDER BY A.quote_id DESC
         LIMIT $2 OFFSET $3
       `
-      
+
         const results = await db.query(query, [
             category,
             LIMIT,

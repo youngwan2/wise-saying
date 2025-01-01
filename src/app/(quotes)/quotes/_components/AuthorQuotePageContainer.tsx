@@ -1,6 +1,6 @@
 'use client'
 
-import useInfiniteScroll from '@/custom/useInfiniteScroll'
+import useInfiniteScroll from '@/custom/swr/useInfiniteScroll'
 
 import QuoteContainer from '@/components/UI/quote/container/QuoteContainer'
 import LoadMoreButton from '@/components/UI/common/button/ListLoadMoreButton'
@@ -13,8 +13,6 @@ interface PropsType {
   params: {
     name: string
     category: "users" | "topics" | "authors"
-    birth: string
-    intro: string
   }
   metadata: {
     maxPage: number
@@ -24,7 +22,7 @@ interface PropsType {
 
 export default function AuthorQuotePageContainer({ params, metadata }: PropsType) {
 
-  const { category: mainPath, name: subPath } = params
+  const { category: mainPath, name: subPath } =params
 
   const {
     items,

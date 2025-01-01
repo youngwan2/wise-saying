@@ -1,10 +1,10 @@
 import QuotesCardControlButtons from '../button/QuoteCardControlButtons'
 import UserQuotesCardControlButtons from '../button/UserQuoteCardBtnContainer'
-import QuoteCommentationButton from '../button/QuoteCommentationButton'
 import QuoteCard from '../card/QuoteCard'
 
 import type { QuoteType } from '@/types/items.types'
 import type { Handlers} from '../container/QuoteContainer'
+import AiQuoteCommentButton from '../button/AiQuoteCommentButton'
 
 interface PropsType {
     items: QuoteType[]
@@ -30,7 +30,7 @@ export default function QuoteList({ items, eventHandlerGroup,  hasUserQuotePage 
                         eventHandlerGroup={eventHandlerGroup(author,  quoteId, hasUserQuotePage)}
                     >
 
-                        <QuoteCommentationButton onClick={eventHandlerGroup(author, quoteId, hasUserQuotePage).onClickGetCommentationInfo} />
+                        <AiQuoteCommentButton onClick={eventHandlerGroup(author, quoteId, hasUserQuotePage).onClickAiComment} />
                         {hasUserQuotePage
                             ? <UserQuotesCardControlButtons index={i} item={item} />
                             : <QuotesCardControlButtons index={i} item={item} />

@@ -4,10 +4,10 @@ import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 
 // GET | 좋아요 조회
-export async function GET(req: NextRequest, res: { params: { id: string } }) {
+export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const db = await openDB()
-    const quoteId = res.params.id
+    const quoteId = (await params).id
 
     const selectQuery = `
         SELECT COUNT(*) as count
@@ -45,10 +45,10 @@ const insertQuery = `INSERT INTO quote_likes(user_id, quote_id) VALUES ($1, $2)`
 const likeCountSelectQuery = `SELECT COUNT(*) as count FROM quote_likes  WHERE quote_id = $1 `
 
 // POST | 좋아요 증가
-export async function POST(req: NextRequest, res: { params: { id: string } }) {
+export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const db = await openDB()
-    const quoteId = res.params.id
+    const quoteId = (await params).id
 
     // 일반 로그인
     const { user, ...HTTP } = tokenVerify(req, true) as any
