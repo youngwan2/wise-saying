@@ -15,6 +15,7 @@ import LoadingMessage from "@/components/UI/message/LoadingMessage"
 import { config } from "@/configs/config.url"
 
 import type { NoticeType } from "../_types/notice.types"
+import { NextUIProvider } from "@nextui-org/system"
 
 
 
@@ -45,7 +46,7 @@ export default function NoticePageContainer({ categories, notices }: NoticeType)
     
     if (error) return <ErrorMessage />
     return (
-        <>
+        <NextUIProvider className="max-w-[1230px] mx-auto px-2">
             <Title title="공지사항"/>
             <div className="flex justify-between items-center">
                 <NoticeFilterList categories={categories} onChange={onCategoryFilter} /> {/* 카테고리 필터*/}
@@ -58,7 +59,7 @@ export default function NoticePageContainer({ categories, notices }: NoticeType)
                 onChange={onPageChange}
                 maxPage={maxPage}
                 currentPage={currentPage + 1} /> {/* 페이지네이션 */}
-        </>
+        </NextUIProvider>
 
     )
 }

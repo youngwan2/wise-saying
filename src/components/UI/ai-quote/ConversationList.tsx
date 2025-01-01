@@ -5,6 +5,7 @@ import ConversationCard from './ConversationCard'
 
 import {type UserInfoType, getUserInfo } from '@/utils/session-storage'
 import {type  ConversationType } from '@/app/(ai)/ai-quote/page'
+import { SyntheticEvent } from 'react'
 
 
 interface PropsType {
@@ -16,7 +17,7 @@ export default function ConversationList({ isLoading, conversationList }: PropsT
 
   const userInfo = getUserInfo() as UserInfoType | null
 
-  function onScrollEnd(e: any) {
+  function onScrollEnd(e: SyntheticEvent ) {
     const target = e.currentTarget.parentElement
     target?.scrollTo({ top: 100000000000 })
   }
