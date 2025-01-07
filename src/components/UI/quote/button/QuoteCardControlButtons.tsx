@@ -11,10 +11,10 @@ import ButtonContainer from '../../common/container/ButtonContainer'
 import { HiDotsVertical, HiOutlineZoomIn } from 'react-icons/hi'
 import { HiOutlineBookmark, HiScissors, HiXMark } from 'react-icons/hi2'
 
-import { addBookmarkItem } from '@/services/data/post'
 import { pageSwitch, quotesSelector } from '@/utils/common-func'
+import { QuoteType } from '@/types/quote.types'
+import { addBookmarkItem } from '@/services/bookmark/bookmark.service'
 
-import type {QuoteType } from '@/types/items.types'
 
 
 interface PropsType {

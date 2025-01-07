@@ -1,4 +1,4 @@
-import { QuoteType } from "@/types/items.types"
+import { QuoteType } from "@/types/quote.types"
 import { MouseEventHandler } from "react"
 
 interface PropsType {

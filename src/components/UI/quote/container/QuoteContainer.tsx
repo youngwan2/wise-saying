@@ -6,11 +6,11 @@ import ZoomInQuoteCard from '../card/ZoomInQuoteCard'
 import CardTheme from '../../theme/CardTheme'
 import QuoteList from '../list/QuoteList'
 
-import { viewCounter } from '@/services/data/patch'
 import { toast } from 'react-toastify'
 import { getAiQuoteComment } from '@/services/ai.service'
+import { QuoteType } from '@/types/quote.types'
+import { viewCounter } from '@/services/quotes/view-count.service'
 
-import { type QuoteType } from '@/types/items.types'
 
 export interface Handlers {
   onClickPageChange: () => void

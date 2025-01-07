@@ -10,9 +10,9 @@ import ButtonContainer from '../../common/container/ButtonContainer'
 import { SlEarphones } from 'react-icons/sl'
 import { HiOutlineBookmark, HiScissors } from 'react-icons/hi2'
 
-import { addBookmarkItem } from '@/services/data/post'
 import { pageSwitch, quotesSelector } from '@/utils/common-func'
 import { toast } from 'react-toastify'
+import { addBookmarkItem } from '@/services/bookmark/bookmark.service'
 
 
 

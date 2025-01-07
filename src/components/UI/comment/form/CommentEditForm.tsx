@@ -5,10 +5,8 @@ import { useCommentUpdate } from '@/store/store'
 import ControlButton from '../../common/button/ControlButton'
 import TextArea from '../../common/TextArea'
 import ButtonContainer from '../../common/container/ButtonContainer'
+import { updateComment } from '@/services/comment/comment.service'
 
-import { updateComment } from '@/services/user/patch'
-
-import { toast } from 'react-toastify'
 
 interface PropsType {
   onClickEditCancel: MouseEventHandler<HTMLButtonElement>

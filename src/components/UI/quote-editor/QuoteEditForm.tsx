@@ -18,9 +18,7 @@ import FormTitle from '../common/Title/FormTitle'
 import { hoverAnimation } from '@/utils/common-func'
 import { getAccessToken } from '@/utils/session-storage'
 import { updateQuoteAction } from '@/actions/update-quote.action'
-
-
-import type { QuoteType } from '@/types/items.types'
+import { QuoteType } from '@/types/quote.types'
 
 
 export type PostType = Pick<QuoteType, 'author' | 'quote' | 'quote_id' | 'category'>

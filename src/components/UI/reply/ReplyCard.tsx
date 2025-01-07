@@ -1,4 +1,4 @@
-import { MouseEventHandler, useState } from 'react'
+import { useState } from 'react'
 import { useSWRConfig } from 'swr'
 
 import ReplyContent from './ReplyContent'
@@ -7,12 +7,10 @@ import ReplyEditForm from './form/ReplyEditForm'
 
 import { deleteFetcher, patchFetcher } from '@/utils/fetcher'
 
-import { HiDotsVertical, HiOutlineX } from 'react-icons/hi'
-
 import { toast } from 'react-toastify'
 
-import { ReplyType } from '@/types/items.types'
 import { ReplyMenuDropdownButton } from './button/ReplyMenuDropdownButton'
+import { ReplyType } from '@/types/reply.types'
 
 interface PropsType extends ReplyType {
   commentId: number

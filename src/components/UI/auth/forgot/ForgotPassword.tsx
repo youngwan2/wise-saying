@@ -34,7 +34,7 @@ export default function ForgotPassword({ uId }: PropsType) {
     >
       <EmailInput uId={uId} />
       <ControlButton type='submit' ariaLabel='전송 버튼' className='w-full bg-white text-black font-bold p-[0.7em] mt-[1em] rounded-[5px] focus:outline-none focus:bg-blue-700 hover:bg-gradient-to-br from-[white] to-[#acaaaa]  transition-all'>
-        임시 비밀번호 발급 받기
+       비밀번호 재설정 하기
       </ControlButton>
     </ForgotForm>
   )

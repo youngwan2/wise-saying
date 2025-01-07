@@ -17,8 +17,8 @@ import { hoverAnimation, hoverAnimationMobile } from '@/utils/common-func'
 import gsap from 'gsap/all'
 import { HiSpeakerphone } from 'react-icons/hi'
 
-import type { QuoteType } from '@/types/items.types'
 import type { Handlers } from '../container/QuoteContainer'
+import { QuoteType } from '@/types/quote.types'
 
 
 

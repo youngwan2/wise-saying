@@ -10,8 +10,8 @@ import CommentSortSelect from './CommentSortSelect'
 import CommentList from './CommentList'
 import ErrorMessage from '../message/ErrorMessage'
 import CommentSkeleton from '@/components/skeleton/CommentSkeleton'
+import { getCommentsFormDb } from '@/services/comment/comment.service'
 
-import { getCommentsFormDb } from '@/services/data/get'
 
 
 export interface CommentsInfoType {

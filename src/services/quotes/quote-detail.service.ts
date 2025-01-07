@@ -1,5 +1,4 @@
 import { openDB } from "@/utils/connect"
-import { headers } from "next/headers"
 
 const userCardSelectQuery = `
 SELECT user_quote_id AS quote_id , quote, author, A.created_at AS created_at, category, email, nickname, profile_img_url

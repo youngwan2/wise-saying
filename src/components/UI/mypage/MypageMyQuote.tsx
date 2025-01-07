@@ -9,8 +9,7 @@ import Container from '../common/container/Container'
 
 import { toast } from 'react-toastify'
 import { HiRefresh } from 'react-icons/hi'
-
-import { UserQuotesType } from '@/types/items.types'
+import { UserQuotesType } from '@/types/quote.types'
 
 interface PropsType {
   page: number

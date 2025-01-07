@@ -1,5 +1,5 @@
 import { Method, getDefaultConfig } from '@/configs/config.api'
-import { QuoteType } from '@/types/items.types'
+import { QuoteType } from '@/types/quote.types'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 import { Dispatch, FormEvent, SetStateAction } from 'react'
 import { toast } from 'react-toastify'

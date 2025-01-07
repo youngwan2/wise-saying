@@ -5,11 +5,11 @@ import useHasToken from '@/custom/useHasToken'
 
 import ControlButton from '../../common/button/ControlButton'
 
-import { postLike } from '@/services/user/post'
 import { defaultFetch } from '@/utils/fetcher'
 import { Method, getDefaultConfig } from '@/configs/config.api'
 
 import { toast } from 'react-toastify'
+import { postLike } from '@/services/quotes/like-count.service'
 
 
 

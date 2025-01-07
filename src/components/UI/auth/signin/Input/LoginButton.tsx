@@ -1,4 +1,4 @@
-export default function ReqLoginInput({ isLoading }: { isLoading: boolean }) {
+export default function LoginButton({ isLoading }: { isLoading: boolean }) {
   return (
     <input
       aria-label="로그인 요청"

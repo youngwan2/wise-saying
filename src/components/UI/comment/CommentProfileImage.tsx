@@ -1,4 +1,4 @@
-import { CommentType } from '@/types/items.types'
+import { CommentType } from '@/types/comment.types'
 import Image from 'next/image'
 
 interface PropsType extends CommentType {}

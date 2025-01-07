@@ -10,10 +10,10 @@ import TextArea from '../../common/TextArea'
 import ControlButton from '../../common/button/ControlButton'
 import ButtonContainer from '../../common/container/ButtonContainer'
 
-import { postComment } from '@/services/user/post'
 import { textareaAutoResize, clearTextarea } from '@/utils/textarea'
 
 import { CommentsInfoType } from '../Comment'
+import { postComment } from '@/services/comment/comment.service'
 
 
 interface PropsType {

@@ -1,8 +1,8 @@
 import styles from './Quotes.module.css'
 
-import { QuoteType } from "@/types/items.types"
 import { hoverAnimation } from "@/utils/common-func"
 import { MouseEventHandler } from "react"
+import { QuoteType } from '@/types/quote.types'
 
 interface PropsType {
   quoteInfo: QuoteType

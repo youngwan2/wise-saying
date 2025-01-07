@@ -5,9 +5,7 @@ import TodayQuoteCard from "../card/TodayQuoteCard"
 import ReplaceMessageCard from "../../common/card/ReplaceMessageCard"
 
 import gsap from "gsap/all"
-
-import type { QuoteType } from "@/types/items.types"
-
+import { QuoteType } from "@/types/quote.types"
 
 
 interface PropsType {

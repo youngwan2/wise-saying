@@ -1,4 +1,4 @@
-import { QuoteType } from '@/types/items.types'
+import { QuoteType } from '@/types/quote.types'
 import { useEffect, useState } from 'react'
 
 /**

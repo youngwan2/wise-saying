@@ -3,8 +3,8 @@ export const dynamic = 'force-dynamic'
 import ReplaceMessageCard from '@/components/UI/common/card/ReplaceMessageCard'
 import HomeMenu from '@/components/UI/home/HomeMenu'
 import TodayQuoteContainer from '@/components/UI/quote/container/TodayQuoteContainer'
+import { getTodayQuotesFromDb } from '@/services/quotes/quotes.service'
 
-import { getTodayQuotesFromDb } from '@/services/data/get'
 
 export default async function Home() {
   

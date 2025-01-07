@@ -1,4 +1,4 @@
-import { UserQuotesType } from '@/types/items.types'
+import { UserQuotesType } from '@/types/quote.types'
 import MypageUserQuoteCard from '../card/MypageMyQuoteCard'
 
 interface PropsType {
