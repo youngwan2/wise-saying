@@ -1,3 +1,4 @@
+
 /** @type {import('next').NextConfig} */
 
 const ContentSecurityPolicy = `
@@ -13,10 +14,11 @@ frame-ancestors 'none';
 upgrade-insecure-requests;
 `
 
+const withPWA = require("@ducanh2912/next-pwa").default({
+  dest: "public",
+});
 
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-})
+
 const nextConfig = {
   images: {
     remotePatterns: [
@@ -77,4 +79,4 @@ const nextConfig = {
   },
 }
 
-module.exports = withBundleAnalyzer(nextConfig)
+module.exports = withPWA((nextConfig))
