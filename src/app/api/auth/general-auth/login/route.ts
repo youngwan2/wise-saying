@@ -77,7 +77,8 @@ export async function POST(req: NextRequest) {
     const exp = tokenExpCalculator(accessToken, true)
 
     // 4. 리프레쉬 토큰 쿠키 저장
-    cookies().set({
+    const cookie = await cookies()
+    cookie.set({
       name: 'refreshToken', // 쿠키 이름
       value: 'Bearer ' + refreshToken, // 쿠키에 저장할 값
       httpOnly: true, // 자바스크립트로 접근 불가능(Only HTTP 로만 전송 가능, XSS 공격 방지)

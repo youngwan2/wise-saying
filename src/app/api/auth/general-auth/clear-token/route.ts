@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { HTTP_CODE } from '@/app/http-code'
 
 export async function GET() {
-  cookies().delete('refreshToken')
+  (await cookies()).delete('refreshToken')
   revalidatePath('/logout')
   try {
     return NextResponse.json({

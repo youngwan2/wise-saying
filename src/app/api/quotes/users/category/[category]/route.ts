@@ -5,9 +5,9 @@ import { NextRequest, NextResponse } from 'next/server';
 
 /** GET | 유저가 작성한 주제별 명언 목록 */
 const LIMIT = 30
-export async function GET(req: NextRequest, res: { params: { category: string } }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ category: string }> }) {
 
-    const { category } = res.params
+    const { category } = await params
     const page = req.nextUrl.searchParams.get('page') || 0
     const pageNum = Number(page)
     

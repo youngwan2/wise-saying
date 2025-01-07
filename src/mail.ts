@@ -103,9 +103,9 @@ export async function sendMailWithAwsSes(recipientEmail: string, recipientName: 
   }
 
   if (type === "signin") {
-    params.Message.Body.Html.Data = setMailOptAwsSes(token, recipientEmail, type)
+    params.Message.Body.Html.Data = await setMailOptAwsSes(token, recipientEmail, type)
   } else {
-    params.Message.Body.Html.Data = setMailOptAwsSes(token, recipientEmail, type)
+    params.Message.Body.Html.Data = await setMailOptAwsSes(token, recipientEmail, type)
   }
 
   try {
@@ -126,13 +126,13 @@ export async function sendMailWithAwsSes(recipientEmail: string, recipientName: 
  * @param type 회원가입, 비밀번호 찾기 요청 구분
  * @returns 메일 본문에 표시할 HTML 
  */
-export function setMailOptAwsSes(tempToken: string, userEmail: string, type: "signin"|"forgot") {
+export async function setMailOptAwsSes(tempToken: string, userEmail: string, type: "signin"|"forgot") {
   if (type === 'signin') {
     const html = setHtml(tempToken, userEmail, type)
     return html
 
   } else {
-    const referer = headers().get('referer')
+    const referer = (await headers()).get('referer')
     const redirectPath = referer?.replace('/forgot', '/reset-pass') || ''
 
     const html = setHtml(redirectPath + '?temp-token=' + tempToken, userEmail, type)

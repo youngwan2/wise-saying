@@ -44,7 +44,7 @@ export default function NoticeEditor() {
     const backMove = useRouter().back
 
     const token = getAccessToken()
-    const ejInstance = useRef<EditorJS | null>(); // Editor 인스턴스
+    const ejInstance = useRef<EditorJS | null>(null); // Editor 인스턴스
 
     const initEditor = () => {
         const editor = new EditorJS({

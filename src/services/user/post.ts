@@ -156,10 +156,10 @@ export const postUserPost = async (userPost: {
 
 export const postComment = async (
   comment: string,
-  quoteId: string | string[],
+  quoteId?: string | string[],
 ) => {
   if (comment.length < 2) return toast.error('2자 이상 입력해주세요.')
-
+  if(!quoteId)  return
   const url = `/api/quotes/${quoteId}/comments`
   const config = defaultConfig(Method.POST, comment)
 
