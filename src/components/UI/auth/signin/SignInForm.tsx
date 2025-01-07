@@ -12,15 +12,14 @@ import EmailAuthInput from './Input/EmailAuthInput'
 import BackButton from '../common/BackButton'
 import FormTitle from '../common/FormTitle'
 import Consent from './Consent'
-
-import { reqSignIn } from '@/services/user/post'
 import { onSubmit } from '@/utils/common-func'
 
 import toast from 'react-hot-toast'
 
-import { ConsentsType } from '@/types/items.types'
+import { ConsentsType } from '@/types/consent.types'
 import { Method, defaultConfig } from '@/configs/config.api'
 import { defaultFetch } from '@/utils/fetcher'
+import { reqSignIn } from '@/services/user/auth.service'
 
 // todo:  추후 action 으로 대체하여 불필요한 리렌더링을 촉발하는 state 를 최대한 줄여야 함.
 export default function SignInForm() {

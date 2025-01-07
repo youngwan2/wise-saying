@@ -5,12 +5,10 @@ import useHasToken from '@/custom/useHasToken'
 import EmailField from '../field/EmailField'
 import PasswordFields from '../field/PasswordFields'
 import MypageActionButtons from '../button/MypageActionButtons'
-import FormTitle from '../../common/Title/FormTitle'
 
-import { deleteUserInfo } from '@/services/user/delete'
-import { updateUserPassword } from '@/services/user/patch'
 
 import toast from 'react-hot-toast'
+import { deleteUserInfo, updateUserPassword } from '@/services/user/auth.service'
 
 
 

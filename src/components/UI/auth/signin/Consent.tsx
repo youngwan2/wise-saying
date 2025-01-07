@@ -3,7 +3,7 @@ import { createPortal } from "react-dom"
 
 import PolicyModal from "./PolicyModal"
 
-import type { ConsentsType } from "@/types/items.types"
+import type { ConsentsType } from "@/types/consent.types"
 
 interface ProsType {
     consents: ConsentsType

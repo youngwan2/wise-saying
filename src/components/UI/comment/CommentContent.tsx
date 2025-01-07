@@ -1,4 +1,4 @@
-import { CommentType } from '@/types/items.types'
+import { CommentType } from "@/types/comment.types"
 
 interface PropsType extends CommentType { }
 export default function CommentContent({ comment }: PropsType) {

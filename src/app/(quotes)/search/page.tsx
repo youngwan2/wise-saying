@@ -10,8 +10,8 @@ import SearchTapButtons from '@/components/UI/search/SearchTapButtons'
 
 import { HiSearch } from 'react-icons/hi'
 
-import { QuoteType } from '@/types/items.types'
 import { toast } from 'react-toastify'
+import { QuoteType } from '@/types/quote.types'
 
 interface TotalCountsType {
   byAuthorCount: number

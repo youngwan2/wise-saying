@@ -3,8 +3,7 @@
 import { useRouter } from 'next/navigation'
 
 import RecommendQuoteCard from './RecommendQuoteCard'
-
-import { QuoteType } from "@/types/items.types"
+import { QuoteType } from '@/types/quote.types'
 
 
 interface PropsType {

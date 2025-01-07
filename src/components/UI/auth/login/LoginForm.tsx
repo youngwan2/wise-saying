@@ -7,14 +7,11 @@ import useDraggable from '@/custom/useDraggable'
 
 import FormTitle from '../common/FormTitle'
 import BackButton from '../common/BackButton'
-import ReqLoginInput from '../signin/Input/ReqLoginInput'
 import SignInGuideLink from '../signin/SignInGuideLink'
 import ForgotLink from '../forgot/ForgotLink'
-
 import LoginDefault from './LoginDefault'
-
-
-import { reqLogin } from '@/services/user/post'
+import LoginButton from '../signin/Input/LoginButton'
+import { reqLogin } from '@/services/user/auth.service'
 
 export default function LoginForm() {
   const loginFormRef = useRef<HTMLFormElement>(null)
@@ -39,12 +36,22 @@ export default function LoginForm() {
     const email = form.get('email')?.valueOf().toString() || ''
     const password = form.get('password')?.valueOf().toString() || ''
 
-    reqLogin({ email, password }).then(() => setIsLoading(false))
+    const isLogin = await reqLogin({ email, password })
+
+    if (isLogin) {
+      setIsLoading(false)
+      setTimeout(() => {
+        window.location.reload()
+      }, 1000)
+    }
   }
 
   function onClickBackMove() {
     router.push('/')
   }
+
+
+  
 
   return (
     <form
@@ -55,7 +62,8 @@ export default function LoginForm() {
       <FormTitle>로그인</FormTitle>
       <BackButton onClickBack={onClickBackMove} />
       <LoginDefault />
-      <ReqLoginInput isLoading={isLoading} />
+      <LoginButton isLoading={isLoading} />
+
       <div className="flex items-center justify-center my-[2em]">
         <SignInGuideLink />
         <ForgotLink />

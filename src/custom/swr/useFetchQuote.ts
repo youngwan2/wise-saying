@@ -1,8 +1,7 @@
-import { getNotices } from "@/services/notices/notices-client.service"
 import { toast } from "react-toastify"
 import { config } from "@/configs/config.url"
 import useSWR from "swr"
-import { getPopularityQuote } from "@/services/quotes/popularitis.service"
+import { getPopularityQuote } from "@/services/quotes/quotes.service"
 
 
 

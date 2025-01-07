@@ -8,7 +8,7 @@ import TodayQuoteContent from '../content/TodayQuoteContent'
 import { hoverAnimation } from '@/utils/common-func'
 
 import { SlEarphones } from 'react-icons/sl'
-import { QuoteType } from '@/types/items.types'
+import { QuoteType } from '@/types/quote.types'
 
 interface PropsType {
     quoteInfo: QuoteType

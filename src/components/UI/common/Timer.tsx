@@ -2,11 +2,11 @@
 
 import { useCallback, useEffect, useState } from 'react'
 
-import { requestNewAccessToken } from '@/services/user/post'
 import { getLoginExp } from '@/utils/session-storage'
 
 import { HiRefresh } from 'react-icons/hi'
 import { HiClock } from 'react-icons/hi2'
+import { requestNewAccessToken } from '@/services/user/jwt.service'
 
 const TOKEN_BUFFER_TIME_SEC = 120
 

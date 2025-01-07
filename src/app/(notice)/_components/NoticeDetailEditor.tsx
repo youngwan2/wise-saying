@@ -7,11 +7,11 @@ import Header from "@editorjs/header";
 import EditorJS, { OutputData } from '@editorjs/editorjs';
 import List from "@editorjs/list";
 
-import type { NoticeType } from "../_types/notice.types";
 
 import { toast } from "react-toastify";
 import { getAccessToken } from "@/utils/session-storage";
 import { noticeDelete, noticeUpload } from "@/services/notices/notices-client.service";
+import { NoticeType } from "../_types/notice.types";
 
 
 

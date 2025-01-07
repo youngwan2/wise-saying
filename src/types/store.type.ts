@@ -1,4 +1,4 @@
-import { QuoteType } from "./items.types";
+import { PostType } from "@/components/UI/quote-editor/QuoteEditForm";
 
 export interface LoginState { loginState: boolean; setLoginState: (loignState: boolean) => void }
 export interface PostIdState { postId: number; setPostId: (id: number) => void }
@@ -49,7 +49,7 @@ export interface CardThemeState { isCardTheme: boolean; setIsCardTheme: (isCardT
 export interface ImageSrcType { imagesSrc: string[]; setImagesSrc: (imagesSrc: string[]) => void; addImageSrc: (newImage: string) => void }
 
 
-type PostType = Pick<QuoteType, 'author' | 'category' | 'quote_id' | 'quote'>
+
 export interface UserPostState {
   post: PostType
 

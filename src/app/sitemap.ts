@@ -1,4 +1,4 @@
-import { getQuoteCategoryFromDb } from '@/services/data/get'
+import { getQuoteCategoryFromDb } from '@/services/sitemap/sitemap.service'
 import { MetadataRoute } from 'next'
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 

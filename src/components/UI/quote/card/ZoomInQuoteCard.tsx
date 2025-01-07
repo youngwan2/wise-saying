@@ -8,8 +8,7 @@ import Overlay from '../overlay/Overlay'
 
 import { gsap } from 'gsap/all'
 import { Draggable } from 'gsap/Draggable'
-
-import { type QuoteType } from '@/types/items.types'
+import { QuoteType } from '@/types/quote.types'
 
 
 interface PropsType {

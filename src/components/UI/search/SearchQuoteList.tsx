@@ -1,6 +1,6 @@
+import { QuoteType } from '@/types/quote.types'
 import SearchQuoteCard from './SearchQuoteCard'
 
-import type { QuoteType } from '@/types/items.types'
 
 interface PropsType {
   children: React.ReactNode

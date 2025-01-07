@@ -14,14 +14,15 @@ import ReplaceMessageCard from '../common/card/ReplaceMessageCard'
 
 import { clearTextarea } from '@/utils/textarea'
 
-import { postReply } from '@/services/user/post'
-import { deleteComment } from '@/services/user/delete'
 import { getUserEmail } from '@/utils/session-storage'
 
 
 import { HiDotsVertical, HiOutlineX } from 'react-icons/hi'
+import { ReplyInfoType } from '@/types/reply.types'
+import { CommentType } from '@/types/comment.types'
+import { postReply } from '@/services/reply/reply.service'
+import { deleteComment } from '@/services/comment/comment.service'
 
-import { CommentType, ReplyInfoType } from '@/types/items.types'
 
 
 type DataType = {

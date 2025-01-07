@@ -7,13 +7,12 @@ import MypageImageUploadInputContainer from '../input/MypageImageUploadInput'
 import MypageNicknameInputContainer from '../container/MypageNicknameInputContainer'
 import MypageProfileUpdateButton from '../MypageProfileUpdataButton'
 
-import { updateUserInfo } from '@/services/user/patch'
 import { imagePreviewReader } from '@/utils/imageloader'
 
-import toast from 'react-hot-toast'
 import { storage } from '@/configs/firebase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { v4 as uuidv4 } from 'uuid'
+import { updateUserInfo } from '@/services/user/profile.service'
 
 
 interface PropsType {

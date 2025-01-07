@@ -8,12 +8,11 @@ import BookmarkCloseButton from './button/BookmarkCloseButton'
 import BookmarkPagination from './BookmarkPagination'
 import BookmarkList from './BookmarkList'
 
-import { getBookmarkListFetcher } from '@/services/data/get'
-import { deleteBookmark } from '@/services/user/delete'
 
 import { toast } from 'react-toastify'
 import { HiBookmarkSquare } from 'react-icons/hi2'
 import { useBookmarkStore, useBookmarkUpdate } from '@/store/bookmarkStore'
+import { deleteBookmark, getBookmarkListFetcher } from '@/services/bookmark/bookmark.service'
 
 
 export interface BookmarkListType {

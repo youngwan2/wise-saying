@@ -1,4 +1,5 @@
-import { ReplyType } from '@/types/items.types'
+import { ReplyType } from "@/types/reply.types"
+
 
 interface PropsType extends ReplyType { }
 export default function ReplyContent({ reply }: PropsType) {

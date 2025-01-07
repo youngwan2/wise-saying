@@ -1,8 +1,8 @@
 "use client"
 
+import { QuoteType } from '@/types/quote.types'
 import styles from '../Quotes.module.css'
 import { hoverAnimation } from '@/utils/common-func'
-import type { QuoteType } from '@/types/items.types'
 
 
 type UserType = {

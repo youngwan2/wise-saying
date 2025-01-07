@@ -1,6 +1,6 @@
 'use client'
 
-import { redirect, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useUserPostWithIdStore } from '@/store/userPostStore'
 
 import QuoteCardControlButtons from './QuoteCardControlButtons'
@@ -10,9 +10,9 @@ import ControlButton from '../../common/button/ControlButton'
 import { getAccessToken, getUserEmail } from '@/utils/session-storage'
 import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi2'
 
-import { type QuoteType } from '@/types/items.types'
 import { deleteUserQuoteAction } from '@/actions/delete-quote.action'
 import { toast } from 'react-toastify'
+import { QuoteType } from '@/types/quote.types'
 
 interface PropsType {
   item: QuoteType

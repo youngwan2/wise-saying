@@ -1,10 +1,10 @@
 import QuotesCardControlButtons from '../button/QuoteCardControlButtons'
 import UserQuotesCardControlButtons from '../button/UserQuoteCardBtnContainer'
 import QuoteCard from '../card/QuoteCard'
-
-import type { QuoteType } from '@/types/items.types'
-import type { Handlers} from '../container/QuoteContainer'
 import AiQuoteCommentButton from '../button/AiQuoteCommentButton'
+
+import { QuoteType } from '@/types/quote.types'
+import  { Handlers} from '../container/QuoteContainer'
 
 interface PropsType {
     items: QuoteType[]
