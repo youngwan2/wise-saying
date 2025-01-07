@@ -24,7 +24,7 @@ export default function NoticeDetail({ notice }: Pick<NoticeType, 'notice'>) {
     const isAdmin = useAdmin()
     const handleBackMove = useRouter().back
 
-    const ejInstance = useRef<EditorJS | null>(); // Editor 인스턴스
+    const ejInstance = useRef<EditorJS | null>(null); // Editor 인스턴스
 
     // 에디터 초기화
     const initEditor = () => {

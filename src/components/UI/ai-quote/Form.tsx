@@ -1,15 +1,20 @@
-
-import { RefObject } from 'react'
+import { forwardRef, RefObject } from 'react'
 import ControlButton from '../common/button/ControlButton'
-
 import { IoSend } from 'react-icons/io5'
 
+interface PropsType { 
+  generateAction: (form: FormData) => Promise<any>, 
+  textAreaRef: RefObject<HTMLTextAreaElement | null> 
+}
 
-interface PropsType { generateAction: (form: FormData) => Promise<string | void>, textAreaRef: RefObject<HTMLTextAreaElement>}
-function Form({ generateAction, textAreaRef }: PropsType) {
+const Form = forwardRef<HTMLFormElement, PropsType>(({ generateAction, textAreaRef }: PropsType, ref) => {
 
   return (
-    <form className="font-sans mt-[1.5em] flex justify-center items-center  rounded-[5px] bg-[#ffffff0e]" action={generateAction}>
+    <form 
+      ref={ref} 
+      className="font-sans mt-[1.5em] flex justify-center items-center  rounded-[5px] bg-[#ffffff0e]" 
+      action={generateAction}
+    >
       <textarea
         placeholder='예) 여름에도 가을처럼 시원하고, 겨울처럼 등꼴이 오싹해지는 명언'
         ref={textAreaRef}
@@ -22,6 +27,8 @@ function Form({ generateAction, textAreaRef }: PropsType) {
       </ControlButton>
     </form>
   )
-}
+});
 
-export default Form
+Form.displayName = 'Form';  // forwardRef로 감쌀 때 displayName을 설정하는 것이 좋습니다.
+
+export default Form;

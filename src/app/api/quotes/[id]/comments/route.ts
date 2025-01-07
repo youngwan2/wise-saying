@@ -142,10 +142,7 @@ WHERE comment_id = $1
 `
 
 // DELECT | 특정 포스트 댓글 삭제
-export async function DELETE(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }) {
-
+export async function DELETE( req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const commentId = (await params).id
   const db = await openDB()
 

@@ -1,9 +1,9 @@
 import { openDB } from '@/utils/connect'
 import { NextRequest, NextResponse } from 'next/server'
 
-export async function GET(req: NextRequest, res: { params: { main: string } }) {
+export async function GET(_req: NextRequest, { params }: { params: Promise<{ main: string }> }) {
 
-  const main = res.params.main || ''
+  const {main} = await params
 
   try {
     const db = await openDB()

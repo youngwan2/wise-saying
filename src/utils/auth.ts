@@ -1,5 +1,4 @@
 import jwt, { JwtPayload } from 'jsonwebtoken'
-import { cookies } from 'next/headers'
 import { NextRequest } from 'next/server'
 import { HTTP_CODE } from '@/app/http-code'
 
@@ -45,7 +44,7 @@ export const createToken = (
 export const tokenVerify = (req: NextRequest, isAccessToken: boolean) => {
   const rawToken = isAccessToken
     ? req.headers.get('authorization')?.split(' ') || [] // access
-    : cookies().get('refreshToken')?.value.split(' ') || [] // refresh
+    : req.cookies.get('refreshToken')?.value.split(' ') || [] // refresh
 
   if (!rawToken)
     return HTTP_CODE.BAD_REQUEST

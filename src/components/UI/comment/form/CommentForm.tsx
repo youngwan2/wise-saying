@@ -12,7 +12,6 @@ import ButtonContainer from '../../common/container/ButtonContainer'
 
 import { postComment } from '@/services/user/post'
 import { textareaAutoResize, clearTextarea } from '@/utils/textarea'
-import { toast } from 'react-toastify'
 
 import { CommentsInfoType } from '../Comment'
 
@@ -26,7 +25,7 @@ export default function CommentForm({ mutate }: PropsType) {
   const hasToken = useHasToken()
 
   async function addComment(formData: FormData) {
-    if (!hasToken) return toast.error('로그인 후 등록 가능합니다.')
+    if (!hasToken) return ;
     const comment = formData.get('comment')?.valueOf().toString() || ''
     await postComment(comment, id)
     clearTextarea(textareaRef)

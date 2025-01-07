@@ -3,9 +3,9 @@ import { openDB } from '@/utils/connect';
 import { NextRequest, NextResponse } from 'next/server';
 
 const LIMIT = 30
-export async function GET(req: NextRequest, res: { params: { category: string } }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ category: string }> }) {
 
-    const category = res.params.category
+    const { category } = await params
     const db = await openDB()
     const page = req.nextUrl.searchParams.get('page') || 0
     const pageNum = Number(page)
