@@ -28,7 +28,7 @@ export const defaultConfig = (method: Method, ...data: any) => {
   const config = {
     method,
     headers: {
-      authorization: 'Bearer ' + token,
+      authorization: token,
     },
 
     body: JSON.stringify({ ...data }),
@@ -49,11 +49,26 @@ export const getDefaultConfig = (method: Method, isTokenVertify: boolean) => {
     config = {
       method,
       headers: {
-        authorization: 'Bearer ' + token,
+        authorization: token,
       },
     }
   } else {
     config = { method }
+  }
+
+  return config
+}
+
+
+export const fetchConfig = (method: Method, obj:Record<string, any>) => {
+  const token = getAccessToken() || ''
+  const config = {
+    method,
+    headers: {
+      authorization: token,
+    },
+
+    body: JSON.stringify(obj),
   }
 
   return config

@@ -12,8 +12,7 @@ export async function POST(req: NextRequest) {
     const db = await openDB()
 
     // 0. 이메일로 유저 정보 찾기
-    const { '0': body } = await req.json()
-    const { email, password } = body
+    const { email, password } = await req.json()
 
     const schema = Joi.object({
       email: Joi.string().email({
@@ -33,8 +32,8 @@ export async function POST(req: NextRequest) {
     if (validResults.error?.name === 'ValidationError') {
       return NextResponse.json({
         ...HTTP_CODE.BAD_REQUEST,
-        meg: validResults.error.message,
-      })
+        meg: "잘못된 요청입니다. 가입한 이메일과 패스워드 형식을 확인하세요.",
+      }, { status: 400, statusText: "Bad request" })
     }
 
     const query = `
@@ -50,7 +49,7 @@ export async function POST(req: NextRequest) {
         ...HTTP_CODE.NOT_FOUND,
         meg: '등록한 정보가 존재하지 않습니다. 회원가입 후 다시시도 해주세요.',
 
-      })
+      }, { status: 404, statusText: 'Not Found' })
 
     // 1-2. 데이터베이스에서 가져온 데이터 저장
 
@@ -68,7 +67,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({
         ...HTTP_CODE.BAD_REQUEST,
         meg: '비밀번호가 일치하지 않습니다.',
-      })
+      }, { status: 400, statusText: "Bad request" })
 
     // 3. 토큰 발급
     const accessToken = createToken({ userEmail, userId }, true)
@@ -76,8 +75,20 @@ export async function POST(req: NextRequest) {
 
     const exp = tokenExpCalculator(accessToken, true)
 
-    // 4. 리프레쉬 토큰 쿠키 저장
+
+
+    const response = NextResponse.json({
+      ...HTTP_CODE.CREATED,
+      email: userEmail,
+      profile: { image: profile_image, nickname: nickname || '익명의 명인' },
+      exp,
+      accessToken,
+    })
+
+    // 4. 토큰 저장
     const cookie = await cookies()
+    
+    response.headers.set('Authorization', 'Bearer ' + accessToken)
     cookie.set({
       name: 'refreshToken', // 쿠키 이름
       value: 'Bearer ' + refreshToken, // 쿠키에 저장할 값
@@ -86,13 +97,8 @@ export async function POST(req: NextRequest) {
       path: '/', // 쿠키에 접근할 수 있는 사이트 경로
     })
 
-    return NextResponse.json({
-      ...HTTP_CODE.CREATED,
-      email: userEmail,
-      profile: { image: profile_image, nickname: nickname || '익명의 명인' },
-      exp,
-      accessToken,
-    })
+
+    return response
 
     // 5. 그 외 에러 처리
   } catch (error) {

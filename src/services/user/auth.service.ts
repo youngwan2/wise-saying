@@ -1,9 +1,9 @@
 
-import { Method, defaultConfig, getDefaultConfig } from '@/configs/config.api'
+import { Method, defaultConfig, fetchConfig, getDefaultConfig } from '@/configs/config.api'
 import apiRoute from '@/configs/config.api-route'
 import { ConsentsType } from '@/types/consent.types'
 import { defaultFetch } from '@/utils/fetcher'
-import { setAccessToken, setLoginExp, setUserInfo } from '@/utils/session-storage'
+
 import { toast } from 'react-toastify'
 
 
@@ -16,29 +16,21 @@ interface UserType {
     email: string
     password: string
 }
-export const reqLogin = async ({ ...userInfo }: UserType) => {
-    const { email: reqEmail, password: reqPassword } = userInfo
-    if (!(reqEmail && reqPassword)) return false
-
-    const user = userInfo
+export const reqLogin = async (userInfo: UserType) => {
+    const { email: reqEmail, password } = userInfo
+    if (!(reqEmail && password)) return false
 
     const url = apiRoute.AUTH.LOGIN();
-    const config = defaultConfig(Method.POST, user)
-    const { meg, success, accessToken, exp, email, profile } = await defaultFetch(
-        url,
-        config,
-    )
+    const config = fetchConfig(Method.POST, userInfo)
+    const response = await fetch(url, config);
+    const { meg, success, exp, email, profile } = await response.json();
+    const accessToken = response.headers.get('authorization')||'';
+
 
     if (success) {
-        setUserInfo({ profile, dbEmail: email })
-        setAccessToken(accessToken)
-        setLoginExp(exp)
-
-        toast.success(`${email}님 환영합니다!. 잠시 후 Home 화면으로 이동합니다.`)
-
-        return true
+        return { meg, success, accessToken, exp, email, profile }
     }
-    if (!success) { toast.error(meg); return false }
+    if (!success) { toast.error(meg); return }
 }
 
 interface SignInUserType {
@@ -141,8 +133,8 @@ export async function existsEmail(email: string) {
     const url = apiRoute.AUTH.EMAIL_CHECK()
     try {
         const response = await fetch(url, {
-            method:"POST",
-            body: JSON.stringify({email})
+            method: "POST",
+            body: JSON.stringify({ email })
         })
 
         const { success, meg } = await response.json();
@@ -155,23 +147,23 @@ export async function existsEmail(email: string) {
 }
 
 
-  /** POST | 이메일 본인인증 */
-  export async function requestEmailAuth(body :{email:string, value:string}) {
+/** POST | 이메일 본인인증 */
+export async function requestEmailAuth(body: { email: string, value: string }) {
 
     const url = apiRoute.AUTH.AUTH_EMAIL()
     const config = {
         method: 'POST',
         body: JSON.stringify(body),
     }
-    
-    try {
-    const response = await fetch(url, config)
-    const { success, meg } = await response.json();
-    return { success, meg }
 
-    } catch(error){
+    try {
+        const response = await fetch(url, config)
+        const { success, meg } = await response.json();
+        return { success, meg }
+
+    } catch (error) {
         console.error('이메일 본인인증 실패:', error)
         return { success: false, meg: "이메일 본인인증 실패" }
-    }    
-  }
+    }
+}
 
