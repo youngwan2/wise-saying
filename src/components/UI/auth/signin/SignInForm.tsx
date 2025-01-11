@@ -16,10 +16,8 @@ import { onSubmit } from '@/utils/common-func'
 
 import toast from 'react-hot-toast'
 
-import { ConsentsType } from '@/types/consent.types'
-import { Method, defaultConfig } from '@/configs/config.api'
-import { defaultFetch } from '@/utils/fetcher'
-import { reqSignIn } from '@/services/user/auth.service'
+import { reqSignIn, requestEmailAuth } from '@/services/user/auth.service'
+import { checkTransmissionAvailability, consentCheck } from '@/services/user/utils/auth.util'
 
 // todo:  추후 action 으로 대체하여 불필요한 리렌더링을 촉발하는 state 를 최대한 줄여야 함.
 export default function SignInForm() {
@@ -31,7 +29,7 @@ export default function SignInForm() {
   const [isEmail, setIsEmail] = useState(false)
   const [isPassword, setIsPassword] = useState(false)
   const [isReconfirmPassword, setIsReconfirmPassword] = useState(false)
-  const [isSuccess, setisSuccess] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false)
   const [consents, setConsents] = useState({
     all: false,
     term: false,
@@ -53,15 +51,6 @@ export default function SignInForm() {
 
   const isVaildForm = isEmail && isPassword && isReconfirmPassword
 
-
-  // 회원가입 요청 가능 유무 체크
-  function checkTransmissionAvailability(isVaildForm: boolean, existsEmail: boolean, isAuthEmail: boolean) {
-    const isPass = isVaildForm && existsEmail && isAuthEmail
-    return isPass
-  }
-
-
-
   // onClick | 회원가입 요청
   async function onClickReqSingin() {
     const isAgreementConcent = consentCheck(consents)
@@ -72,7 +61,7 @@ export default function SignInForm() {
     if (isSuccess) {
       toast.success('승인되었습니다.')
       setExistsEmail(false)
-      setisSuccess(true)
+      setIsSuccess(true)
       pageSwitch('/login')
     } else {
       toast.error('회원가입에 실패하였습니다. 잠시 후 다시시도 해주세요. 동일한 문제가 계속 발생한다면, 하단 풋터의 구글폼으로 신고해주세요.')
@@ -94,13 +83,13 @@ export default function SignInForm() {
   // 이메일 본인인증(인증번호 확인 처리)
   async function reqEmailAuth(value: string | number) {
     if (value.toString().length !== 4) return toast.error('정확히 4자리를 입력해주세요.')
-    const url = '/api/auth/general-auth/auth-email'
-    const data = { email, value }
-    const config = defaultConfig(Method.POST, data)
-    const { success } = await defaultFetch(url, config)
-    if (!success) return toast.error('인증번호가 일치하지 않습니다.')
-    if (success) { toast.success('인증 되었습니다.'); return setIsAuthEmail(true) }
+    const { success, meg } = await requestEmailAuth({ email, value: `${value}` })
 
+    if (!success) return toast.error(meg)
+    if (success) {
+      toast.success(meg);
+      return setIsAuthEmail(true)
+    }
   }
 
 
@@ -133,11 +122,3 @@ export default function SignInForm() {
   )
 }
 
-// 필수 약관에 동의하였는지 체크
-function consentCheck(consents: ConsentsType) {
-  const { term, child, private: privateConsent } = consents
-
-  if (term && child && privateConsent) {
-    return true
-  } else { return false }
-}

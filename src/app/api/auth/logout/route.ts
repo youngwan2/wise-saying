@@ -12,7 +12,7 @@ export async function GET() {
       meg: '로그아웃 되었습니다. 이용해 주셔서 감사합니다.',
     })
   } catch (error) {
-    console.error('/api/auth/general-auth/clear-token', error)
+    console.error('/api/auth/clear-token', error)
     return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
   }
 }

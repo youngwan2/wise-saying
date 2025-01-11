@@ -3,6 +3,9 @@ import { openDB } from '@/utils/connect';
 import { NextRequest, NextResponse } from 'next/server';
 
 const LIMIT = 30
+
+
+/** GET | 명언 저자(인물) 카테고리 조회 */
 export async function GET(req: NextRequest) {
     const page = req.nextUrl.searchParams.get('page') || 0
     const db = await openDB()

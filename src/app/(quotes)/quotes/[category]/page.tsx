@@ -2,7 +2,7 @@ export const dynamic = 'force-dynamic'
 
 import QuoteCategoryContainer from '@/components/UI/quote/container/QuoteCategoryContainer'
 
-import { getQuoteMetadata } from '@/services/quotes/metadata'
+import { getQuoteMetadata } from '@/services/quotes/page-state.service.'
 import { Target } from '@/types/metadata.types'
 import type { Metadata } from 'next'
 

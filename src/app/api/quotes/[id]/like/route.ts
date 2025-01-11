@@ -18,7 +18,7 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
     const result = await db.query(selectQuery, [quoteId])
     const likeCount = result.rows[0].count
     return NextResponse.json({
-      ...HTTP_CODE.CREATED,
+      ...HTTP_CODE.OK,
       meg: '정상적으로 처리되었습니다.',
       likeCount,
       quoteId,
@@ -45,7 +45,7 @@ const insertQuery = `INSERT INTO quote_likes(user_id, quote_id) VALUES ($1, $2)`
 const likeCountSelectQuery = `SELECT COUNT(*) as count FROM quote_likes  WHERE quote_id = $1 `
 
 // POST | 좋아요 증가
-export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const db = await openDB()
     const quoteId = (await params).id

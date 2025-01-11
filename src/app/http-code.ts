@@ -49,6 +49,16 @@ export const HTTP_CODE= {
         success: false,
         status: 404
     },
+    'CONFLICT': {
+        meg: '이미 존재하는 데이터 입니다.',
+        success: false,
+        status: 409
+    },
+    'GONE': {
+        meg: '인증 시간이 만료 되었습니다.',
+        success: false,
+        status: 410
+    },
     'INTERNAL_SERVER_ERROR': {
         meg: '서버에서 알 수 없는 문제가 발생하였습니다. 나중에 다시시도 해주세요.',
         success: false,
