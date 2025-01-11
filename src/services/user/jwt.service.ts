@@ -36,18 +36,18 @@ export const requestNewAccessToken = async () => {
   const config = { method: 'POST' }
 
   try {
-    const respone = await fetch('/api/auth/general-auth/access', config)
-    const { status, accessToken, exp} = await respone.json()
+    const response = await fetch('/api/auth/access', config)
+    const { status, exp} = await response.json()
+
+    const accessToken = response.headers.get("authorization")
 
     if (status === 201) {
-      setAccessToken(accessToken)
-      setLoginExp(exp)
-      return {exp:exp||0, isSuccess:true}
+      return {exp, accessToken}
     } else {
       throw new Error("토큰 갱신 실패")
     }
   } catch (error) {
     console.error('accessToken 발급 실패: ', error)
-    return {exp:0, isSuccess:false}
+    return {exp:0, accessToken:null}
   }
 }

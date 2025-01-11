@@ -12,7 +12,8 @@ import BookmarkList from './BookmarkList'
 import { toast } from 'react-toastify'
 import { HiBookmarkSquare } from 'react-icons/hi2'
 import { useBookmarkStore, useBookmarkUpdate } from '@/store/bookmarkStore'
-import { deleteBookmark, getBookmarkListFetcher } from '@/services/bookmark/bookmark.service'
+import { deleteBookmark } from '@/services/bookmark/bookmark.service'
+import { useFetchBookmarkQuery } from '@/custom/swr/useFetchBookmark'
 
 
 export interface BookmarkListType {
@@ -23,6 +24,7 @@ export interface BookmarkListType {
 }
 
 const MIN_BOOKLIST_COUNT = 1
+const DEFAULT_LIMIT = 5
 export default function BookmarkModal() {
   const [page, setPage] = useState(0)
   const isUpdate = useBookmarkUpdate((state) => state.isUpdate)
@@ -34,23 +36,7 @@ export default function BookmarkModal() {
   const hasToken = useHasToken()
 
   // SWR | 북마크 리스트 조회
-  const {
-    data: bookmarkInfo,
-    isLoading,
-    mutate,
-  } = useSWR(
-    hasToken ? `/api/bookmark?page=${page}&limit=5` : null,
-    getBookmarkListFetcher,
-    {
-      refreshInterval: 300000,
-      revalidateOnMount: true,
-      revalidateIfStale: false,
-      revalidateOnFocus: true,
-      onErrorRetry: ({ retryCount }) => {
-        if (retryCount >= 3) return
-      },
-    },
-  )
+  const { data: bookmarkInfo, isLoading, mutate } = useFetchBookmarkQuery(page, DEFAULT_LIMIT)
 
   const hasData = !!bookmarkInfo
   const total = bookmarkInfo?.totalCount || 0
@@ -63,7 +49,7 @@ export default function BookmarkModal() {
     const isUserQuote = type === undefined ? true : false
     if (!hasToken) return toast.error('로그인 후 이용해주세요.')
     setIsDeleting(true)
-  
+
     const success = await deleteBookmark(bookmarkId, isUserQuote)
     if (success) {
       setIsDeleting(false)
@@ -71,7 +57,7 @@ export default function BookmarkModal() {
     }
   }
 
-  const onClickPageSwitch=(page:number)=>{
+  const onClickPageSwitch = (page: number) => {
     setPage(page)
     mutate()
 

@@ -13,7 +13,7 @@ import { HiOutlineBookmark, HiScissors, HiXMark } from 'react-icons/hi2'
 
 import { pageSwitch, quotesSelector } from '@/utils/common-func'
 import { QuoteType } from '@/types/quote.types'
-import { addBookmarkItem } from '@/services/bookmark/bookmark.service'
+import { addBookmark } from '@/services/bookmark/bookmark.service'
 
 
 
@@ -43,7 +43,7 @@ export default function QuotesCardControlButtons({ item, index, isUserQuote }: P
     const { quote_id } = item
     const type = isUserQuote ? `?type=user` : `?type=no-user`
     const url = `/quotes/authors/${item.author}/${quote_id}` + type
-    const isSuccess = await addBookmarkItem(quote_id, url)
+    const isSuccess = await addBookmark(quote_id, url)
     isSuccess && setIsUpdate(true)
   }
 
