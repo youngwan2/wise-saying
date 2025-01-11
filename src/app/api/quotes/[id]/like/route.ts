@@ -50,9 +50,9 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     const db = await openDB()
     const quoteId = (await params).id
 
-    // 일반 로그인
     const { user, ...HTTP } = tokenVerify(req, true) as any
-    if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
+    if ([400].includes(HTTP.status)) return NextResponse.json(HTTP,{status:400, statusText:'Bad Request'})
+    if ([401].includes(HTTP.status)) return NextResponse.json(HTTP,{status:401, statusText:"Unauthorized"})
 
 
     const { sub: userId, email: jwtEmail } = user
@@ -67,7 +67,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
 
       return NextResponse.json({
         ...HTTP_CODE.CREATED,
-        meg: '평가를 취소하였습니다.',
+        meg: '좋아요 취소.',
         likeCount,
         quoteId,
       })
@@ -79,7 +79,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
 
     return NextResponse.json({
       ...HTTP_CODE.CREATED,
-      meg: '평가를 반영 하였습니다.',
+      meg: '좋아요 추가 완료',
       likeCount,
       quoteId,
     })

@@ -12,7 +12,7 @@ import { HiOutlineBookmark, HiScissors } from 'react-icons/hi2'
 
 import { pageSwitch, quotesSelector } from '@/utils/common-func'
 import { toast } from 'react-toastify'
-import { addBookmarkItem } from '@/services/bookmark/bookmark.service'
+import { addBookmark } from '@/services/bookmark/bookmark.service'
 
 
 
@@ -43,7 +43,7 @@ export default function DetailPageControlButtons({ item, isUserQuote }: PropsTyp
     const { quote_id: quoteId } = item
 
     const type = isUserQuote ? '?type=user' : '?type=no-user'
-    const isSuccess = await addBookmarkItem(
+    const isSuccess = await addBookmark(
       quoteId,
       `/quotes/authors/${item.author}/${quoteId}` + type,
     )

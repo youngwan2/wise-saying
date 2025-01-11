@@ -60,7 +60,7 @@ async function dbQueryModule(db: Pool, email: string = '', pageInfo: { limit: nu
   const total2 = countResults2.rows[0].count || 0
   const sumTotal = Number(total1) + Number(total2)
 
-  return [concatBookmarks||[], sumTotal||0]
+  return [concatBookmarks || [], sumTotal || 0]
 }
 
 
@@ -76,10 +76,12 @@ export async function GET(req: NextRequest) {
     const db = await openDB()
 
     const { user, ...HTTP } = tokenVerify(req, true) as any
-    if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
+    if ([400].includes(HTTP.status)) return NextResponse.json(HTTP)
+    if ([401].includes(HTTP.status)) return NextResponse.json(HTTP, { status: 401, statusText: "Unauthorized" })
 
     const jwtEmail = user.email
     const [concatBookmarks, sumTotal] = await dbQueryModule(db, jwtEmail as string, { limit, pageNum, limitNum }) || [null, null]
+
 
     // 존재하는 경우
     return NextResponse.json({
@@ -98,34 +100,31 @@ export async function GET(req: NextRequest) {
 
 // POST | 북마크 추가 처리
 export async function POST(req: NextRequest) {
-  const { '0': body } = await req.json()
-  const { quoteId, url } = body || { quoteId: null, url: '' }
 
+  const { quoteId, url } = await req.json()
   const type = url.split('?')[1].split('=')[1]
 
 
+  // 북마크 조회 쿼리
   const selectQuery = type === 'no-user' ? `
-  SELECT A.user_id AS user_id, A.quote_id AS quote_id, B.email AS email 
-  FROM bookmarks A 
-  JOIN users B ON A.user_id = B.user_id
-  WHERE email = $1 AND quote_id = $2
-  ` : `
+    SELECT A.user_id AS user_id, A.quote_id AS quote_id, B.email AS email 
+    FROM bookmarks A JOIN users B 
+    ON A.user_id = B.user_id 
+    WHERE email = $1 AND quote_id = $2
+    `
+    :
+    `
+    SELECT A.user_id AS user_id, A.user_quote_id AS quote_id, B.email AS email 
+    FROM user_bookmarks A
+    JOIN users B 
+    ON A.user_id = B.user_id 
+    WHERE email = $1 AND A.user_quote_id = $2
+    `
 
-  SELECT A.user_id AS user_id, A.user_quote_id AS quote_id, B.email AS email
-  FROM user_bookmarks A
-  JOIN users B ON A.user_id = B.user_id
-  WHERE email = $1 AND A.user_quote_id = $2
-
-`
-
-  const insertQuery = type === 'no-user' ? `
-  INSERT INTO bookmarks(user_id, quote_id , quote_url)
-  VALUES ($1, $2, $3)
-  ` : `
-
-  INSERT INTO user_bookmarks(user_id, user_quote_id, quote_url)
-  VALUES ($1, $2, $3)
-  `
+  // 북마크 추가 쿼리
+  const insertQuery = type === 'no-user'
+    ? `INSERT INTO bookmarks(user_id, quote_id , quote_url)  VALUES ($1, $2, $3)`
+    : `INSERT INTO user_bookmarks(user_id, user_quote_id, quote_url)  VALUES ($1, $2, $3) `
 
 
 
@@ -134,7 +133,8 @@ export async function POST(req: NextRequest) {
 
     // 토큰 유효성 검증
     const { user, ...HTTP } = tokenVerify(req, true) as any
-    if ([400, 401].includes(HTTP.status)) return NextResponse.json({ ...HTTP, meg: '로그인  후 이용 가능합니다.' })
+    if ([400].includes(HTTP.status)) return NextResponse.json(HTTP)
+    if ([401].includes(HTTP.status)) return NextResponse.json(HTTP, { status: 401, statusText: "Unauthorized" })
 
     const jwtEmail = user.email
     const userId = user.sub
@@ -145,9 +145,9 @@ export async function POST(req: NextRequest) {
 
     if (isExistingItem) {
       return NextResponse.json({
-        ...HTTP_CODE.BAD_REQUEST,
+        ...HTTP_CODE.CONFLICT,
         meg: '이미 북마크 목록에 추가된 카드입니다.',
-      })
+      }, { status: 409, statusText: "Conflict" })
     }
 
     // (북마크 목록에 없는 경우) 북마크 목록에 추가하기
@@ -156,7 +156,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       ...HTTP_CODE.CREATED,
       meg: '북마크에 추가되었습니다.',
-    })
+    },{status:201, statusText: "Created"})
+
   } catch (error) {
     console.error('/api/bookmark/route.ts', error)
     return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)

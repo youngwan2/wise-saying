@@ -73,3 +73,17 @@ export const fetchConfig = (method: Method, obj:Record<string, any>) => {
 
   return config
 }
+
+
+/** body 없는 페치 요청 */
+export const fetchConfigNoBody = (method: Method) => {
+  const token = getAccessToken() || ''
+  const config = {
+    method,
+    headers: {
+      authorization: token,
+    },
+  }
+
+  return config
+}

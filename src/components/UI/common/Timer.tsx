@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react'
 
-import { getLoginExp } from '@/utils/session-storage'
+import { getLoginExp, setAccessToken, setLoginExp } from '@/utils/session-storage'
 
 import { HiRefresh } from 'react-icons/hi'
 import { HiClock } from 'react-icons/hi2'
@@ -32,13 +32,12 @@ export default function Timer() {
   /** 토큰 갱신 */
   async function updateToken(isExpire: boolean) {
     if (isExpire) {
-      try {
-        const { isSuccess } = await requestNewAccessToken()
-        if (isSuccess) setIsExpire(false)
-        else console.error("토큰 갱신 실패")
-      } catch (error) {
-        console.error("토큰 갱신 중 오류 발생", error)
-      }
+      const { accessToken, exp } = await requestNewAccessToken()
+      if (accessToken) {
+        setAccessToken(accessToken)
+        setLoginExp(exp)
+        setIsExpire(false)
+      } else { console.error("토큰 갱신 실패") }
     }
   }
 
@@ -61,7 +60,7 @@ export default function Timer() {
     return () => {
       clearInterval(timeId)
     }
-  }, [checkTokenExp])
+  }, [checkTokenExp, isExpire])
 
   return (
     <article className="fixed flex items-start flex-col justify-start right-[2em] top-[3em] text-white bg-[#00000039] rounded-[10px] p-[8px] font-sans text-[0.95em]">

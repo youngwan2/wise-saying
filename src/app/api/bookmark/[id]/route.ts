@@ -26,16 +26,17 @@ export async function DELETE(  req: NextRequest,  { params }: { params: Promise<
   const db = await openDB()
   try {
 
-    // 일반 로그인 | 토큰 유효성 검증
+    // 토큰 유효성 검증
     const { user, ...HTTP } = tokenVerify(req, true) as any
-    if ([400, 401].includes(HTTP.status)) return NextResponse.json(HTTP)
+    if ([400].includes(HTTP.status)) return NextResponse.json(HTTP)
+    if ([401].includes(HTTP.status)) return NextResponse.json(HTTP, { status: 401, statusText: "Unauthorized" })
 
     // 검증 통과 후 처리
     const { email: dbEmail } = user
 
     await db.query(selectedQuery, [quoteId, dbEmail])
     db.end()
-    return NextResponse.json(HTTP_CODE.NO_CONTENT)
+    return NextResponse.json(HTTP_CODE.OK)
 
   } catch (error) {
     console.error('/api/bookmark/[id]/route.ts', error)

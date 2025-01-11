@@ -14,17 +14,28 @@ const apiRoute = {
         BASE_URL: "auth",
         LOGIN: () => apiRoute.BASE_URL + apiRoute.AUTH.BASE_URL + "/login",
         REGISTER: () => apiRoute.BASE_URL + apiRoute.AUTH.BASE_URL + "/register",
-        LOGOUT:()=> apiRoute.BASE_URL + apiRoute.AUTH.BASE_URL + "/logout",
-        EMAIL_CHECK:() => apiRoute.BASE_URL + apiRoute.AUTH.BASE_URL+"/check-email",
-        AUTH_EMAIL:() => apiRoute.BASE_URL + apiRoute.AUTH.BASE_URL+"/auth-email",
+        LOGOUT: () => apiRoute.BASE_URL + apiRoute.AUTH.BASE_URL + "/logout",
+        EMAIL_CHECK: () => apiRoute.BASE_URL + apiRoute.AUTH.BASE_URL + "/check-email",
+        AUTH_EMAIL: () => apiRoute.BASE_URL + apiRoute.AUTH.BASE_URL + "/auth-email",
         PASSWORD_RESET: () => apiRoute.BASE_URL + apiRoute.AUTH.BASE_URL + "/forgot-password",
         PASSWORD_CHANGE: () => apiRoute.BASE_URL + apiRoute.AUTH.BASE_URL + "/reset-password",
+        REFRESH_ACCESS_TOKEN: ()=> apiRoute.BASE_URL + apiRoute.AUTH.BASE_URL + "/auth/access-token",
 
     },
     NOTICE: {
         NOTICE_LIST: () => apiRoute.BASE_URL + "notices",
         NOTICE_DETAIL: () => apiRoute.BASE_URL + "notices",
-    }
+    },
+    BOOKMARK: {
+        BASE_URL: "bookmark",
+        BOOKMARK_LIST: ({ page, limit = 5 }: { page: number, limit: number }) => apiRoute.BASE_URL + apiRoute.BOOKMARK.BASE_URL + "?page=" + page + "&limit=" + limit,
+        BOOKMARK_CREATE: () => apiRoute.BASE_URL + apiRoute.BOOKMARK.BASE_URL,
+        BOOKMARK_DELETE: (id: number, type: "user" | "no-user") => apiRoute.BASE_URL + apiRoute.BOOKMARK.BASE_URL + "/" + id + "?type=" + type,
+        
+        
+
+    },
+
 
 } as const
 

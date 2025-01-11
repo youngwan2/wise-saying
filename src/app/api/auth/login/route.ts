@@ -82,7 +82,6 @@ export async function POST(req: NextRequest) {
       email: userEmail,
       profile: { image: profile_image, nickname: nickname || '익명의 명인' },
       exp,
-      accessToken,
     })
 
     // 4. 토큰 저장
