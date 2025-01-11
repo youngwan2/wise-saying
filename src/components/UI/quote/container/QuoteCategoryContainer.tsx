@@ -21,8 +21,15 @@ interface PropsType {
 }
 export default function QuotesCategoryContainer({ category, metadata }: PropsType) {
 
-  const topic = categoryClassifier(category) // 메인 카테고리 분류(저자, 주제, 직업)
-  const mainPath = topic === '주제별' ? 'topics' : 'authors'
+  const selectedCategoryName = categoryClassifier(category) // 메인 카테고리 분류(저자, 주제, 직업)
+  const selectedCategoryEnName =
+    selectedCategoryName === '주제별'
+      ? 'topics'
+      : selectedCategoryName === '인물별'
+        ? 'authors'
+        : selectedCategoryName === '직업별'
+          ? 'jobs'
+          : 'users'
 
   //SWR INFINITE | 저자 목록을 가져온다.
   const {
@@ -33,13 +40,13 @@ export default function QuotesCategoryContainer({ category, metadata }: PropsTyp
     itemCount: currentCount,
     isLoading,
     error,
-  } = useInfiniteScroll({ mainPath, type: 'category' })
+  } = useInfiniteScroll({ mainPath: selectedCategoryEnName, type: 'category' })
 
   if (error) return <ErrorMessage />
   if (isLoading || !items) return <ReplaceMessageCard>데이터를 불러오는 중입니다...</ReplaceMessageCard>
   return (
     <>
-      <Title title={`${topic} 카테고리`} current={currentCount} total={metadata.totalCount} />
+      <Title title={`${selectedCategoryName} 카테고리`} current={currentCount} total={metadata.totalCount} />
       <QuoteCategoryList items={items} />
       <LoadMoreButton
         onClick={() => setSize(size + 1)}

@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation'
 import useHasToken from '@/custom/useHasToken'
 
 import ReplaceMessageCard from '../../common/card/ReplaceMessageCard'
+import { logoutUser } from '@/services/user/auth.service'
 
-import { logoutUser } from '@/utils/common-func'
 
 export default function LogoutGuideModal() {
   const { push } = useRouter()

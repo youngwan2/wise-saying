@@ -39,26 +39,7 @@ export function quotesSelector(item: QuoteType) {
   localStorage.setItem('selectedItem', JSON.stringify(item))
 }
 
-/** 로그아웃 */
-export const logoutUser = async () => {
-  const url = '/api/auth/general-auth/clear-token'
-  const config = getDefaultConfig(Method.GET, false)
-  try {
-    const respone = await fetch(url, config)
-    const { success, meg } = await respone.json()
 
-    if (success) {
-      toast.success(meg)
-      sessionStorage.clear()
-      setTimeout(() => {
-        window.location.reload()
-      }, 1000)
-    }
-    if (!success) toast.error(meg)
-  } catch (error) {
-    console.error('로그아웃 요청 실패:', error)
-  }
-}
 
 // submit 브라우저 이벤트 방지
 export const onSubmit = (e: FormEvent) => {
@@ -149,4 +130,11 @@ export function hoverAnimationMobile(e:any) {
   target.style.setProperty("--mouse-x",`${x}px`)
   target.style.setProperty("--mouse-y",`${y}px`)
 
+}
+
+
+/** 1000~9999 랜덤 번호 생성 */
+export function getRandomAuthNum() {
+  const authNum = Math.floor((Math.random() * 9000)) + 1000;
+  return authNum
 }

@@ -1,10 +1,10 @@
 import { deleteNoticeAction } from "@/actions/notice/delete-notice.action"
 import { updateNoticeAction } from "@/actions/notice/update-notice.action"
 
-import { type DefaultNotice } from "@/app/(notice)/_types/notice.types"
 import { type OutputData } from "@editorjs/editorjs"
 
 import { getFetcher } from "@/utils/fetcher"
+import { DefaultNotice } from "@/app/(notice)/_types/notice.types"
 
 
 

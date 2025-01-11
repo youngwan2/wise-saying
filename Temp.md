@@ -9,3 +9,6 @@
 #### headers(), cookies() 메서드 Promise 처리로 바뀜
 - await headers(), await cookies() 
 
+
+
+### 이메일 중복 확인 부분 api 문서화 해야 함(2025.01.06)

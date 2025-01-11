@@ -1,10 +1,11 @@
 import useSWRInfinite from 'swr/infinite'
 import { getInfiniteFetcher } from '@/utils/fetcher'
+import apiRoute from '@/configs/config.api-route';
 
 
 
 interface PropsType {
-  mainPath?: 'users'| 'topics'|'authors',
+  mainPath: 'users'| 'topics'|'authors' | 'jobs' | null,
   subPath?: string,
   type?: 'category' | 'quote'
 }
@@ -13,8 +14,9 @@ interface PropsType {
   const getKey = (pageIndex: number, previousPageData: any) => {
     if (previousPageData && !previousPageData.length) return null; // 끝에 도달
 
-    const baseUrl = `/api/quotes/${mainPath}`;
-    const pathSuffix = type === 'quote' ? `/category/${subPath}` : `/category`;
+    const baseUrl =  apiRoute.BASE_URL+`quotes/${mainPath}`;
+    // 카테고리(category) 조회 vs 명언(quote) 조회
+    const pathSuffix = type === 'quote' ? `/category/${subPath}` : `/`;
 
     return `${baseUrl}${pathSuffix}?page=${pageIndex}`;
   }
