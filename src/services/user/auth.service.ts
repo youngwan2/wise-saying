@@ -59,52 +59,6 @@ export async function reqSignIn({ ...userInfo }: SignInUserType, consents: Conse
 
 
 
-/**
- * PATCH | 유저 비밀번호 수정 요청
- * @param password
- * @param userId
- * @returns
- */
-export async function updateUserPassword(password: string, userId: number) {
-    const url = `/api/users/${userId}`
-    const config = defaultConfig(Method.PATCH, password)
-    try {
-        const response = await fetch(url, config);
-        const { success, meg } = await response.json()
-
-        if (success) {
-            toast.success('변경되었습니다. 보안을 위해 다시 로그인 해주세요')
-            logoutUser()
-        }
-        if (!success) toast.error(meg)
-    } catch (error) {
-        console.error('/api/users/:userId/update-password', error)
-        toast.error('비밀번호 변경에 실패하였습니다.')
-    }
-}
-
-
-/**
-* DELETE | 회원탈퇴
-* @param userId
-* @returns
-*/
-export async function deleteUserInfo(userId: number) {
-    if (!userId) return alert('접근 권한이 없습니다.')
-    const isDelete = prompt(
-        '정말로 회원탈퇴를 시도하시려면, "회원탈퇴" 라고 입력해주세요. ',
-    )
-    if (isDelete === null) return toast('👏 취소 되었습니다.')
-    if (isDelete !== '회원탈퇴')
-        return toast.error('틀렸습니다. 정확하게 입력해주세요.')
-
-    const url = `/api/users/${userId}`
-    const config = defaultConfig(Method.DELETE)
-    const { success, meg } = await defaultFetch(url, config)
-    if (success) return logoutUser()
-    if (!success) return toast.error(meg)
-}
-
 
 /** 로그아웃 */
 export async function logoutUser() {

@@ -2,6 +2,8 @@ import { toast } from "react-toastify"
 import { config } from "@/configs/config.url"
 import useSWR from "swr"
 import { getPopularityQuote } from "@/services/quotes/quotes.service"
+import apiRoute from "@/configs/config.api-route"
+import { getUserQuotesOfMypage } from "@/services/user/mypage.service"
 
 
 
@@ -15,4 +17,19 @@ export const useFetchPopularityQuoteQuery = () => {
         },
     })
     return { data, isLoading, error, mutate }
+}
+
+
+
+/** 개별 유저 명언을 마이페이지에서 조회 */
+export const useFetchUserMypageQuotesQuery = (page: number) => {
+    const url = apiRoute.USER.USER_MYPAGE_QUOTES(page);
+
+    return useSWR(url, getUserQuotesOfMypage, {
+        errorRetryCount: 2,
+        refreshInterval: 1000 * 60 * 5, // 5 분 간격 리프레쉬
+        onError: (error) => {
+            toast.error('데이터 가져오기 실패:', error.message)
+        },
+    });
 }
