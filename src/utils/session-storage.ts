@@ -81,10 +81,7 @@ export const getLoginExp = () => {
  */
 
 export const setAccessToken = (token: string) => {
-  const isToken = JWT_TOKEN_REGEX.test(token)
-  if (isToken) {
     sessionStorage.setItem('token', token)
-  }
 }
 
 /**
