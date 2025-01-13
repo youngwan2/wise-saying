@@ -19,7 +19,7 @@ const apiRoute = {
         AUTH_EMAIL: () => apiRoute.BASE_URL + apiRoute.AUTH.BASE_URL + "/auth-email",
         PASSWORD_RESET: () => apiRoute.BASE_URL + apiRoute.AUTH.BASE_URL + "/forgot-password",
         PASSWORD_CHANGE: () => apiRoute.BASE_URL + apiRoute.AUTH.BASE_URL + "/reset-password",
-        REFRESH_ACCESS_TOKEN: () => apiRoute.BASE_URL + apiRoute.AUTH.BASE_URL + "/auth/access-token",
+        REFRESH_ACCESS_TOKEN: ()=> apiRoute.BASE_URL + apiRoute.AUTH.BASE_URL + "/auth/access-token",
 
     },
     NOTICE: {
@@ -31,6 +31,7 @@ const apiRoute = {
         BOOKMARK_LIST: ({ page, limit = 5 }: { page: number, limit: number }) => apiRoute.BASE_URL + apiRoute.BOOKMARK.BASE_URL + "?page=" + page + "&limit=" + limit,
         BOOKMARK_CREATE: () => apiRoute.BASE_URL + apiRoute.BOOKMARK.BASE_URL,
         BOOKMARK_DELETE: (id: number, type: "user" | "no-user") => apiRoute.BASE_URL + apiRoute.BOOKMARK.BASE_URL + "/" + id + "?type=" + type,
+
     },
     USER: {
         BASE_URL: "users",
@@ -40,8 +41,6 @@ const apiRoute = {
         USER_PROFILE_READ: () => apiRoute.BASE_URL + apiRoute.USER.BASE_URL + "/profile",
         USER_MYPAGE_QUOTES: (page: number) => apiRoute.BASE_URL + apiRoute.USER.BASE_URL + "/posts?page=" + page
     }
-
-
 } as const
 
 
