@@ -5,9 +5,9 @@ import apiRoute from '@/configs/config.api-route';
 
 
 interface PropsType {
-  mainPath: 'users'| 'topics'|'authors' | 'jobs' | null,
+  mainPath: string
   subPath?: string,
-  type?: 'category' | 'quote'
+  type?: 'category' | 'quote' | 'user-category'
 }
 
 /** SWR | 버튼형 무한 스크롤 커스텀 훅 */export default function useInfiniteScroll({ mainPath, subPath, type }: PropsType) {

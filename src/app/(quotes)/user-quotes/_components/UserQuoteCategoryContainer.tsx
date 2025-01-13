@@ -26,7 +26,7 @@ export default function UserQuoteCategoryContainer({ metadata }: PropsType) {
         setSize,
         isLoading,
         error
-    } = useInfiniteScroll({ mainPath: 'users', type: 'category' })
+    } = useInfiniteScroll({ mainPath: 'users/category', type: 'category' })
 
     if (error)
         return <ErrorMessage />

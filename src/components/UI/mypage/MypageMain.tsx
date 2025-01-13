@@ -2,13 +2,13 @@
 
 import { useState } from 'react'
 import { useMypageTapsStore } from '@/store/store'
-import { useSwrFetchWithToken } from '@/utils/swr'
 import useHasToken from '@/custom/useHasToken'
 
 import MypageProfileForm from './form/MypageProfileForm'
 import MypageUserInfoForm from './form/MypageUserInfoForm'
 import ReplaceMessageCard from '../common/card/ReplaceMessageCard'
 import MypageMyQuote from './MypageMyQuote'
+import { useFetchUserProfileQuery } from '@/custom/swr/useFetchProfile'
 
 export default function MypageMain() {
   const tapId = useMypageTapsStore((state) => state.tapId)
@@ -18,10 +18,9 @@ export default function MypageMain() {
   const hasLogin = !hasToken
 
   // 유저 정보
-  const { data, isLoading } = useSwrFetchWithToken('/api/users/', true)
-  const { userInfo } = data || {}
+  const { data:userInfo, isLoading } = useFetchUserProfileQuery();
 
-  const isReuest = (hasToken) && tapId === 1
+  const isRequest = (hasToken) && tapId === 1
 
   if (hasLogin) return <ReplaceMessageCard isFull>로그인 후 이용 가능합니다.</ReplaceMessageCard>
   if (isLoading) return <ReplaceMessageCard>유저 정보를 불러오는 중입니다.</ReplaceMessageCard>
@@ -36,8 +35,7 @@ export default function MypageMain() {
         <MypageMyQuote
           setPage={setPage}
           page={page}
-          userInfo={userInfo}
-          isRequest={isReuest}
+          isRequest={isRequest}
 
         />
       )}

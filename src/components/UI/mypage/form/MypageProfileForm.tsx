@@ -12,7 +12,8 @@ import { imagePreviewReader } from '@/utils/imageloader'
 import { storage } from '@/configs/firebase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { v4 as uuidv4 } from 'uuid'
-import { updateUserInfo } from '@/services/user/profile.service'
+import { updateUserProfile } from '@/services/user/mypage.service'
+import { toast } from 'react-toastify'
 
 
 interface PropsType {
@@ -60,11 +61,18 @@ export default function MypageProfileForm({ userInfo }: PropsType) {
   }, [userInfo?.profile_image])
 
   // 프로필 업데이트
-  function profileUpdateAction(form: FormData) {
-    if (!hasToken) return 
+  async function profileUpdateAction(form: FormData) {
+    if (!hasToken) return
     const profileUrl = imageUrl
     const nickname = form.get('nickname') || ''
-    updateUserInfo(nickname, profileUrl)
+    const { success, meg } = await updateUserProfile(nickname, profileUrl)
+
+    if (success) {
+      toast.success(meg)
+    } else {
+      toast.error(meg)
+    }
+    // mutate() // state update
   }
 
   // 이미지 업로드

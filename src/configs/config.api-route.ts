@@ -4,8 +4,8 @@ const apiRoute = {
     BASE_URL: config.apiPrefix + config.apiHost + "/api/",
     QUOTES: {
         BASE_URL: "quotes",
-        QUOTES_TODAY: () => apiRoute.BASE_URL + apiRoute.QUOTES.BASE_URL + "/today",
-        QUOTES_POPLARS: () => apiRoute.BASE_URL + apiRoute.QUOTES.BASE_URL + "/poplars",
+        QUOTES_TODAY: (limit: number) => apiRoute.BASE_URL + apiRoute.QUOTES.BASE_URL + "/today?random-count=" + limit,
+        QUOTES_POPLARS: () => apiRoute.BASE_URL + apiRoute.QUOTES.BASE_URL + "/populars",
         QUOTES_DETAIL: () => apiRoute.BASE_URL + apiRoute.QUOTES.BASE_URL + "/",
         QUOTES_SEARCH: () => apiRoute.BASE_URL + apiRoute.QUOTES.BASE_URL + "/",
         QUOTES_CATEGORY: () => apiRoute.BASE_URL + apiRoute.QUOTES.BASE_URL + "/category",
@@ -31,12 +31,16 @@ const apiRoute = {
         BOOKMARK_LIST: ({ page, limit = 5 }: { page: number, limit: number }) => apiRoute.BASE_URL + apiRoute.BOOKMARK.BASE_URL + "?page=" + page + "&limit=" + limit,
         BOOKMARK_CREATE: () => apiRoute.BASE_URL + apiRoute.BOOKMARK.BASE_URL,
         BOOKMARK_DELETE: (id: number, type: "user" | "no-user") => apiRoute.BASE_URL + apiRoute.BOOKMARK.BASE_URL + "/" + id + "?type=" + type,
-        
-        
 
     },
-
-
+    USER: {
+        BASE_URL: "users",
+        USER_PASSWORD_UPDATE: () => apiRoute.BASE_URL + apiRoute.USER.BASE_URL,
+        USER_ACCOUNT_DELETE: () => apiRoute.BASE_URL + apiRoute.USER.BASE_URL,
+        USER_PROFILE_UPDATE: () => apiRoute.BASE_URL + apiRoute.USER.BASE_URL + "/profile",
+        USER_PROFILE_READ: () => apiRoute.BASE_URL + apiRoute.USER.BASE_URL + "/profile",
+        USER_MYPAGE_QUOTES: (page: number) => apiRoute.BASE_URL + apiRoute.USER.BASE_URL + "/posts?page=" + page
+    }
 } as const
 
 

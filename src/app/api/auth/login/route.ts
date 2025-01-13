@@ -75,8 +75,6 @@ export async function POST(req: NextRequest) {
 
     const exp = tokenExpCalculator(accessToken, true)
 
-
-
     const response = NextResponse.json({
       ...HTTP_CODE.CREATED,
       email: userEmail,

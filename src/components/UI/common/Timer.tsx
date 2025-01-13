@@ -23,7 +23,7 @@ export default function Timer() {
   /** 토큰 만료 시간 측정 */
   const checkTokenExp = useCallback((exp: number) => {
     const currentTime = Math.floor(Date.now() / 1000)
-    const expiredBuffer = exp - (currentTime - TOKEN_BUFFER_TIME_SEC)
+    const expiredBuffer = exp - (currentTime + TOKEN_BUFFER_TIME_SEC)
 
     setTimeScale(Math.max(0, expiredBuffer))
     if (expiredBuffer < 1) setIsExpire(true)
@@ -63,7 +63,7 @@ export default function Timer() {
   }, [checkTokenExp, isExpire])
 
   return (
-    <article className="fixed flex items-start flex-col justify-start right-[2em] top-[3em] text-white bg-[#00000039] rounded-[10px] p-[8px] font-sans text-[0.95em]">
+    <article className="fixed flex items-start flex-col justify-start right-[2em] top-[3.8em] text-white bg-[#00000039] rounded-[10px] p-[8px] font-sans text-[0.85em] z-[1000000000000000000000000000]">
       <div title={`재로그인 까지 ${timeScale}초`} className="flex items-center">
         <HiClock className="mr-[1.8px] mt-1" />
         {timeScale}

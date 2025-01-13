@@ -14,8 +14,9 @@ export const postQuoteAction = async (prevState: { message: string }, form: Form
     const category = form.get('category')?.valueOf().toString() || ''
     const content = form.get('content')?.valueOf().toString() || ''
     const author = form.get('author')?.valueOf().toString() || ''
-    const token = form.get('token')?.valueOf().toString() || ''
+    const rawtoken = form.get('token')?.valueOf().toString() || ''
     const scrept = process.env.JWT_SCREPT || ''
+    const token = rawtoken.split(' ')[1]
 
     // 유효성 검증
     if (!token) return { message: '유효한 접근 권한이 없습니다. 로그인 후 시도해주세요.' }

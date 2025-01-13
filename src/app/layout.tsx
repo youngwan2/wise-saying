@@ -10,6 +10,7 @@ import { ToastContainer } from 'react-toastify'
 
 import type { Metadata } from 'next'
 import localFont from "next/font/local";
+import { NextUIProviders } from '@/providers/NextUIProviders';
 
 
 export const metadata: Metadata = {
@@ -61,16 +62,20 @@ export default function RootLayout({
           })();`}
       </Script>
 
+
       <body suppressHydrationWarning>
         <Header />
         <TimerContainer />
         <main className="min-h-[100vh] w-full mx-auto max-w-[1700px] relative">
           <ToastContainer draggable draggablePercent={60} pauseOnFocusLoss={false} toastStyle={{ top: 50 }} />
           <Toaster containerStyle={{ height: 200, top: 50 }} />
-          {children}
+          <NextUIProviders>
+            {children}
+          </NextUIProviders>
         </main>
         <Footer />
       </body>
+
     </html>
   )
 }

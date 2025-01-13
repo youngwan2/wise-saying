@@ -1,5 +1,5 @@
 import ErrorMessage from '@/components/UI/message/ErrorMessage'
-import UserQuoteCategoryContainer from './_components/UserQuoteCategoryContainer'
+import UserQuoteCategoryContainer from '../_components/UserQuoteCategoryContainer'
 
 import { getQuoteMetadata } from '@/services/quotes/page-state.service.'
 import { Target } from '@/types/metadata.types'
