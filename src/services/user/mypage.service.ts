@@ -2,19 +2,17 @@ import { Method, fetchConfig, fetchConfigNoBody } from "@/configs/config.api"
 import apiRoute from "@/configs/config.api-route"
 
 
-
-
-
+/** GET |  유저 명언 조회 */
 export async function getUserQuotesOfMypage(url: string) {
     const config = fetchConfigNoBody(Method.GET)
     const response = await fetch(url, config)
-    const { results } = await response.json()
+    const data = await response.json()
 
-    return results
+    return data
 
 }
 
-/** 유저 프로필 조회 */
+/**  GET | 유저 프로필 조회 */
 export async function getUserProfile(url: string) {
     const config = fetchConfigNoBody(Method.GET)
     const response = await fetch(url, config);

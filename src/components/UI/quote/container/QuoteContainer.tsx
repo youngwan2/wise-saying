@@ -65,7 +65,7 @@ export default function QuoteContainer({ items }: PropsType) {
     }
   }
 
-  /** 명언 URL 생성 */
+  /** 유저 명언 구분 */
   const getQuoteUrl = (quoteId: number, author: string, isUser?: boolean) => {
     return isUser
       ? `/quotes/authors/${author}/${quoteId}`

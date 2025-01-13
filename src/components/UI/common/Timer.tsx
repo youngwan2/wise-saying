@@ -23,7 +23,7 @@ export default function Timer() {
   /** 토큰 만료 시간 측정 */
   const checkTokenExp = useCallback((exp: number) => {
     const currentTime = Math.floor(Date.now() / 1000)
-    const expiredBuffer = exp - (currentTime - TOKEN_BUFFER_TIME_SEC)
+    const expiredBuffer = exp - (currentTime + TOKEN_BUFFER_TIME_SEC)
 
     setTimeScale(Math.max(0, expiredBuffer))
     if (expiredBuffer < 1) setIsExpire(true)

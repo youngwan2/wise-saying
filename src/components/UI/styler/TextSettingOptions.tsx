@@ -17,7 +17,7 @@ export default function TextSettingOptions() {
     const [isShowOptions, setIsShowOptions] = useState(false)
 
     const setTextOptions = useQuotesTextOptions((state) => state.setTextOption)
-    const textOptions = useQuotesTextOptions((state) => { return { lineHeight: state.lineHeight, textPositionY: state.textPositionY, textPositionX: state.textPositionX, textLength: state.textLength } })
+    const textOptions = useQuotesTextOptions()
 
     /** 텍스트 설정 옵션   */
     function onTextOptionToggle() {

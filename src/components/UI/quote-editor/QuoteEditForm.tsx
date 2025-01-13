@@ -3,8 +3,7 @@
 import styles from './eidtor.module.css'
 
 import { useRouter } from 'next/navigation'
-import { useEffect, useRef } from 'react'
-import { useFormState } from 'react-dom'
+import { useActionState, useEffect, useRef } from 'react'
 import useDraggable from '@/custom/useDraggable'
 import useFormStateToaster from '@/custom/useFormStateToaster'
 import { useUserPostWithIdStore } from '@/store/userPostStore'
@@ -30,7 +29,7 @@ export default function QuoteEditForm() {
   const post = useUserPostWithIdStore().post
 
 
-  const [state, formAction] = useFormState(updateQuoteAction, { message: '', success: false })
+  const [state, formAction] = useActionState(updateQuoteAction, { message: '', success: false })
   useFormStateToaster(state)
   useDraggable(updateFormRef, 'free')
 
@@ -69,8 +68,8 @@ export default function QuoteEditForm() {
 function HiddenTextInput({ quoteId, token }: { quoteId: number, token: string }) {
   return (
     <>
-      <input type="text" className='hidden' name="postId" value={quoteId} />
-      <input type="text" className='hidden' name="token" value={token} />
+      <input type="text" className='hidden' name="postId" defaultValue={quoteId} />
+      <input type="text" className='hidden' name="token" defaultValue={token} />
     </>
   )
 

@@ -1,70 +1,27 @@
 import useTTS from "@/custom/useTTS"
-import { useGSAP } from "@gsap/react"
 
-import TodayQuoteCard from "../card/TodayQuoteCard"
 import ReplaceMessageCard from "../../common/card/ReplaceMessageCard"
 
-import gsap from "gsap/all"
 import { QuoteType } from "@/types/quote.types"
+import TodayQuotesSlide from "@/app/(home)/_components/slides/TodayQuotesSlide"
 
 
 interface PropsType {
     items: QuoteType[]
-    onClick:(quoteId:number, isUser:boolean)=>void
+    onAiComment: (quoteId: number, isUser: boolean) => void
 }
-export default function TodayQuoteList({ items=[], onClick }: PropsType) {
+export default function TodayQuoteList({ items = [], onAiComment }: PropsType) {
 
     const { setText } = useTTS()
 
-    // 텍스트 스플릿 애니메이션
-    function playSplitAnimation(textSplit: HTMLSpanElement[]) {
-        const tl = gsap.timeline()
-
-        textSplit.forEach((text, i) => {
-            tl.fromTo(text, {
-                x: () => {
-                    return 300
-                },
-                y: () => {
-                    return i % 2 ? -50 : 50
-                },
-                opacity: 0,
-                position: 'absolute',
-                ease: 'none',
- 
-            },{
-                opacity:1,
-                position: 'relative',
-
-            },'-=0.4')
-        })
-
-    }
-
     // 명언듣기 텍스트 설정
-    function onClickSetText(quote: string) {
+    function onTts(quote: string) {
         setText(quote)
     }
 
-    useGSAP(() => {
-        if (!items) return
-        const textSplit = gsap.utils.toArray('.today-quote') as HTMLSpanElement[] || []
-        playSplitAnimation(textSplit)
-    }, [items])
-
-    if(!items || items.length <  1) return <ReplaceMessageCard isFull={false}>TTS를 적용할 명언이 존재하지 않습니다.</ReplaceMessageCard>
+    if (!items || items.length < 1) return <ReplaceMessageCard isFull={false}>TTS를 적용할 명언이 존재하지 않습니다.</ReplaceMessageCard>
     return (
-        <ul className="overflow-hidden mx-[10px]">
-             {items.slice(0, 1).map((item) => {
-                return (
-                    <TodayQuoteCard
-                        key={item.quote_id}
-                        quoteInfo={item}
-                        onSetText={() => onClickSetText(item.quote)}
-                        onClickGetCommentationInfo={onClick}
-                    />
-                )
-            })}
-        </ul>
+        <TodayQuotesSlide slides={items} onAiComment={onAiComment} onTts={onTts} />
+
     )
 }

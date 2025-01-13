@@ -1,0 +1,111 @@
+.embla {
+  border: 1px solid rgba(240, 240, 240, 0.141);
+  position: relative;
+  border-radius: 10px;
+  max-width: 37rem;
+  padding: 0 5px 0 5px;
+  margin: 1rem auto;
+  overflow: hidden;
+  --slide-height: 17rem;
+  --slide-spacing: 1rem;
+  --slide-size: 90%;
+}
+
+.embla::before {
+  transition: 0.65s;
+  content: "";
+  position: absolute;
+  top: -5rem;
+  left: 0;
+  height: 500px;
+  width: 100px;
+  border-radius: 0px 0px 0px 10px;
+  transform: rotate(5deg) translate(-300px);
+  background-color: rgba(240, 240, 240, 0.141);
+}
+
+.embla::after {
+  transition: 0.85s;
+  content: "";
+  position: absolute;
+  top: -5rem;
+  left: 0;
+  height: 500px;
+  width: 150px;
+  border-radius: 0px 0px 0px 10px;
+  transform: rotate(5deg) translate(-1500px);
+  background-color: rgba(240, 240, 240, 0.141);
+}
+
+.embla:hover::before {
+  transform: rotate(5deg) translate(1000px);
+}
+
+.embla:hover::after {
+  transform: rotate(5deg) translate(1000px);
+}
+
+
+.embla__viewport {
+  overflow: hidden;
+}
+
+.embla__container {
+
+  display: flex;
+  touch-action: pan-y pinch-zoom;
+  margin-left: calc(var(--slide-spacing) * -1);
+}
+
+.embla__slide {
+  transform: translate3d(0, 0, 0);
+  flex: 0 0 var(--slide-size);
+  min-width: 0;
+  padding-left: var(--slide-spacing);
+}
+
+
+
+.embla__controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.2rem;
+  margin-top: 1.3rem;
+}
+
+.embla__buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.embla__button {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  touch-action: manipulation;
+  display: inline-flex;
+  text-decoration: none;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  width: 3.6rem;
+  height: 3.6rem;
+  z-index: 1;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.embla__button:disabled {
+  color:  rgba(240, 240, 240, 0.141);
+}
+
+.embla__button__svg {
+  width: 30%;
+  height: 30%;
+}

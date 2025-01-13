@@ -1,16 +1,14 @@
-import { Fragment, useCallback, useEffect, useState } from 'react'
-
+import { Fragment } from 'react'
 import MypageMyQuotesList from './list/MypageMyQuotesList'
-import Pagination from '../common/Pagination'
 import ReplaceMessageCard from '../common/card/ReplaceMessageCard'
 import ControlButton from '../common/button/ControlButton'
 import Container from '../common/container/Container'
+import { Pagination } from "@nextui-org/pagination";
 
 import { toast } from 'react-toastify'
 import { HiRefresh } from 'react-icons/hi'
 import { UserQuotesType } from '@/types/quote.types'
 import { useFetchUserMypageQuotesQuery } from '@/custom/swr/useFetchQuote'
-import { usePagination } from '@/custom/usePagination'
 
 interface PropsType {
   page: number
@@ -18,7 +16,7 @@ interface PropsType {
   isRequest: boolean
 }
 
-const maxSize = 5
+const perRecord = 5
 
 export default function MypageMyQuote({
   setPage,
@@ -27,24 +25,23 @@ export default function MypageMyQuote({
 }: PropsType) {
 
   // 유저 명언 목록
-  const { data, mutate } = useFetchUserMypageQuotesQuery(page)
+  const { data, mutate, isLoading } = useFetchUserMypageQuotesQuery(page, isRequest)
+
+  console.log(data, isRequest)
 
   const userQuotes: UserQuotesType[] = data?.quotes || []
-  const count = data?.count || []
+  const totalRecord = data?.count || []
+  const totalPage = Math.ceil(totalRecord/perRecord)
 
   async function onClickQuoteUpdate() {
     const data = await mutate()
     toast.info(`현재 총 ${data.count} 개의 목록이 갱신되었습니다.`)
   }
 
-  // 페이지네이션 상태
-  const { pageList, limit, firstPage, lastPage } = usePagination({ page, maxSize, totalCount: count })
 
-
-
-  if (!userQuotes)
+  if (isLoading)
     return <ReplaceMessageCard>데이터를 불러오는 중입니다.</ReplaceMessageCard>
-  if (userQuotes.length < 1) return <p className='min-h-[30vh] text-center mt-[8em] text-white'>현재 작성하신 명언정보가 없습니다.</p>
+  if (userQuotes.length < 1) return
   return (
     <Container elementName={Fragment}>
       <ControlButton
@@ -53,16 +50,13 @@ export default function MypageMyQuote({
         onClick={onClickQuoteUpdate}>
         <HiRefresh /><span className='left-8'>갱신하기</span>
       </ControlButton>
+      {userQuotes.length < 1
+        ? <p className='min-h-[30vh] text-center mt-[8em] text-white'>현재 작성하신 명언정보가 없습니다.</p>
+        : <MypageMyQuotesList userQuotes={userQuotes} />
 
-      <MypageMyQuotesList
-        userQuotes={userQuotes}
-      />
-      <Pagination
-        limit={limit}
-        pageList={pageList}
-        page={page}
-        setPage={setPage}
-      />
+      }
+
+      <Pagination total={totalPage} initialPage={page} onChange={setPage} className='justify-center w-full flex mt-3' />
     </Container>
   )
 }

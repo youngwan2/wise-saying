@@ -18,8 +18,8 @@ export default function RecommendQuoteList({ recommendItems }: PropsType) {
 
   return (
     <article className='mt-[1em]'>
-      <h3 className="text-white sm:text-[1.5em] text-[1.25em] mt-[2em]  bg-[rgba(255,255,255,0.05)]">
-        추천 명언(TOP 10)</h3>
+      <h3 className="text-white sm:text-[1.5em] text-[1.25em] mt-[2em]  bg-[rgba(255,255,255,0.05)] pl-2">
+        다음 명언은 어떤가요?</h3>
       <ul className=' pt-[2em] flex flex-wrap w-full'>
         {recommendItems.map((item: QuoteType) =>
           <RecommendQuoteCard

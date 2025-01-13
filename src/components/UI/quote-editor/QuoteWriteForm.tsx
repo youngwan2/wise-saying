@@ -1,7 +1,7 @@
 'use client'
 import styles from './eidtor.module.css'
 
-import {  useEffect, useRef } from 'react'
+import {  useActionState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import useHasToken from '@/custom/useHasToken'
 
@@ -15,7 +15,6 @@ import FormTitle from '../common/Title/FormTitle'
 import { hoverAnimation } from '@/utils/common-func'
 import { postQuoteAction } from '@/actions/add-quote.action'
 import { getAccessToken } from '@/utils/session-storage'
-import { useFormState } from 'react-dom'
 import useFormStateToaster from '@/custom/useFormStateToaster'
 
 
@@ -26,7 +25,7 @@ export default function QuoteWriteForm() {
   const router = useRouter()
 
   // 포스트 추가 액션
-  const [state, formAction] = useFormState(postQuoteAction, { message: '', success: false })
+  const [state, formAction] = useActionState(postQuoteAction, { message: '', success: false })
   
   useFormStateToaster(state)
   useEffect(()=>{
