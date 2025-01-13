@@ -9,9 +9,7 @@ export async function getQuoteCategoryFromDb(mainCategory: string) {
     const url = config.apiPrefix + config.apiHost + `/api/sitemap/${mainCategory}`
   
     try {
-      const res = await fetch(url, {
-        cache: 'no-store'
-      })
+      const res = await fetch(url)
       const categories = await res.json()
       return categories
     } catch (error) {

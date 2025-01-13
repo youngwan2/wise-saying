@@ -27,7 +27,7 @@ const config: Config = {
   plugins: [
     require(`tailwindcss-3d`),
     nextui(),
-    // require('@tailwindcss/typography')({ className: 'no-tailwind' })
+    require('@tailwindcss/typography')({ className: 'no-tailwind' })
   ]
     ,
 
