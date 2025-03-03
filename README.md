@@ -1,5 +1,5 @@
 ```
-비고: 기존 역할과 기능이 애매모호했던 로직들을 분리하기 위해 리팩터링 진행중
+비고) 비용 문제로 3월 내에 서버 내릴 예정 입니다. 내린 후 데모 배포로 바꿀 예정입니다.
 ```
 ## 📓 프로젝트 명
 wise sayings (위대한 말)
@@ -18,8 +18,9 @@ wise sayings (위대한 말)
 
 ## 🔥 배포
 - 배포 과정 : https://duklook.tistory.com/563
-- 배포: [https://wise-sayings.com](https://wise-sayings.com/)
-- 배포 아키텍처
+- 배포(운영-닫음): [https://wise-sayings.com](https://wise-sayings.com/)
+- 배포(데모-예정): 
+- 배포 아키텍처(AWS 사용 시)
 ```mermaid
 sequenceDiagram
     participant Dev as Developer
