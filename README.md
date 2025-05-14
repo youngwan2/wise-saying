@@ -19,29 +19,9 @@ wise sayings (위대한 말)
 ## 🔥 배포
 - 배포 과정 : https://duklook.tistory.com/563
 - 배포(운영-닫음): [https://wise-sayings.com](https://wise-sayings.com/)
-- 배포(데모-예정): 
 - 배포 아키텍처(AWS 사용 시)
-```mermaid
-sequenceDiagram
-    participant Dev as Developer
-    participant GH as GitHub
-    participant GHA as GitHub Actions
-    participant S3
-    participant CP as CodePipeline
-    participant CD as CodeDeploy
-    participant EC2
+![위대한말 아키텍처](https://github.com/user-attachments/assets/074a67d2-976f-472a-bb42-70cb0aaf3bc2)
 
-    Dev->>GH: Push code
-    GH->>GHA: Trigger workflow
-    GHA->>GHA: Build Next.js app
-    GHA->>S3: Upload build artifacts
-    S3->>CP: Trigger pipeline
-    CP->>S3: Fetch artifacts
-    CP->>CD: Start deployment
-    CD->>EC2: Deploy application
-    EC2->>EC2: Start Next.js server
-    Dev->>EC2: Access application
- ```
 ## ⚙ 구현된 기능
 - #### Access + Refresh 기반 JWT 로그인
   - json-web-token 을 사용하여 구현된 로그인 기능입니다. accessToken 이 만료 되기 1분 전에 refreshToken 을 서버로 전송하여 토큰을 재발급하도록 구현하였습니다. 만일 요청이 늦어 사용자가 현재 하는 작업을 이어갈 수 없을 경우를 대비하여 수동으로 토큰을 재발급할 수 있도록 별도 요청 버튼을 추가하였습니다.
