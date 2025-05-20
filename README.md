@@ -4,12 +4,16 @@
 - 모바일 친화적으로 만들어져 웹과 모바일에서 이질감없이 이용할 수 있도록 구성
 ![제목을-입력해주세요_-001](https://github.com/youngwan2/wise-saying/assets/107159871/f08ea653-2f8f-4788-b3b0-25ad7204b403)
 <br><br>
-## 🎫 프로젝트 목적과 방향성
+## 🎫 프로젝트 목적
 - **[목적]** 국내, 국외에도 많은 명언 웹이나 앱이 존재 합니다. 하지만, 너무 번잡하고 광범위한 정보를 다루려다 보니 마음에 드는 명언을 곱심으며 감상하기에는 사용자의 시선을 많이 분산시킵니다. 따라서 저는 마음에 드는 명언을 선택하여 차분한 마음으로 집중할 수 있는 환경을 만들고자 했습니다.
 <br><br>
 ## 📅 개발 기간/유지보수
 - (개발기간) 2023년 12월 15일 ~ 2024년 4월 21일
 - (유지보수) 2024년 4월 15일 ~
+<br><br>
+## 📒문서
+- [트러블슈팅 <링크>](https://youngwan2.notion.site/1f968acd779b808a8248d9a12bfb741e)
+- [배포 히스토리- GithubActions 을 통한 CI 와 AWS CodePipeline (CodeDeploy)을 통한 CD 구축](https://duklook.tistory.com/563?category=1169621)
 <br><br>
 ## 🔥 배포
 - 데모(비용 문제로 닫힘): [https://wise-sayings.com](https://wise-sayings.com/)
@@ -89,10 +93,6 @@
 |     Swr(^2.2.5)      | (서버 상태관리) Tanstack Query/react에 비해 가볍고, NextJS 팀에서 개발하여 기존 프로젝트와의 호환성이나 유지보수 측면에서도 유리할 것으로 판단하였고, 실시간 데이터 처리 및 캐싱처리가 필요한 기능처리를 위해 활용 |
 | React icons(^5.0.1) | 아이콘 라이브러리 |
 |   Github Actions   | 레포지토리에 저장된 프로젝트 파일을 빌드하고, .zip 으로 압축 후 AWS S3에 배포하는 전 과정을 자동화하기 위해 사용 | 
-<br><br>
-## 📒문서
-- [트러블슈팅 <링크>](https://youngwan2.notion.site/1f968acd779b808a8248d9a12bfb741e)
-- [배포 히스토리- GithubActions 을 통한 CI 와 AWS CodePipeline (CodeDeploy)을 통한 CD 구축](https://duklook.tistory.com/563?category=1169621)
 <br><br>
 ## 🗂️ 프로젝트 구조
 ```
