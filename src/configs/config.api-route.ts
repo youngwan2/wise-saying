@@ -9,6 +9,7 @@ const apiRoute = {
         QUOTES_DETAIL: () => apiRoute.BASE_URL + apiRoute.QUOTES.BASE_URL + "/",
         QUOTES_SEARCH: () => apiRoute.BASE_URL + apiRoute.QUOTES.BASE_URL + "/",
         QUOTES_CATEGORY: () => apiRoute.BASE_URL + apiRoute.QUOTES.BASE_URL + "/category",
+        QUOTES_LIKE_COUNT: (id: string) => apiRoute.BASE_URL + apiRoute.QUOTES.BASE_URL + `/${id}/like`
     },
     AUTH: {
         BASE_URL: "auth",
@@ -19,7 +20,7 @@ const apiRoute = {
         AUTH_EMAIL: () => apiRoute.BASE_URL + apiRoute.AUTH.BASE_URL + "/auth-email",
         PASSWORD_RESET: () => apiRoute.BASE_URL + apiRoute.AUTH.BASE_URL + "/forgot-password",
         PASSWORD_CHANGE: () => apiRoute.BASE_URL + apiRoute.AUTH.BASE_URL + "/reset-password",
-        REFRESH_ACCESS_TOKEN: ()=> apiRoute.BASE_URL + apiRoute.AUTH.BASE_URL + "/auth/access-token",
+        REFRESH_ACCESS_TOKEN: () => apiRoute.BASE_URL + apiRoute.AUTH.BASE_URL + "/auth/access-token",
 
     },
     NOTICE: {

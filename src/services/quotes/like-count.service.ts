@@ -1,6 +1,5 @@
-import { Method, defaultConfig } from '@/configs/config.api'
-import { defaultFetch } from '@/utils/fetcher'
-import { toast } from 'react-toastify'
+import { Method, fetchConfigNoBody } from '@/configs/config.api'
+import apiRoute from '@/configs/config.api-route'
 
 
 /**
@@ -8,15 +7,27 @@ import { toast } from 'react-toastify'
  * @param id 명언 ID
  * @returns
  */
-export const postLike = async (id: number) => {
-  const url = '/api/quotes/' + id + '/like'
-  const config = defaultConfig(Method.POST)
-  const { success, ...results } = await defaultFetch(url, config)
-  if (success) {
-    toast.success('반영되었습니다. 평가해주셔서 감사합니다.')
-    return { isSuccess: true, likeCount: results.likeCount || 0 }
+export const updateLikeCount = async (id: string) => {
+  const url = apiRoute.QUOTES.QUOTES_LIKE_COUNT(id)
+  const config = fetchConfigNoBody(Method.PATCH)
+  try {
+    const response = await fetch(url, config)
+    const { success, likeCount } = await response.json();
+    return { success, likeCount: likeCount || 0 }
+  } catch {
+    return { success: false, likeCount: null }
   }
-  if (!success) {
-    return false
+}
+
+/** GET | 현 명언의 좋아요 조회 요청 */
+export const getLikeCountFromDB = async (id: string): Promise<{ success: boolean, likeCount: number | null, quoteId: number | null }> => {
+  const url = apiRoute.QUOTES.QUOTES_LIKE_COUNT(id)
+  const config = fetchConfigNoBody(Method.GET)
+  try {
+    const response = await fetch(url, config)
+    const { success, likeCount, quoteId } = await response.json();
+    return { success, likeCount, quoteId }
+  } catch {
+    return { success: false, likeCount: null, quoteId: null }
   }
 }

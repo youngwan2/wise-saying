@@ -30,7 +30,7 @@ export default function LoginForm() {
       redirect('/')
     }
   }, [hasToken])
-  
+
 
   // 드래그어블 적용
   useDraggable(loginFormRef, 'free')
@@ -41,7 +41,6 @@ export default function LoginForm() {
     const password = form.get('password')?.valueOf().toString() || ''
 
     const result = await reqLogin({ email, password })
-    console.log("로그인 결과:", result)
     if (result) {
       const { accessToken, email, exp, profile } = result
 
@@ -52,38 +51,40 @@ export default function LoginForm() {
       setIsLoading(false)
       toast.info("로그인 중입니다. 잠시만 기다려주세요.")
       setTimeout(() => {
-        
+
         window.location.reload()
       }, 1500)
     } else {
-      toast.error("로그인 실패")
       setIsLoading(false)
     }
   }
 
 
-function onClickBackMove() {
-  router.push('/')
-}
+  function onClickBackMove() {
+    router.push('/')
+  }
 
 
 
 
-return (
-  <form
-    ref={loginFormRef}
-    action={loginAction}
-    className="shadow-[inset_0_0_0_2px_rgba(255,255,255,0.1)]  rounded-[5px] flex flex-col fixed max-w-[480px] min-h-[350px] left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-[100%] bg-transparent p-[5px] backdrop-blur-[5px]"
-  >
-    <FormTitle>로그인</FormTitle>
-    <BackButton onClickBack={onClickBackMove} />
-    <LoginDefault />
-    <LoginButton isLoading={isLoading} />
+  return (
+    <form
+      ref={loginFormRef}
+      onSubmit={(e) => { 
+        e.preventDefault()
+        loginAction(new FormData(e.currentTarget))
+      }}
+      className="shadow-[inset_0_0_0_2px_rgba(255,255,255,0.1)]  rounded-[5px] flex flex-col fixed max-w-[480px] min-h-[350px] left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-[100%] bg-transparent p-[5px] backdrop-blur-[5px]"
+    >
+      <FormTitle>로그인</FormTitle>
+      <BackButton onClickBack={onClickBackMove} />
+      <LoginDefault />
+      <LoginButton isLoading={isLoading} />
 
-    <div className="flex items-center justify-center my-[2em]">
-      <SignInGuideLink />
-      <ForgotLink />
-    </div>
-  </form>
-)
+      <div className="flex items-center justify-center my-[2em]">
+        <SignInGuideLink />
+        <ForgotLink />
+      </div>
+    </form>
+  )
 }

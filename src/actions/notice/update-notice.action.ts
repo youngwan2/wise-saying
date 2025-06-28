@@ -10,11 +10,12 @@ import { type OutputData } from "@editorjs/editorjs"
 
 
 const secret = process.env.JWT_SCREPT || ''
-export async function updateNoticeAction(categoryName: string, notice: OutputData | undefined, token: string, noticeId?:number) {
+export async function updateNoticeAction(categoryName: string, notice: OutputData | undefined, rawToken: string, noticeId?: number) {
     if (!notice) return { message: '유효한 JSON 타입이 아닙니다.', success: false }
-    if (!token) return { message: '접근 권한이 없습니다.', success: false }
-    if(!noticeId) return { message: '게시글 ID 확인이 불가능하여 요청처리가 불가능합니다.',success:false}
+    if (!rawToken) return { message: '접근 권한이 없습니다.', success: false }
+    if (!noticeId) return { message: '게시글 ID 확인이 불가능하여 요청처리가 불가능합니다.', success: false }
 
+    const token = rawToken.split(' ')[1]
     const decode = jwt.verify(token, secret) as JwtPayload
 
     if (!decode) return { message: '토큰이 만료되었습니다. 새로고침 및 재로그인 후 다시시도 해주세요.', success: false }

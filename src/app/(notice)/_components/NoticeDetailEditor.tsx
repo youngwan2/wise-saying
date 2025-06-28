@@ -61,7 +61,7 @@ export default function NoticeDetail({ notice }: Pick<NoticeType, 'notice'>) {
     }, [])
 
     async function handleDelete() {
-        const { isSuccess, message } = await noticeUpload({category, notice, post, token})
+        const { isSuccess, message } = await noticeDelete(token, notice)
         if (isSuccess) {
             toast.success(message)
             handleBackMove()
@@ -71,7 +71,8 @@ export default function NoticeDetail({ notice }: Pick<NoticeType, 'notice'>) {
     }
 
     async function handleUpload() {
-        const { isSuccess, message } = await noticeDelete(token, notice)
+        const { isSuccess, message } = await noticeUpload({ category, notice, post, token })
+
         if (isSuccess) {
             toast.success(message)
             handleBackMove()

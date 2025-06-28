@@ -38,5 +38,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ cate
     } catch (error) {
         console.error(`api/quotes/authors/category/route.ts`, error);
         return NextResponse.json(HTTP_CODE.INTERNAL_SERVER_ERROR)
+    } finally{
+        db.end()
     }
 }

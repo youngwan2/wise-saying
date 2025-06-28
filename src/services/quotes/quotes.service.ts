@@ -14,12 +14,12 @@ export const getTodayQuotesFromDb = async (limit: number) => {
     const { success, meg, items } = await response.json()
     return { success, meg, items }
   } catch (error) {
-    return { success: false, meg: "오늘의 명언 조회 실패", items: null }
+    return { success: false, meg: "명언 조회 실패", items: null }
   }
 }
 
 
-// GET | 인기 명언 조회
+/**  GET | 인기 명언 조회*/
 export async function getPopularityQuote(url: string) {
   return getFetcher(url, false)
 }

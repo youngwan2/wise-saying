@@ -8,8 +8,8 @@ import QuoteLikeButton from '@/components/UI/detail-quote/button/QuoteLikeButton
 import ShareContainer from '@/components/UI/detail-quote/ShareContainer'
 import RecommendQuoteList from '@/components/UI/detail-quote/RecommendQuoteList'
 
-import { config } from '@/configs/config.url'
 import { getQuoteDetail } from '@/services/quotes/quote-detail.service'
+import apiRoute from '@/configs/config.api-route'
 
 
 
@@ -25,7 +25,7 @@ export default async function DetailPage({
 
   /** GET | 추천명언 조회 */
   async function getRecommendQuote() {
-    const url = `${config.apiPrefix}${config.apiHost}/api/quotes/today?random-count=10`
+    const url = apiRoute.QUOTES.QUOTES_TODAY(15);
     try {
       const response = await fetch(url)
       const { items, success } = await response.json()

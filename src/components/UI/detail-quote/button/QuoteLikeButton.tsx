@@ -1,15 +1,12 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import useHasToken from '@/custom/useHasToken'
 
 import ControlButton from '../../common/button/ControlButton'
 
-import { defaultFetch } from '@/utils/fetcher'
-import { Method, getDefaultConfig } from '@/configs/config.api'
-
 import { toast } from 'react-toastify'
-import { postLike } from '@/services/quotes/like-count.service'
+import { getLikeCountFromDB, updateLikeCount } from '@/services/quotes/like-count.service'
 
 
 
@@ -19,49 +16,50 @@ interface PropsType {
 }
 
 export default function QuoteLikeButton({ id, textColor }: PropsType) {
-  const [likeCount, setLikeCount] = useState(0)
+  const [count, setLikeCount] = useState(0)
   const [quoteId, setQuoteId] = useState(0)
 
   const hasToken = useHasToken()
 
-
-  function updateLikeCount(results: { likeCount: number, quoteId: number }) {
-    const { likeCount = 0, quoteId = 0 } = results || {};
-    setLikeCount(likeCount);
-    setQuoteId(quoteId);
+  /** 좋아요 상태 업데이트 */
+  function updateLikeCountState(results: { likeCount: number, quoteId: number, success: boolean }) {
+    const { likeCount, quoteId, success } = results;
+    console.log(count, quoteId, success)
+    if (success) {
+      setLikeCount(likeCount);
+      setQuoteId(quoteId);
+    } else {
+      toast.error('좋아요 업데이트(조회)에 실패하였습니다.')
+    }
   }
 
-  const handleLikeClick = async () => {
-    if (!hasToken) return toast.error('로그인 후 이용 가능 합니다.')
-    const { isSuccess = false, likeCount = 0 } = (await postLike(Number(id))) || {}
-
-    if (isSuccess) updateLikeCount({ likeCount, quoteId })
+  const onLikeClick = async () => {
+    if (!hasToken) return toast.info('로그인 후 이용 가능 합니다.')
+    const { success, likeCount } = await updateLikeCount(id)
+    updateLikeCountState({ success, likeCount, quoteId })
 
   }
-
-  /** GET | 현 명언의 좋아요 조회 요청 */
-  const getLikeCountFromDB = useCallback(async () => {
-    const url = '/api/quotes/' + id + '/like';
-    const config = getDefaultConfig(Method.GET, false);
-    const { results } = await defaultFetch(url, config);
-    updateLikeCount(results);
-  }, [id]);
 
   const showLikeCountQuoteIdMatch = Number(quoteId) === Number(id)
 
+  async function initializeLikeCount() {
+    const { success, likeCount, quoteId: resQuoteId } = await getLikeCountFromDB(id)
+    updateLikeCountState({ success, likeCount: likeCount || 0, quoteId: resQuoteId || 0 })
+  }
+
   useEffect(() => {
-    getLikeCountFromDB()
-  }, [getLikeCountFromDB])
+    initializeLikeCount()
+  }, [])
 
   return (
     <ControlButton
       ariaLabel="해당 명언에 대한 좋아요 클릭"
-      onClick={handleLikeClick}
+      onClick={onLikeClick}
       className={`${textColor} text-white  rounded-[2px] max-w-[120px] mt-[8px]  transition-shadow  text-[1.15em] flex justify-center p-[5px] text-center shadow-[inset_0_0_2px_0_white,inset_-1px_-1px_5px_0_rgba(255,255,255,0.06)] relative left-[50%] translate-x-[-50%] hover:bg-[#e5e4e411] `}
     >
       <p>명언</p>
       <span className="mx-[2px]">
-        ({showLikeCountQuoteIdMatch ? likeCount : 0})
+        ({showLikeCountQuoteIdMatch ? count : 0})
       </span>
     </ControlButton>
   )

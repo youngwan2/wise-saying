@@ -9,9 +9,11 @@ import { verifyAdmin } from "./vertify"
 const secret = process.env.JWT_SCREPT || ''
 
 /** 공지시항 추가 */
-export async function addNoticeAction(categoryName: string, notice: OutputData | undefined, token: string) {
+export async function addNoticeAction(categoryName: string, notice: OutputData | undefined, rawToken: string) {
     if (!notice) return { message: '유효한 JSON 타입이 아닙니다.', success: false }
-    if (!token) return { message: '접근 권한이 없습니다.', success: false }
+    if (!rawToken) return { message: '접근 권한이 없습니다.', success: false }
+
+    const token = rawToken.split(' ')[1]
 
     const decode = jwt.verify(token, secret) as JwtPayload
 

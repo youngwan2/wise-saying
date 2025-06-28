@@ -2,7 +2,6 @@
 import { Method, defaultConfig, fetchConfig, getDefaultConfig } from '@/configs/config.api'
 import apiRoute from '@/configs/config.api-route'
 import { ConsentsType } from '@/types/consent.types'
-import { defaultFetch } from '@/utils/fetcher'
 
 import { toast } from 'react-toastify'
 

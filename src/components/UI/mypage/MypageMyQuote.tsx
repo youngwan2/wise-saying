@@ -27,11 +27,9 @@ export default function MypageMyQuote({
   // 유저 명언 목록
   const { data, mutate, isLoading } = useFetchUserMypageQuotesQuery(page, isRequest)
 
-  console.log(data, isRequest)
-
   const userQuotes: UserQuotesType[] = data?.quotes || []
   const totalRecord = data?.count || []
-  const totalPage = Math.ceil(totalRecord/perRecord)
+  const totalPage = Math.ceil(totalRecord/perRecord)-1
 
   async function onClickQuoteUpdate() {
     const data = await mutate()

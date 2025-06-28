@@ -28,6 +28,7 @@ export default function Header() {
       <HeaderNavModal />
       <BookmarkModal />
       <Overlay isDisplay={false}/>
+      <div aria-label="hidden" className='h-[52px]'></div>
     </>
   )
 }
