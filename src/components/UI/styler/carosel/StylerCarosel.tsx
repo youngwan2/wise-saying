@@ -19,20 +19,32 @@ export default function StylerCarosel({ imagesSrc, onClickDeleteBackgroundImage,
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay()])
 
   return (
-    <>
-      <p className='sm:text-[1em] text-[0.85em] relative mt-[2em] mb-[1em] text-white flex items-center'><HiInformationCircle className='mt-[1.5px] mr-[2.5px]' /> {'현재 ' + imagesSrc.length + '개의 이미지가 업로드 되었습니다. 필요에 따라 별도의 이미지를 업로드하여 추가할 수 있습니다.'}</p>
+    <div className="w-full mt-8">
+      <div className='flex items-center gap-2 mb-4 p-3 bg-blue-50 rounded-lg border border-blue-200'>
+        <HiInformationCircle className='text-blue-600 text-lg flex-shrink-0' />
+        <p className='text-sm text-blue-800'>
+          현재 {imagesSrc.length}개의 이미지가 업로드되었습니다. 필요에 따라 이미지를 추가할 수 있습니다.
+        </p>
+      </div>
+
       <article
-        className=" mb-[2em] w-full overflow-hidden px-[3em]  shadow-[0_0_0_1px_rgba(255,255,255,0.3)] rounded-[5px]  hover:bg-[#ffffff0e] "
+        className="w-full overflow-hidden border border-gray-200 rounded-lg bg-white hover:bg-gray-50 transition-colors duration-200"
         ref={emblaRef}
       >
         {/*캐러셀 카드 */}
-        <figure className="flex pb-[5em] mt-[5em]">
+        <figure className="flex py-8 px-6 gap-4">
           {imagesSrc.map((image, i) =>
-            <StylerCarouselCard key={i} image={image} onClickDeleteImage={() => onClickDeleteBackgroundImage(i)} onClickSetImage={() => onClickSetBackgroundImage(image)} />)}
+            <StylerCarouselCard
+              key={i}
+              image={image}
+              onClickDeleteImage={() => onClickDeleteBackgroundImage(i)}
+              onClickSetImage={() => onClickSetBackgroundImage(image)}
+            />
+          )}
         </figure>
         {/* 캐러셀 조작 버튼 */}
         <CarouselControlButtonContainer emblaApi={emblaApi} />
       </article>
-    </>
+    </div>
   )
 }

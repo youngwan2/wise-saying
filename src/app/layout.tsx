@@ -4,7 +4,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import Header from '@/components/layout/Header'
 import TimerContainer from '@/components/UI/common/TimerContainer';
 import Footer from '@/components/layout/Footer'
-import Script from 'next/script';
 import { Toaster } from 'react-hot-toast'
 import { ToastContainer } from 'react-toastify'
 
@@ -49,19 +48,6 @@ export default function RootLayout({
 ) {
   return (
     <html lang="ko" className={`${pretendard.className} bg-gradient-to-tr from-[#23346d] to-[#1b2d69]`}>
-      {/* 상담 챗 봇 */}
-      <Script id="show_chat_service">
-        {`var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-          (function(){
-          var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-          s1.async=true;
-          s1.src='https://embed.tawk.to/6670d4f4981b6c56477e4b5b/1i0kbvneu';
-          s1.charset='UTF-8';
-          s1.setAttribute('crossorigin','*');
-          s0.parentNode.insertBefore(s1,s0);
-          })();`}
-      </Script>
-
 
       <body suppressHydrationWarning>
         <Header />

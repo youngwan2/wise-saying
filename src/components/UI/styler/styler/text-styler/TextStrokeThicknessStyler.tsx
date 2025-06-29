@@ -1,55 +1,64 @@
 import { useQuotesStrokeStyleStore } from "@/store/stylerStore"
 import { debounceCloser } from "@/utils/common-func"
-import { ChangeEvent, useRef } from "react"
+import { ChangeEvent, useEffect, useState } from "react"
 import { HiMinus, HiPlus } from "react-icons/hi2"
 
-const DEFAULT_TEXT_SIZE = '1'
 export default function TextStrokeThicknessStyler() {
-
-    const inputRef = useRef<HTMLInputElement>(null)
-
-    const setThickness = useQuotesStrokeStyleStore(
-        (state) => state.setStrokeThicknessStyle,
-    )
+    const [thickness, setThicknessState] = useState(1)
+    const setThickness = useQuotesStrokeStyleStore((state) => state.setStrokeThicknessStyle)
+    const storeThickness = useQuotesStrokeStyleStore((state) => state.thickness)
 
     function onSetThickness(e: ChangeEvent<HTMLInputElement>) {
-        const thickness = Number(e.currentTarget.value)
-        debounceCloser(thickness, '', null, setThickness, 500)
+        const value = Number(e.currentTarget.value)
+        setThicknessState(value)
+        debounceCloser(value, '', null, setThickness, 300)
     }
-
 
     function decrease() {
-        if (!inputRef.current) return
-        let value = Number(inputRef.current.value)
-        const size = --value
-        if (size < 1) return
-        debounceCloser(size, '', null, setThickness, 500)
-        inputRef.current.value = (size).toString()
-
-
+        if (thickness <= 0) return
+        setThicknessState(thickness - 1)
+        debounceCloser(thickness - 1, '', null, setThickness, 300)
     }
     function increase() {
-        if (!inputRef.current) return
-        let value = Number(inputRef.current.value)
-        const size = ++value
-        if (size > 100) return
-        debounceCloser(size, '', null, setThickness, 500)
-        inputRef.current.value = (size).toString()
+        if (thickness >= 10) return
+        setThicknessState(thickness + 1)
+        debounceCloser(thickness + 1, '', null, setThickness, 300)
     }
 
-    return (
+    // store 값과 동기화
+    useEffect(() => {
+        setThicknessState(storeThickness)
+    }, [storeThickness])
 
-        <article className='max-w-[150px] px-[10px] rounded-sm flex items-center relative ml-[0.5em] border '>
-            <button className='text-white hover:text-[#ffcdc5]  text-[1.15em] pr-[5px]' onClick={decrease}><HiMinus /></button>
-            <input
-                value={DEFAULT_TEXT_SIZE}
-                min={0}
-                ref={inputRef}
-                type="number"
-                className="p-[15px] text-center rounded-[3px] focus:outline-none bg-transparent text-white h-[35px] max-w-[100px] w-full"
-                onChange={onSetThickness}
-            />
-            <button className='text-white hover:text-[#97ef97] text-[1.15em] pl-[5px]' onClick={increase}><HiPlus /></button>
-        </article>
+    return (
+        <div className="flex flex-col space-y-2 flex-1 mt-3">
+            <label className="text-sm font-medium text-gray-700">외곽선 두께</label>
+            <div className="flex items-center gap-2">
+                <button
+                    type="button"
+                    className="px-3 py-2 border border-gray-200 rounded-lg bg-white text-gray-600 hover:text-gray-800 hover:border-gray-300 transition-colors"
+                    onClick={decrease}
+                >
+                    <HiMinus className="text-base" />
+                </button>
+                <input
+                    type="range"
+                    min={0}
+                    max={10}
+                    step={1}
+                    value={thickness}
+                    onChange={onSetThickness}
+                    className="w-full accent-gray-500"
+                />
+                <button
+                    type="button"
+                    className="px-3 py-2 border border-gray-200 rounded-lg bg-white text-gray-600 hover:text-gray-800 hover:border-gray-300 transition-colors"
+                    onClick={increase}
+                >
+                    <HiPlus className="text-base" />
+                </button>
+                <span className="text-xs text-gray-500 w-8 text-center">{thickness}</span>
+            </div>
+        </div>
     )
 }

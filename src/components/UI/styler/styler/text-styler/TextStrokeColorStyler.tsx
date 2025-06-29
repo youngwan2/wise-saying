@@ -1,13 +1,8 @@
-import styles from '../../styler.module.css'
-
 import { useQuotesStrokeStyleStore } from '@/store/stylerStore'
 import { useEffect, useRef, useState } from "react"
-
 import { PhotoshopPicker } from 'react-color'
 
-
 export default function TextStrokeColorStyler() {
-
     const [displayState, setDisplayState] = useState(false)
     const [confirmedColor, setConfirmedColor] = useState<any>()
 
@@ -25,38 +20,32 @@ export default function TextStrokeColorStyler() {
     }, [color])
 
     return (
-        <>
-            {/* 외곽선 색 */}
-            <article className={`${styles.stroke_color} w-[50px]`}>
-                <article onClick={() => setDisplayState(true)} className='hover:cursor-pointer'>
-                    <h2 className=" flex items-center text-[1.2em] pb-[0.25em] text-[white]">
-                        <p className="ml-[0.5em]">S</p>
-                    </h2>
-                    <div className="flex items-center">
-                        <div
-                            className="p-[4px] h-[4px] rounded-[20px] w-[28px] text-center bg-white"
-                            ref={divRef}
-                        ></div>
-                    </div>
-                </article>
-
-                {/* 컬러 픽커 */}
-                <PhotoshopPicker
-                    className={`${displayState
-                        ? 'block fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] z-[10000]'
-                        : 'hidden'
-                        }`}
-                    onChange={(color) => setConfirmedColor(color)}
-                    onCancel={() => setDisplayState(false)}
-                    color={confirmedColor}
-                    onAccept={() => {
-                        const color = confirmedColor?.hex || ''
-                        setConfirmedColor(color)
-                        setColor(color)
-                        setDisplayState(false)
-                    }}
+        <article className="space-y-2">
+            <label className="text-sm font-medium text-gray-700">외곽선 색상</label>
+            <button
+                type="button"
+                className="flex items-center gap-2 w-full px-3 py-2 rounded border border-gray-300 bg-white hover:border-gray-400 transition"
+                onClick={() => setDisplayState(true)}
+            >
+                <span
+                    className="inline-block w-6 h-6 rounded border border-gray-200"
+                    style={{ background: color }}
+                    ref={divRef}
                 />
-            </article>
-        </>
+                <span className="text-sm text-gray-600">색상 선택</span>
+            </button>
+            <PhotoshopPicker
+                className={`${displayState ? 'block fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] z-[10000]' : 'hidden'}`}
+                onChange={(color) => setConfirmedColor(color)}
+                onCancel={() => setDisplayState(false)}
+                color={confirmedColor}
+                onAccept={() => {
+                    const color = confirmedColor?.hex || ''
+                    setConfirmedColor(color)
+                    setColor(color)
+                    setDisplayState(false)
+                }}
+            />
+        </article>
     )
 }

@@ -35,35 +35,46 @@ export default function TextStyler({ selectTapNum }: PropsType) {
   useEffect(() => {
     setTextStyle(textStyle)
   }, [setTextStyle, textStyle])
-
   return (
     <article
-      className={`${selectTapNum === 0 ? 'visible ' : 'invisible absolute'}`}
+      className={`${selectTapNum === 0 ? 'block' : 'hidden'} space-y-6`}
     >
-      <h3 className='text-white my-[0.5em]'>스타일(폰트, 글자 선)</h3>
-      <TextFontStyler
-        setTextStyleState={setTextStyleState}
-        textStyle={textStyle}
-      />
-      <h3 className='text-white mt-[0.5em]'>글자</h3>
-      <div className='flex items-center mt-[0.5em] pb-[10px]'>
-        <TextColorStyler
-          setTextStyleState={setTextStyleState}
-          textStyle={textStyle}
-        />
-        <TextSizeStyler
-          setTextStyleState={setTextStyleState}
-          textStyle={textStyle}
-        />
-        <TextSettingOptions />
-        <TextAlignStyler />
+      <section className="space-y-2">
+        <h3 className='text-gray-900 font-semibold text-lg'>폰트 & 스타일</h3>
+        <div className="bg-white shadow-sm rounded-lg p-4 border border-gray-100">
+          <TextFontStyler
+            setTextStyleState={setTextStyleState}
+            textStyle={textStyle}
+          />
+        </div>
+      </section>
 
-      </div>
-      <h3 className='text-white mt-[0.5em]'>외곽선</h3>
-      <TextStrokeStyler />
+      <section className="space-y-2">
+        <h3 className='text-gray-900 font-semibold text-lg'>텍스트 설정</h3>
+        <div className='bg-white shadow-sm rounded-lg p-4 border border-gray-100 space-y-4'>
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+            <TextColorStyler
+              setTextStyleState={setTextStyleState}
+              textStyle={textStyle}
+            />
+            <TextSizeStyler
+              setTextStyleState={setTextStyleState}
+              textStyle={textStyle}
+            />
+          </div>
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+            <TextSettingOptions />
+            <TextAlignStyler />
+          </div>
+        </div>
+      </section>
 
-
-
+      <section className="space-y-2">
+        <h3 className='text-gray-900 font-semibold text-lg'>외곽선</h3>
+        <div className="bg-white shadow-sm rounded-lg p-4 border border-gray-100">
+          <TextStrokeStyler />
+        </div>
+      </section>
     </article>
   )
 }

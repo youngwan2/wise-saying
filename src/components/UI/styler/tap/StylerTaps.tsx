@@ -1,5 +1,3 @@
-import styles from '../styler.module.css'
-
 import { BsBrush, BsCardImage, BsUpload } from 'react-icons/bs'
 
 interface PropsType {
@@ -14,29 +12,26 @@ export default function StylerTaps({
 
 
   const taps = [
-    { num: 0, text: <BsBrush /> },
-    { num: 1, text: <BsCardImage /> },
-    { num: 2, text: <BsUpload /> },
+    { num: 0, text: <div className='flex items-center gap-1'><BsBrush className="mr-2" />스타일</div> },
+    { num: 1, text: <div className='flex items-center gap-1'><BsCardImage className="mr-2" />배경</div> },
+    { num: 2, text: <div className='flex items-center gap-1'><BsUpload className="mr-2" />업로드</div> },
   ]
 
-  function handleTapSlect(num:number){
+  function handleTapSlect(num: number) {
     setSelectTapNum(num)
 
-  }
-
-  return (
-    <div className="bg-[tomato] fixed top-[-3.3em] right-[-1.2px] z-[1000] flex justify-center mt-[1em] text-[white] rounded-tl-[10px] rounded-tr-[10px] backdrop-grayscale-[50%] border-t ">
+  } return (
+    <div className="flex bg-gray-100 rounded-lg p-1 mb-4">
       {taps.map((tap) => {
         return (
           <button
-            onClick={()=>handleTapSlect(tap.num)}
+            onClick={() => handleTapSlect(tap.num)}
             key={tap.num}
             className={`
-            ${styles.styler_tap_buttons}
             ${selectTapNum === tap.num
-                ? 'bg-[white] text-[#162557] font-bold hover:bg-[#e3e1e1]'
-                : 'bg-[transparent] hover:text-white hover:bg-[#f77e69]'
-              } first:rounded-tl-[10px] last:rounded-tr-[10px] border text-[1.5em] p-[5px] px-[10px] transition-all text-center `}
+                ? 'bg-white text-blue-600 shadow-sm'
+                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+              } flex-1 py-3 px-4 rounded-md transition-all duration-200 ease-in-out font-medium`}
           >
             {tap.text}
           </button>

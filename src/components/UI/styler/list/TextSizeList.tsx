@@ -25,20 +25,18 @@ export default function TextSizeList({
             onClickTextSizeSelect(size);
             onClickDisplaySelect(false);
         }
-    }
-
-    return (
+    } return (
         <article
             aria-label="글자 크기 선택창"
             className={`${isShowSelector ? 'visible opacity-100' : 'invisible opacity-0'
-            } absolute w-[120px] bg-white rounded-[10px] shadow-[0_5px_5px_2px_rgba(0,0,0,0.2)] transition z-[1000] top-[-32em] max-h-[500px] overflow-auto`}
+                } absolute w-full bg-white rounded-lg border border-gray-200 shadow-lg transition-all duration-200 z-[100000000002] top-full mt-2 max-h-[300px] overflow-auto`}
         >
             <ul onClick={handleSetTextSize}>
                 {textSizes.map((size) => (
                     <li
                         data-size={size}
                         key={size}
-                        className="p-[5px] text-center hover:bg-[rgba(0,0,0,0.2)] hover:cursor-pointer"
+                        className="p-3 text-center text-gray-700 hover:bg-gray-100 hover:cursor-pointer transition-colors duration-150 border-b border-gray-100 last:border-b-0"
                     >
                         {size === 0 ? '닫기' : size}
                     </li>

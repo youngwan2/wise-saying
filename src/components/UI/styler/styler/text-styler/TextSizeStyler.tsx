@@ -16,7 +16,7 @@ export default function TextSizeStyler({
 
 
   const [isShowSelector, setIsShowSelector] = useState(false)
-  const [textSizes, _] = useState([0,7,
+  const [textSizes, _] = useState([0, 7,
     9,
     11,
     14,
@@ -61,7 +61,7 @@ export default function TextSizeStyler({
     debounceCloser(size, 'size', textStyle, setTextStyleState, 500)
     inputRef.current.value = (size).toString()
   }
-  
+
   function increase() {
     if (!inputRef.current) return
     let value = Number(inputRef.current.value)
@@ -74,25 +74,42 @@ export default function TextSizeStyler({
   useEffect(() => {
     inputRef.current && (inputRef.current.value = DEFAULT_TEXT_SIZE)
   }, [])
-
-
   return (
-    <article className='max-w-[150px] ml-[0.51em] px-[10px] rounded-sm flex flex-col items-center relative  border'>
-      <h2 aria-label='텍스트 크기'  className="flex items-center text-[1.2em] ">
-      </h2>
-      <div className="flex  rounded-[3px]">
-        <button className='text-white hover:text-[#ffcdc5]  text-[1.15em] pr-[5px]' onClick={decrease}><HiMinus /></button>
-        {/* 크기 변경 */}
+    <div className='flex flex-col space-y-2 flex-1 relative'>
+      <label className="text-sm font-medium text-gray-700">글자 크기</label>
+
+      <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden bg-white">
+        <button
+          className='px-3 py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-50 transition-colors'
+          onClick={decrease}
+        >
+          <HiMinus className="text-sm" />
+        </button>
+
         <input
           onClick={() => onClickSetDisplaySelect(!isShowSelector)}
           type="number"
           ref={inputRef}
-          className="p-[15px] text-center rounded-[3px] focus:outline-none bg-transparent text-white h-[35px] max-w-[100px] w-full"
+          className="flex-1 p-2 text-center border-0 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset text-gray-900"
           onChange={onSetTextSize}
+          min="1"
+          max="100"
         />
-        <button className='text-white hover:text-[#97ef97] text-[1.15em] pl-[5px]' onClick={increase}><HiPlus /></button>
+
+        <button
+          className='px-3 py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-50 transition-colors'
+          onClick={increase}
+        >
+          <HiPlus className="text-sm" />
+        </button>
       </div>
-      <TextSizeList textSizes={textSizes} isShowSelector={isShowSelector} onClickTextSizeSelect={onClickTextSizeSelect} onClickDisplaySelect={onClickSetDisplaySelect} />
-    </article>
+
+      <TextSizeList
+        textSizes={textSizes}
+        isShowSelector={isShowSelector}
+        onClickTextSizeSelect={onClickTextSizeSelect}
+        onClickDisplaySelect={onClickSetDisplaySelect}
+      />
+    </div>
   )
 }

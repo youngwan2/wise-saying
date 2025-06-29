@@ -1,6 +1,5 @@
-import styles from '../styler.module.css'
 import { MouseEventHandler } from "react"
-import { HiArrowDown, HiArrowUp } from "react-icons/hi2"
+import { HiArrowLeft, HiArrowRight } from "react-icons/hi2"
 
 interface PropsType {
     isShowStyler: boolean
@@ -9,8 +8,27 @@ interface PropsType {
 export default function HideButton({ isShowStyler, onToggle }: PropsType) {
 
     return (
-        <button onClick={onToggle} className={`${styles.styler_hide_button}  ${!isShowStyler? 'hover:bg-[#f77e69]':'bg-white hover:bg-[#e7e4e4] text-[#162557] '} bg-[tomato]  absolute left-[-0.8px] text-white top-[-1.36em]  rounded-t-[10px] text-[1.55em] p-[4px] px-[10px] transition-all text-center backdrop-grayscale-[50%] w-[48.5px] border-x border-t `}>
-            {!isShowStyler ? <HiArrowDown /> : <HiArrowUp color='black' />}
+        <button
+            onClick={onToggle}
+            className={`flex items-center px-2 justify-center h-10 rounded-lg transition-all duration-200 ease-in-out
+                ${!isShowStyler
+                    ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                    : 'bg-gray-100 hover:bg-gray-200 text-gray-700 border border-gray-200'
+                }`}
+        >
+            {!isShowStyler ?
+                <div className="flex items-center gap-2">
+                    <HiArrowLeft className="text-lg" />
+                    <span>편집도구 열기</span>
+                </div>
+                :
+                <div className="flex items-center gap-2">
+                    <HiArrowRight className="text-lg" />
+                    <span>편집도구 닫기</span>
+                </div>
+
+            }
+
         </button>
     )
 }

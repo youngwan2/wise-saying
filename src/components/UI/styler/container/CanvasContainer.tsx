@@ -173,26 +173,61 @@ export default function Canvas() {
       setAuthor(item.author)
     }
   }, [])
+  // 캔버스 표시 크기 계산 (실제 크기는 유지하되, 표시만 축소)
+  const getDisplaySize = () => {
+    const maxDisplayWidth = 800
+    const maxDisplayHeight = 600
+
+    if (width <= maxDisplayWidth && height <= maxDisplayHeight) {
+      return { displayWidth: width, displayHeight: height, scale: 1 }
+    }
+
+    const scaleX = maxDisplayWidth / width
+    const scaleY = maxDisplayHeight / height
+    const scale = Math.min(scaleX, scaleY)
+
+    return {
+      displayWidth: width * scale,
+      displayHeight: height * scale,
+      scale
+    }
+  }
+
+  const { displayWidth, displayHeight, scale } = getDisplaySize()
 
   return (
     <>
-      <article className={`mt-[2em] min-h-[500px] w-[100%] shadow-[0_0_0_1px_rgba(255,255,255,0.3)] p-[5px] rounded-[5px]  bg-[#1E306A] z-[1] hover:bg-[rgba(255,255,255,0.1)]`} >
-        <span className="text-white inline-block mb-[1em]">
-          {width} X {height}
-        </span>
-        <canvas
-          ref={canvasRef}
-          width={width}
-          height={height}
-          className="border mx-auto"
-        ></canvas>
-      </article>
+      <DownloadButton onClick={onClickDownload} />
+      <article className={`mt-4 w-full p-4 rounded-lg bg-[#1E306A] shadow-lg`}>
+        <div className="flex flex-row items-center justify-between w-full mb-2">
+          <span className="text-white text-sm font-medium">
+            {width} × {height} {scale < 1 && `(${Math.round(scale * 100)}% 표시)`}
+          </span>
 
-      <div className={`${styles.canvas_buttons} absolute top-[1.15em] right-[1.15em] flex z-[0]`}>
-        <DownloadButton
-          onClick={onClickDownload}
-        />
-      </div>
+        </div>
+        <div className="flex flex-col items-center space-y-3">
+          <div
+            className="relative border-2 border-gray-300 rounded overflow-hidden bg-white mt-2"
+            style={{
+              width: `${displayWidth}px`,
+              height: `${displayHeight}px`,
+              maxWidth: '100%',
+              maxHeight: '70vh'
+            }}
+          >
+            <canvas
+              ref={canvasRef}
+              width={width}
+              height={height}
+              className="w-full h-full object-contain"
+              style={{
+                width: `${displayWidth}px`,
+                height: `${displayHeight}px`
+              }}
+            />
+          </div>
+        </div>
+      </article>
     </>
   )
 }

@@ -45,50 +45,58 @@ export default function TextFontStyler({
 
 
   const fontStyles = ['fill', 'stroke', 'hybrid']
-
   return (
-    <>
-      <article className='flex flex-col relative pb-[10px] justify-center'>
-        {/* 폰트 */}
-        <span className='absolute top-[0.5em] right-[0.5em]'><HiArrowDown /> </span>
+    <div className='space-y-4'>
+      <div className='space-y-2'>
+        <label className="text-sm font-medium text-gray-700">폰트 패밀리</label>
+        <div className='relative'>
+          <select
+            className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white text-gray-900"
+            onChange={(e) => {
+              const font = e.currentTarget.value
+              setTextStyleState({ ...textStyle, font })
+            }}
+          >
+            <optgroup label={fontFamilies[0].type}>
+              {fontFamilies[0].fonts.map((font) => {
+                return <option key={font} value={font}>{font}</option>
+              })}
+            </optgroup>
+            <optgroup label={fontFamilies[1].type}>
+              {fontFamilies[1].fonts.map((font) => {
+                return <option key={font} value={font}>{font}</option>
+              })}
+            </optgroup>
+          </select>
+          <div className='absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none'>
+            <HiArrowDown className="text-gray-400" />
+          </div>
+        </div>
+      </div>
 
-        <select
-          className="p-[5px] text-center rounded-[5px] shadow-[0_0px_0px_1px_black] w-full  appearance-none focus:outline-none focus:bg-[#e3e1e1]"
-          onChange={(e) => {
-            const font = e.currentTarget.value
-            setTextStyleState({ ...textStyle, font })
-          }}
-        >
-          <optgroup label={fontFamilies[0].type}>
-            {fontFamilies[0].fonts.map((font) => {
-              return <option key={font}>{font}</option>
+      <div className='space-y-2'>
+        <label className="text-sm font-medium text-gray-700">폰트 스타일</label>
+        <div className='relative'>
+          <select
+            className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white text-gray-900"
+            onChange={(e) => {
+              const fontStyle = e.currentTarget.value
+              setTextStyleState({ ...textStyle, fontStyle })
+            }}
+          >
+            {fontStyles.map((fontStyle) => {
+              return (
+                <option value={fontStyle} key={fontStyle}>
+                  {fontStyle}
+                </option>
+              )
             })}
-          </optgroup>
-          <optgroup label={fontFamilies[1].type}>
-            {fontFamilies[1].fonts.map((font) => {
-              return <option key={font}>{font}</option>
-            })}
-          </optgroup>
-        </select>
-        {/* 폰트 스타일 */}
-        <span className='absolute top-[2.85em] right-[0.5em]'><HiArrowDown /> </span>
-        <select
-          className="p-[5px] text-center rounded-[5px] mt-[0.25em] shadow-[0_0px_0px_1px_black] w-full  appearance-none focus:outline-none focus:bg-[#e3e1e1]"
-          onChange={(e) => {
-            const fontStyle = e.currentTarget.value
-            setTextStyleState({ ...textStyle, fontStyle })
-          }}
-        >
-
-          {fontStyles.map((fontStyle) => {
-            return (
-              <option value={fontStyle} key={fontStyle}>
-                {fontStyle}
-              </option>
-            )
-          })}
-        </select>
-      </article>
-    </>
+          </select>
+          <div className='absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none'>
+            <HiArrowDown className="text-gray-400" />
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }

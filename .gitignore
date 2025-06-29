@@ -45,3 +45,6 @@ next-env.d.ts
 # amplify
 .amplify
 amplifyconfiguration*
+
+# 가이드 문서
+guides

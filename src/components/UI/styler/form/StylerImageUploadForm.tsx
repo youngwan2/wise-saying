@@ -17,30 +17,42 @@ export default function StylerImageUploadForm({
   onChangeImageUploader
 }: PropsType) {
 
-  if (selectTapNum !== 2) return
+  if (selectTapNum !== 2) return null
+
   return (
-    <form
-      className="hover:cursor-pointer group min-w-[200px] h-[250px] bg-[white] rounded-[0.5em]"
-      onSubmit={onSubmit}
-    >
-      <Label
-        aria-label="명언 카드 배경 이미지 업로더"
-        className="hover:cursor-pointer transition-all scale-[1] absolute left-[50%] top-[35%] translate-x-[-50%] translate-y-[-50%] group-hover:visible group-hover:opacity-100 group-hover:scale-[1.25]"
-        htmlFor="image_upload"
+    <div className="space-y-4">
+      <h3 className='text-gray-900 font-semibold text-lg'>이미지 업로드</h3>
+      <form
+        className="group cursor-pointer"
+        onSubmit={onSubmit}
       >
-        <HiUpload className={'text-[3em]'} />
-        <p className="font-bold">업로드</p>
-      </Label>
-      <span className="text-white font-sans absolute left-[50%] translate-x-[-50%]  bottom-[5em] w-full text-center">
-        🔴 JPG/JPEG, PNG 만 가능
-      </span>
-      <Input
-        aria-label='업로드 버튼'
-        onChange={onChangeImageUploader}
-        id="image_upload"
-        type="file"
-        className="hidden"
-      />
-    </form>
+        <Label
+          aria-label="명언 카드 배경 이미지 업로더"
+          className="cursor-pointer flex flex-col items-center justify-center 
+                     w-full h-48 border-2 border-dashed border-gray-300 
+                     rounded-lg hover:border-blue-400 hover:bg-blue-50 
+                     transition-all duration-200 bg-gray-50"
+          htmlFor="image_upload"
+        >
+          <HiUpload className="text-4xl text-gray-400 group-hover:text-blue-500 transition-colors" />
+          <p className="mt-2 font-medium text-gray-600 group-hover:text-blue-600">
+            이미지 업로드
+          </p>
+          <p className="mt-1 text-sm text-gray-500">
+            JPG, JPEG, PNG 파일만 지원
+          </p>
+        </Label>
+
+        <Input
+          aria-label='업로드 버튼'
+          onChange={onChangeImageUploader}
+          id="image_upload"
+          type="file"
+          accept="image/jpeg,image/jpg,image/png"
+          className="hidden"
+        />
+      </form>
+    </div>
   )
 }
+

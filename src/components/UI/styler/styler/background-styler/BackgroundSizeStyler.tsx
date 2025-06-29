@@ -18,11 +18,13 @@ export default function BackgroundSizeStyler() {
   const size = { width, height }
 
 
-  /** 텍스트로부터 사이즈 추출 */
+  /** li 또는 li의 자식 클릭 시 항상 li를 찾아서 dataset을 읽음 */
   function extractSize(e: MouseEvent<HTMLElement>) {
-    if (!(e.target instanceof HTMLLIElement)) return { width: 0, height: 0 }
-    const [width, height] = e.target.textContent?.split('x') || [300, 400]
-    return { width, height }
+    const li = (e.target as HTMLElement).closest('li');
+    if (!li) return { width: 0, height: 0 };
+    const width = li.dataset.width ? Number(li.dataset.width) : Number(li.textContent?.split('x')[0]);
+    const height = li.dataset.height ? Number(li.dataset.height) : Number(li.textContent?.split('x')[1]);
+    return { width, height };
   }
 
   function onChangeSetMessage(size: { width: number, height: number, message: string }) {
@@ -47,14 +49,11 @@ export default function BackgroundSizeStyler() {
 
   return (
     <article>
-      <h2 className="flex items-center text-[1.05em] mt-[1.25em] pb-[0.25em] text-[white]">
-        크기
-      </h2>
       <div className="flex items-center text-center">
         {/* 캔버스 넓이 */}
         <SizeInput
           ariaLabel='카드 넓이 사용자 입력창'
-          className='p-[5px] mb-[0.5em] w-full rounded-[5px]'
+          className='p-[5px] mb-[0.5em] w-full rounded-[5px] border border-gray-100 text-center'
           type='number'
           dataType='width'
           value={width}
@@ -62,12 +61,12 @@ export default function BackgroundSizeStyler() {
           placeholder='넓이(기본: 300px)'
           onChangeSetSize={onChangeSetSize}
         />
-        <HiX className="text-[2em] ml-[5px] pb-[5px]" color="white" />
+        <HiX className="text-[2em] ml-[5px] pb-[5px]" />
 
         {/* 캔버스 높이 */}
         <SizeInput
           ariaLabel="카드 눂이 사용자 입력창"
-          className="ml-[3px] p-[5px] mb-[0.5em] w-full rounded-[5px]"
+          className='ml-3 p-[5px] mb-[0.5em] w-full rounded-[5px] border border-gray-100 text-center'
           type="number"
           dataType="height"
           max={1920}
@@ -78,7 +77,7 @@ export default function BackgroundSizeStyler() {
       </div>
       {/* 추천 사이즈 */}
       <RecommandSizeList onSetSize={onClickSetSize} onSetMessage={onChangeSetMessage} />
-      <RecommandSizeInfoCard message={message}/>
+      <RecommandSizeInfoCard message={message} />
     </article>
   )
 }

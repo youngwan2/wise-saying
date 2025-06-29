@@ -3,12 +3,12 @@ import {
   HiHomeModern,
   HiNewspaper,
   HiOutlineHandThumbUp,
-  HiOutlinePencil,
   HiOutlineUserGroup,
   HiSpeakerWave,
+  HiOutlinePencil,
 } from 'react-icons/hi2'
 import { BsRobot } from "react-icons/bs";
-// import { HiHand } from 'react-icons/hi';
+import { BiSolidBookContent } from 'react-icons/bi';
 
 const navList = [
   // { path: '/intro', label: '사이트 소개', icon: HiHand },/
@@ -20,6 +20,7 @@ const navList = [
   { path: '/add-quote', label: '명언 쓰기', icon: HiOutlinePencil },
   { path: '/mypage', label: '마이페이지', icon: HiHomeModern },
   { path: '/ai-quote', label: 'AI 명언 챗봇', icon: BsRobot },
+  { path: '/canvas-editor', label: '명언 캔버스 에디터', icon: BiSolidBookContent },
 ]
 
 export default navList

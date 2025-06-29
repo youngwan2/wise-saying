@@ -8,12 +8,15 @@ export default function DownloadButton({ onClick }: PropsType) {
   return (
     <button
       onClick={onClick}
-      className="hover: h-[40px] rounded-[5px] border border-[rgba(255,255,255,0.2)] px-[5px] flex items-center text-white hover:bg-[#dbdada23] mr-[6px]"
+      style={{ zIndex: 100 }}
+      className="absolute top-3 right-6 h-[40px] rounded-[5px] border border-gray-300 px-[10px] flex items-center bg-[#1E306A] hover:bg-[#2A54AE] text-white shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+      aria-label="이미지 다운로드"
     >
       <HiDocumentDownload
         color="white"
-        className="mr-[2px] text-[1.5em]  p-[1px] rounded-[10px]"
+        className="mr-[6px] text-[1.5em] p-[1px] rounded-[10px] drop-shadow"
       />
+      <span className="font-semibold text-base">다운로드</span>
     </button>
   )
 }

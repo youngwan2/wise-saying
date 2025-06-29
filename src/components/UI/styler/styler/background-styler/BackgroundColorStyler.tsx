@@ -1,5 +1,6 @@
 import { useBackgroundColorStore } from "@/store/stylerStore"
 import { useEffect, useRef, useState } from "react"
+import { createPortal } from 'react-dom'
 
 import { PhotoshopPicker } from "react-color"
 
@@ -7,7 +8,7 @@ export default function BackgroundColorStyler() {
 
     const [displayState, setDisplayState] = useState(false)
     const [previewColor, setPreviewColor] = useState<any>()
-    const {bgColor, setBgColor} = useBackgroundColorStore()
+    const { bgColor, setBgColor } = useBackgroundColorStore()
 
     const previewDivRef = useRef<HTMLDivElement>(null)
 
@@ -22,36 +23,41 @@ export default function BackgroundColorStyler() {
     function onClickSetDisplay() {
         setDisplayState(!displayState)
     }
-
-
     return (
-        <article className="flex justify-between  mt-[0.5em] ">
-            <h2 className="flex items-center text-[1.05em] text-[white] hover:cursor-pointer" onClick={onClickSetDisplay}>
-                <p>배경색</p>
-            </h2>
-            <PhotoshopPicker
-                className={`${displayState
-                    ? 'block fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]'
-                    : 'hidden'
-                    }`}
-                onChange={(color) => setPreviewColor(color)}
-                onCancel={() => {
-                    setDisplayState(!displayState)
-                }}
-                color={previewColor}
-                onAccept={() => {
-                    const color = previewColor.hex
-                    setPreviewColor(color)
-                    setBgColor(color)
-                    setDisplayState(!displayState)
-                }}
-            />
-            <div
-                aria-label="배경색 미리보기"
+        <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700">배경 색상</label>
+
+            <button
+                className="flex items-center justify-between w-full p-3 border border-gray-200 rounded-lg hover:border-gray-300 transition-colors bg-white"
                 onClick={onClickSetDisplay}
-                className="rounded-[5px] h-[26px] w-[26px] bg-white hover:cursor-pointer "
-                ref={previewDivRef}
-            />
-        </article>
+            >
+                <span className="text-gray-700">색상 선택</span>
+                <div
+                    className="w-8 h-8 rounded-md border border-gray-200 cursor-pointer"
+                    style={{ backgroundColor: bgColor }}
+                    ref={previewDivRef}
+                />
+            </button>
+
+            {displayState && createPortal(
+                <div className="fixed inset-0 bg-rgba(0,0,0,0.3) flex items-center justify-center z-[100000000001]">
+                    <div className="relative">
+                        <PhotoshopPicker
+                            onChange={(color) => setPreviewColor(color)}
+                            onCancel={() => {
+                                setDisplayState(!displayState)
+                            }}
+                            color={previewColor}
+                            onAccept={() => {
+                                const color = previewColor.hex
+                                setPreviewColor(color)
+                                setBgColor(color)
+                                setDisplayState(!displayState)
+                            }}
+                        />
+                    </div>
+                </div>
+                , document.body)}
+        </div>
     )
 }

@@ -1,8 +1,5 @@
 import { useQuotesTextAlign } from '@/store/stylerStore'
-import styles from '../../styler.module.css'
-
 import { MouseEvent, useState } from "react"
-
 import { BiAlignLeft, BiAlignMiddle, BiAlignRight } from "react-icons/bi"
 import { HiXMark } from "react-icons/hi2"
 
@@ -11,14 +8,17 @@ const aligns =
     [
         {
             type: 'center',
-            icon: <BiAlignMiddle />
+            icon: <BiAlignMiddle />,
+            label: '가운데'
         }, {
             type: 'right',
-            icon: <BiAlignRight />
+            icon: <BiAlignRight />,
+            label: '오른쪽'
 
         }, {
             type: 'left',
-            icon: <BiAlignLeft />
+            icon: <BiAlignLeft />,
+            label: '왼쪽'
 
         }
     ]
@@ -31,31 +31,53 @@ export default function TextAlignStyler() {
     function onClickSetAlign(e: MouseEvent<HTMLButtonElement>) {
         const type = e.currentTarget.dataset.type || null
         type && setAlign(type)
+        setIsShowOptions(false)
     }
 
     function onClickSetIsShowOptions() {
         setIsShowOptions(!isShowOptions)
     }
 
+    const currentAlign = aligns.find(a => a.type === align) || aligns[0]
+
     return (
-        <>
+        <div className="flex flex-col space-y-2 flex-1 relative">
+            <label className="text-sm font-medium text-gray-700">텍스트 정렬</label>
+
             <button
+                type="button"
                 onClick={onClickSetIsShowOptions}
-                className={
-                    `${styles.align_option_button} ${isShowOptions
-                        ? 'bg-[#91909049] rounded-[5px]'
-                        : ''} hover:text-[#d5d4d4] text-white text-[1.45em] p-[3px] m-[5px]`}>
-                {align === 'center' ? <BiAlignMiddle /> : align === 'left' ? <BiAlignLeft /> : <BiAlignRight />}
-            </button>
-
-            <article
-                className={`${isShowOptions ? 'visible opacity-100' : 'invisible opacity-0'} transition bg-white max-w-[130px] w-full rounded-[10px] shadow-[0_5px_10px_5px_rgba(0,0,0,0.2)] absolute z-[100000] px-[10px] pt-[26px] pb-[10px] text-[1.35em]`}            >
-                <button onClick={onClickSetIsShowOptions} className="absolute right-[1px] top-[1px] text-[0.95em] hover:shadow-[0_0_0_1px_tomato]"><HiXMark /></button>
-                {aligns.map((align) => {
-                    return <button className="mx-[5px] hover:bg-[#d3d3d3] p-[2px]" onClick={onClickSetAlign} data-type={align.type} key={align.type}>{align.icon} </button>
-                })}
-            </article>
-
-        </>
+                className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:border-gray-300 transition-colors bg-white w-full"
+            >
+                <div className="flex items-center gap-2">
+                    {currentAlign.icon}
+                    <span className="text-sm text-gray-700">{currentAlign.label}</span>
+                </div>
+                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>            {isShowOptions && (
+                <div className="absolute bottom-full left-0 right-0 mb-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+                    <div className="p-2">
+                        {aligns.map((alignOption) => (
+                            <button
+                                key={alignOption.type}
+                                className="w-full flex items-center gap-3 p-2 hover:bg-gray-50 rounded transition-colors"
+                                onClick={onClickSetAlign}
+                                data-type={alignOption.type}
+                            >
+                                {alignOption.icon}
+                                <span className="text-sm text-gray-700">{alignOption.label}</span>
+                                {align === alignOption.type && (
+                                    <svg className="w-4 h-4 text-blue-600 ml-auto" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                    </svg>
+                                )}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            )}
+        </div>
     )
 }

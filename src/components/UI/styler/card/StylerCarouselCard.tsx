@@ -3,26 +3,39 @@ import Image from "next/image";
 import { TbTrash } from "react-icons/tb";
 
 interface PropsType {
-    image: string
-    onClickDeleteImage:()=>void
-    onClickSetImage:()=>void
- }
-  
+  image: string
+  onClickDeleteImage: () => void
+  onClickSetImage: () => void
+}
 
- const DEFAULT_IMG_SIZE = { width: 230, height: 230 }
 
-export default function StylerCarouselCard({image, onClickDeleteImage, onClickSetImage}:PropsType) {
-return (
-    <div className='relative group'>
-    <button onClick={onClickDeleteImage} className='group-hover:visible  invisible p-[3px] text-white text-[1.8em] bg-[#1f1f1f] hover:text-[#b2b1b1] absolute bottom-[0] right-[10px]' ><TbTrash /> </button>
-    <Image
-      onClick={onClickSetImage}
-      className="shadow-[0_0_20px_10px_rgba(0,0,0,0.1)] rounded-[5px] mx-[10px] hover:cursor-pointer bg-[#fafafa] max-h-[250px] max-w-[250px] min-w-[250px] w-full "
-      key={image}
-      src={image}
-      alt="명언 카드 배경 이미지"
-      width={DEFAULT_IMG_SIZE.width}
-      height={DEFAULT_IMG_SIZE.height}
-    ></Image>
-  </div>
-)}
+const DEFAULT_IMG_SIZE = { width: 230, height: 230 }
+
+export default function StylerCarouselCard({ image, onClickDeleteImage, onClickSetImage }: PropsType) {
+  return (
+    <div className='relative group flex-shrink-0 mx-3'>
+      <button
+        onClick={onClickDeleteImage}
+        className='opacity-0 group-hover:opacity-100 transition-opacity duration-200 
+                   absolute -top-2 -right-2 z-10
+                   bg-red-500 hover:bg-red-600 text-white 
+                   rounded-full w-8 h-8 flex items-center justify-center
+                   border-2 border-white shadow-sm'
+      >
+        <TbTrash className="text-sm" />
+      </button>
+
+      <Image
+        onClick={onClickSetImage}
+        className="border border-gray-200 rounded-lg cursor-pointer 
+                   bg-white hover:border-blue-400 transition-colors duration-200
+                   w-64 h-48 object-cover"
+        key={image}
+        src={image}
+        alt="명언 카드 배경 이미지"
+        width={DEFAULT_IMG_SIZE.width}
+        height={DEFAULT_IMG_SIZE.height}
+      />
+    </div>
+  )
+}

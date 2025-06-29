@@ -1,25 +1,17 @@
 "use client"
-import styles from './styler.module.css'
-
 import { ChangeEvent, useState } from "react";
 import { useQuotesTextOptions } from '@/store/stylerStore';
-
 import TextLineHeightStyler from "./styler/text-styler/TextLineHeightStyler";
 import TextPositionStyler from "./styler/text-styler/TextPositionStyler";
 import TextLengthStyler from "./styler/text-styler/TextLengthStyler";
 import { HiAdjustmentsHorizontal, HiXMark } from "react-icons/hi2";
-
 import { debounceCloser } from "@/utils/common-func";
-
-
 
 export default function TextSettingOptions() {
     const [isShowOptions, setIsShowOptions] = useState(false)
-
     const setTextOptions = useQuotesTextOptions((state) => state.setTextOption)
     const textOptions = useQuotesTextOptions()
 
-    /** 텍스트 설정 옵션   */
     function onTextOptionToggle() {
         setIsShowOptions(!isShowOptions)
     }
@@ -30,15 +22,33 @@ export default function TextSettingOptions() {
     }
 
     return (
-        <>
-            <button onClick={onTextOptionToggle}
-                className={`${styles.text_option_button}  ${isShowOptions ? 'bg-[#91909049] rounded-[5px]' : ''} hover:text-[#d5d4d4] text-white text-[1.48em] pl-0 p-[3px] ml-[0.8em] m-[5px]`}><HiAdjustmentsHorizontal /> </button>
-            <article className={`${isShowOptions ? 'visible opacity-100' : 'invisible opacity-0'} transition bg-white max-w-[300px] w-full rounded-[10px] shadow-[0_5px_10px_5px_rgba(0,0,0,0.2)] absolute z-[100000] px-[10px] py-[15px]`}>
-                <button onClick={onTextOptionToggle} className="absolute right-1 top-1 text-[1.2em] hover:shadow-[0_0_0_1px_tomato]"><HiXMark /></button>
-                <TextPositionStyler textOptions={textOptions} onSetOption={onSetOptions} />
-                <TextLineHeightStyler textOptions={textOptions} onSetOption={onSetOptions} />
-                <TextLengthStyler textOptions={textOptions} onSetOption={onSetOptions} />
-            </article>
-        </>
+        <div className="flex flex-col space-y-2 flex-1 relative">
+            <label className="text-sm font-medium text-gray-700">고급 설정</label>
+
+            <button
+                type="button"
+                onClick={onTextOptionToggle}
+                className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:border-gray-300 transition-colors bg-white w-full"
+            >                <div className="flex items-center gap-2">
+                    <HiAdjustmentsHorizontal className="text-lg text-gray-600" />
+                    <span className="text-sm text-gray-700">고급 설정</span>
+                </div>
+                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>            {isShowOptions && (
+                <div className="absolute bottom-full left-0 right-0 mb-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 p-4 space-y-4">
+                    <button
+                        onClick={onTextOptionToggle}
+                        className="absolute right-2 top-2 p-1 hover:bg-gray-100 rounded transition-colors"
+                    >
+                        <HiXMark className="w-4 h-4 text-gray-500" />
+                    </button>
+                    <TextPositionStyler textOptions={textOptions} onSetOption={onSetOptions} />
+                    <TextLineHeightStyler textOptions={textOptions} onSetOption={onSetOptions} />
+                    <TextLengthStyler textOptions={textOptions} onSetOption={onSetOptions} />
+                </div>
+            )}
+        </div>
     )
 }

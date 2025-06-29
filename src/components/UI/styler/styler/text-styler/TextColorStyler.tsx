@@ -1,9 +1,7 @@
-import styles from '../../styler.module.css'
-
-import { useState, useEffect, useRef } from 'react'
-
+import { useState } from 'react'
+import { createPortal } from 'react-dom'
 import { TextStyleType } from './TextStyler'
-import { PhotoshopPicker} from 'react-color'
+import { PhotoshopPicker } from 'react-color'
 import { useQuotesTextStyleStore } from '@/store/stylerStore'
 
 
@@ -17,45 +15,46 @@ export default function TextColorStyler({
 }: PropsType) {
   const [displayState, setDisplayState] = useState(false)
   const [confirmedColor, setConfirmedColor] = useState<any>()
-  const previewInputRef = useRef<HTMLInputElement>(null)
 
-  const {size,color,unit} = useQuotesTextStyleStore()
-
-  useEffect(() => {
-    if (previewInputRef.current) {
-      const inputEl = previewInputRef.current
-      inputEl.style.cssText = `background:${color}; `
-    }
-  }, [color, size, unit])
+  const { color } = useQuotesTextStyleStore()
 
   return (
-    <article className={`${styles.font_color} w-[50px]`}>
-      {/* 글자색 미리보기 */}
-      <article className="flex w-full flex-col" onClick={()=> setDisplayState(true)}>
-        <h2 className=" flex items-center text-[1.2em] text-[white] relative">
-          <p className="ml-[0.5em]" aria-label='글자색 선택도구 제목'>T</p>
-        </h2>
-        <p
-          aria-label="글자 색 미리보기"
-          className="p-[4px] h-[4px] rounded-[20px] w-[28px] text-center bg-white"
-          ref={previewInputRef}
-        >
-        </p>
-      </article>
+    <div className="flex flex-col space-y-2 flex-1">
+      <label className="text-sm font-medium text-gray-700">텍스트 색상</label>
 
-      {/* 글자색 변경(컬러 선택기) */}
-      <PhotoshopPicker
-        className={`${displayState?'block':'hidden'} fixed left-[50%] translate-x-[-50%] top-0 z-[100000]`}
-        onChange={(color) => setConfirmedColor(color)}
-        onCancel={() => setDisplayState(false)}
-        color={confirmedColor}
-        onAccept={() => {
-          const color = confirmedColor?.hex || ''
-          setConfirmedColor(color)
-          setDisplayState(false)
-          setTextStyleState({ ...textStyle, color })
-        }}
-      />
-    </article>
+      <button
+        type="button"
+        className="flex items-center gap-3 px-3 py-[0.41rem] border border-gray-200 rounded-lg hover:border-gray-300 transition-colors bg-white w-full"
+        onClick={() => setDisplayState(true)}
+      >
+        <div className="flex items-center gap-2">
+          <span className="text-lg font-bold text-gray-700">T</span>
+          <div
+            className="w-6 h-6 rounded border border-gray-200"
+            style={{ backgroundColor: color }}
+          />
+        </div>
+        <span className="text-sm text-gray-600">색상 선택</span>
+      </button>      {displayState &&
+        createPortal(
+          <div className="fixed inset-0 bg-[rgba(0,0,0,0.3)] flex items-center justify-center z-[9999999999999999]">
+            <div className="relative">
+              <PhotoshopPicker
+                onChange={(color) => setConfirmedColor(color)}
+                onCancel={() => setDisplayState(false)}
+                color={confirmedColor}
+                onAccept={() => {
+                  const color = confirmedColor?.hex || ''
+                  setConfirmedColor(color)
+                  setDisplayState(false)
+                  setTextStyleState({ ...textStyle, color })
+                }}
+              />
+            </div>
+          </div>,
+          document.body
+        )
+      }
+    </div>
   )
 }
