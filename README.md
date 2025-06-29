@@ -21,67 +21,39 @@
 ## 📟 배포 아키텍처
 ![위대한말 아키텍처](https://github.com/user-attachments/assets/074a67d2-976f-472a-bb42-70cb0aaf3bc2)
 <br><br>
-## ⚙ 기능
-- #### Access + Refresh 기반 JWT 로그인
-  - json-web-token 을 사용하여 구현된 로그인 기능입니다. accessToken 이 만료 되기 1분 전에 refreshToken 을 서버로 전송하여 토큰을 재발급하도록 구현하였습니다. 만일 요청이 늦어 사용자가 현재 하는 작업을 이어갈 수 없을 경우를 대비하여 수동으로 토큰을 재발급할 수 있도록 별도 요청 버튼을 추가하였습니다.
-    ![image](https://github.com/user-attachments/assets/de150192-ccef-46a4-9bbe-1835163d6c09)
-    ![image](https://github.com/user-attachments/assets/f0829847-2c72-4154-a39e-937a7283f458)
 
-- #### 공지사항 기능(24.08.25 추가)
-  - 일반적인 공지사항 게시판 입니다. Editor.js 를 이용해 편집기를 구현하였습니다. 관리자 권한을 가진 경우에만 등록, 수정 등이 가능하도록 제한을 두었습니다.
-  ![image](https://github.com/user-attachments/assets/64b711db-7c54-449a-b05f-123f69934ae9)
-  ![image](https://github.com/user-attachments/assets/ad70a435-683d-4013-adfb-47295dfd2c4c)
+## 🖼 데모/핵심 기능
+### 홈
+![home](https://github.com/user-attachments/assets/b7a2cf19-07b6-466e-a9a5-deff878b46b8)
 
-- #### 버튼형 무한 스크롤
-  - SWR 의 useInfiniteQuery 를 사용하여 구현되었습니다.
-  - 조회된 명언의 끝 지점에 도달하면, 더보기 버튼을 클릭하여 추가 목록을 불러오도록 구현되어 있습니다. 해당 기능은 목록을 조회하는 모든 페이지에 공통되게 적용됩니다. 마지막 페이지에 도달하면 '종착지'라 텍스트가 변경됩니다.
-  ![image](https://github.com/user-attachments/assets/e939c913-ba1d-45c8-bfcb-51fd95034b67)
-  ![image](https://github.com/user-attachments/assets/99f9ed9b-a97c-440b-b191-efee4f9f0584)
+### 명언 꾸미기
+- 명언 카드를 꾸미는 기능은 두 가지가 있습니다. 버전1은 과거에 만든 것으로 실제 사용자가 선택한 명언을 직접 커스텀하여 꾸미기 위해 제공됩니다.
+- 버전2는 최근 새로 추가된 기능으로 사용자가 원하는 명언 카드를 버전1에 비해 자유도가 높고, 사용자가 주어진 명언 목록 중 선택한 것과는 별개로 독립적으로 사용할 수 있는 에디터 서비스 입니다.
+#### 버전1(Old)
+![editor1](https://github.com/user-attachments/assets/02f292dc-8fac-4379-b37e-906f70ac72a7)
 
-- #### 명언 TTS
-  - HTML5 스피치 API 를 사용하여 구현되었습니다.
-  - 각 명언을 음성으로 들을 수 있고, 현재 음성의 진행도를 시각적으로 확인할 수도록 하여 사용성을 높였습니다.
-  ![image](https://github.com/user-attachments/assets/7315df89-bde4-43d4-b8b9-7d1c62615caa)
 
-- #### 명언 꾸미기 및 다운로드
-  - 마음에 드는 명언을 선택하여 꾸밀 수 있습니다. HTML5 의 Canvas API 를 사용하여 구현되었으며, 각 편집 도구의 상태를 전역 관리하기 위해 Zustand 를 사용하였습니다.
-  - 24개의 기본 이미지를 통해 카드의 배경을 만들 수 있으며, 사용자가 원한다면 추가적인 이미지를 업로드하여 사용할 수 있습니다.
-  - 완성된 명언은 .png 형식으로 다운로드할 수 있습니다.
-  ![image](https://github.com/user-attachments/assets/295648cd-5603-4f8b-91dd-e26e7df9b926)
-  ![image](https://github.com/user-attachments/assets/13f48a9d-4061-405a-a475-796175587e37)
+#### 버전2(New - 2025.06.29 기준 추가)
+- 과거 버전은 편집도구를 기반으로 텍스트 및 도형 편집이 가능했으나, 버전2부터는 마우스 드래그를 통해 동적으로 텍스트 및 도형의 위치 변경과 사이즈 변경이 가능해짐
 
-- #### 명언 확대 기능
-  - 보다 분위기 있는 상태에서 명언을 감상하기 위해 별도의 확대 기능을 제공합니다. 
-  - 확대 시 리스트에 있는 명언 카드가 사라지고, 어두워진 화면에 카드가 나타나며 분절된 텍스트가 순차적으로 렌더링 되며 밑줄이 끄어지는 애니메이션이 보여집니다.
-    ![image](https://github.com/user-attachments/assets/cdf06010-d5b7-4745-b7a5-496fd2b797e0)
-    ![image](https://github.com/user-attachments/assets/7104adb3-ffd5-433f-821c-8fd91aec5592)
+![editor2](https://github.com/user-attachments/assets/c29d9444-f310-40f8-8b98-7ec72b2b5ddb)
 
-- #### 명언 좋아요
-  - 사용자는 자신이 원하는 명언을 발견하면, 좋아요 기능을 통해 평가할 수 있습니다.
 
-- #### 댓글과 대댓글 기능
-  - 명언 세부 페이지에 접속하면, 해당 명언에 대한 감상을 댓글로 남길 수 있고, 다른 유저가 해당 댓글에 대댓글을 남길 수 있습니다. 원본 댓 사용자가 댓글을 삭제하면, 대댓글 유저의 댓글도 데이터베이스에서 연쇄적으로 삭제됩니다.
+- ※ 참고) 모바일 버전에서는 편집도구의 레이아웃이 아래와 같이 바뀝니다.
 
-- #### 명언 북마크 기능
-  - 사용자는 자신이 원하는 명언을 선택하여 북마크에 저장할 수 있습니다. 저장된 명언을 클릭하면, 해당 명언의 세부 페이지로 이동합니다.
-
-- #### AI 명언 해석 기능/욕설 필터링 기능/명언 챗봇 기능
-  - **AI 명언 해석 기능**: GPT 4o mini 를 연동하여, 현재 사용자가 감상하고 있는 명언이 어떤 의미인지 궁금하다면 해석된 데이터를 받아볼 수 있습니다.
-    ![image](https://github.com/user-attachments/assets/83b01321-881d-484f-b495-280504527408)
-  - **명언 챗봇 기능**:  GPT 4o mini 를 연동하여, 사용자가 원하는 주제의 명언을 생성하여 받아볼 수 있습니다.
-    ![image](https://github.com/user-attachments/assets/554e163f-ab20-4b35-a1e9-3bcd8d3588f0)
-
-- #### 회원가입/비밀번호 찾기 기능
-  - ##### 회원가입
-    - 회원가입 시 본인인증을 위해 이메일 인증을 거쳐야 합니다. 이메일의 도메인의 유효성 및 DNS 조회를 통해 유효한 경우에만 4자리 번호를 사용자의 이메일로 전송합니다.
-    - 시간 제한이 있고, 해당 시간 내에 인증을 완료하지 못하면, 인증번호가 메모리 상(Redis 메모리)에서 제거되므로 재인증 요청을 해야 합니다.
-    ![image](https://github.com/user-attachments/assets/471c3c09-4a0c-4468-a12c-a63d4be0c5c9)
-
-  - ##### 비밀번호 찾기 기능
-    - 비밀번호 찾기 기능 시 DB에 저장이 되어 있고, 유효한 이메일 도메인인 경우에 해당 이메일로 비밀번호를 재설정할 수 있는 주소를 전달합니다.
-    - 임시 토큰 형태(accessToklen 을 재사용한 형태)로 7분 이내 만료하지 못하면, 토큰이 만료되어 인증 절차를 재시도해야 합니다.
-    ![image](https://github.com/user-attachments/assets/7774197c-30eb-4102-bcdc-8a11caec1a6d)
+![image](https://github.com/user-attachments/assets/0827c725-45d9-48eb-9f9a-2717ddf547de)
 <br><br>
+### 명언 생성 챗봇
+![chat](https://github.com/user-attachments/assets/6e10fa91-f647-4e9f-90cb-46a1dbb59899)
+<br><br>
+
+### 무한스크롤 및 명언 확대 기능
+![scroll](https://github.com/user-attachments/assets/283542eb-51e5-4983-8371-a7f9273ad988)
+
+
+### 기타
+- access+refresh 토큰 기반의 일반 로그인 북마크, 좋아요, 마이페이지, 댓글/대댓글 등의 기본기능 제공
+
 ## 🧰 기술스택
 |      사용 스텍       | 비고                                                                                                                                                                                                        |
 | :------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
