@@ -1,58 +1,36 @@
-```
-비고: 기존 역할과 기능이 애매모호했던 로직들을 분리하기 위해 리팩터링 진행중
-```
-## 📓 프로젝트 명
-wise sayings (위대한 말)
-![제목을-입력해주세요_-001](https://github.com/youngwan2/wise-saying/assets/107159871/f08ea653-2f8f-4788-b3b0-25ad7204b403)
-
+# 📓 wise sayings (위대한 말)
 ## 👁‍🗨 프로젝트 개요
-※ 명언은 계속 추가 됩니다. 
-- 약 800개가 넘는 명언 목록을 조회하고, 자신만의 명언 카드를 커스텀하여 공유할 수 있는 차분한 앱 디자인 느낌의 웹 사이트
-  
-## 🎫 프로젝트 목적과 방향성
-- [목적] 국내, 국외에도 많은 명언 웹이나 앱이 존재 합니다. 하지만, 너무 번잡하고 광범위한 정보를 다루려다 보니 마음에 드는 명언을 곱심으며 감상하기에는 사용자의 시선을 많이 분산시킵니다. 따라서 저는 마음에 드는 명언을 선택하여 차분한 마음으로 집중할 수 있는 환경을 만들고자 했습니다.
-
+- 명언 목록을 조회하고, 마음에 드는 명언을 선택해서 음성으로 체험하고, 어려운 명언은 AI가 숨은 의미를 설명해주는 바쁜 일상에 지친 모두를 위한 차분한 느낌의 사이트
+- 모바일 친화적으로 만들어져 웹과 모바일에서 이질감없이 이용할 수 있도록 구성
+![제목을-입력해주세요_-001](https://github.com/youngwan2/wise-saying/assets/107159871/f08ea653-2f8f-4788-b3b0-25ad7204b403)
+<br><br>
+## 🎫 프로젝트 목적
+- **[목적]** 국내, 국외에도 많은 명언 웹이나 앱이 존재 합니다. 하지만, 너무 번잡하고 광범위한 정보를 다루려다 보니 마음에 드는 명언을 곱심으며 감상하기에는 사용자의 시선을 많이 분산시킵니다. 따라서 저는 마음에 드는 명언을 선택하여 차분한 마음으로 집중할 수 있는 환경을 만들고자 했습니다.
+<br><br>
 ## 📅 개발 기간/유지보수
 - (개발기간) 2023년 12월 15일 ~ 2024년 4월 21일
 - (유지보수) 2024년 4월 15일 ~
-
+<br><br>
+## 📒문서
+- [트러블슈팅 <링크>](https://youngwan2.notion.site/1f968acd779b808a8248d9a12bfb741e)
+- [배포 히스토리- GithubActions 을 통한 CI 와 AWS CodePipeline (CodeDeploy)을 통한 CD 구축](https://duklook.tistory.com/563?category=1169621)
+<br><br>
 ## 🔥 배포
-- 배포 과정 : https://duklook.tistory.com/563
-- 배포: [https://wise-sayings.com](https://wise-sayings.com/)
-- 배포 아키텍처
-```mermaid
-sequenceDiagram
-    participant Dev as Developer
-    participant GH as GitHub
-    participant GHA as GitHub Actions
-    participant S3
-    participant CP as CodePipeline
-    participant CD as CodeDeploy
-    participant EC2
-
-    Dev->>GH: Push code
-    GH->>GHA: Trigger workflow
-    GHA->>GHA: Build Next.js app
-    GHA->>S3: Upload build artifacts
-    S3->>CP: Trigger pipeline
-    CP->>S3: Fetch artifacts
-    CP->>CD: Start deployment
-    CD->>EC2: Deploy application
-    EC2->>EC2: Start Next.js server
-    Dev->>EC2: Access application
- ```
-## ⚙ 구현된 기능
+- 데모(비용 문제로 닫힘): [https://wise-sayings.com](https://wise-sayings.com/)
+<br><br>
+## 📟 배포 아키텍처
+![위대한말 아키텍처](https://github.com/user-attachments/assets/074a67d2-976f-472a-bb42-70cb0aaf3bc2)
+<br><br>
+## ⚙ 기능
 - #### Access + Refresh 기반 JWT 로그인
   - json-web-token 을 사용하여 구현된 로그인 기능입니다. accessToken 이 만료 되기 1분 전에 refreshToken 을 서버로 전송하여 토큰을 재발급하도록 구현하였습니다. 만일 요청이 늦어 사용자가 현재 하는 작업을 이어갈 수 없을 경우를 대비하여 수동으로 토큰을 재발급할 수 있도록 별도 요청 버튼을 추가하였습니다.
     ![image](https://github.com/user-attachments/assets/de150192-ccef-46a4-9bbe-1835163d6c09)
     ![image](https://github.com/user-attachments/assets/f0829847-2c72-4154-a39e-937a7283f458)
 
-
 - #### 공지사항 기능(24.08.25 추가)
   - 일반적인 공지사항 게시판 입니다. Editor.js 를 이용해 편집기를 구현하였습니다. 관리자 권한을 가진 경우에만 등록, 수정 등이 가능하도록 제한을 두었습니다.
   ![image](https://github.com/user-attachments/assets/64b711db-7c54-449a-b05f-123f69934ae9)
   ![image](https://github.com/user-attachments/assets/ad70a435-683d-4013-adfb-47295dfd2c4c)
-
 
 - #### 버튼형 무한 스크롤
   - SWR 의 useInfiniteQuery 를 사용하여 구현되었습니다.
@@ -65,14 +43,12 @@ sequenceDiagram
   - 각 명언을 음성으로 들을 수 있고, 현재 음성의 진행도를 시각적으로 확인할 수도록 하여 사용성을 높였습니다.
   ![image](https://github.com/user-attachments/assets/7315df89-bde4-43d4-b8b9-7d1c62615caa)
 
-
 - #### 명언 꾸미기 및 다운로드
   - 마음에 드는 명언을 선택하여 꾸밀 수 있습니다. HTML5 의 Canvas API 를 사용하여 구현되었으며, 각 편집 도구의 상태를 전역 관리하기 위해 Zustand 를 사용하였습니다.
   - 24개의 기본 이미지를 통해 카드의 배경을 만들 수 있으며, 사용자가 원한다면 추가적인 이미지를 업로드하여 사용할 수 있습니다.
   - 완성된 명언은 .png 형식으로 다운로드할 수 있습니다.
   ![image](https://github.com/user-attachments/assets/295648cd-5603-4f8b-91dd-e26e7df9b926)
   ![image](https://github.com/user-attachments/assets/13f48a9d-4061-405a-a475-796175587e37)
-
 
 - #### 명언 확대 기능
   - 보다 분위기 있는 상태에서 명언을 감상하기 위해 별도의 확대 기능을 제공합니다. 
@@ -82,15 +58,12 @@ sequenceDiagram
 
 - #### 명언 좋아요
   - 사용자는 자신이 원하는 명언을 발견하면, 좋아요 기능을 통해 평가할 수 있습니다.
-    ![image](https://github.com/user-attachments/assets/a9cdfb6c-7caa-4f39-8c8d-98200fd35988)
 
 - #### 댓글과 대댓글 기능
   - 명언 세부 페이지에 접속하면, 해당 명언에 대한 감상을 댓글로 남길 수 있고, 다른 유저가 해당 댓글에 대댓글을 남길 수 있습니다. 원본 댓 사용자가 댓글을 삭제하면, 대댓글 유저의 댓글도 데이터베이스에서 연쇄적으로 삭제됩니다.
-    ![image](https://github.com/user-attachments/assets/eadae940-3701-44e2-a41a-e29a791885f3)
 
 - #### 명언 북마크 기능
   - 사용자는 자신이 원하는 명언을 선택하여 북마크에 저장할 수 있습니다. 저장된 명언을 클릭하면, 해당 명언의 세부 페이지로 이동합니다.
-    ![image](https://github.com/user-attachments/assets/c1fadfba-284a-461a-9a5c-4d8f83efc280)
 
 - #### AI 명언 해석 기능/욕설 필터링 기능/명언 챗봇 기능
   - **AI 명언 해석 기능**: GPT 4o mini 를 연동하여, 현재 사용자가 감상하고 있는 명언이 어떤 의미인지 궁금하다면 해석된 데이터를 받아볼 수 있습니다.
@@ -108,24 +81,8 @@ sequenceDiagram
     - 비밀번호 찾기 기능 시 DB에 저장이 되어 있고, 유효한 이메일 도메인인 경우에 해당 이메일로 비밀번호를 재설정할 수 있는 주소를 전달합니다.
     - 임시 토큰 형태(accessToklen 을 재사용한 형태)로 7분 이내 만료하지 못하면, 토큰이 만료되어 인증 절차를 재시도해야 합니다.
     ![image](https://github.com/user-attachments/assets/7774197c-30eb-4102-bcdc-8a11caec1a6d)
-
-- #### 마이페이지
-  - **프로필**: 사용자는 자신의 프로필 이미지와 닉네임을 확인하고, 필요하다면 변경할 수 있습니다.
-    ![image](https://github.com/user-attachments/assets/c24a236d-693c-4976-b6c7-1cb2b71fc868)
-  - **나의 명언**: 사용자가 북마크에 추가한 명언을 확인할 수 있습니다. 필요하다면 그 자리에서 수정 및 삭제가 가능합니다.
-    ![image](https://github.com/user-attachments/assets/bfebd00d-55ee-4c6c-87bc-b86875059dbd)
-  - **비밀번호 수정/탈퇴**: 사용자는 비밀번호 수정과 탈퇴가 가능합니다. 탈퇴 시 본인이 작성한 모든 명언 목록도 같이 삭제 됩니다.
-    ![image](https://github.com/user-attachments/assets/69b6828f-55a3-436b-b159-0b236a804a25)
-
-- #### 액세스 토큰/리프레쉬 토큰 기반의 로그인
-  - 사용자가 로그인하게 되면 액세스 토큰과 리프레쉬 토큰을 발급받아 리프레쉬 토큰은 쿠키에 저장되고, 액세스 토큰은 클라이언트의 sessionStorage 에 저장됩니다.
-  - 액세스 토큰은 최소 7분 이상 유효하게 설정해두며, 만료 1분 전에 재발급 됩니다.
-  - 권한이 필요한 모든 요청에는 액세스 토큰에 대한 검증을 실시하고, 통과하지 못한 경우에는 클라이언트의 요청을 처리하지 않습니다.
-   
-## 🧰 프레임워크 / 라이브러리 / 그 외 도구
-
-### 프론트엔드/백엔드
-
+<br><br>
+## 🧰 기술스택
 |      사용 스텍       | 비고                                                                                                                                                                                                        |
 | :------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 |    Typeccript(^5.4.2)    | (언어) 타입 안정성을 높이고, 코드 가독성 향상 이점 및 Next 팀에서 적용할 것을 권장하는 점을 참고 후 적용                                                                                                           |
@@ -134,13 +91,10 @@ sequenceDiagram
 | Tailwindcss(^3.4.1)  | (CSS 프레임워크) 미리 스타일이 정의된 클래스를 기반으로 빠르게 CSS를 프로젝트에 적용하기 위해 적용                                                                                                                 |
 |   Zustand(^4.5.2)    | (전역 상태관리) 단순한 상태의 전역 관리를 컴포넌트 단위로 쉽고, 빠르게 적용할 수 있는 이점이 있어서 활용                                                                                                           |
 |     Swr(^2.2.5)      | (서버 상태관리) Tanstack Query/react에 비해 가볍고, NextJS 팀에서 개발하여 기존 프로젝트와의 호환성이나 유지보수 측면에서도 유리할 것으로 판단하였고, 실시간 데이터 처리 및 캐싱처리가 필요한 기능처리를 위해 활용 |
-| React icons(^5.0.1) | 다양한 아이콘을 하나의 패키지에서 고                                                                                                                                              |
-| :------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| React icons(^5.0.1) | 아이콘 라이브러리 |
 |   Github Actions   | 레포지토리에 저장된 프로젝트 파일을 빌드하고, .zip 으로 압축 후 AWS S3에 배포하는 전 과정을 자동화하기 위해 사용 | 
-
-
+<br><br>
 ## 🗂️ 프로젝트 구조
-- ※ 현재 리팩터링과 추가적인 기능 개선에 따라서 달라질 수 있습니다.
 ```
 📦src
  ┣ 📂app
