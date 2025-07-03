@@ -4,10 +4,11 @@
 
 ## 📚 가이드 목록
 
-- [모바일 하단 시트 스타일러 구현 가이드](./guides/mobile-bottom-sheet-styler-guide.md)
-- [반응형 캔버스 에디터 구현 가이드](./guides/responsive-canvas-guide.md)
-- [Next.js + Redis 설치 및 연동 가이드](./guides/nextjs-redis-install-guide.md)
-- [명언 카드 에디터 기능 가이드](./guides/quote-card-editor.md)
+- [모바일 하단 시트 스타일러 구현 가이드](./mobile-bottom-sheet-styler-guide.md)
+- [반응형 캔버스 에디터 구현 가이드](./responsive-canvas-guide.md)
+- [Next.js + Redis 설치 및 연동 가이드](./nextjs-redis-install-guide.md)
+- [TTS(음성 듣기) 기능 구현 가이드](./tts-guide.md)
+- [명언 카드 에디터 기능 가이드](./quote-card-editor.md)
 
 ## 📝 Fabric.js 활용 가이드
 
