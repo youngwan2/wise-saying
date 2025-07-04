@@ -32,6 +32,7 @@
 ### 🏠 홈
 ![home](https://github.com/user-attachments/assets/75614865-ede6-4deb-a194-bac75242032b)
 
+<br><br>
 
 ### 🔊 명언 TTS (음성 듣기)
 - **명언 TTS(음성 듣기)**: 각 명언 카드, 오늘의 명언, 상세 페이지, AI 명언생성 챗봇 등에서 Web Speech API 기반 커스텀 훅(`useTTS`)을 구현 후 재사용하였습니다. 
@@ -40,6 +41,7 @@
     - [TTS(음성 듣기) 기능 구현 가이드 보기](./guides/tts-guide.md)
 
 ![tts](https://github.com/user-attachments/assets/010f1f27-0925-4d54-be1e-bdd3505e7ea1)/
+<br><br>
 
 ### 🖌 명언 꾸미기 (카드 에디터)
 
@@ -62,12 +64,14 @@
 📱 **모바일 대응**: 모바일 환경에서도 하단 시트, 드래그 핸들, 퀵 버튼 등으로 편리하게 사용할 수 있도록 UX를 최적화하였습니다.
 
 ![image](https://github.com/user-attachments/assets/0827c725-45d9-48eb-9f9a-2717ddf547de)
+<br><br>
 
 ### 💬 AI 명언
 #### 명언 챗봇
 - OpenAI API와 연동하여 대화형으로 명언을 생성할 수 있도록 구현하였습니다. (`src/app/(main)/_components/QuoteChatBot.tsx`)
 
 ![chat](https://github.com/user-attachments/assets/6e10fa91-f647-4e9f-90cb-46a1dbb59899)
+<br><br>
 
 #### 명언 해석
 - **(추가 배경)**: 명언은 때로는 추상적이고 은유적인 표현으로 인해 이해하기 어려운 문제가 있습니다. 처음 사이트를 개발 후 배포 했을 때, 이에 대한 건의 사항을 수집하였고, 사용자 경험을 개선하기 위해 도입되었습니다.
@@ -76,6 +80,7 @@
 
 ![aides](https://github.com/user-attachments/assets/8cfbddcc-f9d8-40af-b573-a9e3d731513e)
 
+<br><br>
 
 ### 📜 무한스크롤 및 확대 기능
 #### 버튼형 무한스크롤
@@ -90,19 +95,6 @@
 - 해당 기능은  사용자는 보다 명언의 감상에 집중할 수 있습니다.
   
 ![sizeup](https://github.com/user-attachments/assets/b55b4c50-b3eb-4e92-89bc-fb9cc9219aa5)
-
-
-
-
-
-### 🆕 그 외
-- **명언 AI 해석**: 명언이 어려운 경우 AI가 해석을 제공해 드립니다. (`src/app/(main)/_components/QuoteCard.tsx`)
-- **카드 이미지 업로드/배경 변경**: StylerImageUploadForm, BackgroundSizeStyler 등에서 이미지 업로드 및 배경 스타일링을 지원합니다.
-- **추천 사이즈/프리셋**: SizeSelector, RecommandSizeList에서 인스타그램, 유튜브 등 다양한 소셜미디어 프리셋을 제공합니다.
-- **상태관리**: Zustand를 기반으로 전역 상태를 관리합니다. (`src/store/stylerStore.ts`)
-- **Redis 연동**: Next.js 서버에서 redis를 활용하여 세션 및 캐시를 관리합니다. (`src/utils/redis.ts`)
-- **SSR 안전성**: 모든 document, window 접근은 isMounted 등 클라이언트 체크 후에만 처리하여 SSR 환경에서도 안전하게 동작합니다.
-- **가이드 문서**: guides/ 폴더에 모바일, 반응형, Redis 등 상세 구현 가이드를 제공하고 있습니다.
 
 <br><br>
 ## 📟 배포 및 아키텍처
