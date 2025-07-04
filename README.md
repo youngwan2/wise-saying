@@ -25,40 +25,37 @@
 - **개발 기간**: 2023.12.15 ~ 2024.04.21  
 - **유지보수**: 2024.04.15 ~
 <br><br>
-## 🧱 핵심 기능 데모 (GIF)
+## 🧱 GIF 데모/기능 설명
 
 아래는 주요 기능별 데모와 실제 구현 방식 요약입니다.
 
 ### 🏠 홈
+![home](https://github.com/user-attachments/assets/75614865-ede6-4deb-a194-bac75242032b)
 
-- **명언 리스트, 무한스크롤, 검색**: `src/app/(main)/page.tsx`, `src/app/(main)/_components/QuoteList.tsx` 등에서 SWR 기반 데이터 패칭과 무한스크롤 구현.
-
----
 
 ### 🔊 명언 TTS (음성 듣기)
-
-- **명언 TTS(음성 듣기)**: 각 명언 카드, 오늘의 명언, 상세/AI 대화 등에서 Web Speech API 기반 커스텀 훅(`useTTS`) 사용
+- **명언 TTS(음성 듣기)**: 각 명언 카드, 오늘의 명언, 상세 페이지, AI 명언생성 챗봇 등에서 Web Speech API 기반 커스텀 훅(`useTTS`)을 구현 후 재사용하였습니다. 
     - 사용 컴포넌트: `QuoteCard`, `TodayQuoteList`, `DetailPageControlButtons`, `ConversationList`
-    - 구현 파일: `src/components/UI/quote/card/QuoteCard.tsx`, `src/components/UI/quote/list/TodayQuoteList.tsx`, `src/components/UI/detail-quote/button/DetailPageControlButtons.tsx`, `src/components/UI/ai-quote/ConversationList.tsx`
     - 커스텀 훅: `src/custom/useTTS.tsx` (Web Speech API로 음성합성, 진행률, 재생상태 등 제공)
     - [TTS(음성 듣기) 기능 구현 가이드 보기](./guides/tts-guide.md)
 
----
+![tts](https://github.com/user-attachments/assets/010f1f27-0925-4d54-be1e-bdd3505e7ea1)/
 
 ### 🖌 명언 꾸미기 (카드 에디터)
 
 #### 버전1 (Old)
-- 기본 텍스트/배경 편집, 단순 스타일 적용(`src/app/(canvas-editor)/_components/EditorCanvas.tsx` 등)
+- 기본 텍스트/배경 편집, 단순 스타일 적용(`src/app/(canvas-editor)/_components/EditorCanvas.tsx` 등)이 가능한 에디터 입니다. 구 버전으로 표기하기는 했지만, 각 명언 카드를 사용자가 직접 꾸밀 때 여전히 사용됩니다.
 
 ![editor1](https://github.com/user-attachments/assets/02f292dc-8fac-4379-b37e-906f70ac72a7)
 
-#### 버전2 (New - 2025.06.29 추가)
-- **모듈화/반응형**: ToolPanel, SizeSelector, ShapeToolsPanel 등으로 분리(`src/app/(canvas-editor)/_components/`)
-- **모바일 대응**: MobileToolModal, MobileFloatingButtons 등으로 하단 시트/모달 UI(`src/app/(canvas-editor)/_components/`)
-- **드래그/사이즈 조절**: fabric.js 기반 자유 편집, 모바일 드래그 핸들(`EditorCanvas.tsx`)
-- **추천 사이즈/프리셋**: SizeSelector, RecommandSizeList에서 data-attribute 기반 robust 이벤트 처리
-- **다운로드**: DownloadButton이 캔버스 헤더에 고정, SSR-safe 처리(`DownloadButton.tsx`)
-- **SSR 호환**: isMounted 패턴으로 document 접근 안전하게 처리(`page.tsx`)
+#### 버전2 (New - 2025.06.29)
+- 새롭게 추가된 버전의 카드 에디터입니다. 과거 버전과는 특정 명언 카드에 독립적이며, 사용자가 직접 명언를 작성하여 카드 형식으로 만들 수 있는 등 추가적인 편의성을 제공하고자 했습니다.
+  - **모듈화/반응형**: ToolPanel, SizeSelector, ShapeToolsPanel 등으로 분리(`src/app/(canvas-editor)/_components/`)
+  - **모바일 대응**: MobileToolModal, MobileFloatingButtons 등으로 하단 시트/모달 UI(`src/app/(canvas-editor)/_components/`)
+  - **드래그/사이즈 조절**: fabric.js 기반 자유 편집, 모바일 드래그 핸들(`EditorCanvas.tsx`)
+  - **추천 사이즈/프리셋**: SizeSelector, RecommandSizeList에서 data-attribute 기반 robust 이벤트 처리
+  - **다운로드**: 과거버전과 달리 DownloadButton이 캔버스 헤더에 고정(`DownloadButton.tsx`).
+  - **SSR 호환**: isMounted 패턴으로 SSR 환경에서 window 가 undefined 되는 문제를 개선하였고, document 접근 시 이를 안전하게 처리(`page.tsx`)
 
 ![editor2](https://github.com/user-attachments/assets/c29d9444-f310-40f8-8b98-7ec72b2b5ddb)
 
@@ -66,17 +63,37 @@
 
 ![image](https://github.com/user-attachments/assets/0827c725-45d9-48eb-9f9a-2717ddf547de)
 
-### 💬 AI 명언 생성 챗봇
+### 💬 AI 명언
+#### 명언 챗봇
 - OpenAI API와 연동하여 대화형으로 명언을 생성할 수 있도록 구현하였습니다. (`src/app/(main)/_components/QuoteChatBot.tsx`)
 
 ![chat](https://github.com/user-attachments/assets/6e10fa91-f647-4e9f-90cb-46a1dbb59899)
 
+#### 명언 해석
+- **(추가 배경)**: 명언은 때로는 추상적이고 은유적인 표현으로 인해 이해하기 어려운 문제가 있습니다. 처음 사이트를 개발 후 배포 했을 때, 이에 대한 건의 사항을 수집하였고, 사용자 경험을 개선하기 위해 도입되었습니다.
+- 사용자가 선택한 명언을 GPT API를 통해 LLM이 해석하고, 이를 응답토록 구현되었습니다.
+- 명언 해석 시 매번 다른 해석이 나오는 경우 응답의 일관성이 떨어진다고 판단하였고, 한 번 생성된 응답은 quote 테이블에 저장하여 이후 요청에는 해당 테이블의 해석 내용을 재사용할 수 있게 구현하였습니다.
+
+![aides](https://github.com/user-attachments/assets/8cfbddcc-f9d8-40af-b573-a9e3d731513e)
+
+
 ### 📜 무한스크롤 및 확대 기능
-- SWR을 활용한 무한스크롤과, fabric.js를 이용한 캔버스 확대/축소 기능을 제공합니다. (`EditorCanvas.tsx`)
+#### 버튼형 무한스크롤
+- 서버 상태관리 라이브러리인 SWR 의 useInfinite 훅을 활용하여 버튼형태의 무한스크롤을 구현하였습니다.
+- **(구현 배경)** 최하단 스크롤 시 자동으로 명언 목록을 조회하는 방식을 초기에 도입했지만, 사용자 경험 상 처음에 보여지는 명언에 집중할 수 있는 환경을 제공하는 것이 중요하다고 판단하여, 필요에 따라서 추가적인 정보를 수용할 수 있도록 구현되었습니다.
 
 ![scroll](https://github.com/user-attachments/assets/283542eb-51e5-4983-8371-a7f9273ad988)
+<br><br>
 
----
+#### 명언 확대 기능
+- 참고로, 사용자가 자신이 원하는 명언의 감상에 집중할 수 있도록 도입된 방식은 두 가지가 있습니다. 하나는 상세 페이지이고, 다른 하나는 현재 GIF에 보여지는 명언 확대 애니메이션 입니다.
+- 해당 기능은  사용자는 보다 명언의 감상에 집중할 수 있습니다.
+  
+![sizeup](https://github.com/user-attachments/assets/b55b4c50-b3eb-4e92-89bc-fb9cc9219aa5)
+
+
+
+
 
 ### 🆕 그 외
 - **명언 AI 해석**: 명언이 어려운 경우 AI가 해석을 제공해 드립니다. (`src/app/(main)/_components/QuoteCard.tsx`)
@@ -160,14 +177,14 @@
 <br><br>
 
 ## 📎 문서 및 참고 링크
-
-- [트러블슈팅 및 개발기록 (Notion)](https://youngwan2.notion.site/1f968acd779b808a8248d9a12bfb741e)
+- [트러블슈팅(Notion)](https://youngwan2.notion.site/1f968acd779b808a8248d9a12bfb741e)
+- [개발기록(Tistory](https://duklook.tistory.com/category/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/%EB%82%98%EB%A7%8C%EC%9D%98%EB%AA%85%EC%96%B8%EC%A7%91)
 - [CI/CD 구축기 - Tistory](https://duklook.tistory.com/563?category=1169621)
-
+- [프로젝트 회고(Tistory)](https://duklook.tistory.com/456)
 <br><br>
 ## 📌 기여도 및 회고
 
 - **기획 100%**, **프론트엔드 100%**, **백엔드 100%**, **AWS 배포 및 유지보수 전체 담당**
-- **성공 요인**: 감성 중심의 단순한 UX에 집중한 설계
+- **성공 요인**: 색채심리학 (Color Psychology)을 기반으로 감성 중심의 차분한 느낌의 블루 칼라 중심의 단순한 UX에 집중한 설계
 - **아쉬운 점**: 명언 품질 보완 및 챗봇 기반 명언 생성 퀄리티 개선 필요
 
